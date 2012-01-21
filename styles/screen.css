@@ -1,0 +1,40 @@
+@CHARSET "UTF-8";
+
+html,body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 10px;
+}
+
+#main {
+	margin: 0 auto;
+	min-width: 780px;
+	max-width: 1120px;
+	min-height: 500px;
+	padding: 0;
+}
+
+#header {
+	min-height: 130px;
+}
+
+#leftRail {
+	width: 200px;
+	float: left;
+}
+
+#content {
+	padding: 5px;
+	margin-left: 200px;
+	min-height: 557px;
+	background-color: #464646;
+}
+
+#footer {
+	padding-top: 10px;
+	min-height: 54px;
+	text-align: center;
+}
