@@ -20,42 +20,43 @@ body {
 
 #header {
 	width: 100%;
-	min-height: 130px;
 	background-color: #FFFFFF;
 	margin: 0;
 	padding: 0;
-	border: 1px solid #FFFFFF;
 }
-
 
 #header nav ul {
 	list-style: none;
-	text-align: center;
+	text-align: right;
 	height: 30px;
 	background-color: #cccccc;
-	border:2px solid 55cc00;
-	position:relative;
-	bottom:0;
+	border: 2px solid 55cc00;
+	position: relative;
+	bottom: 0;
+	margin-bottom: 0;
 }
 
 #header nav ul li {
 	font-size: 11px;
 	display: inline;
+	height:30px;
 	padding: 0 20px;
 	border-right: 1px solid #999;
-	position:relative;
-}
-#header nav ul li ul{
-	position:absolute;
-	display:block;
-	visibility:hidden;
-	top:25px;
-	left:2px;
+	position: relative;
 }
 
-#header nav ul li:hover>ul{
-	visibility:visible;
+#header nav ul li ul {
+	position: absolute;
+	display: block;
+	visibility: hidden;
+	top: 20px;
+	left: 2px;
 }
+
+#header nav ul li:hover>ul {
+	visibility: visible;
+}
+
 #leftRail {
 	width: 250px !important;
 	float: left;
