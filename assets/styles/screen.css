@@ -85,3 +85,96 @@ body {
 	text-align: center;
 	background-color: #ccc;
 }
+=======
+@charset "UTF-8";
+
+html,body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 10px;
+}
+
+#main {
+	margin: 0 auto;
+	min-width: 780px;
+	max-width: 1120px;
+	min-height: 500px;
+	padding: 0;
+	background-color: #35c0cd;
+}
+
+#header {
+	width: 100%;
+	background-color: #FFFFFF;
+	margin: 0;
+	padding: 0;
+}
+#log{
+	border: 2px solid #55cc00;
+	height:45px;
+	width:250px;
+	padding-top:30px;
+	text-align:center;
+	float:right;
+}
+
+#header nav ul {
+	list-style: none;
+	text-align: right;
+	min-height: 30px;
+	border: 2px solid 55cc00;
+	position: relative;
+	bottom: 0;
+	margin-bottom: 0;
+	background-color: #cccccc;
+}
+
+#header nav ul li {
+	font-size: 11px;
+	display: inline;
+	padding: 0 20px;
+	border-right: 1px solid #999;
+	position: relative;
+}
+
+#header nav ul li ul {
+	position: absolute;
+	display: block;
+	visibility: hidden;
+	text-align: center;
+	left: 2px;
+	top: 10px;
+}
+
+#header nav ul li ul li {
+	display: list-item;
+	padding: 0;
+	margin: 10px 0;
+	border-right: none;
+}
+
+#header nav ul li:hover>ul {
+	visibility: visible;
+}
+
+#leftRail {
+	width: 200px;
+	float: left;
+}
+
+#content {
+	padding: 5px;
+	margin-left: 200px;
+	min-height: 557px;
+	background-color: #5ec4cd;
+}
+
+#footer {
+	padding-top: 10px;
+	min-height: 54px;
+	text-align: center;
+	background-color: #ccc;
+}
