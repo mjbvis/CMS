@@ -24,22 +24,29 @@ body {
 	margin: 0;
 	padding: 0;
 }
+#log{
+	border: 2px solid #55cc00;
+	height:45px;
+	width:250px;
+	padding-top:30px;
+	text-align:center;
+	float:right;
+}
 
 #header nav ul {
 	list-style: none;
 	text-align: right;
-	height: 30px;
-	background-color: #cccccc;
+	min-height: 30px;
 	border: 2px solid 55cc00;
 	position: relative;
 	bottom: 0;
 	margin-bottom: 0;
+	background-color: #cccccc;
 }
 
 #header nav ul li {
 	font-size: 11px;
 	display: inline;
-	height:30px;
 	padding: 0 20px;
 	border-right: 1px solid #999;
 	position: relative;
@@ -49,8 +56,16 @@ body {
 	position: absolute;
 	display: block;
 	visibility: hidden;
-	top: 20px;
+	text-align: center;
 	left: 2px;
+	top: 10px;
+}
+
+#header nav ul li ul li {
+	display: list-item;
+	padding: 0;
+	margin: 10px 0;
+	border-right: none;
 }
 
 #header nav ul li:hover>ul {
@@ -58,16 +73,15 @@ body {
 }
 
 #leftRail {
-	width: 250px !important;
+	width: 200px;
 	float: left;
 }
 
 #content {
 	padding: 5px;
-	margin-left: 250px;
+	margin-left: 200px;
 	min-height: 557px;
 	background-color: #5ec4cd;
-	min-height: 557px;
 }
 
 #footer {
