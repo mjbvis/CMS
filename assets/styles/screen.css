@@ -127,13 +127,14 @@ body {
 	background-color: #ccc;
 	padding: 5px;
 	/* Transitions: Default, Webkit, Presto, Mozzila/Gecko */
-	transition-property: transform, opacity, visibility;
-	transition-duration: 0.75s, 0.75s;
-	-webkit-transition: opacity 0.75s, visibility 0.75s;
+	transition-property: opacity, visibility;
+	transition-duration: 0.75s;
+	-webkit-transition: opacity, visibility;
+	-webkit-duration: 0.75s;
 	-o-transition-property: opacity, visibility;
-	-o-transition-duration: 0.75s, 0.75s;
+	-o-transition-duration: 0.75s;
 	-moz-transition-property: opacity, visibility;
-	-moz-transition-duration:  0.75s, 0.75s;
+	-moz-transition-duration:  0.75s;
 	/* End Transitions */
 }
 
