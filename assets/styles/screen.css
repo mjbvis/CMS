@@ -1,6 +1,7 @@
 /*
  * This is the Master CSS file for the Corvallis Montessori School Student-Parent Administration web application
- * written by Rory C-H, Justin Field, Wesly Cos, and Mark Bowser in 2012
+ * written by Rory C-H, Justin Field, Wesly Cos, and Mark Bowser in 2012 as part of the Oregon State University senior capstone
+ * the team can be reached at cms-team@googlegroups.com
  */
 
 @charset "UTF-8";
@@ -9,10 +10,19 @@ html,body {
 	height: 100%;
 }
 
+/****************************************************
+ *  BODY
+ ***************************************************/
+
 body {
+	font-family: Tahoma, Geneva, Arial, Helvetica, sans-serif;
 	margin: 0;
 	padding: 10px;
 }
+
+/****************************************************
+ *  Main
+ ***************************************************/
 
 #main {
 	margin: 0 auto;
@@ -23,12 +33,21 @@ body {
 	background-color: #35c0cd;
 }
 
+/****************************************************
+ *  HEADER
+ ***************************************************/
+
 #header {
 	width: 100%;
 	background-color: #FFFFFF;
 	margin: 0;
 	padding: 0;
 }
+
+/****************************************************
+ *  TOP LOG-IN SECTION
+ ***************************************************/
+
 #log{
 	border: 2px solid #55cc00;
 	height:45px;
@@ -37,6 +56,10 @@ body {
 	text-align:center;
 	float:right;
 }
+
+/****************************************************
+ *  TOP MENU
+ ***************************************************/
 
 #header nav ul {
 	list-style: none;
@@ -77,10 +100,18 @@ body {
 	visibility: visible;
 }
 
-#leftRail {
+/****************************************************
+ *  SIDE BAR
+ ***************************************************/
+
+#sideBar {
 	width: 200px;
 	float: left;
 }
+
+/****************************************************
+ *  CONTENT
+ ***************************************************/
 
 #content {
 	padding: 5px;
@@ -88,6 +119,10 @@ body {
 	min-height: 557px;
 	background-color: #5ec4cd;
 }
+
+/****************************************************
+ *  FOOTER
+ ***************************************************/
 
 #footer {
 	padding-top: 10px;
