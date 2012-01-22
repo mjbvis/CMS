@@ -1,4 +1,13 @@
+/*
+ * This is the Master CSS file for the Corvallis Montessori School Student-Parent Administration web application
+ * written by Rory C-H, Justin Field, Wesly Cos, and Mark Bowser in 2012
+ */
+
 @charset "UTF-8";
+
+header, footer, aside, section, article, nav {
+display:block;
+} /* Help browsers understand HTML 5 tags. */
 
 html,body {
 	height: 100%;
