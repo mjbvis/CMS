@@ -1,4 +1,4 @@
-@CHARSET "UTF-8";
+@charset "UTF-8";
 
 html,body {
 	height: 100%;
@@ -15,26 +15,63 @@ body {
 	max-width: 1120px;
 	min-height: 500px;
 	padding: 0;
+	background-color: #35c0cd;
 }
 
 #header {
+	width: 100%;
 	min-height: 130px;
+	background-color: #FFFFFF;
+	margin: 0;
+	padding: 0;
+	border: 1px solid #FFFFFF;
 }
 
+
+#header nav ul {
+	list-style: none;
+	text-align: center;
+	height: 30px;
+	background-color: #cccccc;
+	border:2px solid 55cc00;
+	position:relative;
+	bottom:0;
+}
+
+#header nav ul li {
+	font-size: 11px;
+	display: inline;
+	padding: 0 20px;
+	border-right: 1px solid #999;
+	position:relative;
+}
+#header nav ul li ul{
+	position:absolute;
+	display:block;
+	visibility:hidden;
+	top:25px;
+	left:2px;
+}
+
+#header nav ul li:hover>ul{
+	visibility:visible;
+}
 #leftRail {
-	width: 200px;
+	width: 250px !important;
 	float: left;
 }
 
 #content {
 	padding: 5px;
-	margin-left: 200px;
+	margin-left: 250px;
 	min-height: 557px;
-	background-color: #464646;
+	background-color: #5ec4cd;
+	min-height: 557px;
 }
 
 #footer {
 	padding-top: 10px;
 	min-height: 54px;
 	text-align: center;
+	background-color: #ccc;
 }
