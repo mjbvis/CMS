@@ -23,10 +23,10 @@ body {
  ***************************************************/
 #main {
 	margin: 0 auto;
+	padding: 0;
 	min-width: 780px;
 	max-width: 1120px;
 	min-height: 500px;
-	padding: 0;
 	background-color: #35c0cd;
 }
 
@@ -55,42 +55,48 @@ body {
 /****************************************************
  *  TOP MENU - Needs work
  ***************************************************/
-#header nav ul {
-	list-style: none;
-	text-align: right;
-	min-height: 30px;
-	border: 2px solid 55cc00;
+#topNav {
 	position: relative;
 	bottom: 0;
-	margin-bottom: 0;
+	height: 30px;
+	text-align: right;
 	background-color: #cccccc;
 }
 
-#header nav ul li {
-	font-size: 11px;
-	display: inline;
-	padding: 0 20px;
-	border-right: 1px solid #999;
-	position: relative;
+#topNav ul {
+	list-style: none;
+	margin-bottom: 0;
+	padding: 3px;
 }
 
-#header nav ul li ul {
+#topNav ul li {
+	line-height: 100%;
+	font-size: 11px;
+	display: inline;
+	padding: 5px 20px;
+	position: relative;
+	border: 1px solid #ddd;
+}
+
+#topNav ul li ul {
 	position: absolute;
+	top: 23px;
 	display: block;
 	visibility: hidden;
 	text-align: center;
-	left: 2px;
-	top: 10px;
+	background-color: #ddd;
+	border: 1px solid #b4b4b4;
+	min-width: 75px;
 }
 
-#header nav ul li ul li {
+#topNav ul li ul li {
 	display: list-item;
-	padding: 0;
+	padding: 5px 0;
 	margin: 10px 0;
-	border-right: none;
+	border: 1px solid #ccc;
 }
 
-#header nav ul li:hover>ul {
+#topNav ul li:hover>ul {
 	visibility: visible;
 }
 
@@ -105,16 +111,16 @@ body {
 	list-style: none;
 }
 
-#alert{
-	cursor:default;
-	position:relative;
+#alert {
+	cursor: default;
+	position: relative;
 }
 
-#alert>:first-child{
-	font-weight: bold;
+#alert>:first-child {
 	color: #bd0000;
+	font-weight: bold;
 	font-size: 22px;
-	text-decoration:underline;
+	text-decoration: underline;
 }
 
 #alert div {
@@ -122,23 +128,22 @@ body {
 	opacity: 0;
 	position: absolute;
 	left: 100px;
-	top:30px;
+	top: 30px;
 	width: 500px;
 	background-color: #ccc;
 	padding: 5px;
 	/* Transitions: Default, Webkit, Presto, Mozzila/Gecko */
 	transition-property: opacity, visibility;
 	transition-duration: 0.75s;
-	-webkit-transition: opacity, visibility;
-	-webkit-duration: 0.75s;
+	-webkit-transition: opacity 0.75s, visibility 0.75s;
 	-o-transition-property: opacity, visibility;
 	-o-transition-duration: 0.75s;
 	-moz-transition-property: opacity, visibility;
-	-moz-transition-duration:  0.75s;
+	-moz-transition-duration: 0.75s;
 	/* End Transitions */
 }
 
-#alert:hover div {
+#alert:hover>div {
 	visibility: visible;
 	opacity: 1;
 }
