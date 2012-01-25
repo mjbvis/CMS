@@ -1,9 +1,9 @@
+@charset "UTF-8";
 /*
  * This is the Master CSS file for the Corvallis Montessori School Student-Parent Administration web application
  * written by Rory C-H, Justin Field, Wesly Cos, and Mark Bowser in 2012 as part of the Oregon State University senior capstone
  * the team can be reached at cms-team@googlegroups.com
  */
-@charset "UTF-8";
 
 html,body {
 	height: 100%;
@@ -27,7 +27,7 @@ body {
 	min-width: 780px;
 	max-width: 1120px;
 	min-height: 500px;
-	background-color: #35c0cd;
+	background-color: #99FFCC;
 }
 
 /****************************************************
@@ -60,13 +60,14 @@ body {
 	bottom: 0;
 	height: 30px;
 	text-align: right;
-	background-color: #cccccc;
+	background-color: #99FFFF;
 }
 
 #topNav ul {
 	list-style: none;
 	margin-bottom: 0;
 	padding: 3px;
+	background-color: #019fd5;
 }
 
 #topNav ul li {
@@ -155,7 +156,7 @@ body {
 	padding: 5px;
 	margin-left: 210px;
 	min-height: 557px;
-	background-color: #5ec4cd;
+	background-color: #66FFFF;
 }
 
 /****************************************************
@@ -165,5 +166,5 @@ body {
 	padding-top: 10px;
 	min-height: 54px;
 	text-align: center;
-	background-color: #ccc;
+	background-color: #019fd5;
 }
