@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller'] = "welcome";
+$route['default_controller'] = "landing"; # Since it is the default landing page.  Consistancy!
 $route['404_override'] = '';
 
 
