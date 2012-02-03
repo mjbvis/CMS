@@ -1,5 +1,5 @@
 <?php
-class Login extends CI_Controller {
+class Login extends Application {
 
 	function __construct() {
 		parent::__construct();

@@ -1,5 +1,5 @@
 <?php
-class Landing extends CI_Controller {
+class Landing extends Application {
 
 	function __construct() {
 		parent::__construct();
