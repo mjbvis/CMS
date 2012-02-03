@@ -27,3 +27,5 @@ Session.vim
 ### Aptana Ignores
 .profile
 .settings
+
+.project
