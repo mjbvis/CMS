@@ -22,7 +22,7 @@ class Landing extends CI_Controller {
 
 		# Load Views
 		$this->load->view('templates/header.php', $data);
-		$this->load->view('landing_view', $data);
+		$this->load->view('landing_views/landing_view', $data);
 		$this->load->view('templates/footer.php', $data);
 	}
 

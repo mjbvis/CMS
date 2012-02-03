@@ -7,15 +7,15 @@
 		<meta name="Author" content="Corvallis Montessori School">
 		<meta name="Rating" content="General">
 		<title><?php echo($title); ?> | CMS</title>
-		<link rel="icon" type="image/x-icon" href="favicon.ico">
-		<link rel="stylesheet" href="<?php echo base_url('assets/styles/screen.css'); ?>" type="text/css"	media="screen">
+		<link rel="icon" type="image/x-icon" href="<?php echo base_url('favicon.ico'); ?>" />
+		<link rel="stylesheet" href="<?php echo base_url('assets/styles/screen.css'); ?>" type="text/css"	media="screen" />
 	</head>
 	<body>
 		<div id="main">
 			<div id="header">
 				<header>
 					<div id="log">Login/Logout Stuff Here</div>
-					<img src="assets/images/cms_logo.png" alt="CMS Logo" width="585" height="67">
+					<img src="<?php echo base_url('assets/images/cms_logo.png'); ?>" alt="CMS Logo" width="585" height="67">
 					<nav id="topNav">
 						<ul>
 							<li>Item 1</li>

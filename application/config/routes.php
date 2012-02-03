@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller'] = "landing"; # Since it is the default landing page.  Consistancy!
+$route['default_controller'] = "login"; # Since it is the default login page.  Consistancy!
 $route['404_override'] = '';
 
 
