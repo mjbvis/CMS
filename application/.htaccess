@@ -1,23 +1,4 @@
-Deny from all
+RewriteEngine On
+RewriteCond $1 !^(index\.php|images|robots\.txt)
+RewriteRule ^(.*)$ /index.php/$1 [L]
 
-#<IfModule mod_rewrite.c>
-
-# Enable Rewrite Engine
-#--------------------------------
-#RewriteEngine On
-#RewriteBase /
-
-# Redirect index.php Requests
-#--------------------------------
-#RewriteCond %{THE_REQUEST} ^GET.*index\.php [NC]
-#RewriteCond %{THE_REQUEST} !/system/.*
-#RewriteRule (.*)index\.php/*(.*) /$1$2 [R=301,L]
-
-# Standard ExpressionEngine Rewrite
-#--------------------------------
-#RewriteCond $1 !\.(css|js|gif|jpe?g|png) [NC]
-#RewriteCond %{REQUEST_FILENAME} !-f
-#RewriteCond %{REQUEST_FILENAME} !-d
-#RewriteRule ^(.*)$ /index.php/$1 [L]
-
-#</IfModule>
