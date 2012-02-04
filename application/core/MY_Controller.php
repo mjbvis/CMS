@@ -21,9 +21,9 @@ class Application extends CI_Controller
 		log_message('debug', 'Application Loaded');
 
 		$this->load->library(array('form_validation', 'ag_auth'));
-		$this->load->helper(array('url', 'email', 'ag_auth'));
-		
+		$this->load->helper(array('url', 'email', 'ag_auth', 'dashboard'));
 		$this->config->load('ag_auth');
+
 	}
 	
 	public function field_exists($value)
@@ -82,12 +82,7 @@ class Application extends CI_Controller
 	
 	public function login($redirect = NULL)
 	{
-		
-		if($redirect === NULL)
-		{
-			$redirect = $this->ag_auth->config['auth_login'];
-		}
-		
+			
 		$this->form_validation->set_rules('username', 'Username', 'required|min_length[6]');
 		$this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
 		
@@ -112,6 +107,10 @@ class Application extends CI_Controller
 
 				$this->ag_auth->login_user($user_data);
 				
+				if($redirect === NULL){
+					$redirect = get_dashboard();
+				}
+				
 				redirect($redirect);
 				
 				
@@ -129,6 +128,7 @@ class Application extends CI_Controller
 	{
 		$this->ag_auth->logout();
 	}
+	
 }
 
 /* End of file: MY_Controller.php */
