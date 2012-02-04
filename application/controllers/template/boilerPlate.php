@@ -2,7 +2,7 @@
 if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
-Class BoilerPlate extends CI_Controller {
+Class BoilerPlate extends Application {
 
 	function __construct() {
 		parent::__construct();
@@ -27,7 +27,7 @@ Class BoilerPlate extends CI_Controller {
 
 		/* load views */
 		$this->load->view('templates/header', $data);
-		$this->load->view('boilerPlate_view', $data);
+		$this->load->view('templates/boilerPlate_view', $data);
 		$this->load->view('templates/footer', $data);
 	}
 

@@ -1,8 +1,9 @@
 <?php
 
 //probally move this function once working
-function get_dashboard()
-{
+function get_dashboard(){
+	
+	check_for_alerts();	
 		
 	if(user_group('admin') == TRUE){
 		return 'admin/admin';
@@ -18,6 +19,10 @@ function get_dashboard()
 		echo "error";
 	}	
 
+}
+
+function check_for_alerts(){
+	
 }
 	
 ?>

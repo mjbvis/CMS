@@ -9,7 +9,7 @@ class Parents extends Application
 	
 	public function index()
 	{
-		if(logged_in()) // && role = parent?
+		if(logged_in())
 		{
 			$this->ag_auth->view('dashboard');
 		}
