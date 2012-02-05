@@ -16,9 +16,9 @@ class Admin extends Application
 			$data['title'] = 'Page Title';
 	
 			/* load views */
-			$this->load->view('templates/header', $data);
-			$this->load->view('templates/boilerPlate_view', $data);
-			$this->load->view('templates/footer', $data);
+			$this->load->view('admin/templates/header', $data);
+			$this->load->view('admin/dashboard', $data);
+			$this->load->view('admin/templates/footer', $data);
 		}
 		else
 		{
