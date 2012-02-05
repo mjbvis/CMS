@@ -18,10 +18,10 @@
 					<img src="<?php echo base_url('assets/images/cms_logo.png'); ?>" alt="CMS Logo" width="585" height="67">
 					<nav id="topNav">
 						<ul>
-							<li><?php echo anchor('admin/admin', 'Home'); ?></li>
+							<li><?php echo anchor('admin', 'Home'); ?></li>
 							<li>Admissions
 								<ul>
-									<li><?php echo anchor('admin/admin/register', 'Create New Parent Account'); ?></li>
+									<li><?php echo anchor('admin/register', 'Create New Parent Account'); ?></li>
 								</ul>
 							</li>
 							<li>Item 4</li>

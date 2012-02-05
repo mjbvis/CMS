@@ -40,13 +40,13 @@
 |
 */
 
-$route['default_controller'] = "login/login";
+$route['default_controller'] = "login";
 $route['scaffolding_trigger'] = "";
 
 
 // BEGIN AUTHENTICATION LIBRARY ROUTES
-$route['login'] = "admin/admin/login";
-$route['logout'] = "admin/admin/logout";
+$route['login'] = "admin/login";
+$route['logout'] = "admin/logout";
 // END AUTHENTICATION LIBRARY ROUTES
 
 /* End of file routes.php */

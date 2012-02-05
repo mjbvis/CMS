@@ -6,14 +6,14 @@ function get_dashboard(){
 	check_for_alerts();	
 		
 	if(user_group('admin') == TRUE){
-		return 'admin/admin';
+		return 'admin';
 	} 
 	elseif(user_group('user') == TRUE) {
 		echo "error";
-		return 'parents/parents';
+		return 'parents';
 	}
 	elseif(user_group('alerts') == TRUE) {
-		return 'alerts/alerts';
+		return 'alerts';
 	}
 	else {
 		echo "error";
