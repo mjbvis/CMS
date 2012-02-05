@@ -4,4 +4,10 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	</head>
 	<body>
-		<div id="container">
+		<h2>Logout</h2>
+		
+		<div class="box">
+				You have been successfully logged out!
+		</div>
+	</body>
+</html>

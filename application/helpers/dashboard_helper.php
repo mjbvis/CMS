@@ -10,11 +10,11 @@ function get_dashboard(){
 	} 
 	elseif(user_group('user') == TRUE) {
 		echo "error";
-		return 'parent/parent';
+		return 'parents/parents';
 	}
-	//elseif(user_group('alert') == TRUE) {
-	//	return 'alert/alert';
-	//}
+	elseif(user_group('alerts') == TRUE) {
+		return 'alerts/alerts';
+	}
 	else {
 		echo "error";
 	}	

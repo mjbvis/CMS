@@ -24,11 +24,6 @@ $config['auth_groups'] = array(
 							);
 
 /**
-* The default URI string to redirect to after a successful login.
-*/
-$config['auth_login'] = 'admin/dashboard';
-
-/**
 * The default URI string to redirect to after a successful logout.
 */
 $config['auth_logout'] = 'login';

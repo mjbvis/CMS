@@ -5,7 +5,7 @@ class Login extends Application {
 		parent::__construct();
 
 		# Load Helpers
-		$this->load->helper(array('url', 'form'));
+		$this->load->helper(array('url', 'form', 'dashboard'));
 
 		# Load Libraries
 
@@ -22,7 +22,7 @@ class Login extends Application {
 		//if the user is allready loged in goto there default dashboard
 		if(logged_in())
 		{
-			$this->ag_auth->view('dashboard');
+			redirect(get_dashboard());
 		}
 		else // else present them with the login page.
 		{

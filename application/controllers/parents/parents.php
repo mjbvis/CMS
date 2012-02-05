@@ -1,22 +1,39 @@
 <?php
+if (!defined('BASEPATH'))
+	exit('No direct script access allowed');
 
-class Parents extends Application
-{
-	public function __construct()
-	{
+Class Parents extends Application {
+
+	function __construct() {
 		parent::__construct();
+
+		/* Load helpers */
+		$this->load->helper(array('url', 'form'));
+
+		/* Load libraries */
+		$this->load->library('form_validation');
+
+
 	}
-	
-	public function index()
-	{
+
+	function index() {
+		
 		if(logged_in())
 		{
-			$this->ag_auth->view('dashboard');
+			/* array with example data */
+			$data = array();
+			$data['title'] = 'Page Title';
+	
+			/* load views */
+			$this->load->view('templates/header', $data);
+			$this->load->view('templates/boilerPlate_view', $data);
+			$this->load->view('templates/footer', $data);
 		}
-		else
-		{
+		else {
 			$this->login();
 		}
+		
 	}
 
 }
+?>
