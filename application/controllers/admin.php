@@ -11,9 +11,8 @@ class Admin extends Application
 	{
 		if(logged_in())
 		{
-			/* array with example data */
 			$data = array();
-			$data['title'] = 'Page Title';
+			$data['title'] = 'Admin Dashboard';
 	
 			/* load views */
 			$this->load->view('admin/templates/header', $data);
@@ -35,7 +34,7 @@ class Admin extends Application
 
 		if($this->form_validation->run() == FALSE)
 		{
-			$this->load->view('admin/register');
+			$this->load->view('admin/register/register');
 		}
 		else
 		{
