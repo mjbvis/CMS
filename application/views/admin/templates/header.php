@@ -27,7 +27,7 @@
 							<li>Item 4</li>
 							<li>Item 5</li>
 							<li>Item 6</li>
-							<li>Item 7</li>
+							<li><?php echo anchor('logout', 'Logout'); ?></li>
 						</ul>
 					</nav>
 				</header>
