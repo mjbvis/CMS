@@ -4,33 +4,18 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	</head>
 	<body>
-		<?php if(empty($username)) { ?>
-		<h2>Register :)</h2>
-		<?php } else { ?>
-		<h2>Update</h2>
-		<?php } ?>
+		
+		<h2>Register a new parent account</h2>
+		
 		
 		<div class="box">
 				<form method="post">
-				<?php if(empty($username)) { ?>
-				Username:<br />
-				<input type="text" name="username" size="50" class="form" value="<?php echo set_value('username'); ?>" /><br /><?php echo form_error('username'); ?><br />
-				Password:<br />
-				<input type="password" name="password" size="50" class="form" value="<?php echo set_value('password'); ?>" /><?php echo form_error('password'); ?><br /><br />
-				Password confirmation:<br />
-				<input type="password" name="password_conf" size="50" class="form" value="<?php echo set_value('conf_password'); ?>" /><?php echo form_error('conf_password'); ?><br /><br />
-				<?php } ?>
-				Email:<br />
-				<?php if(empty($username)){ ?>
+					First Name: <input type="text" name="username" size="50" class="form" value="<?php echo set_value('first'); ?>" /><br /><?php echo form_error('first'); ?><br />
+					Last Name: <input type="text" name="username" size="50" class="form" value="<?php echo set_value('last'); ?>" /><br /><?php echo form_error('last'); ?><br />
+					
+					Email:<br />
 					<input type="text" name="email" size="50" class="form" value="<?php echo set_value('email'); ?>" /><?php echo form_error('email'); ?><br /><br />
-				<?php }else{ ?>
-				<input type="text" name="email" size="50" class="form" value="<?php echo set_value('email', $email); ?>" /><?php echo form_error('email'); ?><br /><br />
-				
-				<?php } if(empty($username)) { ?>
-				<input type="submit" value="Register" name="register" />
-				<?php } else { ?>
-				<input type="submit" value="Update" name="register" />
-				<?php } ?>
+					<input type="submit" value="Register" name="register" />
 				</form>
 		</div>
 	</body>
