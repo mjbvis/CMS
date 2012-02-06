@@ -22,10 +22,9 @@ function showhide(value) {
 	}
 }
 </script>
-
 <form id='studRegPgOne' action='studentRegistration.php' method='post' accept-charset='UTF-8'>
 	<fieldset>
-		<legend>Admissions Contact Information</legend>
+		<legend>Contact Information</legend>
 		<label for='parentsNames'>Parent's Names:</label>
 		<input type='text' name='parentsNames' id='parentsNamesId' max='50' /> </br>
 		<label for='childrenNamesAges' >Children's name(s)/ages: </label>
