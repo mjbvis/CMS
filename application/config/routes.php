@@ -45,8 +45,8 @@ $route['scaffolding_trigger'] = "";
 
 
 // BEGIN AUTHENTICATION LIBRARY ROUTES
-$route['login'] = "admin/login";
-$route['logout'] = "admin/logout";
+$route['login'] = "login/login";
+$route['logout'] = "login/logout";
 // END AUTHENTICATION LIBRARY ROUTES
 
 /* End of file routes.php */
