@@ -49,8 +49,8 @@ class Application extends CI_Controller
 	public function login($redirect = NULL)
 	{
 			
-		$this->form_validation->set_rules('username', 'Username', 'required|min_length[6]');
-		$this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
+		$this->form_validation->set_rules('username', 'Username', 'required|min_length[1]');
+		$this->form_validation->set_rules('password', 'Password', 'required|min_length[1]');
 		
 		if($this->form_validation->run() == FALSE)
 		{
