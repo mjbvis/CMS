@@ -27,9 +27,8 @@ class Admin extends Application
 	
 	public function register()
 	{
-		$this->form_validation->set_rules('username', 'Username', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('password', 'Password', 'required|min_length[1]|matches[password_conf]');
-		$this->form_validation->set_rules('password_conf', 'Password Confirmation', 'required|min_length[3]|matches[password]');
+		$this->form_validation->set_rules('first', 'First Name', 'required|min_length[1]|callback_field_exists');
+		$this->form_validation->set_rules('last', 'Last Name', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('email', 'Email Address', 'required|min_length[3]|valid_email|callback_field_exists');
 
 		if($this->form_validation->run() == FALSE)
