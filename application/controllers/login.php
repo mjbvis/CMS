@@ -8,9 +8,9 @@ class Login extends Application {
 		$this->load->helper(array('url', 'form', 'dashboard'));
 
 		# Load Libraries
-
+		
 		# Load Modules
-
+		$this->load->model('login/Login_model');
 	}
 
 	# This is the default login view
@@ -19,16 +19,20 @@ class Login extends Application {
 		$data['title'] = 'Login';
 		
 
-		//if the user is allready loged in goto there default dashboard
+		//if the user is already loged in goto their default dashboard
 		if(logged_in())
 		{
-			redirect(get_dashboard());
+			// get all alerts for current user
+			$alerts = $this->Login_model->selectUserAlerts(user_id());
+			// redirect to the appropriate dashboard
+			redirect(get_dashboard($alerts));
 		}
 		else // else present them with the login page.
 		{
 			$this->login();
 		}
 	}
-
+	
 }
+
 ?>

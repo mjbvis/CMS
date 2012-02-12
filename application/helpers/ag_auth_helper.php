@@ -17,6 +17,12 @@ function username()
 	return $CI->session->userdata('username');
 }
 
+function user_id()
+{
+	$CI =& get_instance();
+	return $CI->session->userdata('id');
+}
+
 function user_group($group)
 {
 	$CI =& get_instance();

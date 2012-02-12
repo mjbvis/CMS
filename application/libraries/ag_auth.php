@@ -58,8 +58,8 @@ class AG_Auth
 	/** 
 	* Restricts access to a page
 	*
-	* Takes a user level (e.g. admin, user etc) and restricts access to that user and above.
-	* Example, users can access a profile page, but so can admins (who are above users)
+	* Takes a user level (e.g. admin, parent etc) and restricts access to that user and above.
+	* Example, parents can access a profile page, but so can admins (who are above users)
 	*
 	* @access public
 	* @param string

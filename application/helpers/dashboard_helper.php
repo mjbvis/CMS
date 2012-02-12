@@ -1,15 +1,18 @@
 <?php
 
-//probally move this function once working
-function get_dashboard(){
+//probably move this function once working
+function get_dashboard($alerts){
 	
-	check_for_alerts();	
-		
+	// put parents in the alert group if they have alerts to deal with	
+	if($alerts->num_rows()>0 && user_group('parent') == TRUE) {
+		// how do you change groups???
+		return 'alerts';
+	}
+	
 	if(user_group('admin') == TRUE){
 		return 'admin';
 	} 
-	elseif(user_group('user') == TRUE) {
-		echo "error";
+	elseif(user_group('parent') == TRUE) {
 		return 'parents';
 	}
 	elseif(user_group('alerts') == TRUE) {
@@ -19,10 +22,6 @@ function get_dashboard(){
 		echo "error";
 	}	
 
-}
-
-function check_for_alerts(){
-	
 }
 	
 ?>

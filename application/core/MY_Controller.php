@@ -23,6 +23,7 @@ class Application extends CI_Controller
 		$this->load->library(array('form_validation', 'ag_auth'));
 		$this->load->helper(array('url', 'email', 'ag_auth', 'dashboard'));
 		$this->config->load('ag_auth');
+		$this->load->model('login/Login_model');
 
 	}
 	
@@ -69,12 +70,14 @@ class Application extends CI_Controller
 			{
 				
 				unset($user_data['password']);
-				unset($user_data['id']);
 
 				$this->ag_auth->login_user($user_data);
 				
+				// get all alerts for current user
+				$alerts = $this->Login_model->selectUserAlerts(user_id());
+				
 				if($redirect === NULL){
-					$redirect = get_dashboard();
+					$redirect = get_dashboard($alerts);
 				}
 				
 				redirect($redirect);
