@@ -1,10 +1,13 @@
-<?php
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Alerts extends Application
 {
 	public function __construct()
 	{
 		parent::__construct();
+		
+		/*restrict access to all but admin*/
+		//$this->ag_auth->restrict('alert');
 		
 		/* Load helpers */
 		$this->load->helper(array('url', 'form'));

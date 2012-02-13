@@ -7,6 +7,9 @@ Class Parents extends Application {
 	function __construct() {
 		parent::__construct();
 
+		/*restrict access to all but parents*/
+		$this->ag_auth->restrict('parent');
+
 		/* Load helpers */
 		$this->load->helper(array('url', 'form'));
 

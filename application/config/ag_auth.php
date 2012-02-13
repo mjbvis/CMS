@@ -19,8 +19,8 @@
 */
 $config['auth_groups'] = array(
 							'admin' => '1',
-							'editor' => '2',
-							'parent' => '100'
+							'parent' => '100',
+							'alert' => '200'
 							);
 
 /**
