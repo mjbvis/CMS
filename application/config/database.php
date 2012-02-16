@@ -48,10 +48,10 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'cms';
-$db['default']['password'] = 'Th3.D@t@bas3.P@ssw0rd';
-$db['default']['database'] = 'cms';
+$db['default']['hostname'] = 'mysql.eecs.oregonstate.edu';
+$db['default']['username'] = 'cs461-team02';
+$db['default']['password'] = 'aBeW2L8UuLeRS3Px';
+$db['default']['database'] = 'cs461-team02';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
