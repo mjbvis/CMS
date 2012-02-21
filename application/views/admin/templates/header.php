@@ -14,26 +14,25 @@
 		<div id="main">
 			<div id="header">
 				<header>
-					<div id="log">Login/Logout Stuff Here</div>
 					<img src="<?php echo base_url('assets/images/cms_logo.png'); ?>" alt="CMS Logo" width="585" height="67">
 					<nav id="topNav">
 						<ul>
 							<li><?php echo anchor('admin', 'Home'); ?></li>
-							<li>Admissions
+							<li><a href="javascript:void();">Admissions</a>
 								<ul>
 									<li><?php echo anchor('admin/register', 'Create New Parent Account'); ?></li>
 								</ul>
 							</li>
-							<li>Item 4</li>
-							<li>Item 5</li>
-							<li>Item 6</li>
+							<li><a href="./">Item 4</a></li>
+							<li><a href="./">Item 5</a></li>
+							<li><a href="./">Item 6</a></li>
 							<li><?php echo anchor('logout', 'Logout'); ?></li>
 						</ul>
 					</nav>
 				</header>
 			</div>
 			<div id="sideBar">
-				<ul style="list-style:none">
+				<ul>
 					<li>Item 1</li>
 					<li>Item 2</li>
 					<li>Item 4</li>

@@ -14,7 +14,6 @@
 		<div id="main">
 			<div id="header">
 				<header>
-					<div id="log">Login/Logout Stuff Here</div>
 					<img src="<?php echo base_url('assets/images/cms_logo.png'); ?>" alt="CMS Logo" width="585" height="67">
 					<nav id="topNav">
 						<ul>
