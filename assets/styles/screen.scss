@@ -8,7 +8,7 @@
  */
 
 $aTrans:     0.75s;    // Transition speed
-$menuHeight: 30px;     // Height of the top menu
+$menuHeight: 30px;     // Height of the top menu [>45 yeilds undesireable results]
 $dPurple:    #613860;
 $purple:     #5C4F79;  // Side Bar
 $lBlue:      #5faba9;  // Seperator for nav
@@ -115,11 +115,11 @@ body {
       @include mainButtons;
       ul{
         position:      absolute;
+        right:         20px;
         z-index:       1000;
         visibility:    hidden;
         opacity:       0;
         padding:       0;
-        float: none;
         &>:nth-child(n+1){
           padding-bottom: 1px;
           padding-right: 0;
@@ -128,10 +128,13 @@ body {
           padding-bottom: 0;
         }
         li{
-          float: none;
-          width: 100%;
+          width:         100%;
+          padding-left:  10px;
+          padding-right: 10px !important;
           a{
-            width: 100%;
+            width:   100%;
+            margin:  0 -10px;
+            padding: 0  10px;
           }
         }
       }
