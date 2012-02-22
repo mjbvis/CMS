@@ -73,6 +73,7 @@ body {
   background-color: #5faba9;
 }
 #topNav ul li:hover > ul {
+  right: 20px;
   visibility: visible;
   opacity: 1;
   top: 30px;
@@ -99,11 +100,18 @@ body {
 }
 #topNav ul li ul {
   position: absolute;
-  right: 20px;
+  right: 0;
+  top: 0;
   z-index: 1000;
   visibility: hidden;
   opacity: 0;
   padding: 0;
+  /* Transitions: Default, Webkit, Presto, Mozzila/Gecko */
+  -webkit-transition: all 0.375s;
+  -moz-transition: all 0.375s;
+  -o-transition: all 0.375s;
+  transition: all 0.375s;
+  /* End Transitions */
 }
 #topNav ul li ul > :nth-child(n+1) {
   padding-bottom: 1px;
@@ -162,13 +170,10 @@ body {
   background-color: #ccc;
   padding: 5px;
   /* Transitions: Default, Webkit, Presto, Mozzila/Gecko */
-  transition-property: opacity, visibility;
-  transition-duration: 0.75s;
-  -webkit-transition: opacity 0.75s, visibility 0.75s;
-  -o-transition-property: opacity, visibility;
-  -o-transition-duration: 0.75s;
-  -moz-transition-property: opacity, visibility;
-  -moz-transition-duration: 0.75s;
+  -webkit-transition: all 0.75s;
+  -moz-transition: all 0.75s;
+  -o-transition: all 0.75s;
+  transition: all 0.75s;
   /* End Transitions */
 }
 

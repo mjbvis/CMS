@@ -7,17 +7,27 @@
  * SASS -> http://sass-lang.com/
  */
 
-$aTrans:     0.75s;    // Transition speed
-$menuHeight: 30px;     // Height of the top menu [>45 yeilds undesireable results]
+$aTrans:     0.75s;    // Transition speed (menu nav 50% this speed)
+$content:    #536C8D;  // Content
 $dPurple:    #613860;
-$purple:     #5C4F79;  // Side Bar
-$lBlue:      #5faba9;  // Seperator for nav
-$blue:       #536C8D;  // Content
-$rainforest: #4F8B89;  // Header/Footer
 $green:      #62A07B;
 $grey:       #ccc;     // Body
+$headFoot:   #4F8B89;  // Header/Footer
+$lBlue:      #5faba9;  // Seperator for nav
+$menuHeight: 30px;     // Height of the top menu [>45 yeilds undesireable results]
+$sideBar:    #5C4F79;  // Side Bar
+
+
 
 // Mixins
+@mixin transAll($speed){
+ /* Transitions: Default, Webkit, Presto, Mozzila/Gecko */
+  -webkit-transition: all $speed;
+  -moz-transition:    all $speed;
+  -o-transition:      all $speed;
+  transition:         all $speed;
+ /* End Transitions */
+}
 @mixin mainButtons {
   a {
     color:           $grey;
@@ -32,7 +42,7 @@ $grey:       #ccc;     // Body
       position: top 0 0;
     }
     &:hover{
-      color: $purple;
+      color: $sideBar;
       background-position: 0 -45px;
     }
     &:active{
@@ -67,7 +77,7 @@ body {
   min-width:  780px;
   max-width:  1120px;
   min-height: 500px;
-  background-color: $purple;
+  background-color: $sideBar;
 }
 
 /****************************************************
@@ -87,7 +97,7 @@ body {
   position:   relative;
   bottom:     0;
   height:     $menuHeight;
-  background-color: $rainforest;
+  background-color: $headFoot;
   ul{
     float:      right;
     list-style: none;
@@ -108,21 +118,25 @@ body {
       display:     inline-block;
       background-color: $lBlue;
       &:hover > ul{
+        right:      20px;
         visibility: visible;
         opacity:    1;
         top:        $menuHeight;
+        
       }
       @include mainButtons;
       ul{
         position:      absolute;
-        right:         20px;
+        right:         0; // Firefox has a bug and will not transition default values.
+        top:           0;
         z-index:       1000;
         visibility:    hidden;
         opacity:       0;
         padding:       0;
+        @include transAll($aTrans - $aTrans * 0.5);
         &>:nth-child(n+1){
           padding-bottom: 1px;
-          padding-right: 0;
+          padding-right:  0;
         }
         &>:last-child{
           padding-bottom: 0;
@@ -179,15 +193,7 @@ body {
     width:      500px;
     background-color: #ccc;
     padding: 5px;
-  /* Transitions: Default, Webkit, Presto, Mozzila/Gecko */
-    transition-property: opacity, visibility;
-    transition-duration: $aTrans;
-    -webkit-transition: opacity $aTrans, visibility $aTrans;
-    -o-transition-property: opacity, visibility;
-    -o-transition-duration: $aTrans;
-    -moz-transition-property: opacity, visibility;
-    -moz-transition-duration: $aTrans;
-  /* End Transitions */
+    @include transAll($aTrans);
   }
 }
 
@@ -198,7 +204,7 @@ body {
   padding:     10px 5px 5px 5px;
   margin-left: 210px;
   min-height:  557px;
-  background-color: $blue;
+  background-color: $content;
 }
 
 /****************************************************
@@ -208,5 +214,5 @@ body {
   padding-top: 10px;
   min-height:  54px;
   text-align:  center;
-  background-color: $rainforest;
+  background-color: $headFoot;
 }
