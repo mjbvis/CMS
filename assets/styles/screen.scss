@@ -17,7 +17,7 @@ $rainforest: #4F8B89;  // Header/Footer
 $green:      #62A07B;
 $grey:       #ccc;     // Body
 
-// Mixins 
+// Mixins
 @mixin mainButtons {
   a {
     color:           $grey;
@@ -98,30 +98,41 @@ body {
     &>:last-child{
       padding-right: 0;
     }
+    a{
+      white-space: nowrap;
+    }
     li{
       font-size:   11px;
       float:       left;
       position:    relative;
       display:     inline-block;
       background-color: $lBlue;
-      &:hover>ul{
-        visibility: hidden;
+      &:hover > ul{
+        visibility: visible;
+        opacity:    1;
+        top:        $menuHeight;
       }
       @include mainButtons;
       ul{
-        position:   absolute;
-        top:        23px;
-        display:    block;
-        visibility: hidden;
-        text-align: center;
-        min-width:  75px;
-        border:     1px solid #b4b4b4;
-        background-color: #ddd;
+        position:      absolute;
+        z-index:       1000;
+        visibility:    hidden;
+        opacity:       0;
+        padding:       0;
+        float: none;
+        &>:nth-child(n+1){
+          padding-bottom: 1px;
+          padding-right: 0;
+        }
+        &>:last-child{
+          padding-bottom: 0;
+        }
         li{
-          display: list-item;
-          padding: 5px 0;
-          margin:  10px 0;
-          border:  1px solid #ccc;
+          float: none;
+          width: 100%;
+          a{
+            width: 100%;
+          }
         }
       }
     }

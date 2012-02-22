@@ -21,6 +21,7 @@
 							<li><a href="javascript:void();">Admissions</a>
 								<ul>
 									<li><?php echo anchor('admin/register', 'Create New Parent Account'); ?></li>
+									<li><a href="#">BLAH BLAH TEST BLAH</a></li>
 								</ul>
 							</li>
 							<li><a href="./">Item 4</a></li>
