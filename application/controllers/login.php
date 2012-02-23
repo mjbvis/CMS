@@ -1,46 +1,38 @@
-<?php
-class Login extends CI_Controller {
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+class Login extends Application {
 
 	function __construct() {
 		parent::__construct();
 
 		# Load Helpers
-		$this->load->helper(array('url', 'form'));
+		$this->load->helper(array('url', 'form', 'dashboard'));
 
 		# Load Libraries
-
+		
 		# Load Modules
-
+		$this->load->model('login/Login_model');
 	}
 
 	# This is the default login view
 	function index() {
 		$data          = array();
-		$data['title'] = 'login';
+		$data['title'] = 'Login';
 		
-		# Model call here
 
-		# Load Views
-		$this->load->view('templates/header.php', $data);
-		$this->load->view('login_views/login_view', $data);
-		$this->load->view('templates/footer.php', $data);
+		//if the user is already loged in goto their default dashboard
+		if(logged_in())
+		{
+			// get all alerts for current user
+			$alerts = $this->Login_model->selectUserAlerts(user_id());
+			// redirect to the appropriate dashboard
+			redirect(get_dashboard($alerts));
+		}
+		else // else present them with the login page.
+		{
+			$this->login();
+		}
 	}
 	
-	# Performs the login process
-	function login() {
-		# is validate login?
-		
-		# is first login? If so, change password
-		
-		# if not, forward to the landing page
-		$this->load->view('templates/header.php', $data);
-		$this->load->view('landing_views/landing_view', $data);
-		$this->load->view('templates/footer.php', $data);
-	}
-
-	function changePassword() {
-		
-	}
-
 }
+
 ?>

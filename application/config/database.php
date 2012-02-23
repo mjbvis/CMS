@@ -48,7 +48,7 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'home.justin-field.com';
+$db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'cms';
 $db['default']['password'] = 'Th3.D@t@bas3.P@ssw0rd';
 $db['default']['database'] = 'cms';
