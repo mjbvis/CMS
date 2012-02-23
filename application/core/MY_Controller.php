@@ -21,9 +21,9 @@ class Application extends CI_Controller
 		log_message('debug', 'Application Loaded');
 
 		$this->load->library(array('form_validation', 'ag_auth'));
+		$this->load->library('Repositories/Login_Repository', '', 'Repo');
 		$this->load->helper(array('url', 'email', 'ag_auth', 'dashboard'));
 		$this->config->load('ag_auth');
-		$this->load->model('login/Login_model');
 
 	}
 	
@@ -74,7 +74,7 @@ class Application extends CI_Controller
 				$this->ag_auth->login_user($user_data);
 				
 				// get all alerts for current user
-				$alerts = $this->Login_model->selectUserAlerts(user_id());
+				$alerts = $this->Repo->selectUserAlerts(user_id());
 				
 				if($redirect === NULL){
 					$redirect = get_dashboard($alerts);

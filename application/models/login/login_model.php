@@ -9,12 +9,5 @@ class Login_model extends CI_Model{
 		// load repository
 		$this->load->library('Repositories/Login_Repository', '', 'Repo');
 	}
-	
-	// selects all alerts for the given user
-	// NOTE: alerts should only work on parents
-	function selectUserAlerts($id) {
-		return $this->Repo->selectUserAlerts($id);
-	}
-
 }
 ?>

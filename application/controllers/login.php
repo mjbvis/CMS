@@ -8,6 +8,7 @@ class Login extends Application {
 		$this->load->helper(array('url', 'form', 'dashboard'));
 
 		# Load Libraries
+		$this->load->library('Repositories/Login_Repository', '', 'Repo');
 		
 		# Load Modules
 		$this->load->model('login/Login_model');
@@ -23,7 +24,7 @@ class Login extends Application {
 		if(logged_in())
 		{
 			// get all alerts for current user
-			$alerts = $this->Login_model->selectUserAlerts(user_id());
+			$alerts = $this->Repo->selectUserAlerts(user_id());
 			// redirect to the appropriate dashboard
 			redirect(get_dashboard($alerts));
 		}
