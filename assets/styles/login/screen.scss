@@ -41,10 +41,10 @@ $purpleHeliotrope: #5C4F79;
   
   
   /*** Background Gradient ***/
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($rainForest), to($darkeningSky));
-  background-image: -moz-linear-gradient(19% 75% 90deg,$rainForest, $darkeningSky);
-  background-image: -o-linear-gradient(19% 75% 90deg,$rainForest, $darkeningSky);
-  background-image: linear-gradient(19% 75% 90deg,$rainForest, $darkeningSky);
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from($rainForest), to($darkeningSky));
+  background: -moz-linear-gradient(19% 75% 90deg,$rainForest, $darkeningSky);
+  background: -o-linear-gradient(19% 75% 90deg,$rainForest, $darkeningSky);
+  background: linear-gradient(19% 75% 90deg,$rainForest, $darkeningSky);
   
    
   /*** Shadow behind the box ***/
@@ -90,10 +90,10 @@ input {
     
     /*** Adding CSS3 Gradients ***/
     // Not sure if you want to specify the positions with percentages.
-    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#963AD6), to(#781bb9));
-    background-image:  -moz-linear-gradient(19% 75% 90deg, #781bb9, #963AD6);
-    background-image:  -o-linear-gradient(19% 75% 90deg, #781bb9, #963AD6);
-    background-image:  linear-gradient(19% 75% 90deg, #781bb9, #963AD6);
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#963AD6), to(#781bb9));
+    background:  -moz-linear-gradient(19% 75% 90deg, #781bb9, #963AD6);
+    background:  -o-linear-gradient(19% 75% 90deg, #781bb9, #963AD6);
+    background:  linear-gradient(19% 75% 90deg, #781bb9, #963AD6);
   }
 }
 	
