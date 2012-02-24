@@ -16,7 +16,8 @@ $rainForest:        #4F8B89;
 $darkeningSky:      #536C8D; 
 $purpleHeliotrope:  #5C4F79;
 $plumWine:          #613860;
-$grey:              #ccc;     // Body
+$grey:              #ccc;
+$colorX:            #5FABA9;
 
 // ************ Color Theme ***************************
 
@@ -26,18 +27,16 @@ $headerAndFooterMainColor: $rainForest;
 
 // Buttons
 $button:      $grey;
-$buttonHover: $sideBar;
+$buttonHover: $purpleHeliotrope;
 $buttonPush:  $awning;;
+$navigationBarSeperator: $colorX;
 
 // Body
 $mainBodyBackground: $grey;
-$main:               $sideBar;
+$main:               $purpleHeliotrope;
 
 //content
 $content: $darkeningSky;
-
-//navigation
-$navigationBarSeperator: #5FABA9;
 
 //sidebars
 $sideBar:  $purpleHeliotrope;
@@ -127,7 +126,7 @@ body {
   position:   relative;
   bottom:     0;
   height:     $menuHeight;
-  background-color: $headFoot;
+  background-color: $headerAndFooterMainColor;
   ul{
     float:      right;
     list-style: none;
