@@ -16,6 +16,7 @@ $headFoot:   #4F8B89;  // Header/Footer
 $lBlue:      #5faba9;  // Seperator for nav
 $menuHeight: 30px;     // Height of the top menu [>45 yeilds undesireable results]
 $sideBar:    #5C4F79;  // Side Bar
+$sideBar2:    #5C4F79;  // Side Bar
 
 
 
@@ -127,13 +128,13 @@ body {
       @include mainButtons;
       ul{
         position:      absolute;
-        right:         0; // Firefox has a bug and will not transition default values.
+        right:         20px; // Firefox has a bug and will not transition default values.
         top:           0;
         z-index:       1000;
         visibility:    hidden;
         opacity:       0;
         padding:       0;
-        @include transAll($aTrans - $aTrans * 0.5);
+        @include transAll($aTrans - $aTrans * 0.65);
         &>:nth-child(n+1){
           padding-bottom: 1px;
           padding-right:  0;
