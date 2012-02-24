@@ -177,7 +177,7 @@ body {
   position: relative;
   &:first-child{
     color:       #bd0000;
-    font-weight: bold;
+    font-weight: 700; // 700 is the optimized shorthand version of bold
     font-size:   22px;
     text-decoration: underline;
   }
@@ -202,7 +202,7 @@ body {
  *  CONTENT
  ***************************************************/
 #content {
-  padding:     10px 5px 5px 5px;
+  padding:     10px 5px 5px; // Optimized short hand version of 10px 5px 5px 5px.
   margin-left: 210px;
   min-height:  557px;
   background-color: $content;
