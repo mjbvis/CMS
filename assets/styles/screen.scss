@@ -20,7 +20,7 @@ $grey:              #ccc;     // Body
 
 //************************************************************************//
 
-$content:                 $darkeningSky;    // Content
+$content:                 $darkeningSky;      // Content
 $headFoot:                $rainForest;        // Header/Footer
 $navigationBarSeperator:  #5FABA9;            // Seperator for nav
 $sideBar:                 $purpleHeliotrope;  // Side Bar
@@ -130,11 +130,9 @@ body {
       display:     inline-block;
       background-color: $navigationBarSeperator;
       &:hover > ul{
-        right:      20px;
         visibility: visible;
         opacity:    1;
         top:        $menuHeight;
-        
       }
       @include mainButtons;
       ul{
@@ -145,7 +143,7 @@ body {
         visibility:    hidden;
         opacity:       0;
         padding:       0;
-        @include transAll($aTrans - $aTrans * 0.65);
+        @include transAll($aTrans * 0.35);
         &>:nth-child(n+1){
           padding-bottom: 1px;
           padding-right:  0;
@@ -179,7 +177,7 @@ body {
   word-wrap:  break-word;  // CSS 3 -> Experimental.  If weird things happen remove this line.
   ul {
     list-style: none;
-    padding: 0;
+    padding:    0;
   }
 }
 
@@ -203,8 +201,8 @@ body {
     left:       100px;
     top:        30px;
     width:      500px;
+    padding:    5px;
     background-color: #ccc;
-    padding: 5px;
     @include transAll($aTrans);
   }
 }
