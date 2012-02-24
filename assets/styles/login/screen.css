@@ -1,0 +1,13 @@
+/*
+ * This is the SCSS file for the log in view
+ * written by Rory C-H, Justin Field, Wesly Cos, and Mark Bowser in 2012 as part of the Oregon State University senior capstone
+ * the team can be reached at cms-team@googlegroups.com
+ * SASS -> http://sass-lang.com/
+ */
+#login {
+  margin: 0 auto;
+  border: 1px solid #55cc00;
+  vertical-align: middle;
+  width: 340px;
+  padding: 20px;
+}

@@ -57,7 +57,7 @@ function showhide(value) {
 		</div>
 	</fieldset>
 	
-	<fieldset
+	<fieldset>
 		<label for='interest'>Level of Interest</label>
 		<input type="radio" name="interest" id="interestLowId" /> Low
 		<input type="radio" name="interest" id="interestMediumId" /> Medium
