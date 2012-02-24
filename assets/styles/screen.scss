@@ -31,9 +31,6 @@ $sideBar2:                $purpleHeliotrope;  // Side Bar
 $aTrans:     0.75s;    // Transition speed (menu nav 50% this speed)
 $menuHeight: 30px;     // Height of the top menu [>45 yeilds undesireable results]
 
-
-
-
 // Mixins
 @mixin transAll($speed){
  /* Transitions: Default, Webkit, Presto, Mozzila/Gecko */
@@ -148,7 +145,7 @@ body {
         visibility:    hidden;
         opacity:       0;
         padding:       0;
-        @include transAll($aTrans - $aTrans * 0.65);
+        @include transAll($aTrans - $aTrans * 0.65);
         &>:nth-child(n+1){
           padding-bottom: 1px;
           padding-right:  0;
@@ -191,7 +188,7 @@ body {
   position: relative;
   &:first-child{
     color:       #bd0000;
-    font-weight: bold;
+    font-weight: 700; // 700 is the optimized shorthand version of bold
     font-size:   22px;
     text-decoration: underline;
   }
@@ -216,7 +213,7 @@ body {
  *  CONTENT
  ***************************************************/
 #content {
-  padding:     10px 5px 5px 5px;
+  padding:     10px 5px 5px; // Optimized short hand version of 10px 5px 5px 5px.
   margin-left: 210px;
   min-height:  557px;
   background-color: $content;
