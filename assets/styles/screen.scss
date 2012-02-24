@@ -119,10 +119,9 @@ body {
       background-color: $lBlue;
       &:hover > ul{
         right:      20px;
-        visibility: visible;
-        opacity:    1;
         top:        $menuHeight;
-        
+        visibility: visible;
+        opacity:    1;        
       }
       @include mainButtons;
       ul{
@@ -133,7 +132,7 @@ body {
         visibility:    hidden;
         opacity:       0;
         padding:       0;
-        @include transAll($aTrans - $aTrans * 0.5);
+        @include transAll($aTrans * 0.5);
         &>:nth-child(n+1){
           padding-bottom: 1px;
           padding-right:  0;

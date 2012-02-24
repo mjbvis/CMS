@@ -74,9 +74,9 @@ body {
 }
 #topNav ul li:hover > ul {
   right: 20px;
+  top: 30px;
   visibility: visible;
   opacity: 1;
-  top: 30px;
 }
 #topNav ul li a {
   color: #cccccc;
