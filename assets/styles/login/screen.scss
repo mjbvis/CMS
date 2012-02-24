@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
  * This is the SCSS file for the log in view
  * written by Rory C-H, Justin Field, Wesly Cos, and Mark Bowser in 2012 as part of the Oregon State University senior capstone
@@ -13,8 +14,9 @@ $darkeningSky:     		#536C8D;
 $rainForest:	    	#4F8B89;
 $plumWine:         		#613860;
 $purpleHeliotrope: 		#5C4F79;
-$grey:             		#ccc;     // Body
+$grey:             		#ccc;
 $black:					#000;
+$colorY:				#270644;
 
 // ************ Color Theme ***************************
 
@@ -23,7 +25,7 @@ $backgroundGradiant1:	$rainForest;
 $backgroundGradiant2:	$darkeningSky;
 $boxShadow:				$purpleHeliotrope;
 $bodyBackGround:		$grey;
-$boarder:				#270644;
+$boarder:				$colorY;
 
 //Text Box Colors
 $inputBackground:		$awning;
