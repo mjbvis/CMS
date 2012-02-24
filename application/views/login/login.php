@@ -6,7 +6,7 @@
 		<meta name="Description" content="Corvallis Montessori School">
 		<meta name="Author" content="Corvallis Montessori School">
 		<meta name="Rating" content="General">
-		<title><?php echo($title); ?> | CMS</title>
+		<title>login | CMS</title>
 		<link rel="icon" type="image/x-icon" href="<?php echo base_url('favicon.ico'); ?>" />
 		<link rel="stylesheet" href="<?php echo base_url('assets/styles/login/screen.css'); ?>" type="text/css"	media="screen" />
 	</head>
