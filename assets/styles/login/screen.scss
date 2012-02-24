@@ -8,76 +8,98 @@
 // colors pallete theme from
 // http://www.colourlovers.com/palette/222832/Gods_Daughter
 
-$awning:			#62A07B;
-$rainForest:		#4F8B89;
-$darkeningSky:		#536C8D;	
-$purpleHeliotrope:	#5C4F79;
-$plumWine:			#613860;
-$grey:              #ccc;     // Body
+$awning:			     #62A07B;
+$darkeningSky:     #536C8D;  
+$grey:             #ccc;     // Body
+$rainForest:	     #4F8B89;
+$plumWine:         #613860;
+$purpleHeliotrope: #5C4F79;
+
+// Mixins
+@mixin transAll($speed){
+ /* Transitions: Default, Webkit, Presto, Mozzila/Gecko */
+  -webkit-transition: all $speed;
+  -moz-transition:    all $speed;
+  -o-transition:      all $speed;
+  transition:         all $speed;
+ /* End Transitions */
+}
+// End Mixins
 
 #login {
-	margin:0 auto;
-    width: 350px;
-    padding: 20px;
-    border: 1px solid #270644;
- 
-    /*** Adding in CSS3 ***/
- 
-    /*** Rounded Corners ***/
-    -moz-border-radius: 20px;
-    -webkit-border-radius: 20px;
- 
-    /*** Background Gradient - 2 declarations one for Firefox and one for Webkit ***/
-    background:  -moz-linear-gradient(19% 75% 90deg,$rainForest, $darkeningSky);
-    background:-webkit-gradient(linear, 0% 0%, 0% 100%, from($rainForest), to($darkeningSky));
- 
-    /*** Shadow behind the box ***/
-    -moz-box-shadow:0px -5px 300px $purpleHeliotrope;
-    -webkit-box-shadow:0px -5px 300px $purpleHeliotrope;
+  margin:  0 auto;
+  width:   350px;
+  padding: 20px;
+  border:  1px solid #270644;
+  /*** Adding in CSS3 ***/
+  
+  /*** Rounded Corners ***/
+  -webkit-border-radius: 20px;
+  -moz-border-radius:    20px;
+  -o-border-radius:      20px;
+  border-radius:         20px;
+  
+  
+  /*** Background Gradient ***/
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($rainForest), to($darkeningSky));
+  background-image: -moz-linear-gradient(19% 75% 90deg,$rainForest, $darkeningSky);
+  background-image: -o-linear-gradient(19% 75% 90deg,$rainForest, $darkeningSky);
+  background-image: linear-gradient(19% 75% 90deg,$rainForest, $darkeningSky);
+  
+   
+  /*** Shadow behind the box ***/
+  -webkit-box-shadow:0px -5px 300px $purpleHeliotrope;
+  -moz-box-shadow:   0px -5px 300px $purpleHeliotrope;
+  -o-box-shadow:     0px -5px 300px $purpleHeliotrope;
+  box-shadow:        0px -5px 300px $purpleHeliotrope;
+  
 }
 
 input {
-    width: 230px;
-    background: $awning;
-    padding: 6px;
-    margin-bottom: 10px;
-    border-top: 1px solid $rainForest;
-    border-left: 0px;
-    border-right: 0px;
-    border-bottom: 0px;
- 
-    /*** Adding CSS3 ***/
- 
-    /*** Transition Selectors - What properties to animate and how long ***/
-    -webkit-transition-property: -webkit-box-shadow, background;
-    -webkit-transition-duration: 0.25s;
- 
-    /*** Adding a small shadow ***/
-    -moz-box-shadow: 0px 0px 2px #000;
-    -webkit-box-shadow: 0px 0px 2px #000;
-}
-
-input:hover {
+  width:         230px;
+  background:    $awning;
+  padding:       6px;
+  margin-bottom: 10px;
+  border:        0;
+  border-top:    1px solid $rainForest;
+   
+  /*** Adding CSS3 ***/
+   
+  /*** Transition Mixin ***/
+  @include transAll(0.25s);
+   
+  /*** Adding a small shadow ***/
+  -webkit-box-shadow: 0px 0px 2px #000;
+  -moz-box-shadow:    0px 0px 2px #000;
+  -o-box-shadow:      0px 0px 2px #000;
+  box-shadow:         0px 0px 2px #000;
+  &:hover{
     -webkit-box-shadow: 0px 0px 4px #000;
+    -moz-box-shadow:    0px 0px 4px #000;
+    -o-box-shadow:      0px 0px 4px #000;
+    box-shadow:         0px 0px 4px #000;
     background: $rainForest;
-}
-
-input.submit {
-    width: 100px;
-    color: #fff;
+  }
+  &.submit{
+    width:          100px;
+    color:          #fff;
     text-transform: uppercase;
-    text-shadow: #000 1px 1px;
-    border-top: 1px solid $rainForest;
-    margin-top: 10px;
-
+    text-shadow:    #000 1px 1px;
+    border-top:     1px solid $rainForest;
+    margin-top:     10px;
+    
     /*** Adding CSS3 Gradients ***/
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#963AD6), to(#781bb9));
-    background:  -moz-linear-gradient(19% 75% 90deg,#781bb9, #963AD6);
+    // Not sure if you want to specify the positions with percentages.
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#963AD6), to(#781bb9));
+    background-image:  -moz-linear-gradient(19% 75% 90deg, #781bb9, #963AD6);
+    background-image:  -o-linear-gradient(19% 75% 90deg, #781bb9, #963AD6);
+    background-image:  linear-gradient(19% 75% 90deg, #781bb9, #963AD6);
+  }
 }
 	
 /****************************************************
  *  BODY
- ***************************************************/
+***************************************************/
 body {
   font-family: Verdana, Helvetica, Arial, sans-serif;
   margin:      0;
