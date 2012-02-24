@@ -7,16 +7,30 @@
  * SASS -> http://sass-lang.com/
  */
 
+ 
+// colors pallete theme from
+// http://www.colourlovers.com/palette/222832/Gods_Daughter
+
+$awning:            #62A07B;
+$rainForest:        #4F8B89;
+$darkeningSky:      #536C8D; 
+$purpleHeliotrope:  #5C4F79;
+$plumWine:          #613860;
+$grey:              #ccc;     // Body
+
+//************************************************************************//
+
+$content:                 $darkeningSky;    // Content
+$headFoot:                $rainForest;        // Header/Footer
+$navigationBarSeperator:  #5FABA9;            // Seperator for nav
+$sideBar:                 $purpleHeliotrope;  // Side Bar
+$sideBar2:                $purpleHeliotrope;  // Side Bar
+
+
+// Other variables
 $aTrans:     0.75s;    // Transition speed (menu nav 50% this speed)
-$content:    #536C8D;  // Content
-$dPurple:    #613860;
-$green:      #62A07B;
-$grey:       #ccc;     // Body
-$headFoot:   #4F8B89;  // Header/Footer
-$lBlue:      #5faba9;  // Seperator for nav
 $menuHeight: 30px;     // Height of the top menu [>45 yeilds undesireable results]
-$sideBar:    #5C4F79;  // Side Bar
-$sideBar2:    #5C4F79;  // Side Bar
+
 
 
 
@@ -47,7 +61,7 @@ $sideBar2:    #5C4F79;  // Side Bar
       background-position: 0 -45px;
     }
     &:active{
-      color:   $green;
+      color:   $awning;
       outline: none;
       background-position: 0 -90px;
     }
@@ -117,7 +131,7 @@ body {
       float:       left;
       position:    relative;
       display:     inline-block;
-      background-color: $lBlue;
+      background-color: $navigationBarSeperator;
       &:hover > ul{
         right:      20px;
         visibility: visible;
