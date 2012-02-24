@@ -38,10 +38,10 @@ $grey:              #ccc;     // Body
 
 input {
     width: 230px;
-    background: #8a33c6;
+    background: $awning;
     padding: 6px;
     margin-bottom: 10px;
-    border-top: 1px solid #ad64e0;
+    border-top: 1px solid $rainForest;
     border-left: 0px;
     border-right: 0px;
     border-bottom: 0px;
@@ -59,7 +59,7 @@ input {
 
 input:hover {
     -webkit-box-shadow: 0px 0px 4px #000;
-    background: #9d39e1;
+    background: $rainForest;
 }
 
 input.submit {
@@ -67,18 +67,9 @@ input.submit {
     color: #fff;
     text-transform: uppercase;
     text-shadow: #000 1px 1px;
-    border-top: 1px solid #ad64e0;
+    border-top: 1px solid $rainForest;
     margin-top: 10px;
-}
 
-input.submit {
-    width: 100px;
-    color: #fff;
-    text-transform: uppercase;
-    text-shadow: #000 1px 1px;
-    border-top: 1px solid #ad64e0;
-    margin-top: 10px;
- 
     /*** Adding CSS3 Gradients ***/
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#963AD6), to(#781bb9));
     background:  -moz-linear-gradient(19% 75% 90deg,#781bb9, #963AD6);
