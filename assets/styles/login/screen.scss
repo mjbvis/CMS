@@ -8,12 +8,37 @@
 // colors pallete theme from
 // http://www.colourlovers.com/palette/222832/Gods_Daughter
 
-$awning:			     #62A07B;
-$darkeningSky:     #536C8D;  
-$grey:             #ccc;     // Body
-$rainForest:	     #4F8B89;
-$plumWine:         #613860;
-$purpleHeliotrope: #5C4F79;
+$awning:			    #62A07B;
+$darkeningSky:     		#536C8D;  
+$rainForest:	    	#4F8B89;
+$plumWine:         		#613860;
+$purpleHeliotrope: 		#5C4F79;
+$grey:             		#ccc;     // Body
+$black:					#000;
+
+// ************ Color Theme ***************************
+
+//Main
+$backgroundGradiant1:	$rainForest;
+$backgroundGradiant2:	$darkeningSky;
+$boxShadow:				$purpleHeliotrope;
+$bodyBackGround:		$grey;
+$boarder:				#270644;
+
+//Text Box Colors
+$inputBackground:		$awning;
+$inputBackgroundHover:	$rainForest;
+$inputBoarder:			$rainForest;
+
+//Submit Button Colors
+$submitGradiant1:		$rainForest;
+$submitGradiant2:		$awning;		
+$submitBoarder:			$rainForest;
+$submitTextColor:		$black;
+$submitTextShadowColor: $grey;
+
+// ************ End Color Theme ************************
+
 
 // Mixins
 @mixin transAll($speed){
@@ -30,7 +55,7 @@ $purpleHeliotrope: #5C4F79;
   margin:  0 auto;
   width:   350px;
   padding: 20px;
-  border:  1px solid #270644;
+  border:  1px solid $boarder;
   /*** Adding in CSS3 ***/
   
   /*** Rounded Corners ***/
@@ -41,27 +66,27 @@ $purpleHeliotrope: #5C4F79;
   
   
   /*** Background Gradient ***/
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from($rainForest), to($darkeningSky));
-  background: -moz-linear-gradient(19% 75% 90deg,$rainForest, $darkeningSky);
-  background: -o-linear-gradient(19% 75% 90deg,$rainForest, $darkeningSky);
-  background: linear-gradient(19% 75% 90deg,$rainForest, $darkeningSky);
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from($backgroundGradiant1), to($backgroundGradiant2));
+  background: -moz-linear-gradient(19% 75% 90deg,$backgroundGradiant1, $backgroundGradiant2);
+  background: -o-linear-gradient(19% 75% 90deg,$backgroundGradiant1, $backgroundGradiant2);
+  background: linear-gradient(19% 75% 90deg,$backgroundGradiant1, $backgroundGradiant2);
   
    
   /*** Shadow behind the box ***/
-  -webkit-box-shadow:0px -5px 300px $purpleHeliotrope;
-  -moz-box-shadow:   0px -5px 300px $purpleHeliotrope;
-  -o-box-shadow:     0px -5px 300px $purpleHeliotrope;
-  box-shadow:        0px -5px 300px $purpleHeliotrope;
+  -webkit-box-shadow:0px -5px 300px $boxShadow;
+  -moz-box-shadow:   0px -5px 300px $boxShadow;
+  -o-box-shadow:     0px -5px 300px $boxShadow;
+  box-shadow:        0px -5px 300px $boxShadow;
   
 }
 
 input {
   width:         230px;
-  background:    $awning;
+  background:    $inputBackground;
   padding:       6px;
   margin-bottom: 10px;
   border:        0;
-  border-top:    1px solid $rainForest;
+  border-top:    1px solid $inputBoarder;
    
   /*** Adding CSS3 ***/
    
@@ -78,24 +103,33 @@ input {
     -moz-box-shadow:    0px 0px 4px #000;
     -o-box-shadow:      0px 0px 4px #000;
     box-shadow:         0px 0px 4px #000;
-    background: $rainForest;
+    background: $inputBackgroundHover;
   }
   &.submit{
     width:          100px;
-    color:          #fff;
+    color:          $submitTextColor;
     text-transform: uppercase;
-    text-shadow:    #000 1px 1px;
-    border-top:     1px solid $rainForest;
+    text-shadow:    $submitTextShadowColor 1px 1px;
+    border-top:     1px solid $submitBoarder;
     margin-top:     10px;
     
     /*** Adding CSS3 Gradients ***/
     // Not sure if you want to specify the positions with percentages.
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#963AD6), to(#781bb9));
-    background:  -moz-linear-gradient(19% 75% 90deg, #781bb9, #963AD6);
-    background:  -o-linear-gradient(19% 75% 90deg, #781bb9, #963AD6);
-    background:  linear-gradient(19% 75% 90deg, #781bb9, #963AD6);
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from($submitGradiant1), to($submitGradiant2));
+    background:  -moz-linear-gradient(19% 75% 90deg, $submitGradiant2, $submitGradiant1);
+    background:  -o-linear-gradient(19% 75% 90deg, $submitGradiant2, $submitGradiant1);
+    background:  linear-gradient(19% 75% 90deg, $submitGradiant2, $submitGradiant1);
+  }
+  &.submit:hover{
+    /*** Adding CSS3 Gradients ***/
+    // Not sure if you want to specify the positions with percentages.
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from($submitGradiant2), to($submitGradiant1));
+    background:  -moz-linear-gradient(19% 75% 90deg, $submitGradiant1, $submitGradiant2);
+    background:  -o-linear-gradient(19% 75% 90deg, $submitGradiant1, $submitGradiant2);
+    background:  linear-gradient(19% 75% 90deg, $submitGradiant1, $submitGradiant2);
   }
 }
+
 	
 /****************************************************
  *  BODY
@@ -104,5 +138,5 @@ body {
   font-family: Verdana, Helvetica, Arial, sans-serif;
   margin:      0;
   padding:     10px;
-  background-color: $grey;
+  background-color: $bodyBackGround;
 }

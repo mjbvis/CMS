@@ -17,7 +17,7 @@
 						<input type="text" name="username" value="<?php echo set_value('username'); ?>" /><?php echo form_error('username'); ?><br /><br />
 					<label>Password:  </label>
 						<input type="password" name="password" value="<?php echo set_value('password'); ?>" /><?php echo form_error('password'); ?><br /><br />
-						<input type="submit" value="Login" name="login" />
+						<input type="submit" value="Login" name="submit" class="submit"/>
 				</form>
 		</div>
 	</body>
