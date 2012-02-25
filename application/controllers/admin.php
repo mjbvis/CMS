@@ -10,7 +10,7 @@ class Admin extends Application
 		$this->ag_auth->restrict('admin');
 		
 		/* Load helpers */
-		$this->load->helper(array('url', 'form'));
+		$this->load->helper(array('url', 'form', 'registration'));
 
 		/* Load libraries */
 		$this->load->library('form_validation');
@@ -36,9 +36,9 @@ class Admin extends Application
 	
 	public function register()
 	{
-		$this->form_validation->set_rules('first', 'First Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('last', 'Last Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('email', 'Email Address', 'required|min_length[3]|valid_email|callback_field_exists');
+		$this->form_validation->set_rules('first', 'First Name', 'required|callback_field_exists');
+		$this->form_validation->set_rules('last', 'Last Name', 'required|callback_field_exists');
+		$this->form_validation->set_rules('email', 'Email Address', 'required|valid_email|callback_field_exists');
 
 		if($this->form_validation->run() == FALSE)
 		{
@@ -48,14 +48,32 @@ class Admin extends Application
 		}
 		else
 		{
-			$username = set_value('username');
-			$password = $this->ag_auth->salt(set_value('password'));
+			$firstName = set_value('first');
+            $lastName = set_value('last');
+			$username = $firstName . '.' . $lastName;
+            
+            //check db to make sure this is a unique name
+            // if not add a number and try again
+            if (!isUsernameUnique($username)){
+                $uniqueUsername = FALSE; 
+                $i = 1;
+                while (!$uniqueUsername) {
+                    $username = $username . '.'. $i;
+                    $i = $i + 1;
+                    $uniqueUsername = isUsernameUnique($username);
+                }
+            }
+            
+            $plainTextPassword = generatePassword();
+            
+			$password = $this->ag_auth->salt($plainTextPassword);
 			$email = set_value('email');
 
 			if($this->ag_auth->register($username, $password, $email) === TRUE)
 			{
 				$data['message'] = "The user account has now been created.";
 				$this->ag_auth->view('message', $data);
+                sendNewUserAccountCreationEmail($firstName, $lastName, $email, $username, $plainTextPassword);
 				
 			} // if($this->ag_auth->register($username, $password, $email) === TRUE)
 			else
