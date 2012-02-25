@@ -17,25 +17,26 @@ $purpleHeliotrope: 		#5C4F79;
 $grey:             		#ccc;
 $black:					#000;
 $colorY:				#270644;
+$white:					#fff;
 
 // ************ Color Theme ***************************
 
 //Main
-$backgroundGradiant1:	$rainForest;
-$backgroundGradiant2:	$darkeningSky;
-$boxShadow:				$purpleHeliotrope;
-$bodyBackGround:		$grey;
-$boarder:				$colorY;
+$backgroundGradiant1:	$white;
+$backgroundGradiant2:	$white;
+$boxShadow:				$black;
+$bodyBackGround:		$white;
+$boarder:				$black;
 
 //Text Box Colors
-$inputBackground:		$awning;
-$inputBackgroundHover:	$rainForest;
-$inputBoarder:			$rainForest;
+$inputBackground:		$grey;
+$inputBackgroundHover:	$white;
+$inputBoarder:			$black;
 
 //Submit Button Colors
-$submitGradiant1:		$rainForest;
-$submitGradiant2:		$awning;		
-$submitBoarder:			$rainForest;
+$submitGradiant1:		$grey;
+$submitGradiant2:		$grey;		
+$submitBoarder:			$black;
 $submitTextColor:		$black;
 $submitTextShadowColor: $grey;
 
@@ -61,10 +62,10 @@ $submitTextShadowColor: $grey;
   /*** Adding in CSS3 ***/
   
   /*** Rounded Corners ***/
-  -webkit-border-radius: 20px;
-  -moz-border-radius:    20px;
-  -o-border-radius:      20px;
-  border-radius:         20px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius:    5px;
+  -o-border-radius:      5px;
+  border-radius:         5px;
   
   
   /*** Background Gradient ***/
@@ -75,10 +76,10 @@ $submitTextShadowColor: $grey;
   
    
   /*** Shadow behind the box ***/
-  -webkit-box-shadow:0px -5px 300px $boxShadow;
-  -moz-box-shadow:   0px -5px 300px $boxShadow;
-  -o-box-shadow:     0px -5px 300px $boxShadow;
-  box-shadow:        0px -5px 300px $boxShadow;
+  -webkit-box-shadow:5px 10px 25px $boxShadow;
+  -moz-box-shadow:   5px 10px 25px $boxShadow;
+  -o-box-shadow:     5px 10px 25px $boxShadow;
+  box-shadow:        5px 10px 25px $boxShadow;
   
 }
 

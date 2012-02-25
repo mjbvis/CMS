@@ -24,9 +24,9 @@ class Alerts extends Application
 			$data['title'] = 'Alert Dashboard';
 	
 			/* load views */
-			$this->load->view('alerts/templates/header', $data);
+			$this->load->view('templates/header', $data);
 			$this->load->view('alerts/dashboard', $data);
-			$this->load->view('alerts/templates/footer', $data);
+			$this->load->view('templates/footer', $data);
 		}
 		else
 		{

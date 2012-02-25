@@ -24,9 +24,9 @@ class Admin extends Application
 			$data['title'] = 'Admin Dashboard';
 	
 			/* load views */
-			$this->load->view('admin/templates/header', $data);
+			$this->load->view('templates/header', $data);
 			$this->load->view('admin/dashboard', $data);
-			$this->load->view('admin/templates/footer', $data);
+			$this->load->view('templates/footer', $data);
 		}
 		else
 		{

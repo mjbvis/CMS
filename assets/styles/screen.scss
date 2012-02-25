@@ -8,45 +8,56 @@
  */
 
 // **************** Defined Colors ************************* 
-// colors pallete theme from
-// http://www.colourlovers.com/palette/222832/Gods_Daughter
 
-$awning:            #62A07B;
-$rainForest:        #4F8B89;
-$darkeningSky:      #536C8D; 
-$purpleHeliotrope:  #5C4F79;
-$plumWine:          #613860;
 $grey:              #ccc;
-$colorX:            #5FABA9;
+$white:             #fff;
+$black:             #000;
+
+// the menu color from http://www.corvallismontessori.org/
+$cmsLightBlue:      #019fd5;
+
+// the ACTIVE menu color from http://www.corvallismontessori.org/
+$cmsDarkBlue:       #006383;
+
+// the green horizontal bar from http://www.corvallismontessori.org/
+$cmsGreen:          #56ac2a;
+
+
+$cmsWhiteBoarder: #d6e6eb;
 
 // ************ Color Theme ***************************
 
 //Header / footer
-$upperHeaderColor:         $grey;
-$headerAndFooterMainColor: $rainForest;
+$upperHeaderColor:         $white;
+$headerAndFooterMainColor: $white;
 
-// Buttons
-$button:      $grey;
-$buttonHover: $purpleHeliotrope;
-$buttonPush:  $awning;
-$navigationBarSeperator: $colorX;
+// Nav Bar
+$button:                  $cmsLightBlue;
+$buttonTextColor:         $white;
+$buttonHover:             $cmsDarkBlue;
+$navigationBarSeperator:  $white;
+
+// shouldnt need this
+$buttonPush:              $cmsDarkBlue;
 
 // Body
-$mainBodyBackground: $grey;
-$main:               $purpleHeliotrope;
+$mainBodyBackground:      $white;
+$main:                    $white;
 
 //content
-$content: $darkeningSky;
+$content:                 $white;
 
 //sidebars
-$sideBar:  $purpleHeliotrope;
-$sideBar2: $purpleHeliotrope;
+$sideBar:                 $white;
+$sideBar2:                $white;
+
+$horizontalBars:          $cmsGreen;
 
 // ************ End Color Theme ************************
 
 // Other variables
 $aTrans:     0.75s;    // Transition speed (menu nav 50% this speed)
-$menuHeight: 30px;     // Height of the top menu [>45 yeilds undesireable results]
+$menuHeight: 38px;     // Height of the top menu [>45 yeilds undesireable results]
 
 // Mixins
 @mixin transAll($speed){
@@ -59,7 +70,7 @@ $menuHeight: 30px;     // Height of the top menu [>45 yeilds undesireable result
 }
 @mixin mainButtons {
   a {
-    color:           $button;
+    color:           $buttonTextColor;
     height:          $menuHeight;
     line-height:     $menuHeight;
     padding:         0 10px;
@@ -71,11 +82,11 @@ $menuHeight: 30px;     // Height of the top menu [>45 yeilds undesireable result
       position: top 0 0;
     }
     &:hover{
-      color: $buttonHover;
+      color: $buttonTextColor;
       background-position: 0 -45px;
     }
     &:active{
-      color: $buttonPush;
+      color: $buttonTextColor;
       outline: none;
       background-position: 0 -90px;
     }
@@ -84,22 +95,20 @@ $menuHeight: 30px;     // Height of the top menu [>45 yeilds undesireable result
 // End Mixins
 
 html,body {
+  border-top: 2px solid $horizontalBars;
   height: 100%;
 }
 
-/****************************************************
- *  BODY
- ***************************************************/
+//  BODY
 body {
-  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-family: Tahoma, Geneva, Arial, Helvetica, sans-serif;
   margin:      0;
   padding:     10px;
   background-color: $mainBodyBackground;
 }
 
-/****************************************************
- *  Main
- ***************************************************/
+
+//  Main
 #main {
   margin:     0 auto;
   padding:    0;
@@ -109,9 +118,9 @@ body {
   background-color: $main;
 }
 
-/****************************************************
- *  HEADER
- ***************************************************/
+
+//  HEADER
+
 #header {
   width:   100%;
   margin:  0;
@@ -119,14 +128,15 @@ body {
   background-color: $upperHeaderColor;
 }
 
-/****************************************************
- *  TOP MENU
- ***************************************************/
+
+// TOP MENU
+
 #topNav {
+  background-color: $button;
+  margin-top: 15px;
   position:   relative;
   bottom:     0;
   height:     $menuHeight;
-  background-color: $headerAndFooterMainColor;
   ul{
     float:      right;
     list-style: none;
@@ -141,11 +151,14 @@ body {
       white-space: nowrap;
     }
     li{
-      font-size:   11px;
+      font-family: Arial,Helvetica,sans-serif;
+      font-size: 13px;
+      letter-spacing: 1px;
+      font-weight: bold;
+      border-left: 1px solid #FFFFFF;
       float:       left;
       position:    relative;
       display:     inline-block;
-      background-color: $navigationBarSeperator;
       &:hover > ul{
         visibility: visible;
         opacity:    1;
@@ -183,37 +196,56 @@ body {
   }
 }
 
-/****************************************************
- *  SIDE BAR
- ***************************************************/
-#sideBar {
-  width:      200px;
-  float:      left;
-  padding:    5px;
-  text-align: center;
-  word-wrap:  break-word;  // CSS 3 -> Experimental.  If weird things happen remove this line.
-  ul {
-    list-style: none;
-    padding:    0;
-  }
-}
 
-/****************************************************
- *  CONTENT
- ***************************************************/
+// CONTENT
 #content {
-  padding:     10px 5px 5px; // Optimized short hand version of 10px 5px 5px 5px.
-  margin-left: 210px;
-  min-height:  557px;
+  padding:      10px 5px 5px; // Optimized short hand version of 10px 5px 5px 5px.
+  min-height:   557px;
   background-color: $content;
 }
 
-/****************************************************
- *  FOOTER
- ***************************************************/
+
+// FOOTER
 #footer {
+  border-top: 3px solid $horizontalBars;
   padding-top: 10px;
+  width: 100%;
   min-height:  54px;
-  text-align:  center;
   background-color: $headerAndFooterMainColor;
+}
+
+#xhtmlCss {
+    float: left;
+    width: 70%;
+}
+
+#rss {
+    float: right;
+    width: 30%;
+    text-align: right;
+}
+
+// clearing
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {
+    min-width: 0;
+    display: inline-block; /* \*/
+    display: block;
+    margin-top: 5px;
+}
+
+/* trigger hasLayout for IE7. Hide from IE Mac */ * html .clearfix {
+    height: 1%;
+}
+
+/* Hide from IE Mac */
+.clr, .clear {
+    clear: both;    
 }

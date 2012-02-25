@@ -13,38 +13,23 @@
 	<body>
 		<div id="main">
 			<div id="header">
-				<header>
 					<img src="<?php echo base_url('assets/images/cms_logo.png'); ?>" alt="CMS Logo" width="585" height="67">
-					<nav id="topNav">
+			</div>
+			<nav id="topNav">
+				<ul>
+					<li><?php echo anchor('admin', 'Home'); ?></li>
+					<li><a href="javascript:void();">Admissions</a>
 						<ul>
-							<li>Item 1</li>
-							<li>Item 2</li>
-							<li>
-								<a href="#">Item 3</a>
-								<ul>
-									<li>Sub1</li>
-									<li>Sub2</li>
-									<li>Sub3</li>
-								</ul>
-							</li>
-							<li>Item 4</li>
-							<li>Item 5</li>
-							<li>Item 6</li>
-							<li>Item 7</li>
+							<li><?php echo anchor('admin/register', 'Create New Parent Account'); ?></li>
+							<li><a href="#">BLAH BLAH TEST BLAH</a></li>
 						</ul>
-					</nav>
-				</header>
-			</div>
-			<div id="sideBar">
-				<ul style="list-style:none">
-					<li>Item 1</li>
-					<li>Item 2</li>
-					<li>Item 4</li>
-					<li>Item 5</li>
-					<li>Item 6</li>
-					<li>Item 7</li>
+					</li>
+					<li><a href="./">Item 4</a></li>
+					<li><a href="./">Item 5</a></li>
+					<li><a href="./">Item 6</a></li>
+					<li><?php echo anchor('logout', 'Logout'); ?></li>
 				</ul>
-			</div>
+			</nav>
 			<div id="content">
 				
 <!-- End Header Segment -->
