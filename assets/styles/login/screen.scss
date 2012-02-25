@@ -9,34 +9,41 @@
 // colors pallete theme from
 // http://www.colourlovers.com/palette/222832/Gods_Daughter
 
-$awning:			    #62A07B;
-$darkeningSky:     		#536C8D;  
-$rainForest:	    	#4F8B89;
-$plumWine:         		#613860;
-$purpleHeliotrope: 		#5C4F79;
-$grey:             		#ccc;
-$black:					#000;
-$colorY:				#270644;
-$white:					#fff;
+// **************** Defined Colors ************************* 
+
+$grey:              #ccc;
+$white:             #fff;
+$black:             #000;
+
+// the menu color from http://www.corvallismontessori.org/
+$cmsLightBlue:      #019fd5;
+
+// the ACTIVE menu color from http://www.corvallismontessori.org/
+$cmsDarkBlue:       #006383;
+
+// the green horizontal bar from http://www.corvallismontessori.org/
+$cmsGreen:          #56ac2a;
+
+
+$cmsWhiteBoarder:   #d6e6eb;
 
 // ************ Color Theme ***************************
 
 //Main
-$backgroundGradiant1:	$white;
-$backgroundGradiant2:	$white;
-$boxShadow:				$black;
-$bodyBackGround:		$white;
-$boarder:				$black;
+
+$boxShadow:				      $cmsLightBlue;
+$bodyBackGround:		    $white;
+$boarder:				        $cmsGreen;
 
 //Text Box Colors
-$inputBackground:		$grey;
-$inputBackgroundHover:	$white;
-$inputBoarder:			$black;
+$inputBackground:		    $white;
+$inputBackgroundHover:	$cmsGreen;
+$inputBoarder:			    $cmsGreen;
 
 //Submit Button Colors
-$submitGradiant1:		$grey;
-$submitGradiant2:		$grey;		
-$submitBoarder:			$black;
+$submitBoarder:			$cmsGreen;
+$submitBackground:  $cmsLightBlue;
+$submitBackHover:   $cmsDarkBlue;
 $submitTextColor:		$black;
 $submitTextShadowColor: $grey;
 
@@ -58,7 +65,7 @@ $submitTextShadowColor: $grey;
   margin:  70px auto;
   width:   350px;
   padding: 20px;
-  border:  1px solid $boarder;
+  border:  3px solid $boarder;
   /*** Adding in CSS3 ***/
   
   /*** Rounded Corners ***/
@@ -67,19 +74,11 @@ $submitTextShadowColor: $grey;
   -o-border-radius:      5px;
   border-radius:         5px;
   
-  
-  /*** Background Gradient ***/
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from($backgroundGradiant1), to($backgroundGradiant2));
-  background: -moz-linear-gradient(19% 75% 90deg,$backgroundGradiant1, $backgroundGradiant2);
-  background: -o-linear-gradient(19% 75% 90deg,$backgroundGradiant1, $backgroundGradiant2);
-  background: linear-gradient(19% 75% 90deg,$backgroundGradiant1, $backgroundGradiant2);
-  
-   
   /*** Shadow behind the box ***/
-  -webkit-box-shadow:5px 10px 25px $boxShadow;
-  -moz-box-shadow:   5px 10px 25px $boxShadow;
-  -o-box-shadow:     5px 10px 25px $boxShadow;
-  box-shadow:        5px 10px 25px $boxShadow;
+  -webkit-box-shadow:2px 5px 10px $boxShadow;
+  -moz-box-shadow:   2px 5px 10px $boxShadow;
+  -o-box-shadow:     2px 5px 10px $boxShadow;
+  box-shadow:        2px 5px 10px $boxShadow;
   
 }
 
@@ -89,7 +88,7 @@ input {
   padding:       6px;
   margin-bottom: 10px;
   border:        0;
-  border-top:    1px solid $inputBoarder;
+  border:        3px solid $inputBoarder;
    
   /*** Adding CSS3 ***/
    
@@ -109,36 +108,29 @@ input {
     background: $inputBackgroundHover;
   }
   &.submit{
+    font-family: Tahoma, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    letter-spacing: 1px;
+    font-weight: bold;
     width:          100px;
     color:          $submitTextColor;
+    background:     $submitBackground;
     text-transform: uppercase;
-    text-shadow:    $submitTextShadowColor 1px 1px;
-    border-top:     1px solid $submitBoarder;
+    border:         2px solid $submitBoarder;
     margin-top:     10px;
     
-    /*** Adding CSS3 Gradients ***/
-    // Not sure if you want to specify the positions with percentages.
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from($submitGradiant1), to($submitGradiant2));
-    background:  -moz-linear-gradient(19% 75% 90deg, $submitGradiant2, $submitGradiant1);
-    background:  -o-linear-gradient(19% 75% 90deg, $submitGradiant2, $submitGradiant1);
-    background:  linear-gradient(19% 75% 90deg, $submitGradiant2, $submitGradiant1);
   }
   &.submit:hover{
-    /*** Adding CSS3 Gradients ***/
-    // Not sure if you want to specify the positions with percentages.
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from($submitGradiant2), to($submitGradiant1));
-    background:  -moz-linear-gradient(19% 75% 90deg, $submitGradiant1, $submitGradiant2);
-    background:  -o-linear-gradient(19% 75% 90deg, $submitGradiant1, $submitGradiant2);
-    background:  linear-gradient(19% 75% 90deg, $submitGradiant1, $submitGradiant2);
+    border:         2px solid $submitBoarder;
+    background:     $submitBackHover;
   }
 }
 
-	
-/****************************************************
- *  BODY
-***************************************************/
 body {
-  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-family: Tahoma, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  letter-spacing: 1px;
+  font-weight: bold;
   margin:      0;
   padding:     10px;
   background-color: $bodyBackGround;

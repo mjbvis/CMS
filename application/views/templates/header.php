@@ -13,7 +13,7 @@
 	<body>
 		<div id="main">
 			<div id="header">
-					<img src="<?php echo base_url('assets/images/cms_logo.png'); ?>" alt="CMS Logo" width="585" height="67">
+					<a href="http://www.corvallismontessori.org/"><img src="<?php echo base_url('assets/images/cms_logo.png'); ?>" alt="CMS Logo" width="585" height="67"></a>
 			</div>
 			<nav id="topNav">
 				<ul>
