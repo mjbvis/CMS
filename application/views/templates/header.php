@@ -9,6 +9,7 @@
 		<title><?php echo($title); ?> | CMS</title>
 		<link rel="icon" type="image/x-icon" href="<?php echo base_url('favicon.ico'); ?>" />
 		<link rel="stylesheet" href="<?php echo base_url('assets/styles/screen.css'); ?>" type="text/css"	media="screen" />
+		<link rel="stylesheet" href="<?php echo base_url('assets/styles/forms/screen.css'); ?>" type="text/css" media="screen" />
 	</head>
 	<body>
 		<div id="main">

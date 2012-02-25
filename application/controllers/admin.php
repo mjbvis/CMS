@@ -42,9 +42,9 @@ class Admin extends Application
 
 		if($this->form_validation->run() == FALSE)
 		{
-			$this->load->view('admin/templates/header');	
+			$this->load->view('templates/header');	
 			$this->load->view('admin/register/register');
-			$this->load->view('admin/templates/footer');
+			$this->load->view('templates/footer');
 		}
 		else
 		{
