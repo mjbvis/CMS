@@ -53,6 +53,8 @@ $sideBar2:                $white;
 
 $horizontalBars:          $cmsGreen;
 
+$links:                   $cmsGreen;
+
 // ************ End Color Theme ************************
 
 // Other variables
@@ -248,4 +250,8 @@ body {
 /* Hide from IE Mac */
 .clr, .clear {
     clear: both;    
+}
+
+a:link, a:visited {
+    color: $links;
 }
