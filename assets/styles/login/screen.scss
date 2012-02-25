@@ -41,9 +41,9 @@ $inputBackgroundHover:	$cmsGreen;
 $inputBoarder:			    $cmsGreen;
 
 //Submit Button Colors
-$submitBoarder:			$cmsGreen;
+$submitBoarder:			$cmsDarkBlue;
 $submitBackground:  $cmsLightBlue;
-$submitBackHover:   $cmsDarkBlue;
+$submitBackHover:   $cmsGreen;
 $submitTextColor:		$black;
 $submitTextShadowColor: $grey;
 
@@ -63,8 +63,11 @@ $submitTextShadowColor: $grey;
 
 #login {
   margin:  70px auto;
-  width:   350px;
-  padding: 20px;
+  width:   400px;
+  padding-top:    20px;
+  padding-left:   20px;
+  padding-right:  20px;
+  padding-bottom: 20px;
   border:  3px solid $boarder;
   /*** Adding in CSS3 ***/
   
@@ -82,8 +85,12 @@ $submitTextShadowColor: $grey;
   
 }
 
+img{
+  padding-bottom: 20px;
+}
+
 input {
-  width:         230px;
+  width:         270px;
   background:    $inputBackground;
   padding:       6px;
   margin-bottom: 10px;
@@ -134,4 +141,31 @@ body {
   margin:      0;
   padding:     10px;
   background-color: $bodyBackGround;
+}
+
+#helpDiv {
+    padding-top: 15px;
+    float: left;
+    width: 70%;
+}
+
+#submitDiv {
+    float: right;
+    width: 30%;
+}
+
+// clearing
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {
+    min-width: 0;
+    display: inline-block; /* \*/
+    display: block;
+    margin-top: 5px;
 }
