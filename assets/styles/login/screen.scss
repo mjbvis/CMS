@@ -24,7 +24,7 @@ $cmsDarkBlue:       #006383;
 // the green horizontal bar from http://www.corvallismontessori.org/
 $cmsGreen:          #56ac2a;
 
-
+$reallyLightBlue:   #ddeeff;
 $cmsWhiteBoarder:   #d6e6eb;
 
 // ************ Color Theme ***************************
@@ -41,11 +41,12 @@ $inputBackgroundHover:	$cmsGreen;
 $inputBoarder:			    $cmsGreen;
 
 //Submit Button Colors
-$submitBoarder:			$cmsDarkBlue;
+$submitBoarder:			$cmsGreen;
 $submitBackground:  $cmsLightBlue;
-$submitBackHover:   $cmsGreen;
-$submitTextColor:		$black;
-$submitTextShadowColor: $grey;
+$submitBackHover:   $cmsDarkBlue;
+$submitTextColor:		$white;
+$submitTextShadowColor: $cmsGreen;
+
 
 // ************ End Color Theme ************************
 
@@ -69,6 +70,7 @@ $submitTextShadowColor: $grey;
   padding-right:  20px;
   padding-bottom: 20px;
   border:  3px solid $boarder;
+  background: $reallyLightBlue;
   /*** Adding in CSS3 ***/
   
   /*** Rounded Corners ***/
@@ -125,6 +127,12 @@ input {
     text-transform: uppercase;
     border:         2px solid $submitBoarder;
     margin-top:     10px;
+    
+    /*** Rounded Corners ***/
+    -webkit-border-radius: 5px;
+    -moz-border-radius:    5px;
+    -o-border-radius:      5px;
+    border-radius:         5px;
     
   }
   &.submit:hover{
