@@ -10,10 +10,12 @@ class Admin extends Application
 		$this->ag_auth->restrict('admin');
 		
 		/* Load helpers */
-		$this->load->helper(array('url', 'form', 'registration'));
-
+		$this->load->helper(array('url', 'form'));
+        
 		/* Load libraries */
-		$this->load->library('form_validation');
+		$this->load->library('form_validation', '');
+        $this->load->library('Repositories/Registration_Repository', '', 'reg');
+        
 	}
 	
 	public function index()
@@ -54,13 +56,13 @@ class Admin extends Application
             
             //check db to make sure this is a unique name
             // if not add a number and try again
-            if (!isUsernameUnique($username)){
+            if (!$this->reg->isUsernameUnique($username)){
                 $uniqueUsername = FALSE; 
                 $i = 1;
-                while (!$uniqueUsername) {
+                while (!$isUnique) {
                     $username = $username . '.'. $i;
                     $i = $i + 1;
-                    $uniqueUsername = isUsernameUnique($username);
+                    $isUnique = $this->reg->isUsernameUnique($username);
                 }
             }
             

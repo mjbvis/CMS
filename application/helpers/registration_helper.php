@@ -46,10 +46,6 @@ function generatePassword() {
     return $password;
 }
 
-function isUsernameUnique($username) {
-    return TRUE;
-}
-
 function sendNewUserAccountCreationEmail($firstName, $lastName, $email, $username, $plainTextPassword) {
     $to = "recipient@example.com";
     $subject = "Hi!";
@@ -57,7 +53,7 @@ function sendNewUserAccountCreationEmail($firstName, $lastName, $email, $usernam
     if (mail($to, $subject, $body)) {
         echo("<p>Message successfully sent!</p>");
     } else {
-        echo("<p> essage delivery failed...</p>
+        echo("<p>Message delivery failed...</p>
         ");
     }
 }
