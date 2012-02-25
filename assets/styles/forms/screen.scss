@@ -26,6 +26,10 @@ $cmsGreen:          #56ac2a;
 
 // ****************************************************
 
+frame{
+  boarder: 1px, solid, $black;
+}
+
 input, textarea {  
     padding: 9px;  
     border: solid 1px #E5E5E5;  
