@@ -1,10 +1,10 @@
 <?php
 
 function generatePassword() {
-    
+
     // set legnth
     $length = 8;
-    
+
     // start with a blank password
     $password = "";
 
@@ -42,15 +42,23 @@ function generatePassword() {
     }
 
     // done!
+
     return $password;
 }
 
-function isUsernameUnique($username){
+function isUsernameUnique($username) {
     return TRUE;
 }
 
-function sendNewUserAccountCreationEmail($firstName, $lastName, $email, $username, $plainTextPassword){
-    
+function sendNewUserAccountCreationEmail($firstName, $lastName, $email, $username, $plainTextPassword) {
+    $to = "recipient@example.com";
+    $subject = "Hi!";
+    $body = "Hi,\n\nHow are you?";
+    if (mail($to, $subject, $body)) {
+        echo("<p>Message successfully sent!</p>");
+    } else {
+        echo("<p> essage delivery failed...</p>
+        ");
+    }
 }
-
 ?>
