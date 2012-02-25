@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	
 	/* This file will hold all database queries for the login model */
-class Login_Repository {
+class Registration_Repository {
 	
 	var $CI; // The CI object
 	
@@ -18,23 +18,19 @@ class Login_Repository {
 	
 	/**
 	* @author Mark Bowser
-	* @param user ID
+	* @param username to validate
 	*
-	* selects all alerts for the given user
-	* NOTE: alerts should only work on parents
+	* decides if a given username is available.
 	*/
-	public function selectUserAlerts($id) {
-		$this->CI->db->select('UserID');
-		$this->CI->db->from('UserAlerts');
-		$this->CI->db->where('UserID', $id);
+	public function selectUserAlerts($username) {
+		$this->CI->db->select('username');
+		$this->CI->db->from('users');
+		$this->CI->db->where('username', $username);
 		$results = $this->CI->db->get();
 		
-		return $results;
+		return $results->num_rows() == 0;
 	}
 
 }
-    
-    
-    
 
 ?>
