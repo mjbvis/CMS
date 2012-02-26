@@ -22,7 +22,7 @@ class Registration_Repository {
 	*
 	* decides if a given username is available.
 	*/
-	public function selectUserAlerts($username) {
+	public function isUsernameUnique($username) {
 		$this->CI->db->select('username');
 		$this->CI->db->from('users');
 		$this->CI->db->where('username', $username);

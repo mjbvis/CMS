@@ -10,7 +10,7 @@ class Admin extends Application
 		$this->ag_auth->restrict('admin');
 		
 		/* Load helpers */
-		$this->load->helper(array('url', 'form'));
+		$this->load->helper(array('url', 'form', 'registration'));
         
 		/* Load libraries */
 		$this->load->library('form_validation', '');
@@ -38,9 +38,9 @@ class Admin extends Application
 	
 	public function register()
 	{
-		$this->form_validation->set_rules('first', 'First Name', 'required|callback_field_exists');
-		$this->form_validation->set_rules('last', 'Last Name', 'required|callback_field_exists');
-		$this->form_validation->set_rules('email', 'Email Address', 'required|valid_email|callback_field_exists');
+		$this->form_validation->set_rules('first', 'First Name', 'required|min_length[1]|callback_field_exists');
+        $this->form_validation->set_rules('last', 'Last Name', 'required|min_length[1]|callback_field_exists');
+        $this->form_validation->set_rules('email', 'Email Address', 'required|min_length[3]|valid_email|callback_field_exists');
 
 		if($this->form_validation->run() == FALSE)
 		{
@@ -57,7 +57,7 @@ class Admin extends Application
             //check db to make sure this is a unique name
             // if not add a number and try again
             if (!$this->reg->isUsernameUnique($username)){
-                $uniqueUsername = FALSE; 
+                $isUnique = FALSE; 
                 $i = 1;
                 while (!$isUnique) {
                     $username = $username . '.'. $i;
@@ -73,15 +73,13 @@ class Admin extends Application
 
 			if($this->ag_auth->register($username, $password, $email) === TRUE)
 			{
-				$data['message'] = "The user account has now been created.";
-				$this->ag_auth->view('message', $data);
-                sendNewUserAccountCreationEmail($firstName, $lastName, $email, $username, $plainTextPassword);
+				echo "sucess";
+				sendNewUserAccountCreationEmail($firstName, $lastName, $email, $username, $plainTextPassword);
 				
 			} // if($this->ag_auth->register($username, $password, $email) === TRUE)
 			else
 			{
-				$data['message'] = "The user account has not been created.";
-				$this->ag_auth->view('message', $data);
+				
 			}
 
 		} // if($this->form_validation->run() == FALSE)

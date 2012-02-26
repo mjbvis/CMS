@@ -47,14 +47,14 @@ function generatePassword() {
 }
 
 function sendNewUserAccountCreationEmail($firstName, $lastName, $email, $username, $plainTextPassword) {
-    $to = "recipient@example.com";
-    $subject = "Hi!";
-    $body = "Hi,\n\nHow are you?";
-    if (mail($to, $subject, $body)) {
-        echo("<p>Message successfully sent!</p>");
-    } else {
-        echo("<p>Message delivery failed...</p>
-        ");
-    }
+
+     $to = $email;
+     $subject = "Welcome " . $firstName . ", " . $lastName . " to CMS";
+     $body = "Welcome " . $firstName . ", " . $lastName .  "\n\nUsermame: " . $username . "\nPassword: " . $plainTextPassword . "\n\nThanks, \n\nthe CMS Team";
+     if (mail($to, $subject, $body)) {
+       return TRUE;
+     } else {
+       return FALSE;
+     }
 }
 ?>
