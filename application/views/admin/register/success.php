@@ -1,4 +1,4 @@
-<div id="registrationSucessBox">
+<div id="centeredBox">
     The system has successfully created an account for</br></br>
     <? echo $firstName ?> <? echo $lastName ?></br>
     Email address: <? echo $email ?></br>

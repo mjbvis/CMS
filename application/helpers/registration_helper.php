@@ -38,11 +38,8 @@ function generatePassword() {
             // ... and increase the counter by one
             $i++;
         }
-
     }
-
     // done!
-
     return $password;
 }
 
