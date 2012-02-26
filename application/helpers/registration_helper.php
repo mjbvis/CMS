@@ -50,7 +50,7 @@ function sendNewUserAccountCreationEmail($firstName, $lastName, $email, $usernam
 
      $to = $email;
      $subject = "Welcome " . $firstName . ", " . $lastName . " to CMS";
-     $body = "Welcome " . $firstName . ", " . $lastName .  "\n\nUsermame: " . $username . "\nPassword: " . $plainTextPassword . "\n\nThanks, \n\nthe CMS Team";
+     $body = "Welcome " . $firstName . ", " . $lastName .  "\n\nUsername: " . $username . "\nPassword: " . $plainTextPassword . "\n\nThanks, \n\nthe CMS Team";
      if (mail($to, $subject, $body)) {
        return TRUE;
      } else {
