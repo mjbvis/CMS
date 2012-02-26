@@ -59,11 +59,11 @@ class Admin extends Application
             if (!$this->reg->isUsernameUnique($username)){
                 $isUnique = FALSE; 
                 $i = 1;
-                while (!$isUnique) {
-                    $username = $username . '.'. $i;
+                while (!$isUnique) {         
                     $i = $i + 1;
-                    $isUnique = $this->reg->isUsernameUnique($username);
+                    $isUnique = $this->reg->isUsernameUnique($username . '.'. $i);
                 }
+                $username = $username . '.'. $i;
             }
             
             $plainTextPassword = generatePassword();
@@ -73,13 +73,22 @@ class Admin extends Application
 
 			if($this->ag_auth->register($username, $password, $email) === TRUE)
 			{
-				echo "sucess";
 				sendNewUserAccountCreationEmail($firstName, $lastName, $email, $username, $plainTextPassword);
+                
+                $data['firstName'] = $firstName;
+                $data['lastName'] = $lastName;
+                $data['email'] = $email;
+                $data['username'] = $username;
+                $data['plainTextPassword'] = $plainTextPassword;
+                
+                $this->load->view('templates/header');  
+                $this->load->view('admin/register/success' , $data);
+                $this->load->view('templates/footer');
 				
 			} // if($this->ag_auth->register($username, $password, $email) === TRUE)
 			else
 			{
-				
+				echo "Error";
 			}
 
 		} // if($this->form_validation->run() == FALSE)
