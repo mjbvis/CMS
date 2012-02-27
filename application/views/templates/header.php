@@ -33,6 +33,7 @@ function isset_not_empty(&$var){
 					<li><a href="javascript:void();">Admissions</a>
 						<ul>
 							<li><?php echo anchor('admin/register', 'Create New Parent Account'); ?></li>
+							<li><?php echo anchor('admin/test', 'form1'); ?></li>
 							<li><a href="#">BLAH BLAH TEST BLAH</a></li>
 						</ul>
 					</li>

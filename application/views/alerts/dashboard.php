@@ -1,1 +1,5 @@
-This is a test alert dashboard view
+Welcome USERNAME HERE,
+
+you have the following alerts:
+
+//database mumbo jumbo here
