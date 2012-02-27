@@ -1,0 +1,285 @@
+@charset "UTF-8";
+/*
+ * This is the Master SCSS file for the Corvallis Montessori School Student-Parent Administration web application
+ * written by Rory C-H, Justin Field, Wesly Cos, and Mark Bowser in 2012 as part of the Oregon State University senior capstone
+ * the team can be reached at cms-team@googlegroups.com
+ * testing
+ * SASS -> http://sass-lang.com/
+ */
+
+// **************** Defined Colors ************************* 
+
+$grey:              #ccc;
+$white:             #fff;
+$black:             #000;
+
+// the menu color from http://www.corvallismontessori.org/
+$cmsLightBlue:      #019fd5;
+
+// the ACTIVE menu color from http://www.corvallismontessori.org/
+$cmsDarkBlue:       #006383;
+
+// the green horizontal bar from http://www.corvallismontessori.org/
+$cmsGreen:          #56ac2a;
+
+
+$cmsWhiteBoarder: #d6e6eb;
+
+// ************ Color Theme ***************************
+
+//Header / footer
+$upperHeaderColor:         $white;
+$headerAndFooterMainColor: $white;
+
+// Nav Bar
+$button:                  $cmsLightBlue;
+$buttonTextColor:         $white;
+$buttonHover:             $cmsDarkBlue;
+$navigationBarSeperator:  $white;
+
+// shouldnt need this
+$buttonPush:              $cmsDarkBlue;
+
+// Body
+$mainBodyBackground:      $white;
+$main:                    $white;
+
+//content
+$content:                 $white;
+
+//sidebars
+$sideBar:                 $white;
+$sideBar2:                $white;
+
+$horizontalBars:          $cmsGreen;
+
+$links:                   $cmsGreen;
+
+$formShadow:                  $cmsLightBlue;
+
+// ************ End Color Theme ************************
+
+// Other variables
+$aTrans:     0.75s;    // Transition speed (menu nav 50% this speed)
+$menuHeight: 38px;     // Height of the top menu [>45 yeilds undesireable results]
+
+// Mixins
+@mixin transAll($speed){
+ /* Transitions: Default, Webkit, Presto, Mozzila/Gecko */
+  -webkit-transition: all $speed;
+  -moz-transition:    all $speed;
+  -o-transition:      all $speed;
+  transition:         all $speed;
+ /* End Transitions */
+}
+@mixin mainButtons {
+  a {
+    color:           $buttonTextColor;
+    height:          $menuHeight;
+    line-height:     $menuHeight;
+    padding:         0 10px;
+    display:         inline-block;
+    text-decoration: none;
+    background:{
+      image:    url("../images/nav.png");
+      repeat:   repeat-x;
+      position: top 0 0;
+    }
+    &:hover{
+      color: $buttonTextColor;
+      background-position: 0 -45px;
+    }
+    &:active{
+      color: $buttonTextColor;
+      outline: none;
+      background-position: 0 -90px;
+    }
+  }
+}
+// End Mixins
+
+html,body {
+  border-top: 2px solid $horizontalBars;
+  height: 100%;
+}
+
+//  BODY
+body {
+  font-family: Tahoma, Geneva, Arial, Helvetica, sans-serif;
+  margin:      0;
+  padding:     10px;
+  background-color: $mainBodyBackground;
+}
+
+
+//  Main
+#main {
+  margin:     0 auto;
+  padding:    0;
+  min-width:  780px;
+  max-width:  1120px;
+  min-height: 500px;
+  background-color: $main;
+}
+
+
+//  HEADER
+
+#header {
+  width:   100%;
+  margin:  0;
+  padding: 0;
+  background-color: $upperHeaderColor;
+}
+
+
+// TOP MENU
+
+#topNav {
+  background-color: $button;
+  margin-top: 15px;
+  position:   relative;
+  bottom:     0;
+  height:     $menuHeight;
+  ul{
+    float:      right;
+    list-style: none;
+    margin:     0;
+    &>:nth-child(n+1){
+      padding-right: 1px;
+    }
+    &>:last-child{
+      padding-right: 0;
+    }
+    a{
+      white-space: nowrap;
+    }
+    li{
+      font-family: Arial,Helvetica,sans-serif;
+      font-size: 13px;
+      letter-spacing: 1px;
+      font-weight: bold;
+      border-left: 1px solid #FFFFFF;
+      float:       left;
+      position:    relative;
+      display:     inline-block;
+      &:hover > ul{
+        visibility: visible;
+        opacity:    1;
+        top:        $menuHeight;
+      }
+      @include mainButtons;
+      ul{
+        position:      absolute;
+        right:         20px; // Firefox has a bug and will not transition default values.
+        top:           0;
+        z-index:       1000;
+        visibility:    hidden;
+        opacity:       0;
+        padding:       0;
+        @include transAll($aTrans * 0.35);
+        &>:nth-child(n+1){
+          padding-bottom: 1px;
+          padding-right:  0;
+        }
+        &>:last-child{
+          padding-bottom: 0;
+        }
+        li{
+          width:         100%;
+          padding-left:  10px;
+          padding-right: 10px !important;
+          a{
+            width:   100%;
+            margin:  0 -10px;
+            padding: 0  10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+// CONTENT
+#content {
+  padding:      10px 5px 5px; // Optimized short hand version of 10px 5px 5px 5px.
+  min-height:   557px;
+  background-color: $content;
+}
+
+
+// FOOTER
+#footer {
+  border-top: 3px solid $horizontalBars;
+  padding-top: 20px;
+  width: 100%;
+  min-height:  54px;
+  background-color: $headerAndFooterMainColor;
+}
+
+#xhtmlCss {
+    float: left;
+    width: 70%;
+}
+
+#rss {
+    float: right;
+    width: 30%;
+    text-align: right;
+}
+
+// clearing
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {
+    min-width: 0;
+    display: inline-block; /* \*/
+    display: block;
+    margin-top: 5px;
+}
+
+/* trigger hasLayout for IE7. Hide from IE Mac */ * html .clearfix {
+    height: 1%;
+}
+
+/* Hide from IE Mac */
+.clr, .clear {
+    clear: both;    
+}
+
+a:link, a:visited {
+    color: $links;
+}
+
+// css for successfull registration messege
+#centeredBox{
+    width: 50%;
+    border: 3px solid $horizontalBars;
+    padding:  10px;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    
+    -webkit-border-radius: 5px;
+    -moz-border-radius:    5px;
+    -o-border-radius:      5px;
+    border-radius:         5px;
+  
+    /*** Shadow behind the box ***/
+    -webkit-box-shadow:2px 5px 10px $formShadow;
+    -moz-box-shadow:   2px 5px 10px $formShadow;
+    -o-box-shadow:     2px 5px 10px $formShadow;
+    box-shadow:        2px 5px 10px $formShadow;
+    
+    font-family: Tahoma, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    letter-spacing: 1px;
+    font-weight: bold;   
+}

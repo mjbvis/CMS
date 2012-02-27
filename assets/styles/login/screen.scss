@@ -1,0 +1,179 @@
+@charset "UTF-8";
+/*
+ * This is the SCSS file for the log in view
+ * written by Rory C-H, Justin Field, Wesly Cos, and Mark Bowser in 2012 as part of the Oregon State University senior capstone
+ * the team can be reached at cms-team@googlegroups.com
+ * SASS -> http://sass-lang.com/
+ */
+
+// colors pallete theme from
+// http://www.colourlovers.com/palette/222832/Gods_Daughter
+
+// **************** Defined Colors ************************* 
+
+$grey:              #ccc;
+$white:             #fff;
+$black:             #000;
+
+// the menu color from http://www.corvallismontessori.org/
+$cmsLightBlue:      #019fd5;
+
+// the ACTIVE menu color from http://www.corvallismontessori.org/
+$cmsDarkBlue:       #006383;
+
+// the green horizontal bar from http://www.corvallismontessori.org/
+$cmsGreen:          #56ac2a;
+
+$reallyLightBlue:   #ddeeff;
+$cmsWhiteBoarder:   #d6e6eb;
+
+// ************ Color Theme ***************************
+
+//Main
+
+$boxShadow:				      $cmsLightBlue;
+$bodyBackGround:		    $white;
+$boarder:				        $cmsGreen;
+
+//Text Box Colors
+$inputBackground:		    $white;
+$inputBackgroundHover:	$cmsGreen;
+$inputBoarder:			    $cmsGreen;
+
+//Submit Button Colors
+$submitBoarder:			$cmsGreen;
+$submitBackground:  $cmsLightBlue;
+$submitBackHover:   $cmsDarkBlue;
+$submitTextColor:		$white;
+$submitTextShadowColor: $cmsGreen;
+
+
+// ************ End Color Theme ************************
+
+
+// Mixins
+@mixin transAll($speed){
+ /* Transitions: Default, Webkit, Presto, Mozzila/Gecko */
+  -webkit-transition: all $speed;
+  -moz-transition:    all $speed;
+  -o-transition:      all $speed;
+  transition:         all $speed;
+ /* End Transitions */
+}
+// End Mixins
+
+#login {
+  margin:  70px auto;
+  width:   400px;
+  padding-top:    20px;
+  padding-left:   20px;
+  padding-right:  20px;
+  padding-bottom: 20px;
+  border:  3px solid $boarder;
+  background: $reallyLightBlue;
+  /*** Adding in CSS3 ***/
+  
+  /*** Rounded Corners ***/
+  -webkit-border-radius: 5px;
+  -moz-border-radius:    5px;
+  -o-border-radius:      5px;
+  border-radius:         5px;
+  
+  /*** Shadow behind the box ***/
+  -webkit-box-shadow:2px 5px 10px $boxShadow;
+  -moz-box-shadow:   2px 5px 10px $boxShadow;
+  -o-box-shadow:     2px 5px 10px $boxShadow;
+  box-shadow:        2px 5px 10px $boxShadow;
+  
+}
+
+img{
+  padding-bottom: 20px;
+}
+
+input {
+  width:         270px;
+  background:    $inputBackground;
+  padding:       6px;
+  margin-bottom: 10px;
+  border:        0;
+  border:        3px solid $inputBoarder;
+   
+  /*** Adding CSS3 ***/
+   
+  /*** Transition Mixin ***/
+  @include transAll(0.25s);
+   
+  /*** Adding a small shadow ***/
+  -webkit-box-shadow: 0px 0px 2px #000;
+  -moz-box-shadow:    0px 0px 2px #000;
+  -o-box-shadow:      0px 0px 2px #000;
+  box-shadow:         0px 0px 2px #000;
+  &:hover{
+    -webkit-box-shadow: 0px 0px 4px #000;
+    -moz-box-shadow:    0px 0px 4px #000;
+    -o-box-shadow:      0px 0px 4px #000;
+    box-shadow:         0px 0px 4px #000;
+    background: $inputBackgroundHover;
+  }
+  &.submit{
+    font-family: Tahoma, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    width:          100px;
+    color:          $submitTextColor;
+    background:     $submitBackground;
+    text-transform: uppercase;
+    border:         2px solid $submitBoarder;
+    margin-top:     10px;
+    
+    /*** Rounded Corners ***/
+    -webkit-border-radius: 5px;
+    -moz-border-radius:    5px;
+    -o-border-radius:      5px;
+    border-radius:         5px;
+    
+  }
+  &.submit:hover{
+    border:         2px solid $submitBoarder;
+    background:     $submitBackHover;
+  }
+}
+
+body {
+  font-family: Tahoma, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  letter-spacing: 1px;
+  font-weight: bold;
+  margin:      0;
+  padding:     10px;
+  background-color: $bodyBackGround;
+}
+
+#helpDiv {
+    padding-top: 15px;
+    float: left;
+    width: 70%;
+}
+
+#submitDiv {
+    float: right;
+    width: 30%;
+}
+
+// clearing
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {
+    min-width: 0;
+    display: inline-block; /* \*/
+    display: block;
+    margin-top: 5px;
+}
