@@ -24,7 +24,7 @@ function isset_not_empty(&$var){
 	</head>
 	<body>
 		<div id="main">
-			<div id="header">
+			<div id="header">s
 					<a href="http://www.corvallismontessori.org/"><img src="<?php echo base_url('assets/images/cms_logo.png'); ?>" alt="CMS Logo" width="585" height="67"></a>
 			</div>
 			<nav id="topNav">
@@ -33,6 +33,7 @@ function isset_not_empty(&$var){
 					<li><a href="javascript:void();">Admissions</a>
 						<ul>
 							<li><?php echo anchor('admin/register', 'Create New Parent Account'); ?></li>
+							<li><?php echo anchor('admissions/register_page1', 'Register A New Student'); ?></li>
 							<li><a href="#">BLAH BLAH TEST BLAH</a></li>
 						</ul>
 					</li>
