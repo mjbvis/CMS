@@ -23,7 +23,7 @@ $cmsDarkBlue:       #006383;
 $cmsGreen:          #56ac2a;
 
 
-$cmsWhiteBoarder: #d6e6eb;
+$cmsWhiteBoarder:   #d6e6eb;
 
 // ************ Color Theme ***************************
 
@@ -81,7 +81,7 @@ $menuHeight: 38px;     // Height of the top menu [>45 yeilds undesireable result
     display:         inline-block;
     text-decoration: none;
     background:{
-      image:    url("../images/nav.png");
+      image:    url("../images/nav2.png");
       repeat:   repeat-x;
       position: top 0 0;
     }
@@ -100,7 +100,7 @@ $menuHeight: 38px;     // Height of the top menu [>45 yeilds undesireable result
 
 html,body {
   border-top: 2px solid $horizontalBars;
-  height: 100%;
+  height:     100%;
 }
 
 //  BODY
@@ -155,14 +155,14 @@ body {
       white-space: nowrap;
     }
     li{
-      font-family: Arial,Helvetica,sans-serif;
-      font-size: 13px;
+      font-family:    Arial, Helvetica, sans-serif;
+      font-size:      13px;
       letter-spacing: 1px;
-      font-weight: bold;
-      border-left: 1px solid #FFFFFF;
-      float:       left;
-      position:    relative;
-      display:     inline-block;
+      font-weight:    bold;
+      border-left:    1px solid #FFFFFF;
+      float:          left;
+      position:       relative;
+      display:        inline-block;
       &:hover > ul{
         visibility: visible;
         opacity:    1;
@@ -171,8 +171,8 @@ body {
       @include mainButtons;
       ul{
         position:      absolute;
-        right:         20px; // Firefox has a bug and will not transition default values.
-        top:           0;
+        right:         20px;
+        top:           0;       // Firefox has a bug and will not transition default values.
         z-index:       1000;
         visibility:    hidden;
         opacity:       0;
@@ -200,86 +200,85 @@ body {
   }
 }
 
-
 // CONTENT
 #content {
-  padding:      10px 5px 5px; // Optimized short hand version of 10px 5px 5px 5px.
-  min-height:   557px;
+  padding:    10px 5px 5px; // Optimized short hand version of 10px 5px 5px 5px.
+  min-height: 557px;
   background-color: $content;
 }
 
-
 // FOOTER
 #footer {
-  border-top: 3px solid $horizontalBars;
+  border-top:  3px solid $horizontalBars;
   padding-top: 20px;
-  width: 100%;
+  width:       100%;
   min-height:  54px;
   background-color: $headerAndFooterMainColor;
 }
 
 #xhtmlCss {
-    float: left;
-    width: 70%;
+  float: left;
+  width: 70%;
 }
 
 #rss {
-    float: right;
-    width: 30%;
-    text-align: right;
+  float: right;
+  width: 30%;
+  text-align: right;
 }
 
 // clearing
-.clearfix:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
-
 .clearfix {
-    min-width: 0;
-    display: inline-block; /* \*/
-    display: block;
-    margin-top: 5px;
+  min-width:  0;
+  display:    inline-block;
+  display:    block;
+  margin-top: 5px;
+  &:after{
+    content:    ".";  // What is this?
+    display:    block;
+    height:     0;
+    clear:      both;
+    visibility: hidden;
+  }
 }
 
-/* trigger hasLayout for IE7. Hide from IE Mac */ * html .clearfix {
-    height: 1%;
+/* trigger hasLayout for IE7. Hide from IE Mac */
+* html .clearfix {
+  height: 1%;
 }
 
 /* Hide from IE Mac */
 .clr, .clear {
-    clear: both;    
+  clear: both;    
 }
 
 a:link, a:visited {
-    color: $links;
+  color: $links;
 }
 
 // css for successfull registration messege
 #centeredBox{
-    width: 50%;
-    border: 3px solid $horizontalBars;
-    padding:  10px;
-    margin-top: 25px;
-    margin-left: auto;
-    margin-right: auto;
-    
-    -webkit-border-radius: 5px;
-    -moz-border-radius:    5px;
-    -o-border-radius:      5px;
-    border-radius:         5px;
-  
-    /*** Shadow behind the box ***/
-    -webkit-box-shadow:2px 5px 10px $formShadow;
-    -moz-box-shadow:   2px 5px 10px $formShadow;
-    -o-box-shadow:     2px 5px 10px $formShadow;
-    box-shadow:        2px 5px 10px $formShadow;
-    
-    font-family: Tahoma, Geneva, Arial, Helvetica, sans-serif;
-    font-size: 16px;
-    letter-spacing: 1px;
-    font-weight: bold;   
+  width:   50%;
+  border:  3px solid $horizontalBars;
+  padding: 10px;
+  margin:  25px auto 0;
+
+  -webkit-border-radius: 5px;
+  -moz-border-radius:    5px;
+  -o-border-radius:      5px;
+  border-radius:         5px;
+
+  /*** Shadow behind the box ***/
+  -webkit-box-shadow: 2px 5px 10px $formShadow;
+  -moz-box-shadow:    2px 5px 10px $formShadow;
+  -o-box-shadow:      2px 5px 10px $formShadow;
+  box-shadow:         2px 5px 10px $formShadow;
+
+  font-family:    Tahoma, Geneva, Arial, Helvetica, sans-serif;
+  font-size:      16px;
+  letter-spacing: 1px;
+  font-weight:    700;  // 700 is the optimized version of bold.  Use this instead!
 }
+
+// Import other CSS documents here
+
