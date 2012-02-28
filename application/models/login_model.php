@@ -16,13 +16,13 @@ class Login_model extends CI_Model{
 	* selects all alerts for the given user
 	* NOTE: alerts should only work on parents
 	*/
-	public function selectUserAlerts($id) {
-		$this->db->select('AlertID');
-		$this->db->from('UserAlerts');
-		$this->db->where('UserID', $id);
-		$results = $this->db->get();
-		
-		return $results;
-	}
+    public function selectUserAlerts($id) {
+        $this->db->select('AlertID');
+        $this->db->from('UserAlerts');
+        $this->db->where('UserID', $id);
+        $results = $this->db->get();
+        
+        return $results;
+    }
 }
 ?>
