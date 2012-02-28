@@ -36,3 +36,4 @@ Session.vim
 
 ### SASS Ignores
 .sass-cache
+application/config/database.php
