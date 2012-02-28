@@ -23,10 +23,10 @@ function isset_not_empty(&$var){
 		<link rel="stylesheet" href="<?php echo base_url('assets/styles/forms/screen.css'); ?>" type="text/css" media="screen" />
 	</head>
 	<body>
+		<div id="header">
+			<a href="http://www.corvallismontessori.org/"><img src="<?php echo base_url('assets/images/cms_logo.png'); ?>" alt="CMS Logo" width="585" height="67"></a>
+		</div>
 		<div id="main">
-			<div id="header">
-					<a href="http://www.corvallismontessori.org/"><img src="<?php echo base_url('assets/images/cms_logo.png'); ?>" alt="CMS Logo" width="585" height="67"></a>
-			</div>
 			<nav id="topNav">
 				<ul>
 					<li><?php echo anchor('admin', 'Home'); ?></li>

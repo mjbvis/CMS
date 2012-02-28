@@ -32,30 +32,30 @@ $upperHeaderColor:         $white;
 $headerAndFooterMainColor: $white;
 
 // Nav Bar
-$button:                  $cmsLightBlue;
-$buttonTextColor:         $white;
-$buttonHover:             $cmsDarkBlue;
-$navigationBarSeperator:  $white;
+$button:                   $cmsLightBlue;
+$buttonTextColor:          $white;
+$buttonHover:              $cmsDarkBlue;
+$navigationBarSeperator:   $white;
 
 // shouldnt need this
-$buttonPush:              $cmsDarkBlue;
+$buttonPush:               $cmsDarkBlue;
 
 // Body
-$mainBodyBackground:      $white;
-$main:                    $white;
+$mainBodyBackground:       $white;
+$main:                     $white;
 
 //content
-$content:                 $white;
+$content:                  $white;
 
 //sidebars
-$sideBar:                 $white;
-$sideBar2:                $white;
+$sideBar:                  $white;
+$sideBar2:                 $white;
 
-$horizontalBars:          $cmsGreen;
+$horizontalBars:           $cmsGreen;
 
-$links:                   $cmsGreen;
+$links:                    $cmsGreen;
 
-$formShadow:                  $cmsLightBlue;
+$formShadow:               $cmsLightBlue;
 
 // ************ End Color Theme ************************
 
@@ -109,6 +109,8 @@ body {
   margin:      0;
   padding:     10px;
   background-color: $mainBodyBackground;
+  background-image: url('../images/background.png');
+  background-repeat: repeat;
 }
 
 
@@ -124,17 +126,16 @@ body {
 
 
 //  HEADER
-
 #header {
   width:   100%;
-  margin:  0;
-  padding: 0;
-  background-color: $upperHeaderColor;
+  margin:     0 auto;
+  padding:    0;
+  min-width:  780px;
+  max-width:  1120px;
 }
 
 
 // TOP MENU
-
 #topNav {
   background-color: $button;
   margin-top: 15px;
