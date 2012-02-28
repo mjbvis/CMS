@@ -25,21 +25,8 @@ class Login extends Application {
 		//if the user is already loged in goto their default dashboard
 		if(logged_in())
 		{
-			// get all alerts for current user
-			$alerts = $this->alerts_model->selectUserAlerts(user_id());
-            
-            // put parents in the alert group if they have alerts to deal with  
-            if($alerts->num_rows()>0 && user_group('parent') == TRUE) {
-                //$alertGroupID = $this->ag_auth->config['auth_groups']['alert'];
-                $this->alerts_model->changeGroup(user_id(), '200');
-        
-            }
-            else{
-            redirect('admin');
-            }
-            
 			// redirect to the appropriate dashboard
-			redirect(get_dashboard($alerts));
+			redirect(get_dashboard());
 		}
 		else // else present them with the login page.
 		{

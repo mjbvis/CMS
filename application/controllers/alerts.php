@@ -23,7 +23,7 @@ class Alerts extends Application
 		{
 			$data = array();
 			$data['title'] = 'Alert Dashboard';
-	
+
             $data['userAlerts'] = $this->alerts_model->selectUserAlerts(user_id());
   
 			/* load views */
