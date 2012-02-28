@@ -1,3 +1,6 @@
+### Local
+application/config/database.php
+
 ### CodeIgniter ignores
 
 */config/development
