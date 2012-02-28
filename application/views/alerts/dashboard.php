@@ -1,11 +1,12 @@
-Welcome USERNAME HERE,
+Welcome,
 
-you have the following alerts:</br>
-
+you must resolve the following alerts:</br>
+<ul>
 <? 
     foreach($userAlerts->result_array() as $alert){
-        echo  $alert['Description'] . '</br>';
-    }
-   
-    
 ?>
+        <li> <? echo  $alert['Description'] . '</br>'; ?> </li>
+<?
+    }   
+?>
+</ul>
