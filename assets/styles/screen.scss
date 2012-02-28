@@ -112,8 +112,8 @@ body {
   font-family: Tahoma, Geneva, Arial, Helvetica, sans-serif;
   margin:      0;
   padding:     10px;
-  background-color: $mainBodyBackground;
-  background-image: url('../images/background.png');
+  background-color:  $mainBodyBackground;
+  background-image:  url('../images/background.png');
   background-repeat: repeat;
 }
 
@@ -131,7 +131,7 @@ body {
 
 //  HEADER
 #header {
-  width:   100%;
+  width:      100%;
   margin:     0 auto;
   padding:    0;
   min-width:  780px;
