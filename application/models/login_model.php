@@ -6,8 +6,23 @@ class Login_model extends CI_Model{
 	public function __construct(){
 		parent::__construct();
 		
-		// load repository
-		$this->load->library('Repositories/Login_Repository', '', 'Repo');
+		$this->load->database();
+	}
+	
+	/**
+	* @author Mark Bowser
+	* @param user ID
+	*
+	* selects all alerts for the given user
+	* NOTE: alerts should only work on parents
+	*/
+	public function selectUserAlerts($id) {
+		$this->db->select('AlertID');
+		$this->db->from('UserAlerts');
+		$this->db->where('UserID', $id);
+		$results = $this->db->get();
+		
+		return $results;
 	}
 }
 ?>
