@@ -5,18 +5,15 @@ class Alerts_model extends CI_Model{
     
     public function __construct(){
         parent::__construct();
-        
-        $this->CI->load->database();
-       
+               
     }
     
-    public function selectUserAlerts($id) {
-        $this->CI->db->select('AlertID');
-        $this->CI->db->from('UserAlerts');
-        $this->CI->db->where('UserID', $id);
-        $results = $this->CI->db->get();
+    public function doesUserHaveAnyAlerts($id) {
         
-        return $results;
+    }
+
+    public function selectUserAlerts($id) {
+        
     }
 }
 ?>

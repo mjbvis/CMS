@@ -11,13 +11,10 @@ class Alerts extends Application
 		
 		/* Load helpers */
 		$this->load->helper(array('url', 'form'));
-
-		/* Load libraries */
+    	/* Load libraries */
 		$this->load->library('form_validation');
-        
-        # Load models
-        $this->load->library('alerts');
-        
+        /* Load Models */
+        $this->load->model('alerts_model');
 	}
 	
 	public function index()
@@ -28,7 +25,7 @@ class Alerts extends Application
 			$data['title'] = 'Alert Dashboard';
 	
             // get all alerts for current user
-            $data['alerts'] = $this->Repo->selectUserAlerts(user_id());
+            //$data['alerts'] = $this->Repo->selectUserAlerts(user_id());
     
 			/* load views */
 			$this->load->view('templates/header', $data);

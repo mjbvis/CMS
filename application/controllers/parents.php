@@ -29,7 +29,7 @@ Class Parents extends Application {
 	
 			/* load views */
 			$this->load->view('templates/header', $data);
-			$this->load->view('templates/boilerPlate_view', $data);
+			$this->load->view('parents/dashboard', $data);
 			$this->load->view('templates/footer', $data);
 		}
 		else {
