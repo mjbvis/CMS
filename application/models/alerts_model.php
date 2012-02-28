@@ -8,21 +8,11 @@ class Alerts_model extends CI_Model{
         $this->load->database();    
     }
     
-    public function doesUserHaveAnyAlerts($id) {
-        if (selectUserAlerts($id)->num_rows() > 0)
+    public function userHasAlerts($id) {
+        if ($this->selectUserAlerts($id)->num_rows() > 0)
             return TRUE;
         else
             return FALSE;
-    }
-
-    public function selectUserAlerts2($id) {
-        $this->db->select('AlertID');
-        $this->db->from('UserAlerts');
-        $this->db->where('UserID', $id);
-        $this->db->join('Alerts', 'Alerts.AlertID = UserAlerts.AlertID');
-        $query = $this->db->get();
-            
-        return $query;
     }
     
     public function selectUserAlerts($id){
@@ -36,7 +26,10 @@ class Alerts_model extends CI_Model{
     public function changeGroup($id, $group){
         $this->db->query('update users
                           set group_id = ' . $group .
-                          'where id = ' . $id);
+                          ' where id = ' . $id);
+						  
+		// reload the group ID in the session
+		$this->session->set_userdata('group_id', $group);
     }
     
 }

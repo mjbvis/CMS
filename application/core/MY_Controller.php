@@ -80,20 +80,23 @@ class Application extends CI_Controller
 				// get all alerts for current user
 				$alerts = $this->alerts_model->selectUserAlerts(user_id());
 				
+				// put parents in the alert group if they have alerts to deal with  
+            	if($this->alerts_model->userHasAlerts(user_id()) && user_group('parent') == TRUE) {
+                	$alertGroupID = $this->ag_auth->config['auth_groups']['alert'];
+                	$this->alerts_model->changeGroup(user_id(), $alertGroupID);
+            	}
+
 				if($redirect === NULL){
-					$redirect = get_dashboard($alerts);
+					$redirect = get_dashboard();
 				}
-				
+			
 				redirect($redirect);
-				
-				
 			} 
 			else
 			{
 				echo "error";
 			}
 		}
-		
 	}
 	
 	public function logout()
