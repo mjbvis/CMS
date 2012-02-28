@@ -25,6 +25,7 @@ $cmsGreen:          #56ac2a;
 
 $cmsWhiteBoarder:   #d6e6eb;
 $reallyLightBlue:   #ddeeff;
+$reallyReallyLightBlue:   #eeffff;
 
 // ************ Color Theme ***************************
 
@@ -46,7 +47,7 @@ $mainBodyBackground:      $white;
 $main:                    $white;
 
 //content
-$content:                 $white;
+$content:                 $reallyReallyLightBlue;
 
 //sidebars
 $sideBar:                 $white;
@@ -85,7 +86,7 @@ $menuHeight: 38px;     // Height of the top menu [>45 yeilds undesireable result
     display:         inline-block;
     text-decoration: none;
     background:{
-      image:    url("../images/nav2.png");
+      image:    url("../images/nav.png");
       repeat:   repeat-x;
       position: top 0 0;
     }
@@ -113,6 +114,9 @@ body {
   margin:      0;
   padding:     10px;
   background-color: $mainBodyBackground;
+//  background:{
+//      image:    url("../images/Black_White_Texture_01_by_diebutterfliege.jpg");
+//  }
 }
 
 
@@ -207,8 +211,9 @@ body {
 // CONTENT
 #content {
   margin: 0 auto;
-  border: solid 3px $formBoarder;
-  background: $forumBackgroundColor;
+  border-right: solid 3px $formBoarder;
+  border-left: solid 3px $formBoarder;
+  border-bottom: solid 3px $formBoarder;
   padding:    10px 5px 5px; // Optimized short hand version of 10px 5px 5px 5px.
   min-height: 557px;
   background-color: $content;
