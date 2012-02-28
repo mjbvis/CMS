@@ -1,5 +1,5 @@
 ### Local
-application/config/database.php
+database.php
 
 ### CodeIgniter ignores
 
