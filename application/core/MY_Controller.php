@@ -27,7 +27,7 @@ class Application extends CI_Controller
 		# Load Config
 		$this->config->load('ag_auth');
 		# Load Modules
-		$this->load->model('login_model');
+		$this->load->model('alerts_model');
 
 	}
 	
@@ -78,7 +78,7 @@ class Application extends CI_Controller
 				$this->ag_auth->login_user($user_data);
 				
 				// get all alerts for current user
-				$alerts = $this->login_model->selectUserAlerts(user_id());
+				$alerts = $this->alerts_model->selectUserAlerts(user_id());
 				
 				if($redirect === NULL){
 					$redirect = get_dashboard($alerts);

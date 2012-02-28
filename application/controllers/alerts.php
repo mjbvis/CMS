@@ -24,9 +24,8 @@ class Alerts extends Application
 			$data = array();
 			$data['title'] = 'Alert Dashboard';
 	
-            // get all alerts for current user
-            //$data['alerts'] = $this->Repo->selectUserAlerts(user_id());
-    
+            $data['userAlerts'] = $this->alerts_model->selectUserAlerts(user_id());
+  
 			/* load views */
 			$this->load->view('templates/header', $data);
 			$this->load->view('alerts/dashboard', $data);

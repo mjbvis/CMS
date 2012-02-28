@@ -10,7 +10,10 @@ class Login extends Application {
 		# Load Libraries
 		
 		# Load Modules
-		$this->load->model('login_model');
+		$this->load->model('alerts_model');
+        
+        # Load Config
+        $this->config->load('ag_auth');
 	}
 
 	# This is the default login view
@@ -23,7 +26,18 @@ class Login extends Application {
 		if(logged_in())
 		{
 			// get all alerts for current user
-			$alerts = $this->login_model->selectUserAlerts(user_id());
+			$alerts = $this->alerts_model->selectUserAlerts(user_id());
+            
+            // put parents in the alert group if they have alerts to deal with  
+            if($alerts->num_rows()>0 && user_group('parent') == TRUE) {
+                //$alertGroupID = $this->ag_auth->config['auth_groups']['alert'];
+                $this->alerts_model->changeGroup(user_id(), '200');
+        
+            }
+            else{
+            redirect('admin');
+            }
+            
 			// redirect to the appropriate dashboard
 			redirect(get_dashboard($alerts));
 		}

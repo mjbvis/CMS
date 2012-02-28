@@ -15,13 +15,29 @@ class Alerts_model extends CI_Model{
             return FALSE;
     }
 
-    public function selectUserAlerts($id) {
+    public function selectUserAlerts2($id) {
         $this->db->select('AlertID');
         $this->db->from('UserAlerts');
         $this->db->where('UserID', $id);
-        $results = $this->db->get();
-        
-        return $results;
+        $this->db->join('Alerts', 'Alerts.AlertID = UserAlerts.AlertID');
+        $query = $this->db->get();
+            
+        return $query;
     }
+    
+    public function selectUserAlerts($id){
+        return $this->db->query('select ua.AlertID, a.Description
+                                 from UserAlerts as ua
+                                 inner join Alerts as a
+                                    on ua.AlertID = a.AlertID
+                                 where UserID = ' . $id);
+    }
+    
+    public function changeGroup($id, $group){
+        $this->db->query('update users
+                          set group_id = ' . $group .
+                          'where id = ' . $id);
+    }
+    
 }
 ?>
