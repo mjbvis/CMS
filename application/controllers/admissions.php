@@ -7,20 +7,44 @@ class admissions extends Application {
 		# Load Helpers
 		$this->load->helper(array('url', 'form', 'dashboard'));
 		# Load Libraries
-			
+		
 		# Load Modules
+		$this->load->library('Repositories/Admissions_Repository', '', 'reg');
 	}
+    
+    public function index()
+    {
+        if(logged_in())
+        {
+            $data = array();
+            $data['title'] = 'Admin Dashboard';
+    
+            /* load views */
+            $this->load->view('templates/header', $data);
+            $this->load->view('admissions/dashboard', $data);
+            $this->load->view('templates/footer', $data);
+        }
+        else
+        {
+            $this->login();
+        }
+    }
 	
 	function register_page1() {
 		# Set up validation for admissionsPage1.php
 		$this->validatePageOne();
 		
 		if($this->form_validation->run() == FALSE) {
-			$this->load->view('admissions/admissions/admissionsPage1');
+			$this->load->view('templates/header');	
+			$this->load->view('admissions/forms/admissionsPage1');
+			$this->load->view('templates/footer');
 		}
 		else {
 			$data = storePageOneForm();
-			$this->load->view('admissions/admissions/admissionsPage2');
+			$this->$reg->savePageOne($data);
+			$this->load->view('templates/header');	
+			$this->load->view('admissions/forms/admissionsPage2');
+			$this->load->view('templates/header');	
 		}
 	}
 	
@@ -28,11 +52,11 @@ class admissions extends Application {
 		$this->validatePageTwo();
 		
 		if($this->form_validation->run() == false) {
-			$this->load->view('admissions/admissions/admissionsPage2');
+			$this->load->view('admissions/forms/admissionsPage2');
 		}
 		else {
 			$data = storePageTwoForm();
-			$this->load->view('admissions/admissions/admissionsPage3');
+			$this->load->view('admissions/forms/admissionsPage3');
 		}	
 	}
 	
@@ -40,11 +64,11 @@ class admissions extends Application {
 		$this->form_validation->set_rules('agreementName', 'required');
 		
 		if($this->form_validation->run() == false) {
-			$this->load->view('admissions/admissions/admissionPage3');	
+			$this->load->view('admissions/forms/admissionPage3');	
 		}
 		else {
 			$data = set_value('agreementName');
-			$this->load->view('admissions/admissions/admissionPage4');
+			$this->load->view('admissions/forms/admissionPage4');
 		}
 	}	
 	
@@ -52,11 +76,11 @@ class admissions extends Application {
 		$this->validatePageFour();
 		
 		if($this->form_validation->run() == false) {
-			$this->load->view('admissions/admissions/admissionPage4');
+			$this->load->view('admissions/forms/admissionPage4');
 		}
 		else {
 			$data = storePageFourForm();
-			$this->load->view('admissions/admissions/admissionPage5');
+			$this->load->view('admissions/forms/admissionPage5');
 		}
 	}
 	#region

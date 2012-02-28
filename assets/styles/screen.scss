@@ -24,6 +24,7 @@ $cmsGreen:          #56ac2a;
 
 
 $cmsWhiteBoarder:   #d6e6eb;
+$reallyLightBlue:   #ddeeff;
 
 // ************ Color Theme ***************************
 
@@ -56,6 +57,9 @@ $horizontalBars:           $cmsGreen;
 $links:                    $cmsGreen;
 
 $formShadow:               $cmsLightBlue;
+
+$formBoarder:              $cmsGreen;
+$forumBackgroundColor:     $reallyLightBlue;
 
 // ************ End Color Theme ************************
 
@@ -203,6 +207,9 @@ body {
 
 // CONTENT
 #content {
+  margin: 0 auto;
+  border: solid 3px $formBoarder;
+  background: $forumBackgroundColor;
   padding:    10px 5px 5px; // Optimized short hand version of 10px 5px 5px 5px.
   min-height: 557px;
   background-color: $content;

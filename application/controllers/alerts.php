@@ -11,9 +11,10 @@ class Alerts extends Application
 		
 		/* Load helpers */
 		$this->load->helper(array('url', 'form'));
-
-		/* Load libraries */
+    	/* Load libraries */
 		$this->load->library('form_validation');
+        /* Load Models */
+        $this->load->model('alerts_model');
 	}
 	
 	public function index()
@@ -23,6 +24,8 @@ class Alerts extends Application
 			$data = array();
 			$data['title'] = 'Alert Dashboard';
 	
+            $data['userAlerts'] = $this->alerts_model->selectUserAlerts(user_id());
+  
 			/* load views */
 			$this->load->view('templates/header', $data);
 			$this->load->view('alerts/dashboard', $data);

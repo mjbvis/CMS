@@ -94,6 +94,12 @@ class Admin extends Application
 		} // if($this->form_validation->run() == FALSE)
 		
 	} // public function register()
+	
+	public function test(){
+	    $this->load->view('templates/header');  
+        $this->load->view('admissions/forms/admissionsPage1');
+        $this->load->view('templates/footer');
+	}
 
 }
 

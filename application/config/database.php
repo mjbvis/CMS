@@ -48,7 +48,7 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = '127.0.0.1';  // Edited to local host that is OSX compatable (also linux and windows)
+$db['default']['hostname'] = '192.168.0.110';  // Edited to local host that is OSX compatable (also linux and windows)
 $db['default']['username'] = 'cms';
 $db['default']['password'] = 'Th3.D@t@bas3.P@ssw0rd';
 $db['default']['database'] = 'cms';
