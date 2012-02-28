@@ -11,6 +11,24 @@ class admissions extends Application {
 		# Load Modules
 		$this->load->library('Repositories/Admissions_Repository', '', 'reg');
 	}
+    
+    public function index()
+    {
+        if(logged_in())
+        {
+            $data = array();
+            $data['title'] = 'Admin Dashboard';
+    
+            /* load views */
+            $this->load->view('templates/header', $data);
+            $this->load->view('admissions/dashboard', $data);
+            $this->load->view('templates/footer', $data);
+        }
+        else
+        {
+            $this->login();
+        }
+    }
 	
 	function register_page1() {
 		# Set up validation for admissionsPage1.php
