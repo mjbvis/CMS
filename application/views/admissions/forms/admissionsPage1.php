@@ -94,34 +94,55 @@ function show_hide_page_one(value) {
         </fieldset>
 	
 		<fieldset>
+			
 			Level of Interest
+			<div class="radioButtons">
 			<input type="radio" name="interestName" id="interestLowId" /> Low
 			<input type="radio" name="interestName" id="interestMediumId" /> Medium
 			<input type="radio" name="interestName" id="interestHighId" /> High </br>
+			</div>
+			
 			Understanding of Montessori
+			<div class="radioButtons">
 			<input type="radio" name="understandingName" id="understandingLowId" /> Little
 			<input type="radio" name="understandingName" id="understandingMediumId" /> Average
 			<input type="radio" name="understandingName" id="understandingHighId" /> High </br>
+			</div>
+			
 			Willingness to learn more
+			<div class="radioButtons">
 			<input type="radio" name="willingnessName" id="willingnessLowId" /> Low
 			<input type="radio" name="willingnessName" id="willingnessMediumId" /> Medium
 			<input type="radio" name="willingnessName" id="willingnessHighId" /> High </br>
-			If Moving: City/St:	
-				<input type="text" name="movingCityName" id="movingCityId" max="50" placeholder="city"/> 
-				<input type="text" name="movingStateName" id="movingStateId" max="50" placeholder="state"/> </br>
-			School:	
+			</div>
+			
+			<ul>
+			    <li>
+    			    <label>If Moving: City/St:</label>	
+    				<input type="text" name="movingCityName" id="movingCityId" max="50" placeholder="city"/> 
+    				<input type="text" name="movingStateName" id="movingStateId" max="50" placeholder="state"/> </br>
+				</li>
+			    <li>
+                    <label>School:</label>	
 				<input type="text" name="movingSchoolName" id="movingSchoolId" max="100" /> </br>
-			Notes: 
-				<input type="checkbox" name="learningNotesName" id="inDepthId" /> In Depth Learning
-				<input type="checkbox" name="learningNotesName" id="ownPaceId" /> At Own Pace
-				<input type="checkbox" name="learningNotesName" id="handsOnId" /> Hands On
-				<input type="checkbox" name="learningNotesName" id="mixedAgesId" /> Mixed Ages </br>
+				</li>
+	        </ul>
+			
+	     	Notes:
+	     	<div class="radioButtons"> 
+			<input type="checkbox" name="learningNotesName" id="inDepthId" /> In Depth Learning
+			<input type="checkbox" name="learningNotesName" id="ownPaceId" /> At Own Pace
+			<input type="checkbox" name="learningNotesName" id="handsOnId" /> Hands On
+			<input type="checkbox" name="learningNotesName" id="mixedAgesId" /> Mixed Ages </br>
+	        </div>
+			
 			Montessori impressions: </br>
 				<textarea name="montessoriImpressionsName" id="montessoriImpressionsId" cols="100" rows="2" max="1000" 
 					placeholder="Montessori Impressions..."></textarea></br>
 			Interviews impressions: </br>
 				<textarea name="interviewImpressionsName" id="interviewsImpressionsId" cols="100" rows="4" max="3000"
-					placeholder="Interviewer Impressions..."></textarea></br>	
+					placeholder="Interviewer Impressions..."></textarea></br>
+						
 		</fieldset>
 		
 		<fieldset>

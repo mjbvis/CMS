@@ -115,8 +115,6 @@ body {
   margin:      0;
   padding:     10px;
   background-color: $mainBodyBackground;
-//  background-image: url('../images/background.png');
-//  background-repeat: repeat;
 
 }
 
@@ -224,8 +222,9 @@ body {
   border-top:  3px solid $horizontalBars;
   padding-top: 20px;
   width:       100%;
-  min-height:  54px;
+  min-height:  75px;
   background-color: $headerAndFooterMainColor;
+
 }
 
 #xhtmlCss {
