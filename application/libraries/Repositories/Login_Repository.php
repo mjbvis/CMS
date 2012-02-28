@@ -24,7 +24,7 @@ class Login_Repository {
 	* NOTE: alerts should only work on parents
 	*/
 	public function selectUserAlerts($id) {
-		$this->CI->db->select('AlertID');
+		$this->CI->db->select('UserID');
 		$this->CI->db->from('UserAlerts');
 		$this->CI->db->where('UserID', $id);
 		$results = $this->CI->db->get();

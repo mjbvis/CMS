@@ -15,8 +15,8 @@ class Alerts extends Application
 		/* Load libraries */
 		$this->load->library('form_validation');
         
-        # Load Libraries
-        $this->load->library('Repositories/Login_Repository', '', 'alert');
+        # Load models
+        $this->load->library('alerts');
         
 	}
 	

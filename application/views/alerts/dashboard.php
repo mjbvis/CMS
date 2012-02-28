@@ -2,4 +2,9 @@ Welcome USERNAME HERE,
 
 you have the following alerts:
 
-<? echo $data['alerts'] ?>
+<? 
+    while($row = mysql_fetch_array($alerts, MYSQL_ASSOC))
+    {
+        echo "Name :{$row['AlerID']} <br>";
+    } 
+?>
