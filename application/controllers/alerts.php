@@ -15,6 +15,9 @@ class Alerts extends Application
 		$this->load->library('form_validation');
         /* Load Models */
         $this->load->model('alerts_model');
+		
+		/* Load PHP-ActiveRecord*/
+        $this->load->spark('php-activerecord');
 	}
 	
 	public function index()

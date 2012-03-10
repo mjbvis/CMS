@@ -15,12 +15,9 @@ class Admin extends Application
 		/* Load libraries */
 		$this->load->library('form_validation', '');
         $this->load->library('Repositories/Registration_Repository', '', 'reg');
-		
-		/* Load Models */
-        //$this->load->model('menu_item');
-        
+		        
         /* Load PHP-ActiveRecord*/
-       $this->load->spark('php-activerecord');
+        $this->load->spark('php-activerecord');
         
 	}
 	
@@ -30,17 +27,6 @@ class Admin extends Application
 		{
 			$data = array();
 			$data['title'] = 'Admin Dashboard';
-			//$data['MenuItem'] = menu_item::first();
-	
-			//$stuff = menu_item::create(array('Label' => 'testLabel', 'URL' => 'testURL'));
-	
-			//throw new \ActiveRecord\UndefinedPropertyException(get_called_class());//,$name);
-	
-			//$MenuItem = new menu_item();
-			$MenuItem = menu_item::create(array('Label' => 'Tito', 'URL' => 'VA'));
-			//$MenuItem->Label = 'testLabel';
-			//$MenuItem->URL= 'testURL';
-			$MenuItem->save();
 	
 			/* load views */
 			$this->load->view('templates/header', $data);

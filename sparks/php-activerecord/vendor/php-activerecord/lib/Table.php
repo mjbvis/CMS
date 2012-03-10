@@ -272,6 +272,8 @@ class Table
 			if ($column->inflected_name == $inflected_name)
 				return $column;
 		}
+		
+		throw new ActiveRecordException("Column, '" . $inflected_name . "' could not be found in table, '" . $this->table . "'");
 		return null;
 	}
 

@@ -794,7 +794,6 @@ class Model
 
 		if ($table->sequence && !isset($attributes[$pk]))
 		{
-			throw new ActiveRecordException("OUCH");
 			if (($conn = static::connection()) instanceof OciAdapter)
 			{
 				// terrible oracle makes us select the nextval first
@@ -811,6 +810,7 @@ class Model
 				$table->insert($attributes,$pk,$table->sequence);
 				$use_sequence = true;
 			}
+			//$table->insert($attributes);
 		}
 		else
 			$table->insert($attributes);
@@ -821,11 +821,7 @@ class Model
 		{
 			$column = $table->get_column_by_inflected_name($pk);
 
-			if($column == null)
-			{
-				throw new ActiveRecordException("Cannot insert record. " . $pk . " is not recognized as a column of " . $table->table . " LOOK HERE: " . $table->pk[0]);
-			}
-			else if ($column->auto_increment || $use_sequence)
+			if ($column->auto_increment || $use_sequence)
 			{
 				$this->attributes[$pk] = static::connection()->insert_id($table->sequence);
 			}
