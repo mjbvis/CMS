@@ -35,7 +35,7 @@ function isset_not_empty(&$var){
 							<li><?php echo anchor('admin/register', 'Create New Parent Account'); ?></li>
 							<li><?php echo anchor('admin/test', 'form1'); ?></li>
 							<li><?php echo anchor('admissions/register_page1', 'Register A New Student'); ?></li>
-							<li><a href="#">BLAH BLAH TEST BLAH</a></li>
+							<li><?php echo anchor('admissions/waitlist_questionaire', 'Waitlist Student'); ?></li>
 						</ul>
 					</li>
 					<li><a href="./">Item 4</a></li>

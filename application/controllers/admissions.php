@@ -30,6 +30,28 @@ class admissions extends Application {
         }
     }
 	
+	function waitlist_questionaire() {
+		// get all enabled questions
+		$wlQuestions = Waitlist_question::find_all_by_enabled(1);//, array('select' => 'QuestionText'));
+		//print_r($wlQuestions);
+		// send these questions to the view for display
+		$data['wlQuestions'] = $wlQuestions;
+		
+		# Set up validation for admissionsPage1.php
+		//$this->validateWaitlistQuestionaire($wlQuestions);
+		
+		// save correctly validated forms
+		//if($this->form_validation->run() == TRUE) {
+		//	$data = storeWaitListForm();
+		//	$this->$reg->saveWaitlistForm($data);
+		//}
+		
+		// display the waitlist questionaire
+		$this->load->view('templates/header', $data);	
+		$this->load->view('admissions/forms/waitlist_questionaire', $data);
+		$this->load->view('templates/header', $data);	
+	}
+	
 	function register_page1() {
 		# Set up validation for admissionsPage1.php
 		$this->validatePageOne();
@@ -216,6 +238,13 @@ class admissions extends Application {
 			'nameOfInsured' => set_value('nameOfInsuredName'),
 			'employer' => set_value('employerName')
 		);
+	}
+
+	function validateWaitlistQuestionaire(){
+		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]|callback_field_exists');
+		$this->form_validation->set_rules('cLastName', 'Child\'s Last Name', 'required|min_length[1]|callback_field_exists');
+		$this->form_validation->set_rules('qOneName', 'Child\'s Last Name', 'required|min_length[1]|callback_field_exists');
+		$this->form_validation->set_rules('qTwoName', 'Child\'s Age', 'required|min_length[1]|callback_field_exists');
 	}
 
 	function validatePageOne()

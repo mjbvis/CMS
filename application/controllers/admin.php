@@ -14,11 +14,7 @@ class Admin extends Application
         
 		/* Load libraries */
 		$this->load->library('form_validation', '');
-        $this->load->library('Repositories/Registration_Repository', '', 'reg');
-		        
-        /* Load PHP-ActiveRecord*/
-        $this->load->spark('php-activerecord');
-        
+        $this->load->library('Repositories/Registration_Repository', '', 'reg');        
 	}
 	
 	public function index()
@@ -28,6 +24,9 @@ class Admin extends Application
 			$data = array();
 			$data['title'] = 'Admin Dashboard';
 	
+			$mItems = Menu_item::all();
+			$data['MenuItems'] = $mItems;
+			
 			/* load views */
 			$this->load->view('templates/header', $data);
 			$this->load->view('admin/dashboard', $data);
