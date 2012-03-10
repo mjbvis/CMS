@@ -10,12 +10,5 @@
 |
 */
 
-$hook['pre_controller'][] = array(
-	'class'    => '',
-	'function' => 'initialize_php_activerecord',
-	'filename' => 'ActiveRecord.php',
-	'filepath' => 'third_party/php-activerecord'                                
-);
-
 /* End of file hooks.php */
 /* Location: ./application/config/hooks.php */
