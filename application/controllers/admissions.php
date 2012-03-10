@@ -32,8 +32,8 @@ class admissions extends Application {
 	
 	function waitlist_questionaire() {
 		// get all enabled questions
-		$wlQuestions = Waitlist_question::find_all_by_enabled(1);//, array('select' => 'QuestionText'));
-		//print_r($wlQuestions);
+		$wlQuestions = Waitlist_question::find_all_by_enabled(1);
+
 		// send these questions to the view for display
 		$data['wlQuestions'] = $wlQuestions;
 		
