@@ -5,8 +5,10 @@
  * @param mixed $var - Reference of a variable to be checked.
  * @return bool - True if the variable is set AND not empty.  False otherwise.
  */
-function isset_not_empty(&$var){
-	return(isset($var) && !empty($var));
+if (!function_exists('isset_not_empty')){
+	function isset_not_empty(&$var){
+		return(isset($var) && !empty($var));
+	}
 }
 ?>
 <!DOCTYPE HTML>

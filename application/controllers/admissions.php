@@ -5,7 +5,8 @@ class admissions extends Application {
 		parent::__construct();
 	
 		# Load Helpers
-		$this->load->helper(array('url', 'form', 'dashboard'));
+		$this->load->helper(array('url', 'form', 'dashboard', 'ag_auth'));
+		
 		# Load Libraries
 		
 		# Load Modules
@@ -38,35 +39,58 @@ class admissions extends Application {
 		$data['wlQuestions'] = $wlQuestions;
 		
 		# Set up validation for admissionsPage1.php
-		//$this->validateWaitlistQuestionaire($wlQuestions);
+		$this->validateWaitlistQuestionaire($wlQuestions);
 		
 		// save correctly validated forms
-		//if($this->form_validation->run() == TRUE) {
-		//	$data = storeWaitListForm();
-		//	$this->$reg->saveWaitlistForm($data);
-		//}
-		
-		// display the waitlist questionaire
-		$this->load->view('templates/header', $data);	
-		$this->load->view('admissions/forms/waitlist_questionaire', $data);
-		$this->load->view('templates/header', $data);	
+		if($this->form_validation->run() == TRUE) {
+			// get answers from waitlist questionaire
+			$answerData = $this->storeWaitListForm($wlQuestions);
+			
+			// save waitlist form to DB
+			$formAttributes = array(
+				'ParentID' 			=> Parental::find_by_userid(user_id())->ParentID,
+				'FirstName'			=> $answerData['cFirst'],
+				'MiddleName'		=> $answerData['cMiddle'],
+				'LastName'			=> $answerData['cLast'],
+				'Agreement'			=> 1,	//TODO: use agreement from policy form
+				'SubmissionDTTM'	=> date('Y-m-d H:i:s', time()) // Example: 2012-11-28 14:32:08
+			);
+			$wlForm = Waitlist_form::create($formAttributes);
+			
+			// save each question/answer pair for this form
+			$i = 0;
+			foreach($wlQuestions as $q){
+				$questionAttributes = array(
+					'FormID'		=> $wlForm->FormID,
+					'QuestionID'	=> $q->QuestionID,
+					'Answer'		=> $answerData['q' . $i . 'answer']
+				);
+				$question_answer = Waitlist_form_question::create();
+				$i++;
+			}
+		}
+		else{
+			// display the waitlist questionaire
+			$this->load->view('templates/header', $data);	
+			$this->load->view('admissions/forms/waitlist_questionaire', $data);
+			$this->load->view('templates/footer', $data);
+		}
 	}
 	
 	function register_page1() {
 		# Set up validation for admissionsPage1.php
 		$this->validatePageOne();
-		
 		if($this->form_validation->run() == FALSE) {
 			$this->load->view('templates/header');	
 			$this->load->view('admissions/forms/admissionsPage1');
 			$this->load->view('templates/footer');
 		}
 		else {
-			$data = storePageOneForm();
-			$this->$reg->savePageOne($data);
+			$formData = storePageOneForm();
+			$this->$reg->savePageOne($formData);
 			$this->load->view('templates/header');	
 			$this->load->view('admissions/forms/admissionsPage2');
-			$this->load->view('templates/header');	
+			$this->load->view('templates/footer');	
 		}
 	}
 	
@@ -105,7 +129,25 @@ class admissions extends Application {
 			$this->load->view('admissions/forms/admissionPage5');
 		}
 	}
+	
 	#region
+	function storeWaitlistForm($questions){
+		$data = array(
+			'cFirst'		=> set_value('cFirstName'),
+			'cMiddle'		=> set_value('cMiddle'),
+			'cLast'			=> set_value('cLastName')
+		);
+		
+		// store each answer from the waitlist questionaire form
+		$i = 0;
+		foreach($questions as $q){
+			$data['q' . $i . 'answer'] = set_value('q' . $i . 'answer');
+			$i++;
+		}
+		
+		return $data;
+	}
+	
 	function storePageOneForm(){
 		$data = array(
 			'pFirst' 		=> set_value('pFirstName'),
@@ -240,15 +282,20 @@ class admissions extends Application {
 		);
 	}
 
-	function validateWaitlistQuestionaire(){
+	function validateWaitlistQuestionaire($questions){
+		// validate name (don't require middle name)
 		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('cLastName', 'Child\'s Last Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('qOneName', 'Child\'s Last Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('qTwoName', 'Child\'s Age', 'required|min_length[1]|callback_field_exists');
+		
+		// validate all questions on the form
+		$i = 0;
+		foreach($questions as $q){
+			$this->form_validation->set_rules('q' . $i . "answer", 'Question ' . $i . ' answer', 'required|min_length[1]|callback_field_exists');
+			$i++;
+		}
 	}
 
-	function validatePageOne()
-	{
+	function validatePageOne(){
 		$this->form_validation->set_rules('pFirstName', 'Parent\'s First Name', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('pLastName', 'Parent\'s Last Name', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]|callback_field_exists');
