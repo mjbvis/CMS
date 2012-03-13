@@ -31,19 +31,19 @@ if (!function_exists('isset_not_empty')){
 		<div id="main">
 			<nav id="topNav">
 				<ul>
-					<li><?php echo anchor('admin', 'Home'); ?></li>
-					<li><a href="javascript:void();">Admissions</a>
-						<ul>
-							<li><?php echo anchor('admin/register', 'Create New Parent Account'); ?></li>
-							<li><?php echo anchor('admin/test', 'form1'); ?></li>
-							<li><?php echo anchor('admissions/register_page1', 'Register A New Student'); ?></li>
-							<li><?php echo anchor('admissions/waitlist_questionaire', 'Waitlist Student'); ?></li>
-						</ul>
-					</li>
-					<li><a href="./">Item 4</a></li>
-					<li><a href="./">Item 5</a></li>
-					<li><a href="./">Item 6</a></li>
-					<li><?php echo anchor('logout', 'Logout'); ?></li>
+					<?php foreach($MenuItems as $mItem): ?>
+						<? $mItemAttr = $mItem->attributes(); ?>
+						<li><a href='<?= $mItemAttr['url']; ?>'><?= $mItemAttr['label']; ?></a>
+							<ul>
+								<?php if(is_array($mItem->sub_item)): ?>
+									<?php foreach($mItem->sub_item as $sItem): ?>
+										<? $sItemAtt = $sItem->attributes(); ?>
+										<li><a href='<? $sItemAttr['url']?>'><? $sItemAtt['label']; ?></a></li>
+									<?php endforeach; ?>
+								<?php endif; ?>
+							</ul>
+						</li>
+					<?php endforeach; ?>
 				</ul>
 			</nav>
 			<div id="content">

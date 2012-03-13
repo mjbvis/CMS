@@ -20,9 +20,6 @@ class Parental extends ActiveRecord\Model
 		'AppReceivedDTTM' => 'AppReceivedDTTM',
 		'FeeReceivedDTTM' => 'FeeReceivedDTTM',
 		'UDTTM' => 'UDTTM');
-		
-	//static $has_many = array(
-	//	'group_menu_item');
 }
 	
 	

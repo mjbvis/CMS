@@ -116,7 +116,7 @@ class admissions extends Application {
 		}
 	}
 	
-	#region
+	# saves the completed Waitlist Questionaire
 	function storeWaitlistForm($questions){
 		// save waitlist form to DB
 		$formAttributes = array(
@@ -144,6 +144,7 @@ class admissions extends Application {
 		}
 	}
 	
+	# saves the completed 1st page of the registration form
 	function storePageOneForm(){
 		$data = array(
 			'pFirst' 		=> set_value('pFirstName'),
@@ -179,6 +180,7 @@ class admissions extends Application {
 		return $data;
 	}
 
+	# saves the completed 2nd page of the registration form
 	function storePageTwoForm() {
 		$data = array(
 			'cFirst' => set_value('cFirstName'),
@@ -203,6 +205,7 @@ class admissions extends Application {
 		);
 	}
 	
+	# saves the completed 4th page of the registration form
 	function storeFormPageFour() {
 		$data = array(
 			'cFirst' => set_value('cFirstName'),
@@ -251,6 +254,7 @@ class admissions extends Application {
 		);
 	}
 
+	# saves the completed 5th page of the registration form
 	function storeFormPageFive() {
 		$data = array(
 			'cFirst' => set_value('cFirstName'),
@@ -278,6 +282,7 @@ class admissions extends Application {
 		);
 	}
 
+	# sets the validation rules
 	function validateWaitlistQuestionaire($questions){
 		// validate name (don't require middle name)
 		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]|callback_field_exists');
@@ -292,6 +297,7 @@ class admissions extends Application {
 		}
 	}
 
+	# sets the validation rules
 	function validatePageOne(){
 		$this->form_validation->set_rules('pFirstName', 'Parent\'s First Name', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('pLastName', 'Parent\'s Last Name', 'required|min_length[1]|callback_field_exists');
@@ -321,6 +327,7 @@ class admissions extends Application {
 		$this->form_validation->set_rules('feeReceivedName', 'Date Application Fee Received', 'required|min_length[4]|callback_field_exists');
 	}
 	
+	# sets the validation rules
 	function validatePageTwo() {
 		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('cLastName', 'Child\'s Last Name', 'required|min_length[1]|callback_field_exists');
@@ -343,6 +350,7 @@ class admissions extends Application {
 		$this->form_validation->set_rules('qSixteenName', 'Question 16', 'required|min_length[1]|callback_field_exists');
 	}
 
+	# sets the validation rules
 	function validatePageFour() {
 		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('cLastName', 'Child\'s Last Name', 'required|min_length[1]|callback_field_exists');
@@ -389,6 +397,7 @@ class admissions extends Application {
 		$this->form_validation->set_rules('learnedAboutName', 'Learned About us', 'required|min_length[1]|callback_field_exists');
 	}
 
+	# sets the validation rules
 	function validatePageFive() {
 		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('cLastName', 'Child\'s Last Name', 'required|min_length[1]|callback_field_exists');

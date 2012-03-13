@@ -14,7 +14,7 @@ class Admin extends Application
         
 		/* Load libraries */
 		$this->load->library('form_validation', '');
-        $this->load->library('Repositories/Registration_Repository', '', 'reg');        
+        $this->load->library('Repositories/Registration_Repository', '', 'reg'); 
 	}
 	
 	public function index()
@@ -26,6 +26,15 @@ class Admin extends Application
 	
 			$mItems = Menu_item::all();
 			$data['MenuItems'] = $mItems;
+			
+			$mItem = Menu_item::find_by_menuitemid(3);
+			//print_r($mItem->sub_item);
+			$sItems = $mItem->sub_item;
+			print_r($sItems);
+			
+			
+			$sItem = Sub_item::first();
+			//print_r($sItem->menu_item);
 			
 			/* load views */
 			$this->load->view('templates/header', $data);

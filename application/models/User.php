@@ -18,9 +18,6 @@ class User extends ActiveRecord\Model
 		'CreationDTTM' => 'CreationDTTM',
 		'Enabled' => 'Enabled',
 		'HasChangedPassword' => 'HasChangedPassword');
-		
-	//static $has_many = array(
-	//	'group_menu_item');
 }
 	
 	

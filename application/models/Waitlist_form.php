@@ -5,7 +5,7 @@ class Waitlist_form extends ActiveRecord\Model
 	# explicit table name
 	static $table_name = 'WaitlistForm';
 	
-	// explicit map for the sake of readability
+	# explicit column names for the sake of readability
 	static $alias_attribute = array(
 		'FormID' => 'id',
 		'ParentID' => 'ParentID',
@@ -14,8 +14,8 @@ class Waitlist_form extends ActiveRecord\Model
 		'Agreement' => 'Agreement',
 		'SubmissionDTTM' => 'SubmissionDTTM');
 		
-	//static $has_many = array(
-	//	'group_menu_item');
+	static $has_many = array(
+		array('waitlist_form', 'class_name' => 'Waitlist_form'));
 }
 	
 	
