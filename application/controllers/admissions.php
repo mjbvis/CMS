@@ -41,7 +41,7 @@ class admissions extends Application {
 		# Set up validation for admissionsPage1.php
 		$this->validateWaitlistQuestionaire($wlQuestions);
 		
-		// save correctly validated forms
+		// if user is posting back answers, then save the form
 		if($this->form_validation->run() == TRUE) {
 			// get answers from waitlist questionaire
 			$answerData = $this->storeWaitListForm($wlQuestions);
@@ -65,9 +65,12 @@ class admissions extends Application {
 					'QuestionID'	=> $q->QuestionID,
 					'Answer'		=> $answerData['q' . $i . 'answer']
 				);
-				$question_answer = Waitlist_form_question::create();
+				$question_answer = Waitlist_form_question::create($questionAttributes);
 				$i++;
 			}
+			
+			// let the login controller redirect us to the appropriate dashboard
+			redirect(login);
 		}
 		else{
 			// display the waitlist questionaire
@@ -76,6 +79,8 @@ class admissions extends Application {
 			$this->load->view('templates/footer', $data);
 		}
 	}
+
+	
 	
 	function register_page1() {
 		# Set up validation for admissionsPage1.php
@@ -134,7 +139,7 @@ class admissions extends Application {
 	function storeWaitlistForm($questions){
 		$data = array(
 			'cFirst'		=> set_value('cFirstName'),
-			'cMiddle'		=> set_value('cMiddle'),
+			'cMiddle'		=> set_value('cMiddleName'),
 			'cLast'			=> set_value('cLastName')
 		);
 		

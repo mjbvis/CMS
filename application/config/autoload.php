@@ -54,7 +54,7 @@ $autoload['packages'] = array();
 
 $autoload['libraries'] = array();
 
-$autoload['sparks']= array('php-activerecord');
+$autoload['sparks']= array('php-activerecord/2.0.0');
 
 /*
 | -------------------------------------------------------------------
