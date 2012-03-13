@@ -19,7 +19,7 @@ class admissions extends Application {
         {
             $data = array();
             $data['title'] = 'Admin Dashboard';
-    
+	
             /* load views */
             $this->load->view('templates/header', $data);
             $this->load->view('admissions/dashboard', $data);
@@ -44,35 +44,16 @@ class admissions extends Application {
 		// if user is posting back answers, then save the form
 		if($this->form_validation->run() == TRUE) {
 			// get answers from waitlist questionaire
-			$answerData = $this->storeWaitListForm($wlQuestions);
+			$this->storeWaitListForm($wlQuestions);
 			
-			// save waitlist form to DB
-			$formAttributes = array(
-				'ParentID' 			=> Parental::find_by_userid(user_id())->ParentID,
-				'FirstName'			=> $answerData['cFirst'],
-				'MiddleName'		=> $answerData['cMiddle'],
-				'LastName'			=> $answerData['cLast'],
-				'Agreement'			=> 1,	//TODO: use agreement from policy form
-				'SubmissionDTTM'	=> date('Y-m-d H:i:s', time()) // Example: 2012-11-28 14:32:08
-			);
-			$wlForm = Waitlist_form::create($formAttributes);
-			
-			// save each question/answer pair for this form
-			$i = 0;
-			foreach($wlQuestions as $q){
-				$questionAttributes = array(
-					'FormID'		=> $wlForm->FormID,
-					'QuestionID'	=> $q->QuestionID,
-					'Answer'		=> $answerData['q' . $i . 'answer']
-				);
-				$question_answer = Waitlist_form_question::create($questionAttributes);
-				$i++;
-			}
+			// TODO: success page?
 			
 			// let the login controller redirect us to the appropriate dashboard
 			redirect(login);
 		}
 		else{
+			// TODO: show missing fields???
+			
 			// display the waitlist questionaire
 			$this->load->view('templates/header', $data);	
 			$this->load->view('admissions/forms/waitlist_questionaire', $data);
@@ -137,20 +118,30 @@ class admissions extends Application {
 	
 	#region
 	function storeWaitlistForm($questions){
-		$data = array(
-			'cFirst'		=> set_value('cFirstName'),
-			'cMiddle'		=> set_value('cMiddleName'),
-			'cLast'			=> set_value('cLastName')
+		// save waitlist form to DB
+		$formAttributes = array(
+			'ParentID' 			=> Parental::find_by_userid(user_id())->ParentID,
+			'FirstName'			=> set_value('cFirstName'),
+			'MiddleName'		=> set_value('cMiddleName'),
+			'LastName'			=> set_value('cLastName'),
+			'Agreement'			=> 1,	//TODO: use agreement from policy form
+			'SubmissionDTTM'	=> date('Y-m-d H:i:s', time()) // Example: 2012-11-28 14:32:08
 		);
+		$wlForm = Waitlist_form::create($formAttributes);
+
 		
 		// store each answer from the waitlist questionaire form
 		$i = 0;
 		foreach($questions as $q){
-			$data['q' . $i . 'answer'] = set_value('q' . $i . 'answer');
+			$questionAttributes = array(
+				'FormID'		=> $wlForm->FormID,
+				'QuestionID'	=> $q->QuestionID,
+				'Answer'		=> set_value('q' . $i . 'answer')
+			);
+			Waitlist_form_question::create($questionAttributes);
+			
 			$i++;
 		}
-		
-		return $data;
 	}
 	
 	function storePageOneForm(){
@@ -290,12 +281,13 @@ class admissions extends Application {
 	function validateWaitlistQuestionaire($questions){
 		// validate name (don't require middle name)
 		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]|callback_field_exists');
+		$this->form_validation->set_rules('cMiddleName', 'Child\'s Middle Name', '');
 		$this->form_validation->set_rules('cLastName', 'Child\'s Last Name', 'required|min_length[1]|callback_field_exists');
 		
 		// validate all questions on the form
 		$i = 0;
 		foreach($questions as $q){
-			$this->form_validation->set_rules('q' . $i . "answer", 'Question ' . $i . ' answer', 'required|min_length[1]|callback_field_exists');
+			$this->form_validation->set_rules('q' . $i . "answer", 'Question ' . $i . '\'s answer', 'required|min_length[1]|callback_field_exists');
 			$i++;
 		}
 	}
