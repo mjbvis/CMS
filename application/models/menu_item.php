@@ -13,7 +13,7 @@ class Menu_item extends ActiveRecord\Model
 		'RankOrder' => 'RankOrder');
 		
 	static $has_many = array(
-		array('sub_item', 'class_name' => 'Sub_item', 'foreign_key' => '', 'primary_key' => ''));
+		array('sub_item', 'class_name' => 'Sub_item', 'primary_key' => 'MenuItemID'));
 		//array('group_menu_item', 'class_name' => 'Group_menu_item'));
 }
 	

@@ -27,12 +27,14 @@ class Admin extends Application
 			$mItems = Menu_item::all();
 			$data['MenuItems'] = $mItems;
 			
-			$mItem = Menu_item::find_by_menuitemid(3);
+			
+			$mItem = Menu_item::last();
 			//print_r($mItem->sub_item);
 			$sItems = $mItem->sub_item;
+			//$str = $this->db->last_query();
 			print_r($sItems);
-			
-			
+			//print_r($str);
+
 			$sItem = Sub_item::first();
 			//print_r($sItem->menu_item);
 			
