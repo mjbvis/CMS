@@ -2,8 +2,10 @@
 
 class Admin extends Application
 {
+	private static $data = array();
+	
 	public function __construct()
-	{
+	{		
 		parent::__construct();
 		
 		/*restrict access to all but admin*/
@@ -15,33 +17,23 @@ class Admin extends Application
 		/* Load libraries */
 		$this->load->library('form_validation', '');
         $this->load->library('Repositories/Registration_Repository', '', 'reg'); 
+		
+		# setup default view data
+		$this->data['title'] = 'Admin Dashboard';
+		$mItems = Menu_item::all(array('order' => 'RankOrder asc'));
+		// TODO: limit menu items to admin
+		$this->data['MenuItems'] = $mItems;
+		
 	}
 	
 	public function index()
-	{
+	{		
 		if(logged_in())
-		{
-			$data = array();
-			$data['title'] = 'Admin Dashboard';
-	
-			$mItems = Menu_item::all();
-			$data['MenuItems'] = $mItems;
-			
-			
-			$mItem = Menu_item::last();
-			//print_r($mItem->sub_item);
-			$sItems = $mItem->sub_item;
-			//$str = $this->db->last_query();
-			print_r($sItems);
-			//print_r($str);
-
-			$sItem = Sub_item::first();
-			//print_r($sItem->menu_item);
-			
+		{				
 			/* load views */
-			$this->load->view('templates/header', $data);
-			$this->load->view('admin/dashboard', $data);
-			$this->load->view('templates/footer', $data);
+			$this->load->view('templates/header', $this->data);
+			$this->load->view('admin/dashboard', $this->data);
+			$this->load->view('templates/footer', $this->data);
 		}
 		else
 		{
@@ -57,7 +49,7 @@ class Admin extends Application
 
 		if($this->form_validation->run() == FALSE)
 		{
-			$this->load->view('templates/header');	
+			$this->load->view('templates/header', $this->data);	
 			$this->load->view('admin/register/register');
 			$this->load->view('templates/footer');
 		}
@@ -88,14 +80,14 @@ class Admin extends Application
 			{
 				sendNewUserAccountCreationEmail($firstName, $lastName, $email, $username, $plainTextPassword);
                 
-                $data['firstName'] = $firstName;
-                $data['lastName'] = $lastName;
-                $data['email'] = $email;
-                $data['username'] = $username;
-                $data['plainTextPassword'] = $plainTextPassword;
+                $this->data['firstName'] = $firstName;
+                $this->data['lastName'] = $lastName;
+                $this->data['email'] = $email;
+                $this->data['username'] = $username;
+                $this->data['plainTextPassword'] = $plainTextPassword;
                 
-                $this->load->view('templates/header');  
-                $this->load->view('admin/register/success' , $data);
+                $this->load->view('templates/header', $this->data);  
+                $this->load->view('admin/register/success' , $this->data);
                 $this->load->view('templates/footer');
 				
 			} // if($this->ag_auth->register($username, $password, $email) === TRUE)
@@ -109,7 +101,7 @@ class Admin extends Application
 	} // public function register()
 	
 	public function test(){
-	    $this->load->view('templates/header');  
+	    $this->load->view('templates/header', $this->data);  
         $this->load->view('admissions/forms/admissionsPage1');
         $this->load->view('templates/footer');
 	}

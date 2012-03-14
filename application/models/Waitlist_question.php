@@ -13,7 +13,8 @@ class Waitlist_question extends ActiveRecord\Model
 		'UDTTM' => 'UDTTM');
 		
 	static $has_many = array(
-		array('waitlist_form_question', 'class_name' => 'Waitlist_form_question'));
+		array('waitlist_form_question', 'class_name' => 'Waitlist_form_question', 'foreign_key' => 'questionid', 'primary_key' => 'questionid'),
+		array('waitlist_form', 'class_name' => 'Waitlist_form', 'through' => 'waitlist_form_question'));
 }
 	
 	

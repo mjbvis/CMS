@@ -12,7 +12,8 @@ class Group extends ActiveRecord\Model
 		'Description' => 'description');
 	
 	static $has_many = array(
-		array('group_menu_item', 'class_name' => 'Group_menu_item'));
+		array('group_menu_item', 'class_name' => 'Group_menu_item'),
+		array('menu_item', 'class_name' => 'Menu_item', 'through' => 'group_menu_item'));
 }
 	
 	

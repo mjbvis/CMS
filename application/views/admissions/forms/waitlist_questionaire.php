@@ -12,7 +12,7 @@
 			<legend>
 				Waitlist Questionaire:
 			</legend> 
-			<? $i = 0; ?>
+			<?php $i = 0; ?>
 			<?php foreach($wlQuestions as $q): ?>
 				<?
 					// print question

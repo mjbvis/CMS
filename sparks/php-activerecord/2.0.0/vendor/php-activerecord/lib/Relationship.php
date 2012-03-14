@@ -165,7 +165,7 @@ abstract class AbstractRelationship implements InterfaceRelationship
 			}
 			$options['joins'] = $this->construct_inner_join_sql($through_table, true);
 
-			$query_key = $this->primary_key[0];
+			$query_key = $this->primary_key[0];  //$query_key = $this->primary_key[0]; // Mark Bowser's fix from online
 
 			// reset keys
 			$this->primary_key = $pk;

@@ -27,6 +27,10 @@ class Alerts extends Application
 			$data = array();
 			$data['title'] = 'Alert Dashboard';
 
+			$mItems = Menu_item::all(array('order' => 'RankOrder asc'));
+			// TODO: limit menu items to admin
+			$data['MenuItems'] = $mItems;
+
             $data['userAlerts'] = $this->alerts_model->selectUserAlerts(user_id());
   
 			/* load views */

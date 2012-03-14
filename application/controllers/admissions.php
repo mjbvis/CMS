@@ -1,5 +1,8 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+
 class admissions extends Application {
+	
+	private static $data = array();
 			
 	function __construct() {
 		parent::__construct();
@@ -11,19 +14,22 @@ class admissions extends Application {
 		
 		# Load Modules
 		$this->load->library('Repositories/Admissions_Repository', '', 'reg');
+		
+		# setup default view data
+		$this->data['title'] = 'Admin Dashboard';
+		$mItems = Menu_item::all(array('order' => 'RankOrder asc'));
+		// TODO: limit menu items to admin
+		$this->data['MenuItems'] = $mItems;
 	}
     
     public function index()
     {
         if(logged_in())
         {
-            $data = array();
-            $data['title'] = 'Admin Dashboard';
-	
             /* load views */
-            $this->load->view('templates/header', $data);
-            $this->load->view('admissions/dashboard', $data);
-            $this->load->view('templates/footer', $data);
+            $this->load->view('templates/header', $this->data);
+            $this->load->view('admissions/dashboard', $this->data);
+            $this->load->view('templates/footer', $this->data);
         }
         else
         {
@@ -36,7 +42,7 @@ class admissions extends Application {
 		$wlQuestions = Waitlist_question::find_all_by_enabled(1);
 
 		// send these questions to the view for display
-		$data['wlQuestions'] = $wlQuestions;
+		$this->data['wlQuestions'] = $wlQuestions;
 		
 		# Set up validation for admissionsPage1.php
 		$this->validateWaitlistQuestionaire($wlQuestions);
@@ -55,9 +61,9 @@ class admissions extends Application {
 			// TODO: show missing fields???
 			
 			// display the waitlist questionaire
-			$this->load->view('templates/header', $data);	
-			$this->load->view('admissions/forms/waitlist_questionaire', $data);
-			$this->load->view('templates/footer', $data);
+			$this->load->view('templates/header', $this->data);	
+			$this->load->view('admissions/forms/waitlist_questionaire', $this->data);
+			$this->load->view('templates/footer', $this->data);
 		}
 	}
 
@@ -74,7 +80,7 @@ class admissions extends Application {
 		else {
 			$formData = storePageOneForm();
 			$this->$reg->savePageOne($formData);
-			$this->load->view('templates/header');	
+			$this->load->view('templates/header', $this->data);	
 			$this->load->view('admissions/forms/admissionsPage2');
 			$this->load->view('templates/footer');	
 		}

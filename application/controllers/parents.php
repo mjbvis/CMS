@@ -26,6 +26,10 @@ Class Parents extends Application {
 			/* array with example data */
 			$data = array();
 			$data['title'] = 'Page Title';
+
+			$mItems = Menu_item::all(array('order' => 'RankOrder asc'));
+			// TODO: limit menu items to admin
+			$data['MenuItems'] = $mItems;
 	
 			/* load views */
 			$this->load->view('templates/header', $data);

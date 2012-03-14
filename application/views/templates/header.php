@@ -35,12 +35,10 @@ if (!function_exists('isset_not_empty')){
 						<? $mItemAttr = $mItem->attributes(); ?>
 						<li><a href='<?= $mItemAttr['url']; ?>'><?= $mItemAttr['label']; ?></a>
 							<ul>
-								<?php if(is_array($mItem->sub_item)): ?>
-									<?php foreach($mItem->sub_item as $sItem): ?>
-										<? $sItemAtt = $sItem->attributes(); ?>
-										<li><a href='<? $sItemAttr['url']?>'><? $sItemAtt['label']; ?></a></li>
-									<?php endforeach; ?>
-								<?php endif; ?>
+								<?php foreach($mItem->sub_items as $sItem): ?>
+									<? $sItemAttr = $sItem->attributes(); ?>
+									<li><a href='<?= $sItemAttr['url']; ?>'><?= $sItemAttr['label']; ?></a></li>
+								<?php endforeach; ?>
 							</ul>
 						</li>
 					<?php endforeach; ?>
