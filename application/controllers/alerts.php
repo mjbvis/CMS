@@ -2,6 +2,8 @@
 
 class Alerts extends Application
 {
+	private static $data = array();
+	
 	public function __construct()
 	{
 		parent::__construct();
@@ -16,8 +18,9 @@ class Alerts extends Application
         /* Load Models */
         $this->load->model('alerts_model');
 		
-		/* Load PHP-ActiveRecord*/
-        $this->load->spark('php-activerecord');
+		$mItems = Menu_item::all(array('order' => 'RankOrder asc'));
+		// TODO: limit menu items to admin
+		$this->data['MenuItems'] = $mItems;
 	}
 	
 	public function index()

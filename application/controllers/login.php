@@ -1,6 +1,8 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Login extends Application {
 
+	private static $data = array();
+
 	function __construct() {
 		parent::__construct();
 
@@ -14,6 +16,10 @@ class Login extends Application {
         
         # Load Config
         $this->config->load('ag_auth');
+		
+		$mItems = Menu_item::all(array('order' => 'RankOrder asc'));
+		// TODO: limit menu items to admin
+		$this->data['MenuItems'] = $mItems;
 	}
 
 	# This is the default login view

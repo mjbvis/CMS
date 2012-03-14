@@ -1,8 +1,8 @@
-<?php
-if (!defined('BASEPATH'))
-	exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 Class Parents extends Application {
+
+	private static $data = array();
 
 	function __construct() {
 		parent::__construct();
@@ -16,7 +16,9 @@ Class Parents extends Application {
 		/* Load libraries */
 		$this->load->library('form_validation');
 
-
+		$mItems = Menu_item::all(array('order' => 'RankOrder asc'));
+		// TODO: limit menu items to admin
+		$this->data['MenuItems'] = $mItems;
 	}
 
 	function index() {
