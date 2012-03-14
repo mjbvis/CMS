@@ -31,6 +31,10 @@ class Admin extends Application{
 		// TODO: limit menu items to admin
 		$this->data['MenuItems'] = $mItems;
 		
+		$mItem = Menu_item::first();
+		$grp = $mItem->groups;
+		var_dump($grp);
+		
 	}
 	
 	public function index(){

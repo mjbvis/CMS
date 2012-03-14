@@ -18,7 +18,8 @@ class Menu_item extends ActiveRecord\Model
 	static $has_many = array(
 		array('sub_items', 'class_name' => 'Sub_item', 'foreign_key' => 'menuitemid', 'primary_key' => 'menuitemid'),
 		array('group_menu_items', 'class_name' => 'Group_menu_item', 'foreign_key' => 'menuitemid', 'primary_key' => 'menuitemid'),
-		array('groups', 'class_name' => 'Group', 'through' => 'group_menu_item'));
+		array('groups', 'class_name' => 'Group',
+			array('through' => 'group_menu_items', 'foreign_key' => 'groupid', 'primary_key' => 'groupid')));
 }
 	
 	

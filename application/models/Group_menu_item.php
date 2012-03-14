@@ -7,10 +7,10 @@ class Group_menu_item extends ActiveRecord\Model
 	
 	# explicit column names for the sake of readability
 	static $alias_attribute = array(
-		'GroupID' => 'id',
+		'GroupID' => 'GroupID',
 		'MenuItemID' => 'MenuItemID');
 		
 	static $belongs_to = array(
-		array('menu_item', 'class_name' => 'Menu_item'),
-		array('group', 'class_name' => 'Group'));
+		array('menu_item', 'class_name' => 'Menu_item', 'foreign_key' => 'menuitemid'),
+		array('group', 'class_name' => 'Group', 'foreign_key' => 'groupid'));
 }
