@@ -27,19 +27,19 @@ class Alerts extends Application
 	{
 		if(logged_in())
 		{
-			$data = array();
-			$data['title'] = 'Alert Dashboard';
+			$this->data = array();
+			$this->data['title'] = 'Alert Dashboard';
 
 			$mItems = Menu_item::all(array('order' => 'RankOrder asc'));
 			// TODO: limit menu items to admin
-			$data['MenuItems'] = $mItems;
+			$this->data['MenuItems'] = $mItems;
 
-            $data['userAlerts'] = $this->alerts_model->selectUserAlerts(user_id());
+            $this->data['userAlerts'] = $this->alerts_model->selectUserAlerts(user_id());
   
 			/* load views */
-			$this->load->view('templates/header', $data);
-			$this->load->view('alerts/dashboard', $data);
-			$this->load->view('templates/footer', $data);
+			$this->load->view('templates/header', $this->data);
+			$this->load->view('alerts/dashboard', $this->data);
+			$this->load->view('templates/footer');
 		}
 		else
 		{

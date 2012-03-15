@@ -26,17 +26,17 @@ Class Parents extends Application {
 		if(logged_in())
 		{
 			/* array with example data */
-			$data = array();
-			$data['title'] = 'Page Title';
+			$this->data = array();
+			$this->data['title'] = 'Page Title';
 
 			$mItems = Menu_item::all(array('order' => 'RankOrder asc'));
 			// TODO: limit menu items to admin
-			$data['MenuItems'] = $mItems;
+			$this->data['MenuItems'] = $mItems;
 	
 			/* load views */
-			$this->load->view('templates/header', $data);
-			$this->load->view('parents/dashboard', $data);
-			$this->load->view('templates/footer', $data);
+			$this->load->view('templates/header', $this->data);
+			$this->load->view('parents/dashboard', $this->data);
+			$this->load->view('templates/footer');
 		}
 		else {
 			$this->login();

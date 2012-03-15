@@ -73,7 +73,7 @@ class admissions extends Application {
 		# Set up validation for admissionsPage1.php
 		$this->validatePageOne();
 		if($this->form_validation->run() == FALSE) {
-			$this->load->view('templates/header');	
+			$this->load->view('templates/header', $this->data);	
 			$this->load->view('admissions/forms/admissionsPage1');
 			$this->load->view('templates/footer');
 		}
