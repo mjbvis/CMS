@@ -53,6 +53,12 @@ class Application extends CI_Controller
 	
 	public function login($redirect = NULL)
 	{
+		//if the user is already loged in goto their default dashboard
+		if(logged_in())
+		{
+			// redirect to the appropriate dashboard
+			redirect(get_dashboard());
+		}
 			
 		$this->form_validation->set_rules('username', 'Username', 'required|min_length[1]');
 		$this->form_validation->set_rules('password', 'Password', 'required|min_length[1]');

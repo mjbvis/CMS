@@ -37,7 +37,7 @@ if (!function_exists('isset_not_empty')){
 							<ul>
 								<?php foreach($mItem->sub_items as $sItem): ?>
 									<? $sItemAttr = $sItem->attributes(); ?>
-									<li><a href='<?= $sItemAttr['url']; ?>'><?= $sItemAttr['label']; ?></a></li>
+									<li><?php echo anchor($sItemAttr['url'], $sItemAttr['label']); ?></li>
 								<?php endforeach; ?>
 							</ul>
 						</li>
