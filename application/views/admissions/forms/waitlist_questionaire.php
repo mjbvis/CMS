@@ -1,5 +1,5 @@
 <div class="formBox">
-	<form id='studWaitlistQuestionaire'  method='post' accept-charset='UTF-8'>
+	<form id='studWaitlistQuestionaire'  method='post' accept-charset='UTF-8' class='clearfix'>
 		<fieldset>
 			<legend>
 				Child's Name:
