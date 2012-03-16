@@ -19,7 +19,7 @@ class Waitlist_form extends ActiveRecord\Model
 			 ,'class_name' => 'Waitlist_question'
 			 ,'foreign_key' => 'questionid'
 			 ,'primary_key' => 'questionid'),
-		array('waitlist_form'
+		array('waitlist_form'	// NOTE: the many-to-many mapping through Waitlist_form_question.php isn't functional
 			 ,'class_name' => 'Waitlist_form'
 			 ,'foreign_key' => 'questionid'
 			 ,'primary_key' => 'questionid'
