@@ -13,8 +13,19 @@ class Waitlist_question extends ActiveRecord\Model
 		'UDTTM' => 'UDTTM');
 		
 	static $has_many = array(
-		array('waitlist_form_question', 'class_name' => 'Waitlist_form_question', 'foreign_key' => 'questionid', 'primary_key' => 'questionid'),
-		array('waitlist_form', 'class_name' => 'Waitlist_form', 'through' => 'waitlist_form_question'));
+		array('waitlist_form_questions'
+			 ,'class_name' => 'Waitlist_form_question'
+			 ,'foreign_key' => 'questionid'
+			 ,'primary_key' => 'questionid'
+			 ),
+		array('menu_items'	// NOTE: the many-to-many mapping through Waitlist_form_question.php isn't functional
+			 ,'class_name' => 'Waitlist_form'
+			 ,'foreign_key' => 'formid'
+			 ,'primary_key' => 'formid'
+			 //,'through' => 'waitlist_form_questions'
+			 , array('through' => 'waitlist_form_questions', 'foreign_key' => 'formid')
+			 )
+		);
 }
 	
 	

@@ -12,8 +12,15 @@ class Waitlist_form_question extends ActiveRecord\Model
 		'Answer' => 'Answer');
 		
 	static $belongs_to = array(
-		array('waitlist_question', 'class_name' => 'Waitlist_question'),
-		array('waitlist_form', 'class_name' => 'Waitlist_form'));
+		array('waitlist_question'
+			 ,'class_name' => 'Waitlist_question'
+			 ,'foreign_key' => 'questionid'
+			 ,'primary_key' => 'questionid'),
+		array('waitlist_form'
+			 ,'class_name' => 'Waitlist_form'
+			 ,'foreign_key' => 'formid'
+			 ,'primary_key' => 'formid')
+		);
 }
 	
 	

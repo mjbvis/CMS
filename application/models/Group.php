@@ -20,7 +20,7 @@ class Group extends ActiveRecord\Model
 			 ,'foreign_key' => 'groupid'
 			 ,'primary_key' => 'groupid'
 			 ),
-		array('menu_items'
+		array('menu_items'	// NOTE: the many-to-many mapping through Group_menu_item.php isn't functional
 			 ,'class_name' => 'Menu_item'
 			 ,'foreign_key' => 'menuitemid'
 			 ,'primary_key' => 'menuitemid'
@@ -28,7 +28,6 @@ class Group extends ActiveRecord\Model
 			 , array('through' => 'group_menu_items', 'foreign_key' => 'menuitemid')
 			 )
 		);
-			//array('through' => 'group_menu_items', 'foreign_key' => 'menuitemid')));
 }
 	
 	

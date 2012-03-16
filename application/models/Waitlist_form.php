@@ -15,7 +15,18 @@ class Waitlist_form extends ActiveRecord\Model
 		'SubmissionDTTM' => 'SubmissionDTTM');
 		
 	static $has_many = array(
-		array('waitlist_form', 'class_name' => 'Waitlist_form'));
+		array('waitlist_questions'
+			 ,'class_name' => 'Waitlist_question'
+			 ,'foreign_key' => 'questionid'
+			 ,'primary_key' => 'questionid'),
+		array('waitlist_form'
+			 ,'class_name' => 'Waitlist_form'
+			 ,'foreign_key' => 'questionid'
+			 ,'primary_key' => 'questionid'
+			 //,'through' => 'waitlist_form_questions'
+			 , array('through' => 'waitlist_form_questions', 'foreign_key' => 'questionid')
+			 )
+		);
 }
 	
 	
