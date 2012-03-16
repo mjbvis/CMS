@@ -8,7 +8,7 @@ class admissions extends Application {
 		parent::__construct();
 	
 		# Load Helpers
-		$this->load->helper(array('url', 'form', 'dashboard', 'ag_auth'));
+		$this->load->helper(array('url', 'form', 'dashboard', 'ag_auth', 'menu'));
 		
 		# Load Libraries
 		
@@ -16,10 +16,7 @@ class admissions extends Application {
 		$this->load->library('Repositories/Admissions_Repository', '', 'reg');
 		
 		# setup default view data
-		$this->data['title'] = 'Admin Dashboard';
-		$mItems = Menu_item::all(array('order' => 'RankOrder asc'));
-		// TODO: limit menu items to admin
-		$this->data['MenuItems'] = $mItems;
+		$this->data['title'] = 'Admissions Dashboard';
 	}
     
     public function index()

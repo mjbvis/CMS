@@ -11,28 +11,20 @@ Class Parents extends Application {
 		$this->ag_auth->restrict('parent');
 
 		/* Load helpers */
-		$this->load->helper(array('url', 'form'));
+		$this->load->helper(array('url', 'form', 'menu'));
 
 		/* Load libraries */
 		$this->load->library('form_validation');
 
-		$mItems = Menu_item::all(array('order' => 'RankOrder asc'));
-		// TODO: limit menu items to admin
-		$this->data['MenuItems'] = $mItems;
+		# setup default view data
+		$this->data['title'] = 'Parent Dashboard';
+		$this->data['MenuItems'] = get_menu_items('parent');
 	}
 
 	function index() {
 		
 		if(logged_in())
 		{
-			/* array with example data */
-			$this->data = array();
-			$this->data['title'] = 'Page Title';
-
-			$mItems = Menu_item::all(array('order' => 'RankOrder asc'));
-			// TODO: limit menu items to admin
-			$this->data['MenuItems'] = $mItems;
-	
 			/* load views */
 			$this->load->view('templates/header', $this->data);
 			$this->load->view('parents/dashboard', $this->data);

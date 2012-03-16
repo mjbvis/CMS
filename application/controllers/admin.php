@@ -12,7 +12,7 @@ class Admin extends Application{
 		$this->ag_auth->restrict('admin');
 		
 		/* Load helpers */
-		$this->load->helper(array('url', 'form', 'registration'));
+		$this->load->helper(array('url', 'form', 'registration', 'menu'));
         
 		/* Load libraries */
 		$this->load->library('form_validation', '');
@@ -24,17 +24,7 @@ class Admin extends Application{
 		
 		# setup default view data
 		$this->data['title'] = 'Admin Dashboard';
-		
-		
-		
-		$mItems = Menu_item::all(array('order' => 'RankOrder asc'));
-		// TODO: limit menu items to admin
-		$this->data['MenuItems'] = $mItems;
-		
-		$mItem = Menu_item::first();
-		$grp = $mItem->groups;
-		var_dump($grp);
-		
+		$this->data['MenuItems'] = get_menu_items('admin');
 	}
 	
 	public function index(){

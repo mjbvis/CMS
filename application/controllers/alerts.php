@@ -12,30 +12,22 @@ class Alerts extends Application
 		//$this->ag_auth->restrict('alert');
 		
 		/* Load helpers */
-		$this->load->helper(array('url', 'form'));
+		$this->load->helper(array('url', 'form', 'menu'));
     	/* Load libraries */
 		$this->load->library('form_validation');
         /* Load Models */
         $this->load->model('alerts_model');
 		
-		$mItems = Menu_item::all(array('order' => 'RankOrder asc'));
-		// TODO: limit menu items to admin
-		$this->data['MenuItems'] = $mItems;
+		# setup default view data
+		$this->data['title'] = 'Alert Dashboard';
+		$this->data['MenuItems'] = get_menu_items('alert');
+		$this->data['userAlerts'] = $this->alerts_model->selectUserAlerts(user_id());
 	}
 	
 	public function index()
 	{
 		if(logged_in())
 		{
-			$this->data = array();
-			$this->data['title'] = 'Alert Dashboard';
-
-			$mItems = Menu_item::all(array('order' => 'RankOrder asc'));
-			// TODO: limit menu items to admin
-			$this->data['MenuItems'] = $mItems;
-
-            $this->data['userAlerts'] = $this->alerts_model->selectUserAlerts(user_id());
-  
 			/* load views */
 			$this->load->view('templates/header', $this->data);
 			$this->load->view('alerts/dashboard', $this->data);

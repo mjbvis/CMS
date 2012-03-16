@@ -17,7 +17,11 @@ class Sub_item extends ActiveRecord\Model
 		'RankOrder' => 'RankOrder');
 		
 	static $belongs_to = array(
-		array('menu_item', 'class_name' => 'Menu_item', 'foreign_key' => 'menuitemid'));
+		array('menu_item'
+			 ,'class_name' => 'Menu_item'
+			 ,'foreign_key' => 'menuitemid'
+			 ,'primary_key' => 'menuitemid')
+		);
 }
 	
 	
