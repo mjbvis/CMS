@@ -11,40 +11,38 @@
 
 // **************** Defined Colors ************************* 
 
-$grey:              #ccc;
-$white:             #fff;
-$black:             #000;
+$grey:  #ccc;
+$white: #fff;
+$black: #000;
 
 // the menu color from http://www.corvallismontessori.org/
-$cmsLightBlue:      #019fd5;
+$cmsLightBlue: #019fd5;
 
 // the ACTIVE menu color from http://www.corvallismontessori.org/
-$cmsDarkBlue:       #006383;
+$cmsDarkBlue: #006383;
 
 // the green horizontal bar from http://www.corvallismontessori.org/
-$cmsGreen:          #56ac2a;
-
-$reallyLightBlue:   #ddeeff;
-$cmsWhiteBoarder:   #d6e6eb;
+$cmsGreen:        #56ac2a;
+$reallyLightBlue: #ddeeff;
+$cmsWhiteBoarder: #d6e6eb;
 
 // ************ Color Theme ***************************
 
 //Main
-
-$boxShadow:				      $cmsLightBlue;
-$bodyBackGround:		    $white;
-$boarder:				        $cmsGreen;
+$boxShadow:			 $cmsLightBlue;
+$bodyBackGround: $white;
+$border:				 $cmsGreen;
 
 //Text Box Colors
-$inputBackground:		    $white;
-$inputBackgroundHover:	$cmsGreen;
-$inputBoarder:			    $cmsGreen;
+$inputBoarder:			   $cmsGreen;
+$inputBackground:      $white;
+$inputBackgroundHover: $cmsGreen;
 
 //Submit Button Colors
-$submitBoarder:			$cmsGreen;
-$submitBackground:  $cmsLightBlue;
-$submitBackHover:   $cmsDarkBlue;
-$submitTextColor:		$white;
+$submitBoarder:			    $cmsGreen;
+$submitBackground:      $cmsLightBlue;
+$submitBackHover:       $cmsDarkBlue;
+$submitTextColor:		    $white;
 $submitTextShadowColor: $cmsGreen;
 
 
@@ -60,36 +58,46 @@ $submitTextShadowColor: $cmsGreen;
   transition:         all $speed;
  /* End Transitions */
 }
+
+@mixin borderRadius($radius){
+  -webkit-border-radius: $radius;
+  -moz-border-radius:    $radius;
+  -o-border-radius:      $radius;
+  border-radius:         $radius;
+}
+
+@mixin boxShadow($pos, $color){
+  -webkit-box-shadow: $pos $color;
+  -moz-box-shadow:    $pos $color;
+  -o-box-shadow:      $pos $color;
+  box-shadow:         $pos $color;
+}
 // End Mixins
 
+body {
+  font-family:      Tahoma, Geneva, Arial, Helvetica, sans-serif;
+  font-size:        16px;
+  letter-spacing:   1px;
+  font-weight:      bold;
+  margin:           0;
+  padding:          10px;
+  background-color: $bodyBackGround;
+}
+
 #login {
-  margin:  70px auto;
-  width:   400px;
+  margin:         70px auto;
+  width:          400px;
+  border:         3px solid $border;
+  background:     $reallyLightBlue;
   padding-top:    20px;
   padding-left:   20px;
   padding-right:  20px;
   padding-bottom: 20px;
-  border:  3px solid $boarder;
-  background: $reallyLightBlue;
-  /*** Adding in CSS3 ***/
-  
-  /*** Rounded Corners ***/
-  -webkit-border-radius: 5px;
-  -moz-border-radius:    5px;
-  -o-border-radius:      5px;
-  border-radius:         5px;
-  
-  /*** Shadow behind the box ***/
-  -webkit-box-shadow:2px 5px 10px $boxShadow;
-  -moz-box-shadow:   2px 5px 10px $boxShadow;
-  -o-box-shadow:     2px 5px 10px $boxShadow;
-  box-shadow:        2px 5px 10px $boxShadow;
-  
+  @include borderRadius(5px);
+  @include boxShadow(2px 5px 10px, $boxShadow);
 }
 
-img{
-  padding-bottom: 20px;
-}
+img{ padding-bottom: 20px; }
 
 input {
   width:         270px;
@@ -98,71 +106,43 @@ input {
   margin-bottom: 10px;
   border:        0;
   border:        3px solid $inputBoarder;
-   
-  /*** Adding CSS3 ***/
-   
-  /*** Transition Mixin ***/
   @include transAll(0.25s);
-   
-  /*** Adding a small shadow ***/
-  -webkit-box-shadow: 0px 0px 2px #000;
-  -moz-box-shadow:    0px 0px 2px #000;
-  -o-box-shadow:      0px 0px 2px #000;
-  box-shadow:         0px 0px 2px #000;
+  @include boxShadow(0px 0px 2px, #000);
   &:hover{
-    -webkit-box-shadow: 0px 0px 4px #000;
-    -moz-box-shadow:    0px 0px 4px #000;
-    -o-box-shadow:      0px 0px 4px #000;
-    box-shadow:         0px 0px 4px #000;
+    @include boxShadow(0px 0px 4px, #000);
     background: $inputBackgroundHover;
   }
   &.submit{
-    font-family: Tahoma, Geneva, Arial, Helvetica, sans-serif;
-    font-size: 16px;
+    font-family:    Tahoma, Geneva, Arial, Helvetica, sans-serif;
+    font-size:      16px;
+    text-transform: uppercase;
     letter-spacing: 1px;
-    font-weight: bold;
+    font-weight:    bold;
     width:          100px;
     color:          $submitTextColor;
     background:     $submitBackground;
-    text-transform: uppercase;
-    border:         2px solid $submitBoarder;
     margin-top:     10px;
-    
-    /*** Rounded Corners ***/
-    -webkit-border-radius: 5px;
-    -moz-border-radius:    5px;
-    -o-border-radius:      5px;
-    border-radius:         5px;
-    
+    border:         2px solid $submitBoarder;
+    @include borderRadius(5px);
   }
   &.submit:hover{
-    border:         2px solid $submitBoarder;
-    background:     $submitBackHover;
+    border:     2px solid $submitBoarder;
+    background: $submitBackHover;
   }
-}
-
-body {
-  font-family: Tahoma, Geneva, Arial, Helvetica, sans-serif;
-  font-size: 16px;
-  letter-spacing: 1px;
-  font-weight: bold;
-  margin:      0;
-  padding:     10px;
-  background-color: $bodyBackGround;
 }
 
 #helpDiv {
-    padding-top: 15px;
-    float: left;
-    width: 70%;
+  float:       left;
+  width:       70%;
+  padding-top: 15px;
 }
 
 #submitDiv {
-    float: right;
-    width: 30%;
+  float: right;
+  width: 30%;
 }
 
-// clearing
+// HACKY REMOVE ...........
 .clearfix:after {
     content: ".";
     display: block;

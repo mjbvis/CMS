@@ -35,6 +35,6 @@ Session.vim
 .htaccess
 
 ### SASS Ignores
-.sass-cache
+*.sass-cache
 application/config/database.php
 */database.php

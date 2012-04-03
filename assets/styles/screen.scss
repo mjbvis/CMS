@@ -8,24 +8,21 @@
  */
 
 // **************** Defined Colors ************************* 
-
-$grey:              #ccc;
-$white:             #fff;
-$black:             #000;
+$grey:  #ccc;
+$white: #fff;
+$black: #000;
 
 // the menu color from http://www.corvallismontessori.org/
-$cmsLightBlue:      #019fd5;
+$cmsLightBlue: #019fd5;
 
 // the ACTIVE menu color from http://www.corvallismontessori.org/
-$cmsDarkBlue:       #006383;
+$cmsDarkBlue: #006383;
 
 // the green horizontal bar from http://www.corvallismontessori.org/
-$cmsGreen:          #56ac2a;
-
-
-$cmsWhiteBoarder:   #d6e6eb;
-$reallyLightBlue:   #ddeeff;
-$reallyReallyLightBlue:   #eeffff;
+$cmsGreen:              #56ac2a;
+$cmsWhiteBoarder:       #d6e6eb;
+$reallyLightBlue:       #ddeeff;
+$reallyReallyLightBlue: #eeffff;
 
 // ************ Color Theme ***************************
 
@@ -34,34 +31,29 @@ $upperHeaderColor:         $white;
 $headerAndFooterMainColor: $white;
 
 // Nav Bar
-$button:                   $cmsLightBlue;
-$buttonTextColor:          $white;
-$buttonHover:              $cmsDarkBlue;
-$navigationBarSeperator:   $white;
+$button:                 $cmsLightBlue;
+$buttonTextColor:        $white;
+$buttonHover:            $cmsDarkBlue;
+$navigationBarSeperator: $white;
 
 // shouldnt need this
-$buttonPush:               $cmsDarkBlue;
+$buttonPush: $cmsDarkBlue;
 
 // Body
-$mainBodyBackground:       $white;
-$main:                     $white;
+$mainBodyBackground: $white;
+$main:               $white;
 
 //content
-
-$content:                 $reallyReallyLightBlue;
+$content: $reallyReallyLightBlue;
 
 //sidebars
-$sideBar:                  $white;
-$sideBar2:                 $white;
-
-$horizontalBars:           $cmsGreen;
-
-$links:                    $cmsGreen;
-
-$formShadow:               $cmsLightBlue;
-
-$formBoarder:              $cmsGreen;
-$forumBackgroundColor:     $reallyLightBlue;
+$sideBar:              $white;
+$sideBar2:             $white;
+$horizontalBars:       $cmsGreen;
+$links:                $cmsGreen;
+$formShadow:           $cmsLightBlue;
+$formBorder:          $cmsGreen;
+$forumBackgroundColor: $reallyLightBlue;
 
 // ************ End Color Theme ************************
 
@@ -78,6 +70,7 @@ $menuHeight: 38px;     // Height of the top menu [>45 yeilds undesireable result
   transition:         all $speed;
  /* End Transitions */
 }
+
 @mixin mainButtons {
   a {
     color:           $buttonTextColor;
@@ -102,6 +95,20 @@ $menuHeight: 38px;     // Height of the top menu [>45 yeilds undesireable result
     }
   }
 }
+
+@mixin borderRadius($radius){
+  -webkit-border-radius: $radius;
+  -moz-border-radius:    $radius;
+  -o-border-radius:      $radius;
+  border-radius:         $radius;
+}
+
+@mixin boxShadow($pos, $color){
+  -webkit-box-shadow: $pos $color;
+  -moz-box-shadow:    $pos $color;
+  -o-box-shadow:      $pos $color;
+  box-shadow:         $pos $color;
+}
 // End Mixins
 
 html,body {
@@ -109,17 +116,14 @@ html,body {
   height:     100%;
 }
 
-//  BODY
 body {
-  font-family: Tahoma, Geneva, Arial, Helvetica, sans-serif;
-  margin:      0;
-  padding:     10px;
+  font-family:       Tahoma, Geneva, Arial, Helvetica, sans-serif;
+  margin:            0;
+  padding:           10px;
   background-image:  url('../images/background.png');
   background-repeat: repeat;
 }
 
-
-//  Main
 #main {
   margin:     0 auto;
   padding:    0;
@@ -129,8 +133,6 @@ body {
   background-color: $main;
 }
 
-
-//  HEADER
 #header {
   width:      100%;
   margin:     0 auto;
@@ -139,8 +141,6 @@ body {
   max-width:  1120px;
 }
 
-
-// TOP MENU
 #topNav {
   background-color: $button;
   margin-top: 15px;
@@ -176,13 +176,13 @@ body {
       }
       @include mainButtons;
       ul{
-        position:      absolute;
-        right:         20px;
-        top:           0;       // Firefox has a bug and will not transition default values.
-        z-index:       1000;
-        visibility:    hidden;
-        opacity:       0;
-        padding:       0;
+        position:   absolute;
+        right:      20px;
+        top:        0;       // Firefox has a bug and will not transition default values.
+        z-index:    1000;
+        visibility: hidden;
+        opacity:    0;
+        padding:    0;
         @include transAll($aTrans * 0.35);
         &>:nth-child(n+1){
           padding-bottom: 1px;
@@ -206,23 +206,21 @@ body {
   }
 }
 
-// CONTENT
 #content {
-  margin: 0 auto;
-  border-right: solid 3px $formBoarder;
-  border-left: solid 3px $formBoarder;
-  border-bottom: solid 3px $formBoarder;
-  padding:    10px 5px 5px; // Optimized short hand version of 10px 5px 5px 5px.
-  min-height: 557px;
+  margin:           0 auto;
+  padding:          10px 5px 5px; // Optimized short hand version of 10px 5px 5px 5px.
+  min-height:       557px;
+  border-right:     solid 3px $formBorder;
+  border-left:      solid 3px $formBorder;
+  border-bottom:    solid 3px $formBorder;
   background-color: $content;
 }
 
-// FOOTER
 #footer {
-  border-top:  3px solid $horizontalBars;
-  padding-top: 20px;
-  width:       100%;
-  min-height:  75px;
+  border-top:       3px solid $horizontalBars;
+  padding-top:      20px;
+  width:            100%;
+  min-height:       75px;
   background-color: $headerAndFooterMainColor;
 
 }
@@ -233,12 +231,12 @@ body {
 }
 
 #rss {
-  float: right;
-  width: 30%;
+  float:      right;
+  width:      30%;
   text-align: right;
 }
 
-// clearing
+// DELETE - HACKY
 .clearfix {
   min-width:  0;
   display:    inline-block;
@@ -263,32 +261,24 @@ body {
   clear: both;    
 }
 
+// END DELETE
+
 a:link, a:visited {
   color: $links;
 }
 
-// css for successfull registration messege
+// CSS for successfull registration messege
 #centeredBox{
-  width:   50%;
-  border:  3px solid $horizontalBars;
-  padding: 10px;
-  margin:  25px auto 0;
-
-  -webkit-border-radius: 5px;
-  -moz-border-radius:    5px;
-  -o-border-radius:      5px;
-  border-radius:         5px;
-
-  /*** Shadow behind the box ***/
-  -webkit-box-shadow: 2px 5px 10px $formShadow;
-  -moz-box-shadow:    2px 5px 10px $formShadow;
-  -o-box-shadow:      2px 5px 10px $formShadow;
-  box-shadow:         2px 5px 10px $formShadow;
-
+  width:          50%;
+  border:         3px solid $horizontalBars;
+  padding:        10px;
+  margin:         25px auto 0;
   font-family:    Tahoma, Geneva, Arial, Helvetica, sans-serif;
   font-size:      16px;
   letter-spacing: 1px;
-  font-weight:    700;  // 700 is the optimized version of bold.  Use this instead!
+  font-weight:    bold;
+  @include borderRadius(5px);
+  @include boxShadow(2px 5px 10px, $formShadow);
 }
 
 // Import other CSS documents here
