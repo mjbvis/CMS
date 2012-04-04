@@ -18,7 +18,7 @@ class Group extends ActiveRecord\Model
 		array('group_menu_items'
 			 ,'class_name' => 'Group_menu_item'
 			 ,'foreign_key' => 'groupid'
-			 ,'primary_key' => 'groupid'
+			 ,'primary_key' => 'id'
 			 ),
 		array('menu_items'	// NOTE: the many-to-many mapping through Group_menu_item.php isn't functional
 			 ,'class_name' => 'Menu_item'
@@ -28,6 +28,25 @@ class Group extends ActiveRecord\Model
 			 , array('through' => 'group_menu_items', 'foreign_key' => 'menuitemid')
 			 )
 		);
+	
+	static $delegate = array(
+		array('label', 'url', 'rankorder', 'to' => 'menu_items'));
+		
+	
+	// static $has_many = array(
+		// array('group_menu_items'
+			 // ,'class_name' => 'Group_menu_item'
+			 // ,'foreign_key' => 'groupid'
+			 // ,'primary_key' => 'groupid'
+			 // ),
+		// array('menu_items'	// NOTE: the many-to-many mapping through Group_menu_item.php isn't functional
+			 // ,'class_name' => 'Menu_item'
+			 // ,'foreign_key' => 'menuitemid'
+			 // //,'primary_key' => 'menuitemid'
+			 // //,'through' => 'group_menu_items'
+			 // , array('through' => 'group_menu_items', 'foreign_key' => 'menuitemid')
+			 // )
+		// );
 }
 	
 	
