@@ -5,10 +5,13 @@ class Group_menu_item extends ActiveRecord\Model
 	# explicit table name
 	static $table_name = 'GroupMenuItem';
 
+	# explicit pk since our pk is not "id" 
+ 	static $primary_key = 'GroupID';
+
 	# explicit column names for the sake of readability
 	static $alias_attribute = array(
 		'GroupID' => 'GroupID',
-		'ItemID' => 'MenuItemID');
+		'MenuItemID' => 'MenuItemID');
 
 	static $belongs_to = array(
 		array('menu_item'
@@ -19,7 +22,7 @@ class Group_menu_item extends ActiveRecord\Model
 		array('group'
 			 ,'class_name' => 'Group'
 			 ,'foreign_key' => 'groupid'
-			 ,'primary_key' => 'groupid'
+			 ,'primary_key' => 'id'
 			 )
 		);
 }
