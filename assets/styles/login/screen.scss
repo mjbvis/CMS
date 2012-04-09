@@ -79,25 +79,29 @@ body {
   font-size:        16px;
   letter-spacing:   1px;
   font-weight:      bold;
-  margin:           0;
-  padding:          10px;
   background-color: $bodyBackGround;
 }
 
 #login {
-  margin:         70px auto;
+  margin:         100px auto;
   width:          400px;
   border:         3px solid $border;
   background:     $reallyLightBlue;
-  padding-top:    20px;
-  padding-left:   20px;
-  padding-right:  20px;
-  padding-bottom: 20px;
+  padding:        20px;
   @include borderRadius(5px);
   @include boxShadow(2px 5px 10px, $boxShadow);
 }
 
 img{ padding-bottom: 20px; }
+
+#bottom{
+  height:      30px;
+  padding-top: 10px;
+  a{
+   position: relative;
+   top:      5px;
+  }
+}
 
 input {
   width:         270px;
@@ -110,7 +114,7 @@ input {
   @include boxShadow(0px 0px 2px, #000);
   &:hover{
     @include boxShadow(0px 0px 4px, #000);
-    background: $inputBackgroundHover;
+    background-color: $inputBackgroundHover;
   }
   &.submit{
     font-family:    Tahoma, Geneva, Arial, Helvetica, sans-serif;
@@ -118,10 +122,11 @@ input {
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight:    bold;
+    float:          right;
     width:          100px;
+    cursor:         pointer;
     color:          $submitTextColor;
     background:     $submitBackground;
-    margin-top:     10px;
     border:         2px solid $submitBoarder;
     @include borderRadius(5px);
   }
@@ -129,31 +134,4 @@ input {
     border:     2px solid $submitBoarder;
     background: $submitBackHover;
   }
-}
-
-#helpDiv {
-  float:       left;
-  width:       70%;
-  padding-top: 15px;
-}
-
-#submitDiv {
-  float: right;
-  width: 30%;
-}
-
-// HACKY REMOVE ...........
-.clearfix:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
-
-.clearfix {
-    min-width: 0;
-    display: inline-block; /* \*/
-    display: block;
-    margin-top: 5px;
 }
