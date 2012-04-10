@@ -41,10 +41,7 @@ $buttonPush: $cmsDarkBlue;
 
 // Body
 $mainBodyBackground: $white;
-$main:               $white;
-
-//content
-$content: $reallyReallyLightBlue;
+$main:               $reallyReallyLightBlue;
 
 //sidebars
 $sideBar:              $white;
@@ -146,9 +143,7 @@ body {
   position:         relative;
   bottom:           0;
   height:           $menuHeight;
-  z-index: 100;
   ul{
-    z-index: 100;
     float:      right;
     list-style: none;
     margin:     0;
@@ -179,8 +174,7 @@ body {
       ul{
         position:   absolute;
         right:      20px;
-        top:        0;       // Firefox has a bug and will not transition default values.
-        z-index:    1;
+        top:        $menuHeight + 10;       // Firefox has a bug and will not transition default values.
         visibility: hidden;
         opacity:    0;
         padding:    0;
@@ -193,7 +187,6 @@ body {
           padding-bottom: 0;
         }
         li{
-          z-index:1;
           width:         100%;
           padding-left:  10px;
           padding-right: 10px !important;
@@ -212,9 +205,6 @@ body {
   margin:           0 auto;
   padding:          10px 5px 5px; // Optimized short hand version of 10px 5px 5px 5px.
   min-height:       100%;
-  border:           solid 3px $formBorder;
-  border-top:       0;
-  background-color: $content;
 }
 
 #footer {
