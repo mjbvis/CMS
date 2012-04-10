@@ -33,18 +33,18 @@ if (!function_exists('isset_not_empty')) {
 			<nav id="topNav">
 				<ul>
 					<?php
-					foreach($MenuItems as $mItem):
-					$mItemAttr = $mItem->attributes();
+foreach($MenuItems as $mItem):
+$mItemAttr = $mItem->attributes();
 					?>
 					<li>
-						<a href='<?php echo $mItemAttr['url'];?>'><?php echo $mItemAttr['label'];?></a>
+						<a href='<?php echo $mItemAttr['url'];?>'><?php echo $mItemAttr['label']; ?></a>
 						<ul>
 							<?php
-							foreach($mItem->sub_items as $sItem):
-							$sItemAttr = $sItem->attributes();
+foreach($mItem->sub_items as $sItem):
+$sItemAttr = $sItem->attributes();
 							?>
 							<li>
-								<?php echo anchor($sItemAttr['url'], $sItemAttr['label']);?>
+								<?php echo anchor($sItemAttr['url'], $sItemAttr['label']); ?>
 							</li>
 							<?php endforeach;?>
 						</ul>

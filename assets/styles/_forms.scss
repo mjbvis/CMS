@@ -22,11 +22,13 @@ $formShadow:             $cmsLightBlue;
 // ****************************************************
 
 form {
+  position:       relative;
   width:          75%;
   margin:         10px auto;
   border:         solid 3px $formBorder;
   background:     $formBackgroundColor;
   padding:        20px;
+  padding-bottom: 55px;
   font-family:    Tahoma, Geneva, Arial, Helvetica, sans-serif;
   font-size:      16px;
   letter-spacing: 1px;
@@ -69,7 +71,7 @@ input:focus, textarea:focus {
   width:      auto;
   padding:    9px 15px;
   background: $submitButtonColor;
-  border:     0;
+  cursor:     pointer;
   font-size:  14px;
   color:      $submitButtonTextColor;
   border:     2px solid $submitBoarder;

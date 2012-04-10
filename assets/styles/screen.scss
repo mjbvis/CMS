@@ -58,8 +58,9 @@ $forumBackgroundColor: $reallyLightBlue;
 // ************ End Color Theme ************************
 
 // Other variables
-$aTrans:     0.75s;    // Transition speed (menu nav 50% this speed)
-$menuHeight: 38px;     // Height of the top menu [>45 yeilds undesireable results]
+$aTrans:       0.75s;    // Transition speed (menu nav 50% this speed)
+$menuHeight:   38px;     // Height of the top menu [>45 yeilds undesireable results]
+$footerHeight: 75px;
 
 // Mixins
 @mixin transAll($speed){
@@ -117,37 +118,37 @@ html,body {
 }
 
 body {
-  font-family:       Tahoma, Geneva, Arial, Helvetica, sans-serif;
-  margin:            0;
-  padding:           10px;
   background-image:  url('../images/background.png');
   background-repeat: repeat;
+  margin:0;
 }
 
 #main {
-  margin:     0 auto;
-  padding:    0;
-  min-width:  780px;
-  max-width:  1120px;
-  min-height: 500px;
+  position:         relative;
+  font-family:      Tahoma, Geneva, Arial, Helvetica, sans-serif;
+  margin:           0 auto;
+  min-width:        780px;
+  max-width:        1120px;
+  min-height:       90%;
   background-color: $main;
+  padding-bottom:   $footerHeight;
 }
 
 #header {
-  width:      100%;
   margin:     0 auto;
-  padding:    0;
   min-width:  780px;
   max-width:  1120px;
 }
 
 #topNav {
   background-color: $button;
-  margin-top: 15px;
-  position:   relative;
-  bottom:     0;
-  height:     $menuHeight;
+  margin-top:       15px;
+  position:         relative;
+  bottom:           0;
+  height:           $menuHeight;
+  z-index: 100;
   ul{
+    z-index: 100;
     float:      right;
     list-style: none;
     margin:     0;
@@ -179,7 +180,7 @@ body {
         position:   absolute;
         right:      20px;
         top:        0;       // Firefox has a bug and will not transition default values.
-        z-index:    1000;
+        z-index:    1;
         visibility: hidden;
         opacity:    0;
         padding:    0;
@@ -192,6 +193,7 @@ body {
           padding-bottom: 0;
         }
         li{
+          z-index:1;
           width:         100%;
           padding-left:  10px;
           padding-right: 10px !important;
@@ -209,25 +211,27 @@ body {
 #content {
   margin:           0 auto;
   padding:          10px 5px 5px; // Optimized short hand version of 10px 5px 5px 5px.
-  min-height:       557px;
-  border-right:     solid 3px $formBorder;
-  border-left:      solid 3px $formBorder;
-  border-bottom:    solid 3px $formBorder;
+  min-height:       100%;
+  border:           solid 3px $formBorder;
+  border-top:       0;
   background-color: $content;
 }
 
 #footer {
+  position:         absolute;
+  bottom:           0;
   border-top:       3px solid $horizontalBars;
   padding-top:      20px;
   width:            100%;
-  min-height:       75px;
+  height:           $footerHeight;
   background-color: $headerAndFooterMainColor;
 
 }
 
 #xhtmlCss {
-  float: left;
-  width: 70%;
+  float:        left;
+  width:        67%;
+  padding-left: 3px;
 }
 
 #rss {
@@ -235,33 +239,6 @@ body {
   width:      30%;
   text-align: right;
 }
-
-// DELETE - HACKY
-.clearfix {
-  min-width:  0;
-  display:    inline-block;
-  display:    block;
-  margin-top: 5px;
-  &:after{
-    content:    ".";  // What is this?
-    display:    block;
-    height:     0;
-    clear:      both;
-    visibility: hidden;
-  }
-}
-
-/* trigger hasLayout for IE7. Hide from IE Mac */
-* html .clearfix {
-  height: 1%;
-}
-
-/* Hide from IE Mac */
-.clr, .clear {
-  clear: both;    
-}
-
-// END DELETE
 
 a:link, a:visited {
   color: $links;
