@@ -178,6 +178,7 @@ body {
         visibility: hidden;
         opacity:    0;
         padding:    0;
+        z-index:    1;
         @include transAll($aTrans * 0.35);
         &>:nth-child(n+1){
           padding-bottom: 1px;
