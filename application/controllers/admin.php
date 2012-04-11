@@ -16,7 +16,7 @@ class Admin extends Application{
         
 		/* Load libraries */
 		$this->load->library('form_validation', '');
-        $this->load->library('Repositories/Registration_Repository', '', 'reg'); 
+        $this->load->library('Repositories/Registration_Repository', '', 'reg');
 		
 		/* Load Models*/
 		

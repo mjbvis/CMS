@@ -14,14 +14,14 @@
 			</legend> 
 			<?php $i = 0; ?>
 			<?php foreach($wlQuestions as $q): ?>
-				<?
+				<?php
 					// print question
 					$attributes = $q->attributes();
 					echo $attributes['questiontext'] . '</br>';
 				?>
 				
 				<!--Question Textarea-->
-				<textarea name="<?="q" . $i . "answer"; ?>" id="<?="q" . $i . "ID"; ?>" placeholder="Enter Answer Here..." cols="100" rows="5" max="250" ></textarea></br>
+				<textarea name="<?php echo("q" . $i . "answer"); ?>" id="<?php echo ("q" . $i . "ID"); ?>" placeholder="Enter Answer Here..." cols="100" rows="5" max="250" ></textarea></br>
 				
 			<? $i++; ?>
 			<?php endforeach; ?>
