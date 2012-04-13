@@ -82,6 +82,18 @@ input:focus, textarea:focus {
   }
 }
 
+.validationBox{
+  border: 2px solid #7f1007;
+  border-left-color: #e92516;
+  border-top-color: #e92516;
+  padding-left: 5px;
+  p{
+    color: #eb460d;
+    font-size: 18px;
+    font-weight: bold;
+  }
+}
+
 legend{
   padding-left:  10px;
   padding-right: 10px;
