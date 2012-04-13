@@ -55,9 +55,10 @@ $forumBackgroundColor: $reallyLightBlue;
 // ************ End Color Theme ************************
 
 // Other variables
-$aTrans:       0.75s;    // Transition speed (menu nav 50% this speed)
-$menuHeight:   38px;     // Height of the top menu [>45 yeilds undesireable results]
-$footerHeight: 75px;
+$aTrans:        0.75s;    // Transition speed (menu nav 50% this speed)
+$menuHeight:    38px;     // Height of the top menu [>45 yeilds undesireable results]
+$footerHeight:  75px;
+$footerPadding: 10px;
 
 // Mixins
 @mixin transAll($speed){
@@ -222,13 +223,14 @@ body {
 #xhtmlCss {
   float:        left;
   width:        67%;
-  padding-left: 3px;
+  padding-left: $footerPadding;
 }
 
 #rss {
-  float:      right;
-  width:      30%;
-  text-align: right;
+  float:         right;
+  width:         30%;
+  text-align:    right;
+  padding-right: $footerPadding;
 }
 
 a:link, a:visited {
