@@ -20,6 +20,7 @@ if (!function_exists('isset_not_empty')) {
 		<meta name="Description" content="Corvallis Montessori School">
 		<meta name="Author" content="Corvallis Montessori School">
 		<meta name="Rating" content="General">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
 		<title><?php echo((isset_not_empty($title) ? "$title | CMS" : "CMS"));?></title>
 		<link rel="icon" type="image/x-icon" href="<?php echo base_url('favicon.ico');?>" />
 		<link rel="stylesheet" href="<?php echo base_url('assets/styles/screen.css');?>" type="text/css"	media="screen" />

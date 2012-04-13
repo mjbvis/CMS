@@ -13,7 +13,7 @@
 					<a href="http://www.facebook.com/pages/Corvallis-Montessori-School/141276895968144" target="_blank" title="Click here to visit our Facebook page!"><img class="social" src="<?php echo base_url('assets/images/fb_icon.png');?>" border="0" /></a>
 				</div>
 		</div>
-		<!--[if lt IE 8 ]>
+		<!--[if lt IE 7 ]>
     <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
     <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
   <![endif]-->
