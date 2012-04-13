@@ -299,7 +299,7 @@ class admissions extends Application {
 		// validate all questions on the form
 		$i = 0;
 		foreach($questions as $q){
-			$this->form_validation->set_rules('q' . $i . "answer", 'Question ' . $i . '\'s answer', 'required|min_length[1]|callback_field_exists');
+			$this->form_validation->set_rules('q' . $i . 'answer', 'question#' . $i . '\'s answer', 'required|min_length[1]|callback_field_exists');
 			$i++;
 		}
 	}
