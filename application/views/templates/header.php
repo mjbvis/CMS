@@ -15,7 +15,7 @@ if (!function_exists('isset_not_empty')) {
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta name="Robots" content="noindex, nofollow, noarchive">
 		<meta name="Description" content="Corvallis Montessori School">
 		<meta name="Author" content="Corvallis Montessori School">
