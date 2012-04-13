@@ -83,13 +83,12 @@ input:focus, textarea:focus {
 }
 
 .validationBox{
-  border: 2px solid #7f1007;
-  border-left-color: #e92516;
-  border-top-color: #e92516;
-  padding-left: 5px;
+  border:        2px solid #e92516;
+  padding-left:  5px;
+  margin-bottom: 10px;
   p{
-    color: #eb460d;
-    font-size: 18px;
+    color:       #eb460d;
+    font-size:   18px;
     font-weight: bold;
   }
 }
