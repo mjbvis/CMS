@@ -30,16 +30,16 @@ function show_hide_page_one(value) {
             </legend>
             <ul>
                 <li>
-                    <label></lable>Parent's Names:</label>
+                    <label>Parent's Names:</label>
                     <input type='text' name='pFirstName' id='pFirstId' placeholder="First Name" max='50' />
                     <input type="text" name='pLastName' id="pLastId" placeholder="Last Name" max='50' />
                     </br>
                 </li>
                 <li>
-                    <label>Children's name(s)</br>/ages:</label>
-                    <input type='text' name='cFirstName' id='cFirstId' placeholder="First Name" max='50' />
-                    <input type="text" name="cLastName" id="cLastId" placeholder="Last Name" max='50'/>
-                    <input type="text" name="cAgeName" id="cAgeId" max='4'/>
+                    <label>Children names/ages:</label>
+                    <textarea name="namesAndAges" id="namesAndAgesId"
+                    	placeholder="Names and ages here..." cols="100" rows="5" max="250" ><?php
+							echo set_value('namesAndAges'); ?></textarea></br>
                     </br>
                 </li>
                 <li>
