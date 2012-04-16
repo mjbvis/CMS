@@ -62,10 +62,14 @@ class admissions extends Application {
 			// get answers from waitlist questionaire
 			$this->storeWaitListForm($wlQuestions);
 			
-			// TODO: success page?
+			$this->data['firstName'] = set_value('cFirstName');
+			$this->data['middleName'] = set_value('cMiddleName');
+			$this->data['lastName'] = set_value('cLastName');
 			
-			// let the login controller redirect us to the appropriate dashboard
-			redirect(login);
+			// display SUCCESS!
+			$this->load->view('templates/header', $this->data);	
+			$this->load->view('admissions/forms/waitlist_success', $this->data);
+			$this->load->view('templates/footer', $this->data);
 		}
 		else{	
 			// display the waitlist questionaire
@@ -168,27 +172,24 @@ class admissions extends Application {
 	
 	# saves the completed Waitlist Questionaire
 	function storeWaitlistForm($questions){
-		// save waitlist form to DB
-		$formAttributes = array(
-			'ParentID' 			=> Parental::find_by_userid(user_id())->ParentID,
-			'FirstName'			=> set_value('cFirstName'),
-			'MiddleName'		=> set_value('cMiddleName'),
-			'LastName'			=> set_value('cLastName'),
-			'Agreement'			=> set_value('pAgreement'),
-			'SubmissionDTTM'	=> date('Y-m-d H:i:s', time()) // Example: 2012-11-28 14:32:08
-		);
-		$wlForm = Waitlist_form::create($formAttributes);
+		// save waitlist form to DB		
+		$wlForm = new Waitlist_form();
+		$wlForm->parentid = Parental::find_by_userid(user_id())->ParentID;
+		$wlForm->firstname = set_value('cFirstName');
+		$wlForm->middlename = set_value('cMiddleName');
+		$wlForm->lastname = set_value('cLastName');
+		$wlForm->agreement = set_value('pAgreement');
+		$wlForm->submissiondttm = date('Y-m-d H:i:s', time()); // Example: 2012-11-28 14:32:08
+		$wlForm->save();
 
-		
 		// store each answer from the waitlist questionaire form
 		$i = 0;
 		foreach($questions as $q){
-			$questionAttributes = array(
-				'FormID'		=> $wlForm->FormID,
-				'QuestionID'	=> $q->QuestionID,
-				'Answer'		=> set_value('q' . $i . 'answer')
-			);
-			Waitlist_form_question::create($questionAttributes);
+			$wlAnswer = new Waitlist_form_question();
+			$wlAnswer->formid = $wlForm->formid;
+			$wlAnswer->questionid = $q->questionid;
+			$wlAnswer->answer = set_value('q' . $i . 'answer');
+			$wlAnswer->save();
 			
 			$i++;
 		}

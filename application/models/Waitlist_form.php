@@ -5,7 +5,7 @@ class Waitlist_form extends ActiveRecord\Model
 	# explicit table name
 	static $table_name = 'WaitlistForm';
 	
-	static $primary_key = 'FormID';
+	//static $primary_key = 'FormID';
 	
 	# explicit column names for the sake of readability
 	static $alias_attribute = array(
