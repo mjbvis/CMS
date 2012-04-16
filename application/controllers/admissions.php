@@ -38,13 +38,16 @@ class admissions extends Application {
         }
     }
 	
+	// view the Montessori policy and statements of value
 	function policy() {
 		$this->load->view('templates/header', $this->data);
 		$this->load->view('admissions/forms/policy', $this->data);
 		$this->load->view('templates/footer', $this->data);
 	}
 	
-	function waitlist_questionaire() {
+	// Manages the waitlist_questionaire. Handles displaying the
+	// questionaire, validating the questionaire, and saving the form.
+	function waitlist_questionaire() {		
 		// get all enabled questions
 		$wlQuestions = Waitlist_question::find_all_by_enabled(1);
 
@@ -72,22 +75,52 @@ class admissions extends Application {
 		}
 	}
 
+	// returns all waitlisted students.
+	// TODO: this functions purpose is for when we get datagrids working.
+	// this method will convert the datagrid info to xml or json so that it
+	// can be sent to the view and interpreted by the JQuery.
+	function get_waitlisted_students() {
+		$join = 'LEFT JOIN Student s ON(WaitlistForm.FormID = s.QuestionaireID AND s.IsEnrolled != 1)';
+		$wForms = Waitlist_form::all(array('joins' => $join));
+		var_dump($wForms);
+	}
+	
+	// Displays the list of all waitlisted students for the current parent.
+	// TODO: filter by parent
+	function register_student_selector() {
+		$join = 'LEFT JOIN Student s ON(WaitlistForm.FormID = s.QuestionaireID AND s.IsEnrolled != 1)';
+		$this->data['wlStudents'] = Waitlist_form::all(array('joins' => $join));
+		
+		$this->load->view('templates/header', $this->data);	
+		$this->load->view('admissions/forms/register_student_selection');
+		$this->load->view('templates/footer');
+	}
 	
 	
-	function register_page1() {
-		# Set up validation for admissionsPage1.php
+	// Manages the register_student form. Handles displaying the
+	// form, validating the form, and saving the form.
+	// We are registering the student represented by the given
+	// waitlist ID, wlid.
+	function register_student($wlid = '') {
+		
+		// TODO: verify that this student belongs to this user
+		
+		# Set up validation for the student registration process
 		$this->validatePageOne();
 		if($this->form_validation->run() == FALSE) {
 			$this->load->view('templates/header', $this->data);	
-			$this->load->view('admissions/forms/admissionsPage1');
+			$this->load->view('admissions/forms/register_student');
 			$this->load->view('templates/footer');
 		}
 		else {
 			$formData = storePageOneForm();
 			$this->$reg->savePageOne($formData);
-			$this->load->view('templates/header', $this->data);	
-			$this->load->view('admissions/forms/admissionsPage2');
-			$this->load->view('templates/footer');	
+			
+			
+			// TODO: success page?
+			
+			// let the login controller redirect us to the appropriate dashboard
+			redirect(login);	
 		}
 	}
 	

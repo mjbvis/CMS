@@ -52,8 +52,8 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-//$autoload['libraries'] = array();
-//$autoload['libraries'] = array('Activerecord'); 
+//autoload JQuery and php-activerecord
+$autoload['libraries'] = array('javascript');
 $autoload['sparks']= array('php-activerecord/2.0.0');
 
 /*

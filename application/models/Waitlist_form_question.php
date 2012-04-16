@@ -7,7 +7,7 @@ class Waitlist_form_question extends ActiveRecord\Model
 	
 	# explicit column names for the sake of readability
 	static $alias_attribute = array(
-		'FormID' => 'id',
+		'FormID' => 'FormID',
 		'QuestionID' => 'QuestionID',
 		'Answer' => 'Answer');
 		

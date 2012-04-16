@@ -90,9 +90,9 @@ class Admin extends Application{
 		
 	} // public function register()
 	
-	public function test(){
+	public function interview_observation_form(){
 	    $this->load->view('templates/header', $this->data);  
-        $this->load->view('admissions/forms/admissionsPage1');
+        $this->load->view('admissions/forms/interview_observation');
         $this->load->view('templates/footer');
 	}
 

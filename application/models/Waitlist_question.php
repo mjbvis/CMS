@@ -5,9 +5,11 @@ class Waitlist_question extends ActiveRecord\Model
 	# explicit table name
 	static $table_name = 'WaitlistQuestion';
 	
+	static $primary_key = 'QuestionID';
+
 	# explicit column names for the sake of readability
 	static $alias_attribute = array(
-		'QuestionID' => 'id',
+		'QuestionID' => 'QuestionID',
 		'Text' => 'QuestionText',
 		'Enabled' => 'Enabled',
 		'UDTTM' => 'UDTTM');
@@ -18,7 +20,7 @@ class Waitlist_question extends ActiveRecord\Model
 			 ,'foreign_key' => 'questionid'
 			 ,'primary_key' => 'questionid'
 			 ),
-		array('menu_items'	// NOTE: the many-to-many mapping through Waitlist_form_question.php isn't functional
+		array('waitlist_forms'	// NOTE: the many-to-many mapping through Waitlist_form_question.php isn't functional
 			 ,'class_name' => 'Waitlist_form'
 			 ,'foreign_key' => 'formid'
 			 ,'primary_key' => 'formid'

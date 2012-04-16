@@ -23,8 +23,13 @@ if (!function_exists('isset_not_empty')) {
 		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
 		<title><?php echo((isset_not_empty($title) ? "$title | CMS" : "CMS"));?></title>
 		<link rel="icon" type="image/x-icon" href="<?php echo base_url('favicon.ico');?>" />
-		<link rel="stylesheet" href="<?php echo base_url('assets/styles/screen.css');?>" type="text/css"	media="screen" />
+		<link rel="stylesheet" href="<?php echo base_url('assets/styles/screen.css');?>" type="text/css" media="screen" />
 		<link rel="stylesheet" href="<?php echo base_url('assets/styles/forms/screen.css');?>" type="text/css" media="screen" />
+		<link rel="stylesheet" href="<?php echo base_url('assets/js/jqgrid-php-v1.4/js/themes/ui-lightness/jquery-ui.custom.css'); ?>" type="text/css" media="screen" />
+		<link rel="stylesheet" href="<?php echo base_url('assets/js/jqgrid-php-v1.4/js/jqgrid/css/ui.jqgrid.css'); ?>" type="text/css" media="screen" />
+		<script src="<?php echo base_url('assets/js/jqgrid-php-v1.4/js/jqgrid/js/i18n/grid.locale-en.js'); ?>" type="text/javascript"></script>
+		<script src="<?php echo base_url('assets/js/jqgrid-php-v1.4/js/jqgrid/js/jquery.jqGrid.min.js'); ?>" type="text/javascript"></script>
+		
 	</head>
 	<body>
 		<div id="header">
@@ -33,22 +38,22 @@ if (!function_exists('isset_not_empty')) {
 		<div id="main">
 			<nav id="topNav">
 				<ul>
-					<?php foreach($MenuItems as $mItem):
+					<?php
+					foreach($MenuItems as $mItem):
 						$mItemAttr = $mItem->attributes();
+						printf('<li>');
+							printf('<a href=%s>%s</a></br>', base_url($mItemAttr['url']), $mItemAttr['label']);
+							printf('<ul>');
+								foreach($mItem->sub_items as $sItem):
+									$sItemAttr = $sItem->attributes();
+									printf('<li>');
+										printf('<a href=%s>%s</a></br>', base_url($sItemAttr['url']), $sItemAttr['label']);
+									printf('</li>');
+								endforeach;
+							printf('</ul>');
+						printf('</li>');
+					endforeach;
 					?>
-					<li>
-						<a href='<?php echo $mItemAttr['url'];?>'><?php echo $mItemAttr['label']; ?></a>
-						<ul>
-							<?php foreach($mItem->sub_items as $sItem):
-								$sItemAttr = $sItem->attributes();
-							?>
-							<li>
-								<?php echo anchor($sItemAttr['url'], $sItemAttr['label']); ?>
-							</li>
-							<?php endforeach;?>
-						</ul>
-					</li>
-					<?php endforeach;?>
 				</ul>
 			</nav>
 			<div id="content">
