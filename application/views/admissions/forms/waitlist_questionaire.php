@@ -11,9 +11,9 @@
 			<legend>
 				Child's Name:
 			</legend>
-			<input type="text" name="cFirstName" id="cFirstId" max="50" placeholder="First Name" value="<?php echo set_value('cFirstName');?>" />
-			<input type="text" name="cMiddleName" id="cMiddleId" max="50" placeholder="Middle Name" value="<?php echo set_value('cMiddleName');?>" />
-			<input type="text" name="cLastName" id="cLastId" max="50" placeholder="Last Name" value="<?php echo set_value('cLastName');?>" />
+			<input type="text" name="cFirstName" id="cFirstId" max="45" placeholder="First Name" value="<?php echo set_value('cFirstName');?>" />
+			<input type="text" name="cMiddleName" id="cMiddleId" max="45" placeholder="Middle Name" value="<?php echo set_value('cMiddleName');?>" />
+			<input type="text" name="cLastName" id="cLastId" max="45" placeholder="Last Name" value="<?php echo set_value('cLastName');?>" />
 			</br> </br>
 		</fieldset>
 		<fieldset>
@@ -37,7 +37,7 @@
 			?>
 		</fieldset>
 		<fieldset>
-			<a href="admissions/policy" target="_blank">Click here to view Montessori values</a></br></br>
+			<?php printf('<a href="%s" target="_blank">%s</a></br></br>', base_url('admissions/policy'), 'Click here to view Montessori values'); ?>
 			How well do you agree with the Montessori values?</br>
 			<input type="radio" name="pAgreement" value="1" align="vertical" <?php echo set_radio('pAgreement', '1'); ?> >Agree</input>
 			<input type="radio" name="pAgreement" value="2" aligh="vertical" <?php echo set_radio('pAgreement', '2'); ?> >Unsure</input>
