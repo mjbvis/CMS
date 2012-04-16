@@ -92,7 +92,7 @@ class Admin extends Application{
 	
 	public function interview_observation_form(){
 	    $this->load->view('templates/header', $this->data);  
-        $this->load->view('admissions/forms/interview_observation');
+        $this->load->view('admin/interview_observation');
         $this->load->view('templates/footer');
 	}
 
