@@ -36,6 +36,13 @@
 			endforeach;
 			?>
 		</fieldset>
+		<fieldset>
+			<a href="admissions/policy" target="_blank">Click here to view Montessori values</a></br></br>
+			How well do you agree with the Montessori values?</br>
+			<input type="radio" name="pAgreement" value="1" align="vertical" <?php echo set_radio('pAgreement', '1'); ?> >Agree</input>
+			<input type="radio" name="pAgreement" value="2" aligh="vertical" <?php echo set_radio('pAgreement', '2'); ?> >Unsure</input>
+			<input type="radio" name="pAgreement" value="3" align="vertical" <?php echo set_radio('pAgreement', '3'); ?> >Disagree</input>
+		</fieldset>
 		<input type="submit" value="Save and Continue" name="waitlist_questionaire" class="submit"/>
 	</form>
 </div>

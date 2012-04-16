@@ -38,6 +38,12 @@ class admissions extends Application {
         }
     }
 	
+	function policy() {
+		$this->load->view('templates/header', $this->data);
+		$this->load->view('admissions/forms/policy', $this->data);
+		$this->load->view('templates/footer', $this->data);
+	}
+	
 	function waitlist_questionaire() {
 		// get all enabled questions
 		$wlQuestions = Waitlist_question::find_all_by_enabled(1);
@@ -58,9 +64,7 @@ class admissions extends Application {
 			// let the login controller redirect us to the appropriate dashboard
 			redirect(login);
 		}
-		else{
-			// TODO: show missing fields???
-			
+		else{	
 			// display the waitlist questionaire
 			$this->load->view('templates/header', $this->data);	
 			$this->load->view('admissions/forms/waitlist_questionaire', $this->data);
@@ -131,7 +135,7 @@ class admissions extends Application {
 			'FirstName'			=> set_value('cFirstName'),
 			'MiddleName'		=> set_value('cMiddleName'),
 			'LastName'			=> set_value('cLastName'),
-			'Agreement'			=> 1,	//TODO: use agreement from policy form
+			'Agreement'			=> set_value('pAgreement'),
 			'SubmissionDTTM'	=> date('Y-m-d H:i:s', time()) // Example: 2012-11-28 14:32:08
 		);
 		$wlForm = Waitlist_form::create($formAttributes);
@@ -302,6 +306,8 @@ class admissions extends Application {
 			$this->form_validation->set_rules('q' . $i . 'answer', 'question#' . $i . '\'s answer', 'required|min_length[1]|callback_field_exists');
 			$i++;
 		}
+		
+		$this->form_validation->set_rules('pAgreement', 'Policy Agreement', 'required|callback_field_exists');
 	}
 
 	# sets the validation rules
