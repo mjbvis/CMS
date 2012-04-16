@@ -104,6 +104,12 @@ class admissions extends Application {
 	function register_student($wlid = '') {
 		
 		// TODO: verify that this student belongs to this user
+		$wlStud = Waitlist_form::find_by_formid($wlid);
+		
+		
+		$this->data['firstName'] = $wlStud->firstname;
+		$this->data['middleName'] = $wlStud->middlename;
+		$this->data['lastName'] = $wlStud->lastname;
 		
 		# Set up validation for the student registration process
 		$this->validatePageOne();
