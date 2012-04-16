@@ -15,7 +15,6 @@ class Admin extends Application{
 		$this->load->helper(array('url', 'form', 'registration', 'menu'));
         
 		/* Load libraries */
-		$this->load->library('form_validation', '');
         $this->load->library('Repositories/Registration_Repository', '', 'reg');
 		
 		/* setup default view data */

@@ -7,7 +7,7 @@ class Login extends Application {
 		parent::__construct();
 
 		# Load Helpers
-		$this->load->helper(array('url', 'form', 'dashboard'));
+		$this->load->helper(array('url', 'form', 'dashboard', 'ag_auth'));
 
 		# Load Libraries
 		
@@ -18,7 +18,7 @@ class Login extends Application {
         $this->config->load('ag_auth');
 		
 		$mItems = Menu_item::all(array('order' => 'RankOrder asc'));
-		// TODO: limit menu items to admin
+		
 		$this->data['MenuItems'] = $mItems;
 	}
 
@@ -28,7 +28,7 @@ class Login extends Application {
 		$data['title'] = 'Login';
 		
 
-		//if the user is already loged in goto their default dashboard
+		//if the user is already logged in goto their default dashboard
 		if(logged_in())
 		{
 			// redirect to the appropriate dashboard

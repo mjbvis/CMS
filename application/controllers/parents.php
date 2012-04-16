@@ -14,9 +14,8 @@ Class Parents extends Application {
 		$this->load->helper(array('url', 'form', 'menu'));
 
 		/* Load libraries */
-		$this->load->library('form_validation');
 
-		# setup default view data
+		/* setup default view data */
 		$this->data['title'] = 'Parent Dashboard';
 		$this->data['MenuItems'] = get_menu_items('parent');
 	}

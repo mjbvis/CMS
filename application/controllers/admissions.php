@@ -17,9 +17,6 @@ class admissions extends Application {
 		
 		# setup default view data
 		$this->data['title'] = 'Admissions Dashboard';
-		
-		# setup default view data
-		$this->data['title'] = 'Admissions Dashboard';
 		$this->data['MenuItems'] = get_menu_items('admin');
 	}
     

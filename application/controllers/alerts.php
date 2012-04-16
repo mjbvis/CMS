@@ -14,7 +14,7 @@ class Alerts extends Application
 		/* Load helpers */
 		$this->load->helper(array('url', 'form', 'menu'));
     	/* Load libraries */
-		$this->load->library('form_validation');
+
         /* Load Models */
         $this->load->model('alerts_model');
 		

@@ -15,12 +15,12 @@
 			<img src="<?php echo base_url('assets/images/login_banner.png');?>" alt="CMS Logo" width="400" height="150">
 			<form name="loginform" method="POST">
 				<label>Username: </label>
-				<input type="text" name="username" value="<?php echo set_value('username');?>" />
-				<?php echo form_error('username');?><br />
+				<?php echo form_error('username'); ?>
+				<input type="text" name="username" value="<?php echo set_value('username');?>" /><br />
 				<br />
 				<label>Password: </label>
-				<input type="password" name="password" value="<?php echo set_value('password');?>" />
-				<?php echo form_error('password');?><br />
+				<?php echo form_error('password'); ?>
+				<input type="password" name="password" /><br />
 				<div id="bottom">
 					<input type="submit" value="Login" name="submit" class="submit"/>
 					<a href="">Lost your password?</a>

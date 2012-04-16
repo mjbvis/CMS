@@ -21,9 +21,9 @@ class Application extends CI_Controller
 		log_message('debug', 'Application Loaded');
 
 		# Load Libraries
-		$this->load->library(array('form_validation', 'ag_auth'));
+		$this->load->library(array('ag_auth'));
 		# Load Helpers
-		$this->load->helper(array('url', 'email', 'ag_auth', 'dashboard'));
+		$this->load->helper(array('url', 'email', 'ag_auth', 'dashboard', 'form'));
 		# Load Config
 		$this->config->load('ag_auth');
 		# Load Modules

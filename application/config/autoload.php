@@ -53,7 +53,7 @@ $autoload['packages'] = array();
 */
 
 //autoload JQuery and php-activerecord
-$autoload['libraries'] = array('javascript');
+$autoload['libraries'] = array('javascript', 'form_validation');
 $autoload['sparks']= array('php-activerecord/2.0.0');
 
 /*
