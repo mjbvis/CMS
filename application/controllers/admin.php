@@ -18,9 +18,7 @@ class Admin extends Application{
 		$this->load->library('form_validation', '');
         $this->load->library('Repositories/Registration_Repository', '', 'reg');
 		
-		/* Load Models*/
-		
-		# setup default view data
+		/* setup default view data */
 		$this->data['title'] = 'Admin Dashboard';
 		$this->data['MenuItems'] = get_menu_items('admin');
 	}
