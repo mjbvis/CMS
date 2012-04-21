@@ -239,7 +239,7 @@ class admissions extends Application {
 	function validateWaitlistQuestionaire($questions){
 		// validate name (don't require middle name)
 		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('cMiddleName', 'Child\'s Middle Name', '');
+		$this->form_validation->set_rules('cMiddleName', 'Child\'s Middle Name', '');	// Don't require the middle name
 		$this->form_validation->set_rules('cLastName', 'Child\'s Last Name', 'required|min_length[1]|callback_field_exists');
 		
 		// validate all questions on the form
@@ -255,7 +255,9 @@ class admissions extends Application {
 	// Sets the validation rules for the Student Registration Form
 	function validateRegistrationForm() {
 		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]|callback_field_exists');
+		$this->form_validation->set_rules('cMiddleName', 'Child\'s Middle Name', '');	// Don't require the middle name
 		$this->form_validation->set_rules('cLastName', 'Child\'s Last Name', 'required|min_length[1]|callback_field_exists');
+		
 		$this->form_validation->set_rules('cAddressName', 'Child\'s Address', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('cPhoneName', 'Child\s Phone', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('cityBirthplaceName', 'City child was born in', 'required|min_length[1]|callback_field_exists');
