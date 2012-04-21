@@ -44,7 +44,7 @@ class admissions extends Application {
 	
 	// Manages the waitlist_questionaire. Handles displaying the
 	// questionaire, validating the questionaire, and saving the form.
-	function waitlist_questionaire() {		
+	function waitlistQuestionaire() {		
 		// get all enabled questions
 		$wlQuestions = Waitlist_question::find_all_by_enabled(1);
 
@@ -80,15 +80,15 @@ class admissions extends Application {
 	// TODO: this functions purpose is for when we get datagrids working.
 	// this method will convert the datagrid info to xml or json so that it
 	// can be sent to the view and interpreted by the JQuery.
-	function get_waitlisted_students() {
+	function getWaitlistedStudents() {
 		$join = 'LEFT JOIN Student s ON(WaitlistForm.FormID = s.QuestionaireID AND s.IsEnrolled != 1)';
 		$wForms = Waitlist_form::all(array('joins' => $join));
 		var_dump($wForms);
 	}
 	
 	// Displays the list of all waitlisted students for the current parent.
-	// TODO: filter by parent
-	function register_student_selector() {
+	// TODO: filter by parent, filter out where no deposit is paid
+	function registerStudentSelector() {
 		$join = 'LEFT JOIN Student s ON(WaitlistForm.FormID = s.QuestionaireID AND s.IsEnrolled != 1)';
 		$this->data['wlStudents'] = Waitlist_form::all(array('joins' => $join));
 		
@@ -102,25 +102,27 @@ class admissions extends Application {
 	// form, validating the form, and saving the form.
 	// We are registering the student represented by the given
 	// waitlist ID, wlid.
-	function register_student($wlid = '') {
+	function registerStudent($wlid = '') {
 		
 		// TODO: verify that this student belongs to this user
 		$wlStud = Waitlist_form::find_by_formid($wlid);
 		
-		
+		// populate all name info from waitlist form
 		$this->data['firstName'] = $wlStud->firstname;
 		$this->data['middleName'] = $wlStud->middlename;
 		$this->data['lastName'] = $wlStud->lastname;
 		
 		# Set up validation for the student registration process
-		$this->validatePageOne();
+		$this->validateRegistrationForm();
 		if($this->form_validation->run() == FALSE) {
 			$this->load->view('templates/header', $this->data);	
 			$this->load->view('admissions/forms/register_student');
 			$this->load->view('templates/footer');
 		}
 		else {
-			$formData = storePageOneForm();
+			$formData = storeRegistrationForm();
+			
+			// TODO: THIS MUST BE PHASED OUT
 			$this->$reg->savePageOne($formData);
 			
 			
@@ -128,42 +130,6 @@ class admissions extends Application {
 			
 			// let the login controller redirect us to the appropriate dashboard
 			redirect(login);	
-		}
-	}
-	
-	function register_page2() {
-		$this->validatePageTwo();
-		
-		if($this->form_validation->run() == false) {
-			$this->load->view('admissions/forms/admissionsPage2');
-		}
-		else {
-			$data = storePageTwoForm();
-			$this->load->view('admissions/forms/admissionsPage3');
-		}	
-	}
-	
-	function register_page3() {
-		$this->form_validation->set_rules('agreementName', 'required');
-		
-		if($this->form_validation->run() == false) {
-			$this->load->view('admissions/forms/admissionPage3');	
-		}
-		else {
-			$data = set_value('agreementName');
-			$this->load->view('admissions/forms/admissionPage4');
-		}
-	}	
-	
-	function register_page4() {
-		$this->validatePageFour();
-		
-		if($this->form_validation->run() == false) {
-			$this->load->view('admissions/forms/admissionPage4');
-		}
-		else {
-			$data = storePageFourForm();
-			$this->load->view('admissions/forms/admissionPage5');
 		}
 	}
 	
@@ -192,69 +158,8 @@ class admissions extends Application {
 		}
 	}
 	
-	# saves the completed 1st page of the registration form
-	function storePageOneForm(){
-		$data = array(
-			'pFirst' 		=> set_value('pFirstName'),
-			'pLast' 		=> set_value('pLastName'),
-			'cFirst' 		=> set_value('cFirstName'),
-			'cLast'		 	=> set_value('cLastName'),
-			'cAge' 			=> set_value('cAgeName'),
-			'dob' 			=> set_value('dobName'),
-			'contactDate' 	=> set_value('contactDateName'),
-			'phone' 		=> set_value('phoneName'),
-			'visitDate' 	=> set_value('visitDateName'),
-			'email'		 	=> set_value('emailName'),
-			'learnedAbout'  => set_value('learnedAboutName'),
-			'adIn'			=> set_value('adInName'),
-			'other'			=> set_value('otherName'),
-			'interest'		=> set_value('interestName'),
-			'understanding' => set_value('understandingName'),
-			'willingness'	=> set_value('willingnessName'),
-			'movingCity'	=> set_value('movingCityName'),
-			'movingState'	=> set_value('movingStateName'),
-			'movingSchool'	=> set_value('movingSchoolName'),
-			'learningNotes' => set_value('learningNotesName'),
-			'montessoriImp' => set_value('montessoriImpressionsName'),
-			'interviewImp'	=> set_value('interviewImpressionsName'),
-			'obervationDate'=> set_value('observationDateName'),
-			'classroom'		=> set_value('classroomName'),
-			'attended'  	=> set_value('attendedName'),
-			'onTime'		=> set_value('onTimeName'),
-			'interviewDate' => set_value('interviewDateName'),
-			'appReceived' 	=> set_value('appReceivedName'),
-			'feeReceived'	=> set_value('feeReceivedName')
-		);
-		return $data;
-	}
-
-	# saves the completed 2nd page of the registration form
-	function storePageTwoForm() {
-		$data = array(
-			'cFirst' => set_value('cFirstName'),
-			'cLast' => set_value('cLastName'),
-			'currentDate' => set_value('currentDateName'),
-			'qOne' => set_value('qOneName'),
-			'qTwo' => set_value('qTwoName'),
-			'qThree' => set_value('qThreeName'),
-			'qFour' => set_value('qFourName'),
-			'qFive' => set_value('qFiveName'),
-			'qSix' => set_value('qSixName'),
-			'qSeven' => set_value('qSevenName'),
-			'qEight' => set_value('qEightName'),
-			'qNine' => set_value('qNineName'),
-			'qTen' => set_value('qTenName'),
-			'qEleven' => set_value('qElevenName'),
-			'qTwelve' => set_value('qTwelveName'),
-			'qThirteen' => set_value('qThirteenName'),
-			'qFourteen' => set_value('qFourteenName'),
-			'qFifteen' => set_value('qFifteenName'),
-			'qSixteen' => set_value('qSixteenName')
-		);
-	}
-	
-	# saves the completed 4th page of the registration form
-	function storeFormPageFour() {
+	# saves the registration form
+	function storeRegistrationForm() {
 		$data = array(
 			'cFirst' => set_value('cFirstName'),
 			'cLast' => set_value('cLastName'),
@@ -302,8 +207,8 @@ class admissions extends Application {
 		);
 	}
 
-	# saves the completed 5th page of the registration form
-	function storeFormPageFive() {
+	# saves the medical information to the database
+	function storeMedicalInformation() {
 		$data = array(
 			'cFirst' => set_value('cFirstName'),
 			'cLast' => set_value('cLastName'),
@@ -347,61 +252,8 @@ class admissions extends Application {
 		$this->form_validation->set_rules('pAgreement', 'Policy Agreement', 'required|callback_field_exists');
 	}
 
-	# sets the validation rules
-	function validatePageOne(){
-		$this->form_validation->set_rules('pFirstName', 'Parent\'s First Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('pLastName', 'Parent\'s Last Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('cLastName', 'Child\'s Last Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('cAgeName', 'Child\'s Age', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('dobName', 'Date of Birth', 'required|min_length[4]|callback_field_exists');
-		$this->form_validation->set_rules('contactDateName', 'Contact Date', 'required|min_length[4]|callback_field_exists');
-		$this->form_validation->set_rules('phoneName', 'Phone Number', 'required|min_length[10]|callback_field_exists');
-		$this->form_validation->set_rules('visitDateName', 'Visit Date', 'required|min_length[10]|callback_field_exists');
-		$this->form_validation->set_rules('emailName', 'Email', 'required|min_length[5]|callback_field_exists');
-		$this->form_validation->set_rules('learnedAboutName', 'Learned About CMS How', 'required');
-		$this->form_validation->set_rules('interestName', 'Level of Interest', 'required');
-		$this->form_validation->set_rules('understandingName', 'Understanding of Montessori', 'required');
-		$this->form_validation->set_rules('willingnessName', 'Willingness to learn more', 'required');
-		$this->form_validation->set_rules('movingCityName', 'Moving City', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('movingStateName', 'Moving State', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('movingSchoolName', 'Moving School', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('montessoriImpressionsName', 'Montessori Impressions', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('interviewImpressionsName', 'Interviews Impressions', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('observationDateName', 'Classroom Obersvation Date', 'required|min_length[4]|callback_field_exists');
-		$this->form_validation->set_rules('classroomName', 'Classroom Observed', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('attendedName', 'Attended', 'required');
-		$this->form_validation->set_rules('onTimeName', 'On Time', 'required');
-		$this->form_validation->set_rules('interviewDateName', 'Interview Date', 'required|min_length[4]|callback_field_exists');
-		$this->form_validation->set_rules('appReceivedName', 'Date Application Received', 'required|min_length[4]|callback_field_exists');
-		$this->form_validation->set_rules('feeReceivedName', 'Date Application Fee Received', 'required|min_length[4]|callback_field_exists');
-	}
-	
-	# sets the validation rules
-	function validatePageTwo() {
-		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('cLastName', 'Child\'s Last Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('pgTwoCurrentDateName', 'Current Date', 'required|min_length[4]|callback_field_exists');
-		$this->form_validation->set_rules('qOneName', 'Question 1', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('qTwoName', 'Question 2', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('qThreeName', 'Question 3', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('qFourName', 'Question 4', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('qFiveName', 'Question 5', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('qSixName', 'Question 6', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('qSevenName', 'Question 7', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('qEightName', 'Question 8', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('qNineName', 'Question 9', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('qTenName', 'Question 10', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('qElevenName', 'Question 11', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('qTwelveName', 'Question 12', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('qThirteenName', 'Question 13', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('qFourteenName', 'Question 14', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('qFifteenName', 'Question 15', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('qSixteenName', 'Question 16', 'required|min_length[1]|callback_field_exists');
-	}
-
-	# sets the validation rules
-	function validatePageFour() {
+	// Sets the validation rules for the Student Registration Form
+	function validateRegistrationForm() {
 		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('cLastName', 'Child\'s Last Name', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('cAddressName', 'Child\'s Address', 'required|min_length[1]|callback_field_exists');
@@ -447,8 +299,8 @@ class admissions extends Application {
 		$this->form_validation->set_rules('learnedAboutName', 'Learned About us', 'required|min_length[1]|callback_field_exists');
 	}
 
-	# sets the validation rules
-	function validatePageFive() {
+	// sets the validation rules for the MedicalInformationForm
+	function validateMedicalInformation() {
 		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('cLastName', 'Child\'s Last Name', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('dobName', 'Date of Birth', 'required|min_length[4]|callback_field_exists');

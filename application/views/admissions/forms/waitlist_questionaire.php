@@ -6,7 +6,7 @@
 	}
 	?>
 
-	<form id='studWaitlistQuestionaire'  method='post' accept-charset='UTF-8' class='clearfix'>
+	<form id='studWaitlistQuestionaire' method='post' accept-charset='UTF-8' class='clearfix'>
 		<fieldset>
 			<legend>
 				Child's Name:
@@ -43,6 +43,6 @@
 			<input type="radio" name="pAgreement" value="2" aligh="vertical" <?php echo set_radio('pAgreement', '2'); ?> >Unsure</input>
 			<input type="radio" name="pAgreement" value="3" align="vertical" <?php echo set_radio('pAgreement', '3'); ?> >Disagree</input>
 		</fieldset>
-		<input type="submit" value="Save and Continue" name="waitlist_questionaire" class="submit"/>
+		<input type="submit" value="Save and Continue" name="waitlistQuestionaire" class="submit"/>
 	</form>
 </div>
