@@ -80,22 +80,22 @@ class Admin extends Application{
                 $this->load->view('admin/register/success' , $this->data);
                 $this->load->view('templates/footer');
 				
-			} // if($this->ag_auth->register($username, $password, $email) === TRUE)
+			} 
 			else{
 				echo "Error";
 			}
 
-		} // if($this->form_validation->run() == FALSE)
+		} 
 		
-	} // public function register()
+	}
 	
 	public function interview_observation_form(){
 	    $this->load->view('templates/header', $this->data);  
         $this->load->view('admin/interview_observation');
         $this->load->view('templates/footer');
 	}
-
 }
+
 
 /* End of file: dashboard.php */
 /* Location: application/controllers/admin/dashboard.php */
