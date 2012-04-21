@@ -1,6 +1,6 @@
 
 <div class="formBox">
-	<form id="student_registration_selector">
+	<form id="studentRegistrationSelector">
 		<fieldset>
 			<legend>
                 currently waitlisted students:
@@ -17,7 +17,7 @@
 				}
 				$fullname = $fullname . " " . $wlStudAttr['lastname'];
 				
-				printf('<a href=%s>%s</a></br>', base_url('admissions/register_student/' . $wlStudAttr['formid']), $fullname);
+				printf('<a href=%s>%s</a></br>', base_url('admissions/registerStudent/' . $wlStudAttr['formid']), $fullname);
 			endforeach;
 			?>
 	    </fieldset>

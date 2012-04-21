@@ -43,7 +43,7 @@ function show_hide(value) {
 }
 </script>
 
-<form id='register_student' method='post' accept-charset='UTF-8' class='clearfix'>
+<form id='studentRegistration' method='post' accept-charset='UTF-8' class='clearfix'>
 	<fieldset>
 		<legend>Child's Information</legend>
 		<ul>

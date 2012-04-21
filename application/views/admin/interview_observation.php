@@ -22,7 +22,7 @@ function show_hide_page_one(value) {
 }
 </script>
 <div class="formBox">
-	<form id='studRegPgOne' action="studRegPageOne" method="post" accept-charset='UTF-8' class="clearfix">
+	<form id='parentInterviewObservationForm' method="post" accept-charset='UTF-8' class="clearfix">
 		
         <fieldset>
             <legend>
@@ -168,6 +168,6 @@ function show_hide_page_one(value) {
 				<input type="text" name="feeReceivedName" id="feeReceivedId" max="15" placeholder="01/01/2001"/> </br>
 		</fieldset>
 		
-			<input type="submit" value="Save and Continue" name="register_page1" class="submit"/>
+			<input type="submit" value="Save and Continue" name="interviewObservationForm" class="submit"/>
 	</form>
 </div>
