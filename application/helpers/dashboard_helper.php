@@ -2,6 +2,13 @@
 
 //probably move this function once working
 function get_dashboard(){
+        
+    $hasUserChangedPassword = checkPass();
+    
+    if(!$hasUserChangedPassword){
+        return 'login';
+    }    
+        
     if(user_group('admin') == TRUE){
 		return 'admin';
 	} 
@@ -18,4 +25,15 @@ function get_dashboard(){
 
 }
 	
+function checkPass(){
+    $userName = username();
+    $query = "select HasChangedPassword from users where username = '" . $userName . "'";
+    $result = mysql_query($query);
+    
+    if(mysql_result($result,0,"HasChangedPassword") == 1)
+        return TRUE;
+    else
+        return FALSE; 
+}    
+    
 ?>

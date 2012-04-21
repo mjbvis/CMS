@@ -91,7 +91,17 @@ body {
 
 #login {
   margin:         100px auto;
-  width:          400px;
+  width:          425px;
+  border:         3px solid $border;
+  background:     $reallyLightBlue;
+  padding:        20px;
+  @include borderRadius(5px);
+  @include boxShadow(2px 5px 10px, $boxShadow);
+}
+
+#changePassword {
+  margin:         100px auto;
+  width:          475px;
   border:         3px solid $border;
   background:     $reallyLightBlue;
   padding:        20px;

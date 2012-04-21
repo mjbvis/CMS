@@ -10,7 +10,8 @@ class Login extends Application {
 		$this->load->helper(array('url', 'form', 'dashboard', 'ag_auth'));
 
 		# Load Libraries
-		
+		$this->load->library('form_validation');
+        
 		# Load Modules
 		$this->load->model('alerts_model');
         
@@ -31,14 +32,29 @@ class Login extends Application {
 		//if the user is already logged in goto their default dashboard
 		if(logged_in())
 		{
-			// redirect to the appropriate dashboard
-			redirect(get_dashboard());
+			if(!checkPass())
+                $this->changePass();
+            else
+    			// redirect to the appropriate dashboard
+    			redirect(get_dashboard());
 		}
 		else // else present them with the login page.
 		{
 			$this->login();
 		}
 	}
+    
+    function changePass(){
+        $this->form_validation->set_rules('password', 'Password', 'required|matches[passconf]');
+        $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required');   
+            
+        if ($this->form_validation->run() == FALSE)
+            $this->load->view('login/change_password/change_password');     
+        else
+            $this->load->view('login/change_password/success');  
+        
+        
+    }
 	
 }
 
