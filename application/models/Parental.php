@@ -15,10 +15,6 @@ class Parental extends ActiveRecord\Model
 		'Email' => 'Email',
 		'Employer' => 'Employer',
 		'Occupation' => 'Occupation',
-		'IsDepositPaid' => 'IsDepositPaid',
-		'IsProspect' => 'IsProspect',
-		'AppReceivedDTTM' => 'AppReceivedDTTM',
-		'FeeReceivedDTTM' => 'FeeReceivedDTTM',
 		'UDTTM' => 'UDTTM');
 }
 	

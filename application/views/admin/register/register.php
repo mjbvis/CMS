@@ -1,8 +1,25 @@
+<script>
+var counter = 1;
+var limit = 3;
+function addInput(divName){
+     if (counter == limit)  {
+          alert("You have reached the limit of adding " + counter + " inputs");
+     }
+     else {
+          var newdiv = document.createElement('div');
+          newdiv.innerHTML = "Entry " + (counter + 1) + " <br><input type='text' name='myInputs[]'>";
+          document.getElementById(divName).appendChild(newdiv);
+          counter++;
+     }
+
+}
+</script>
+
 <div class="formBox">
 		<form method="post" id="registerUser" class="clearfix">
 		    <fieldset>
 		    <legend><h2>Register a new parent account</h2></legend>
-		    <ul>
+		    <ul>Parent
 		    	<li>
 					<label>First Name:</label>
 					<input type="text" name="first" size="50" class="form" value="<?php echo set_value('first'); ?>" /><br /><?php echo form_error('first'); ?><br />
@@ -19,33 +36,8 @@
 					<label>Email:</label>
 					<input type="text" name="email" size="50" class="form" value="<?php echo set_value('email'); ?>" /><?php echo form_error('email'); ?><br /><br />
 				</li>
-				<li>
-					<label>Address:</label>
-					<input type="text" name="pOneAddressName" id="pOneAddressId" max="100" placeholder="Address" /> </br>
-				</li>
-				<li>
-					<label>Home Phone:</label>
-					<input type="text" name="pOneHomePhoneName" id="pOneHomePhoneId" max="15" placeholder="555-555-5555" /> </br>
-				</li>
-				<li>
-					<label>Cell Phone:</label>
-					<input type="text" name="pOneCellPhoneName" id="pOneCellPhoneId" max="15" placeholder="555-555-5555"  /> </br>
-				</li>
-				<li>
-					<label>Business Phone:</label>
-					<input type="text" name="pOneBusinessPhoneName" id="pOneBusinessPhoneId" max="15" placeholder="555-555-5555"  /> </br>
-				</li>
-				<li>
-					<label>Employer:</label>
-					<input type="text" name="pOneEmployerName" id="pOneEmployerId" max="100" placeholder="Employer Name"  /> </br>
-				</li>
-				<li>
-					<label>Occupation:</label>
-					<input type="text" name="pOneOccupationName" id="pOneOccupationId" max="100" placeholder="Occupation"  /> </br>
-				</li>
 			</ul>
-			</fieldset>
-		
+
 		<input type="submit" value="Register" name="register" class="submit"/>
 	</form>
 </div>

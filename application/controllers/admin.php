@@ -38,6 +38,7 @@ class Admin extends Application{
 	public function register(){
 		$this->form_validation->set_rules('first', 'First Name', 'required|min_length[1]|callback_field_exists');
         $this->form_validation->set_rules('last', 'Last Name', 'required|min_length[1]|callback_field_exists');
+        $this->form_validation->set_rules('middle', 'Middle Name', '');
         $this->form_validation->set_rules('email', 'Email Address', 'required|min_length[3]|valid_email|callback_field_exists');
 
 		if($this->form_validation->run() == FALSE){
@@ -47,6 +48,7 @@ class Admin extends Application{
 		}
 		else{
 			$firstName = set_value('first');
+            $middleName = set_value('middle');
             $lastName = set_value('last');
 			$username = $firstName . '.' . $lastName;
             
@@ -84,6 +86,11 @@ class Admin extends Application{
 			else{
 				echo "Error";
 			}
+            
+            $userId = $this->getUserID($username);
+                  
+            $this->createParent($userId, $firstName, $middleName, $lastName, $email);
+            
 		} 
 	}
 
@@ -160,6 +167,27 @@ class Admin extends Application{
 		$this->form_validation->set_rules('appReceivedName', 'Date Application Received', 'required|min_length[4]|callback_field_exists');
 		$this->form_validation->set_rules('feeReceivedName', 'Date Application Fee Received', 'required|min_length[4]|callback_field_exists');
 	}
+
+    function createParent($userId, $fName, $mName, $lName, $email){
+        $parent = new Parental();
+        $parent->userid = $userId;
+        $parent->firstname = $fName;
+        $parent->middlename = $mName;
+        $parent->lastname = $lName;
+        $parent->email = $email;
+        $parent->uddtm = date('Y-m-d H:i:s', time());
+        $parent->save();
+    }
+    
+    function getUserID($userName){
+                
+        $query = "SELECT id FROM users WHERE username ='" . $userName . "'";
+        $result = mysql_query($query);
+        
+        return mysql_result($result,0,"id");
+        
+    }
+
 }
 
 
