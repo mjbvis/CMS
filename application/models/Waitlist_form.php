@@ -11,6 +11,7 @@ class Waitlist_form extends ActiveRecord\Model
 	static $alias_attribute = array(
 		'FormID' => 'FormID',
 		'ParentID' => 'ParentID',
+		'ExpectedProgramID' => 'ExpectedProgramID',
 		'FirstName' => 'FirstName',
 		'MiddleName' => 'MiddleName',
 		'LastName' => 'LastName',

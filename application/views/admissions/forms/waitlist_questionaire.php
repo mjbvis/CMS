@@ -17,6 +17,30 @@
 			</br> </br>
 		</fieldset>
 		<fieldset>
+			<legend>Program:</legend>
+			<ul>
+				<?php
+					$i = 0;
+					foreach($progGroups as $pGroup):
+						$pGroupAttr = $pGroup->attributes();
+						printf('<li>');
+							printf('<label><h3>%s</h3></label></br>', $pGroupAttr['grouptitle']);
+							printf('<ul>');
+								foreach($pGroup->programs as $program):
+									$programAttr = $program->attributes();
+									printf('<li>');
+										printf('<input type="radio" name="programChecked" id="programCheckbox%d" value="%d"/>', $i, $programAttr['programid']);
+										printf('%s, %s - %s', $programAttr['days'], $programAttr['starttime'], $programAttr['endtime']);
+									printf('</li>');
+								endforeach;
+							printf('</ul>');
+						printf('</li>');
+						$i++;
+					endforeach;
+				?>
+			</ul>
+		</fieldset>
+		<fieldset>
 			<legend>
 				Waitlist Questionaire:
 			</legend>
