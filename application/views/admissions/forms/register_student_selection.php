@@ -3,7 +3,27 @@
 	<form id="studentRegistrationSelector">
 		<fieldset>
 			<legend>
-                currently waitlisted students:
+                Pre-enrolled Students:
+            </legend>
+			
+	    	<?php
+	    	foreach($preEnStudents as $peStud):
+				$peStudAttr = $peStud->attributes();
+				
+				// assemble full name
+				$fullname = $peStudAttr['firstname'];
+				if(!empty($wlStudAttr['middlename'])){
+					$fullname = $fullname . " " . $peStudAttr['middlename'];
+				}
+				$fullname = $fullname . " " . $peStudAttr['lastname'];
+				
+				printf('<a href=%s>%s</a></br>', base_url('admissions/registerStudent/' . $peStudAttr['formid']), $fullname);
+			endforeach;
+			?>
+	    </fieldset>
+		<fieldset>
+			<legend>
+                Currently Waitlisted Students:
             </legend>
 			
 	    	<?php
@@ -17,7 +37,7 @@
 				}
 				$fullname = $fullname . " " . $wlStudAttr['lastname'];
 				
-				printf('<a href=%s>%s</a></br>', base_url('admissions/registerStudent/' . $wlStudAttr['formid']), $fullname);
+				printf('<label>%s</label></br>', $fullname);
 			endforeach;
 			?>
 	    </fieldset>

@@ -10,13 +10,20 @@ class Waitlist_form extends ActiveRecord\Model
 	# explicit column names for the sake of readability
 	static $alias_attribute = array(
 		'FormID' => 'FormID',
-		'ParentID' => 'ParentID',
+		'UserID' => 'UserID',
 		'ExpectedProgramID' => 'ExpectedProgramID',
 		'FirstName' => 'FirstName',
 		'MiddleName' => 'MiddleName',
 		'LastName' => 'LastName',
 		'Agreement' => 'Agreement',
 		'SubmissionDTTM' => 'SubmissionDTTM');
+		
+	static $belongs_to = array(
+			array('user'
+			 ,'class_name' => 'User'
+			 ,'foreign_key' => 'userid'
+			 ,'primary_key' => 'id')
+		);
 		
 	static $has_many = array(
 		array('student'

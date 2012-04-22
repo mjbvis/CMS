@@ -5,9 +5,11 @@ class User extends ActiveRecord\Model
 	# explicit table name
 	static $table_name = 'users';
 	
+	//static $primary_key = 'id';
+	
 	// explicit map for the sake of readability
 	static $alias_attribute = array(
-		'UserID' => 'id',
+		'id' => 'id',
 		'UserName' => 'username',
 		'Email' => 'email',
 		'Password' => 'password',
@@ -18,6 +20,13 @@ class User extends ActiveRecord\Model
 		'CreationDTTM' => 'CreationDTTM',
 		'Enabled' => 'Enabled',
 		'HasChangedPassword' => 'HasChangedPassword');
+		
+	static $has_many = array(
+		array('waitlist_forms'
+			 ,'class_name' => 'Waitlist_form'
+			 ,'foreign_key' => 'userid'
+			 ,'primary_key' => 'id')
+		);
 }
 	
 	

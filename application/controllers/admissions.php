@@ -85,17 +85,27 @@ class admissions extends Application {
 	// TODO: this functions purpose is for when we get datagrids working.
 	// this method will convert the datagrid info to xml or json so that it
 	// can be sent to the view and interpreted by the JQuery.
-	function getWaitlistedStudents() {
+	function getWaitlistedStudentsAsJSON() {
 		$join = 'LEFT JOIN Student s ON(WaitlistForm.FormID = s.QuestionaireID AND s.IsEnrolled != 1)';
 		$wForms = Waitlist_form::all(array('joins' => $join));
 		var_dump($wForms);
 	}
 	
-	// Displays the list of all waitlisted students for the current parent.
-	// TODO: filter by parent, filter out where no deposit is paid
+	// Displays the list of all waitlisted students for the current user.
+	// 	That is, the waitlisted students who were waitlisted by the current
+	// 	user AND who have been approved for registration.
+	//  TODO: the parents should be able to see waitlisted students
+	//		who are not at PreEnrolled status, who are not eligible for registration.
+	//	TODO: pre-enrolled students should not show up after they have been fully
+	//		registered. Do a left outer join on the student table.
 	function registerStudentSelector() {
-		$join = 'LEFT JOIN Student s ON(WaitlistForm.FormID = s.QuestionaireID AND s.IsEnrolled != 1)';
-		$this->data['wlStudents'] = Waitlist_form::all(array('joins' => $join));
+		$this->data['preEnStudents'] = Waitlist_form::all(
+				array('conditions' => array('UserID=? AND IsPreEnrolled=1', user_id())
+					 ,'joins' => array('user')));
+					 
+		$this->data['wlStudents'] = Waitlist_form::all(
+				array('conditions' => array('UserID=? AND IsPreEnrolled=0', user_id())
+					 ,'joins' => array('user')));
 		
 		$this->load->view('templates/header', $this->data);	
 		$this->load->view('admissions/forms/register_student_selection');
@@ -109,10 +119,13 @@ class admissions extends Application {
 	// waitlist ID, wlid.
 	function registerStudent($wlid = '') {
 		
-		// TODO: verify that this student belongs to this user
-		$wlStud = Waitlist_form::find_by_formid($wlid);
+		// verify that this student belongs to this user
+		$wlStud = Waitlist_form::find(array('conditions' => array('FormID=? AND UserID=?', $wlid, user_id())));
+		if($wlStud == null || empty($wlStud)){
+			redirect('login');
+		}
 		
-		// TODO: filter programs by enabled
+		// TODO: filter programs by enabled (we are currently only filtering program groups)
 		$progGroups = Program_group::find_all_by_enabled(1);
 		
 		// populate view data with child info and program info
@@ -146,7 +159,7 @@ class admissions extends Application {
 	function storeWaitlistForm($questions){
 		// save waitlist form to DB		
 		$wlForm = new Waitlist_form();
-		$wlForm->parentid = Parental::find_by_userid(user_id())->ParentID;
+		$wlForm->userid = user_id();
 		$wlForm->expectedprogramid = set_value('programChecked');
 		$wlForm->firstname = set_value('cFirstName');
 		$wlForm->middlename = set_value('cMiddleName');
