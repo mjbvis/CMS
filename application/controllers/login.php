@@ -45,7 +45,7 @@ class Login extends Application {
 	}
     
     function changePass(){
-        $this->form_validation->set_rules('password', 'Password', 'required|matches[passconf]');
+        $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|matches[passconf]');
         $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required');   
             
         if ($this->form_validation->run() == FALSE)
@@ -57,7 +57,7 @@ class Login extends Application {
             $query = "UPDATE users SET password='". $saltedPassword . "', HasChangedPassword = 1 WHERE username = '" . username() . "'";     
             mysql_query($query); 
             
-            $this->load->view('login/change_password/success');
+            redirect(get_dashboard());
         }
         
     }
