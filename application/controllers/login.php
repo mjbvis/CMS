@@ -50,9 +50,15 @@ class Login extends Application {
             
         if ($this->form_validation->run() == FALSE)
             $this->load->view('login/change_password/change_password');     
-        else
-            $this->load->view('login/change_password/success');  
-        
+        else{
+            $plainTextPassword = set_value('password');
+            $saltedPassword = $this->ag_auth->salt($plainTextPassword); 
+            
+            $query = "UPDATE users SET password='". $saltedPassword . "', HasChangedPassword = 1 WHERE username = '" . username() . "'";     
+            mysql_query($query); 
+            
+            $this->load->view('login/change_password/success');
+        }
         
     }
 	

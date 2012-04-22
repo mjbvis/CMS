@@ -1,9 +1,9 @@
 <div id="centeredBox">
     The system has successfully created an account for</br></br>
-    <? echo $firstName ?> <? echo $lastName ?></br>
-    Email address: <? echo $email ?></br>
-    Username: <? echo $username ?></br>
-    Password: <? echo $plainTextPassword ?></br>
+    <?php echo $firstName ?> <?php echo $lastName ?></br>
+    Email address: <?php echo $email ?></br>
+    Username: <?php echo $username ?></br>
+    Password: <?php echo $plainTextPassword ?></br>
     </br>
-    <? echo $firstName ?> <? echo $lastName ?> has been notified of their account creation via their email.
+    <?php echo $firstName ?> <?php echo $lastName ?> has been notified of their account creation via their email.
 </div>
