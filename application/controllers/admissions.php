@@ -17,7 +17,7 @@ class admissions extends Application {
 		
 		# setup default view data
 		$this->data['title'] = 'Admissions Dashboard';
-		$this->data['MenuItems'] = get_menu_items('admin');
+		$this->data['MenuItems'] = get_menu_items();	// no argument means use current gruop
 	}
     
     public function index()

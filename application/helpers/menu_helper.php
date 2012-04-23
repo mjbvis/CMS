@@ -11,7 +11,7 @@ function get_menu_items($group_name = NULL){
 			$group_name = 'admin';
 		} 
 		elseif(user_group('parent') == TRUE) {
-			$group_name = 'parents';
+			$group_name = 'parent';
 		}
 		else {
 			$group_name = 'alerts';
