@@ -30,11 +30,31 @@ class Student extends ActiveRecord\Model
 		'QuestionaireID' => 'QuestionaireID',
 		'UDTTM' => 'UDTTM');
 		
+	static $has_many = array(
+		array('admissions_form'
+			 ,'class_name' => 'Admissions_form'
+			 ,'foreign_key' => 'studentid'
+			 ,'primary_key' => 'studentid')
+		);
+		
 	static $belongs_to = array(
 		array('waitlist_form'
 			 ,'class_name' => 'Waitlist_form'
 			 ,'foreign_key' => 'questionaireid'
-			 ,'primary_key' => 'id'));
+			 ,'primary_key' => 'id'),
+		array('emergency_contact1'
+			 ,'class_name' => 'Emergency_contact'
+			 ,'foreign_key' => 'emergencycontactid1'
+			 ,'primary_key' => 'contactid'),
+		array('emergency_contact2'
+			 ,'class_name' => 'Emergency_contact'
+			 ,'foreign_key' => 'emergencycontactid2'
+			 ,'primary_key' => 'contactid'),
+		array('emergency_contact3'
+			 ,'class_name' => 'Emergency_contact'
+			 ,'foreign_key' => 'emergencycontactid3'
+			 ,'primary_key' => 'contactid'),
+		);
 }
 	
 	

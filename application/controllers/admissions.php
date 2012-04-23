@@ -142,7 +142,7 @@ class admissions extends Application {
 			$this->load->view('templates/footer');
 		}
 		else {
-			$formData = storeRegistrationForm();
+			$formData = storeRegistrationForm($wlid);
 			
 			// TODO: THIS MUST BE PHASED OUT
 			$this->$reg->savePageOne($formData);
@@ -182,114 +182,67 @@ class admissions extends Application {
 	}
 	
 	# saves the registration form
-	function storeRegistrationForm() {
-		$data = array(
-			'cFirst' => set_value('cFirstName'),
-			'cLast' => set_value('cLastName'),
-			'cAddress' => set_value('cAddressName'),
-			'cPhone' => set_value('cPhoneName'),
-			'cityBirthplace' => set_value('cityBirthplaceName'),
-			'stateBirthplace' => set_value('stateBirthplaceName'),
-			'dob' => set_value('dobName'),
-			'pOneFirst' => set_value('pOneFirstName'),
-			'pOneLast' => set_value('pOneLastName'),
-			'pOneAddress' => set_value('pOneAddressName'),
-			'pOneEmail' => set_value('pOneEmailName'),
-			'pOneHomePhone' => set_value('pOneHomePhoneName'),
-			'pOneCellPhone' => set_value('pOneCellPhoneName'),
-			'pOneBusinessPhone' => set_value('pOneBusinessPhoneName'),
-			'pOneEmployer' => set_value('pOneEmployerName'),
-			'pOneOccupation' => set_value('pOneOccupation'),
-			'pTwoFirst' => set_value('pTwoFirstName'),
-			'pTwoLast' => set_value('pTwoLastName'),
-			'pTwoAddress' => set_value('pTwoAddressName'),
-			'pTwoEmail' => set_value('pTwoEmailName'),
-			'pTwoHomePhone' => set_value('pTwoHomePhoneName'),
-			'pTwoCellPhone' => set_value('pTwoCellPhoneName'),
-			'pTwoBusinessPhone' => set_value('pTwoBusinessPhoneName'),
-			'pTwoEmployer' => set_value('pTwoEmployerName'),
-			'pTwoOccupation' => set_value('pTwoOccupationName'),
-			'daycareExperience' => set_value('daycareExperienceName'),
-			'socialExperience' => set_value('socialExperienceName'),
-			'comfortChild' => set_value('comfortChildName'),
-			'toiletNeeds' => set_value('toiletNeedsName'),
-			'napTaking' => set_value('napTakingName'),
-			'playOutside' => set_value('playOutsideName'),
-			'hasPets' => set_value('hasPetsName'),
-			'typeOfPet' => set_value('typeOfPetName'),
-			'nameOfPet' => set_value('nameOfPetName'),
-			'silblingOneFirst' => set_value('silbingOneFirstName'),
-			'silbingOneLast' => set_value('silbingOneLastName'),
-			'silbingOneAge' => set_value('silbingOneAgeName'),
-			'silbingTwoFirst' => set_value('silbingTwoFirstName'),
-			'silbingTwoLast' => set_value('silbingTwoLastName'),
-			'silbingTwoAge' => set_value('silbingTwoAgeName'),
-			'otherImportant' => set_value('otherImportantName'),
-			'hearAbout' => set_value('hearAboutName'),
-			'learnedAbout' => set_value('learnedAboutName')
-		);
-		
-		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('cMiddleName', 'Child\'s Middle Name', '');	// Don't require the middle name
-		$this->form_validation->set_rules('cLastName', 'Child\'s Last Name', 'required|min_length[1]|callback_field_exists');
-		
-		$this->form_validation->set_rules('emergencyContactName1', 'Emergency Contact#1\'s Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('emergencyContactPhone1', 'Emergency Contact#1\'s Phone', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('emergencyContactRelationship1', 'Emergency Contact#1\'s Relationship to child', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('emergencyContactName2', 'Emergency Contact#2\'s Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('emergencyContactPhone2', 'Emergency Contact#2\'s Phone', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('emergencyContactRelationship2', 'Emergency Contact#2\'s Relationship to child', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('emergencyContactName3', 'Emergency Contact#3\'s Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('emergencyContactPhone3', 'Emergency Contact#3\'s Phone', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('emergencyContactRelationship3', 'Emergency Contact#3\'s Relationship to child', 'required|min_length[1]|callback_field_exists');
-		
-		$this->form_validation->set_rules('cAddressName', 'Child\'s Address', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('cPhoneName', 'Child\s Phone', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('cityBirthplaceName', 'City child was born in', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('stateBirthplaceName', 'State child was born in', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('cDOB', 'Date of Birth', 'required|min_length[4]|callback_field_exists');
-		$this->form_validation->set_rules('dayCareExperienceName', 'Daycare Experiences', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('socialExperienceName', 'Social Experiences', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('comfortMethod', 'Comfort your child', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('toiletNeedsName', 'Toilet Needs', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('napTime', 'Takes Naps', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('playOutside', 'Plays outside', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('HasPets', 'Has Pets', 'required');
-		$this->form_validation->set_rules('petType', 'Type of Pet', '');
-		$this->form_validation->set_rules('petName', 'Name of Pet', '');
-		$this->form_validation->set_rules('siblingName', 'Silbing\'s first name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('silbingAge', 'Silbing\'s age', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('otherImportantInfo', 'Other Important Information', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('referenceType', 'Heard about us', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('referenceName', 'Learned About us', 'required|min_length[1]|callback_field_exists');
-		
-		// Student::transaction(function(){
-			// $student = new Student();
-			// $student->classid = null;
-			// $student->programid = 
-		// });
-		
-				// save waitlist form to DB		
-		$wlForm = new Waitlist_form();
-		$wlForm->parentid = Parental::find_by_userid(user_id())->ParentID;
-		$wlForm->firstname = set_value('cFirstName');
-		$wlForm->middlename = set_value('cMiddleName');
-		$wlForm->lastname = set_value('cLastName');
-		$wlForm->agreement = set_value('pAgreement');
-		$wlForm->submissiondttm = date('Y-m-d H:i:s', time()); // Example: 2012-11-28 14:32:08
-		$wlForm->save();
-
-		// store each answer from the waitlist questionaire form
-		$i = 0;
-		foreach($questions as $q){
-			$wlAnswer = new Waitlist_form_question();
-			$wlAnswer->formid = $wlForm->formid;
-			$wlAnswer->questionid = $q->questionid;
-			$wlAnswer->answer = set_value('q' . $i . 'answer');
-			$wlAnswer->save();
+	function storeRegistrationForm($wlid) {
+		// make submission to databse atomic because we want to save the emergency contact
+		// 	only if the student saves successfully.
+		Student::transaction(function(){
+			$emergencyContact1 = new Emergency_contact();
+			$emergencycontact1->ecname = set_value('emergencyContactName1');
+			$emergencycontact1->ecphone = set_value('emergencyContactPhone1');
+			$emergencycontact1->ecrelationship = set_value('emergencyContactRelationship1');
+			$emergencycontact1->save();
 			
-			$i++;
-		}
+			$emergencyContact2 = new Emergency_contact();
+			$emergencycontact2->ecname = set_value('emergencyContactName2');
+			$emergencycontact2->ecphone = set_value('emergencyContactPhone2');
+			$emergencycontact2->ecrelationship = set_value('emergencyContactRelationship2');
+			$emergencycontact2->save();
+			
+			$emergencyContact3 = new Emergency_contact();
+			$emergencycontact3->ecname = set_value('emergencyContactName3');
+			$emergencycontact3->ecphone = set_value('emergencyContactPhone3');
+			$emergencycontact3->ecrelationship = set_value('emergencyContactRelationship3');
+			$emergencycontact3->save();
+			
+			$student = new Student();
+			$student->userid = user_id();
+			$student->classid = null;		// admin decides classroom later in the admissions process
+			$student->programid = set_value('programChecked');
+			$student->firstname = set_value('cFirstName');
+			$student->middlename = set_value('cMiddleName');
+			$student->lastname = set_value('cLastName');
+			$student->gender = set_value('cGender');
+			$student->placeofbirth = set_value('cBirthplace');
+			$student->dob = set_value('cDOB');
+			$student->phonenumber = set_value('cPhoneNum');
+			$student->emergencycontactid1 = $emergencyContact1->contactid;
+			$student->emergencycontactid2 = $emergencyContact2->contactid;
+			$student->emergencycontactid3 = $emergencyContact3->contactid;
+			$student->questionaireid = $wlid;
+			$student->isenrolled = 0;
+			$student->udttm = date('Y-m-d H:i:s', time()); // Example: 2012-11-28 14:32:08
+			$student->enrollmentdttm = null;
+			$student->save();
+			
+			$form = new Admissions_form();
+			$form->studentid = $student->studentid;
+			$form->schoolexperience = set_value('daycareExperience');
+			$form->socialexperience = set_value('socialExperience');
+			$form->comfortmethods = set_value('comfortMethod');
+			$form->toilet = set_value('toiletNeeds');
+			$form->naptime = set_value('napTime');
+			$form->outdoorplay = set_value('playOutside');
+			if(set_value('HasPets') == "1"){
+				$form->pets = set_value('petType') . " : " . set_value('petName');
+			}
+			$form->interests = set_value('childInterestsName');
+			$form->siblingnames = set_value('siblingOneName');
+			$form->siblingages = set_value('siblingOneAge');
+			$form->notes = set_value('otherImportantInfo');
+			$form->save();
+			
+			// TODO: save info on how parent heard about school
+		});
 	}
 
 	# saves the medical information to the database
@@ -324,7 +277,7 @@ class admissions extends Application {
 	function validateWaitlistQuestionaire($questions, $progGroups){
 		// validate name (don't require middle name)
 		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('cMiddleName', 'Child\'s Middle Name', '');	// Don't require the middle name
+		$this->form_validation->set_rules('cMiddleName', 'Child\'s Middle Name', '');
 		$this->form_validation->set_rules('cLastName', 'Child\'s Last Name', 'required|min_length[1]|callback_field_exists');
 		
 		// make sure a program was selected
@@ -342,10 +295,15 @@ class admissions extends Application {
 
 	// Sets the validation rules for the Student Registration Form
 	function validateRegistrationForm() {
+		// validate name (don't require middle name)
 		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('cMiddleName', 'Child\'s Middle Name', '');	// Don't require the middle name
+		$this->form_validation->set_rules('cMiddleName', 'Child\'s Middle Name', '');
 		$this->form_validation->set_rules('cLastName', 'Child\'s Last Name', 'required|min_length[1]|callback_field_exists');
 		
+		// make sure a program was selected
+		$this->form_validation->set_rules('programChecked', 'Program', 'required|callback_field_exists');
+		
+		// verify 3 emergency contacts
 		$this->form_validation->set_rules('emergencyContactName1', 'Emergency Contact#1\'s Name', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('emergencyContactPhone1', 'Emergency Contact#1\'s Phone', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('emergencyContactRelationship1', 'Emergency Contact#1\'s Relationship to child', 'required|min_length[1]|callback_field_exists');
@@ -357,14 +315,14 @@ class admissions extends Application {
 		$this->form_validation->set_rules('emergencyContactRelationship3', 'Emergency Contact#3\'s Relationship to child', 'required|min_length[1]|callback_field_exists');
 		
 		$this->form_validation->set_rules('cAddressName', 'Child\'s Address', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('cPhoneName', 'Child\s Phone', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('cityBirthplaceName', 'City child was born in', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('stateBirthplaceName', 'State child was born in', 'required|min_length[1]|callback_field_exists');
+		$this->form_validation->set_rules('cPhoneNum', 'Child\s Phone', 'required|min_length[1]|callback_field_exists');
+		$this->form_validation->set_rules('cBirthplace', 'Child\s birthplace', 'required|min_length[2]|callback_field_exists');
 		$this->form_validation->set_rules('cDOB', 'Date of Birth', 'required|min_length[4]|callback_field_exists');
-		$this->form_validation->set_rules('dayCareExperienceName', 'Daycare Experiences', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('socialExperienceName', 'Social Experiences', 'required|min_length[1]|callback_field_exists');
+		$this->form_validation->set_rules('cGender', 'Gender', 'required|callback_field_exists');
+		$this->form_validation->set_rules('dayCareExperience', 'Daycare Experiences', 'required|min_length[1]|callback_field_exists');
+		$this->form_validation->set_rules('socialExperience', 'Social Experiences', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('comfortMethod', 'Comfort your child', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('toiletNeedsName', 'Toilet Needs', 'required|min_length[1]|callback_field_exists');
+		$this->form_validation->set_rules('toiletNeeds', 'Toilet Needs', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('napTime', 'Takes Naps', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('playOutside', 'Plays outside', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('HasPets', 'Has Pets', 'required');

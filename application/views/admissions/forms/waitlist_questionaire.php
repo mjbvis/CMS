@@ -1,5 +1,6 @@
 <div class="formBox">
 	<?php
+	/* display validation errors */
 	$errors = validation_errors();
 	if (!empty($errors)) {
 		printf('<div class="validationBox">%s</div>', $errors);
