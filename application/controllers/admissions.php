@@ -132,9 +132,10 @@ class admissions extends Application {
 		$this->data['firstName'] = $wlStud->firstname;
 		$this->data['middleName'] = $wlStud->middlename;
 		$this->data['lastName'] = $wlStud->lastname;
+		$this->data['progSelected'] = $wlStud->expectedprogramid;
 		$this->data['progGroups'] = $progGroups;
 		
-		# Set up validation for the student registration process
+		# Validation for the student registration process
 		$this->validateRegistrationForm();
 		if($this->form_validation->run() == FALSE) {
 			$this->load->view('templates/header', $this->data);	
@@ -142,11 +143,7 @@ class admissions extends Application {
 			$this->load->view('templates/footer');
 		}
 		else {
-			$formData = storeRegistrationForm($wlid);
-			
-			// TODO: THIS MUST BE PHASED OUT
-			$this->$reg->savePageOne($formData);
-			
+			$this->storeRegistrationForm($wlid);
 			
 			// TODO: success page?
 			
@@ -182,28 +179,37 @@ class admissions extends Application {
 	}
 	
 	# saves the registration form
-	function storeRegistrationForm($wlid) {
-		// make submission to databse atomic because we want to save the emergency contact
-		// 	only if the student saves successfully.
-		Student::transaction(function(){
+	function storeRegistrationForm($wlid){
+		
+		// make submission of multiple tables to database atomic.
+		Admissions_form::transaction(function() use ($wlid){
+			
+			// do this to disable the new student from being re-registered
+			$waitlistform = Waitlist_form::find_by_formid($wlid);
+			$waitlistform->iswaitlisted = 0;
+			$waitlistform->ispreenrolled = 0;
+			$waitlistform->save();
+			
+			// must save 3 emergency contacts 1st
 			$emergencyContact1 = new Emergency_contact();
-			$emergencycontact1->ecname = set_value('emergencyContactName1');
-			$emergencycontact1->ecphone = set_value('emergencyContactPhone1');
-			$emergencycontact1->ecrelationship = set_value('emergencyContactRelationship1');
-			$emergencycontact1->save();
+			$emergencyContact1->ecname = set_value('emergencyContactName1');
+			$emergencyContact1->ecphone = set_value('emergencyContactPhone1');
+			$emergencyContact1->ecrelationship = set_value('emergencyContactRelationship1');
+			$emergencyContact1->save();
 			
 			$emergencyContact2 = new Emergency_contact();
-			$emergencycontact2->ecname = set_value('emergencyContactName2');
-			$emergencycontact2->ecphone = set_value('emergencyContactPhone2');
-			$emergencycontact2->ecrelationship = set_value('emergencyContactRelationship2');
-			$emergencycontact2->save();
+			$emergencyContact2->ecname = set_value('emergencyContactName2');
+			$emergencyContact2->ecphone = set_value('emergencyContactPhone2');
+			$emergencyContact2->ecrelationship = set_value('emergencyContactRelationship2');
+			$emergencyContact2->save();
 			
 			$emergencyContact3 = new Emergency_contact();
-			$emergencycontact3->ecname = set_value('emergencyContactName3');
-			$emergencycontact3->ecphone = set_value('emergencyContactPhone3');
-			$emergencycontact3->ecrelationship = set_value('emergencyContactRelationship3');
-			$emergencycontact3->save();
+			$emergencyContact3->ecname = set_value('emergencyContactName3');
+			$emergencyContact3->ecphone = set_value('emergencyContactPhone3');
+			$emergencyContact3->ecrelationship = set_value('emergencyContactRelationship3');
+			$emergencyContact3->save();
 			
+			// must save the student 2nd
 			$student = new Student();
 			$student->userid = user_id();
 			$student->classid = null;		// admin decides classroom later in the admissions process
@@ -212,8 +218,9 @@ class admissions extends Application {
 			$student->middlename = set_value('cMiddleName');
 			$student->lastname = set_value('cLastName');
 			$student->gender = set_value('cGender');
+			$student->address = set_value('cAddress');
 			$student->placeofbirth = set_value('cBirthplace');
-			$student->dob = set_value('cDOB');
+			$student->dob = date('Y-m-d H:i:s', strtotime(set_value('cDOB')));
 			$student->phonenumber = set_value('cPhoneNum');
 			$student->emergencycontactid1 = $emergencyContact1->contactid;
 			$student->emergencycontactid2 = $emergencyContact2->contactid;
@@ -224,6 +231,7 @@ class admissions extends Application {
 			$student->enrollmentdttm = null;
 			$student->save();
 			
+			// save the Admissions_form last to complete the transaction
 			$form = new Admissions_form();
 			$form->studentid = $student->studentid;
 			$form->schoolexperience = set_value('daycareExperience');
@@ -238,10 +246,10 @@ class admissions extends Application {
 			$form->interests = set_value('childInterestsName');
 			$form->siblingnames = set_value('siblingOneName');
 			$form->siblingages = set_value('siblingOneAge');
+			$form->referrertype = set_value('referenceType');
+			$form->referredby = set_value('referenceName');
 			$form->notes = set_value('otherImportantInfo');
 			$form->save();
-			
-			// TODO: save info on how parent heard about school
 		});
 	}
 
@@ -314,12 +322,12 @@ class admissions extends Application {
 		$this->form_validation->set_rules('emergencyContactPhone3', 'Emergency Contact#3\'s Phone', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('emergencyContactRelationship3', 'Emergency Contact#3\'s Relationship to child', 'required|min_length[1]|callback_field_exists');
 		
-		$this->form_validation->set_rules('cAddressName', 'Child\'s Address', 'required|min_length[1]|callback_field_exists');
+		$this->form_validation->set_rules('cAddress', 'Child\'s Address', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('cPhoneNum', 'Child\s Phone', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('cBirthplace', 'Child\s birthplace', 'required|min_length[2]|callback_field_exists');
 		$this->form_validation->set_rules('cDOB', 'Date of Birth', 'required|min_length[4]|callback_field_exists');
 		$this->form_validation->set_rules('cGender', 'Gender', 'required|callback_field_exists');
-		$this->form_validation->set_rules('dayCareExperience', 'Daycare Experiences', 'required|min_length[1]|callback_field_exists');
+		$this->form_validation->set_rules('daycareExperience', 'Daycare Experiences', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('socialExperience', 'Social Experiences', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('comfortMethod', 'Comfort your child', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('toiletNeeds', 'Toilet Needs', 'required|min_length[1]|callback_field_exists');
@@ -328,11 +336,14 @@ class admissions extends Application {
 		$this->form_validation->set_rules('HasPets', 'Has Pets', 'required');
 		$this->form_validation->set_rules('petType', 'Type of Pet', '');
 		$this->form_validation->set_rules('petName', 'Name of Pet', '');
-		$this->form_validation->set_rules('siblingName', 'Silbing\'s first name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('silbingAge', 'Silbing\'s age', 'required|min_length[1]|callback_field_exists');
+		$this->form_validation->set_rules('childInterestsName', 'Child\'s Interests', 'required|min_length[1]|callback_field_exists');
+		$this->form_validation->set_rules('siblingOneName', 'Silbing\'s first name', 'required|min_length[1]|callback_field_exists');
+		$this->form_validation->set_rules('siblingOneAge', 'Silbing\'s age', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('otherImportantInfo', 'Other Important Information', 'required|min_length[1]|callback_field_exists');
 		$this->form_validation->set_rules('referenceType', 'Heard about us', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('referenceName', 'Learned About us', 'required|min_length[1]|callback_field_exists');
+		
+		// should not be validated
+		$this->form_validation->set_rules('referenceName', 'Learned About us', '');
 	}
 
 	// sets the validation rules for the MedicalInformationForm

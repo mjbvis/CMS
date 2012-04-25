@@ -6,7 +6,7 @@ class Student extends ActiveRecord\Model
 	static $table_name = 'Student';
 	
 	# explicit pk since our pk is not "id" 
- 	static $primary_key = 'StudentID';
+ 	//static $primary_key = 'StudentID';
 	
 	# explicit column names for the sake of readability
 	static $alias_attribute = array(
@@ -19,6 +19,7 @@ class Student extends ActiveRecord\Model
 		'Nickname' => 'Nickname',
 		'Age' => 'Age',
 		'Gender' => 'Gender',
+		'Address' => 'Address',
 		'PlaceOfBirth' => 'PlaceOfBirth',
 		'DOB' => 'DOB',
 		'EnrollmentDTTM' => 'EnrollmentDTTM',

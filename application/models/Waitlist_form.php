@@ -16,6 +16,8 @@ class Waitlist_form extends ActiveRecord\Model
 		'MiddleName' => 'MiddleName',
 		'LastName' => 'LastName',
 		'Agreement' => 'Agreement',
+		'IsPreEnrolled' => 'IsPreEnrolled',
+		'IsWaitlisted' => 'IsWaitlisted',
 		'SubmissionDTTM' => 'SubmissionDTTM');
 		
 	static $belongs_to = array(

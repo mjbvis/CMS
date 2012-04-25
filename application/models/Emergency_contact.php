@@ -6,7 +6,7 @@ class Emergency_contact extends ActiveRecord\Model
 	static $table_name = 'EmergencyContact';
 	
 	# explicit pk since our pk is not "id" 
- 	static $primary_key = 'ContactID';
+ 	//static $primary_key = 'ContactID';
 	
 	# explicit column names for the sake of readability
 	static $alias_attribute = array(

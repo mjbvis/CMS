@@ -6,7 +6,7 @@ class Admissions_form extends ActiveRecord\Model
 	static $table_name = 'AdmissionsForm';
 	
 	# explicit pk since our pk is not "id" 
- 	static $primary_key = 'StudentID';
+ 	//static $primary_key = 'StudentID';
 	
 	# explicit column names for the sake of readability
 	static $alias_attribute = array(
@@ -21,7 +21,9 @@ class Admissions_form extends ActiveRecord\Model
 		'Interests' => 'Interests',
 		'SiblingNames' => 'SiblingNames',
 		'SiblingAges' => 'SiblingAges',
-		'notes' => 'notes');
+		'ReferrerType' => 'ReferrerType',
+		'ReferredBy' => 'ReferredBy',
+		'Notes' => 'Notes');
 		
 	static $belongs_to = array(
 		array('student'
