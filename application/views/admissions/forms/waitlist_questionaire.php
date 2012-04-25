@@ -30,7 +30,7 @@
 								foreach($pGroup->programs as $program):
 									$programAttr = $program->attributes();
 									printf('<li>');
-										printf('<input type="radio" name="programChecked" id="programCheckbox%d" value="%d"/>', $i, $programAttr['programid']);
+										printf('<input type="radio" name="programChecked" id="programCheckbox%d" value="%d" %s />', $i, $programAttr['programid'], set_radio('programChecked', $programAttr['programid']));
 										printf('%s, %s - %s', $programAttr['days'], $programAttr['starttime'], $programAttr['endtime']);
 									printf('</li>');
 								endforeach;
@@ -64,9 +64,9 @@
 		<fieldset>
 			<?php printf('<a href="%s" target="_blank">%s</a></br></br>', base_url('admissions/policy'), 'Click here to view Montessori values'); ?>
 			How well do you agree with the Montessori values?</br>
-			<input type="radio" name="pAgreement" value="1" align="vertical" <?php echo set_radio('pAgreement', '1'); ?> >Agree</input>
-			<input type="radio" name="pAgreement" value="2" aligh="vertical" <?php echo set_radio('pAgreement', '2'); ?> >Unsure</input>
-			<input type="radio" name="pAgreement" value="3" align="vertical" <?php echo set_radio('pAgreement', '3'); ?> >Disagree</input>
+			<input type="radio" name="pAgreement" value="1" align="vertical" <?php echo set_radio('pAgreement', '1'); ?> \>Agree</input>
+			<input type="radio" name="pAgreement" value="2" aligh="vertical" <?php echo set_radio('pAgreement', '2'); ?> \>Unsure</input>
+			<input type="radio" name="pAgreement" value="3" align="vertical" <?php echo set_radio('pAgreement', '3'); ?> \>Disagree</input>
 		</fieldset>
 		<input type="submit" value="Save and Continue" name="waitlistQuestionaire" class="submit"/>
 	</form>
