@@ -7,7 +7,7 @@ class Login extends Application {
 		parent::__construct();
 
 		# Load Helpers
-		$this->load->helper(array('url', 'form', 'dashboard', 'ag_auth'));
+		$this->load->helper(array('url', 'form', 'dashboard', 'ag_auth', 'registration'));
 
 		# Load Libraries
 		$this->load->library('form_validation');
@@ -49,7 +49,7 @@ class Login extends Application {
         $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required');   
             
         if ($this->form_validation->run() == FALSE)
-            $this->load->view('login/change_password/change_password');     
+            $this->load->view('login/password/change_password');     
         else{
             $plainTextPassword = set_value('password');
             $saltedPassword = $this->ag_auth->salt($plainTextPassword); 
@@ -62,6 +62,51 @@ class Login extends Application {
         
     }
 	
+    function forgotPass(){
+            
+        $this->form_validation->set_rules('username', 'username', 'required');   
+            
+        if ($this->form_validation->run() == FALSE)
+            $this->load->view('login/password/forgot_password');     
+        else{
+                
+            $username = set_value('username');    
+             
+            $plainTextPassword = generatePassword();
+            $saltedPassword = $this->ag_auth->salt($plainTextPassword);
+                    
+            $query = "UPDATE users SET password='". $saltedPassword . "', HasChangedPassword = 0 WHERE username = '" . $username . "'";     
+            mysql_query($query);
+            
+            $username = set_value('username');
+            $info = $this->getUserinfo($username);
+            
+            $firstName = $info['first'];
+            $lastName = $info['last'];
+            $email = $info['email'];
+            
+            sendNewUserAccountCreationEmail($firstName, $lastName, $email, $username, $plainTextPassword);
+            
+            redirect(get_dashboard());
+        }
+    }
+    
+    function getUserinfo($username){
+            
+        $query =   "SELECT Parent.FirstName, Parent.LastName, users.email 
+                    FROM users
+                    JOIN Parent ON (users.id = Parent.UserID)
+                    WHERE users.username ='" . $username . "'";     
+        
+        $result = mysql_query($query);
+        
+        $info['first'] =  mysql_result($result, 0, "FirstName");
+        $info['last'] =  mysql_result($result, 0, "LastName");
+        $info['email'] =  mysql_result($result, 0, "email");
+        
+        return $info;
+    }
+    
 }
 
 ?>
