@@ -23,7 +23,7 @@
 				<input type="password" name="password" /><br />
 				<div id="bottom">
 					<input type="submit" value="Login" name="submit" class="submit"/>
-					<a href="">Lost your password?</a>
+					<a href="<?php echo base_url('login/forgotPass');?>">Lost your password?</a>
 				</div>
 			</form>
 		</div>
