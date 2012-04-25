@@ -1,0 +1,23 @@
+.cg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: expression(document.body.clientWidth);
+    height: expression(document.body.clientHeight);
+}
+.cg-dialog {
+    position: absolute;
+}
+.cg-dialog-form .cg-group-header {
+    margin: 0;
+}
+.cg-dialog-form textarea, .cg-form input.cg-long {
+    width: 593px!important;
+}
+.cg-dialog-form .cg-field-cont {
+    padding: 0!important;
+}
+.cg-scroll {
+    width: 100%;
+}

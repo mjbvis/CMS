@@ -12,7 +12,7 @@ class Admin extends Application{
 		$this->ag_auth->restrict('admin');
 		
 		/* Load helpers */
-		$this->load->helper(array('url', 'form', 'registration', 'menu'));
+		$this->load->helper(array('url', 'form', 'registration', 'menu', 'language'));
         
 		/* Load libraries */
         $this->load->library('Repositories/Registration_Repository', '', 'reg');
@@ -188,11 +188,52 @@ class Admin extends Application{
         
     }
     
-    function datagrid(){
-        $this->load->view('templates/header', $this->data);  
-        $this->load->view('admin/datagrid/datagrid');
-        $this->load->view('templates/footer');
-    }
+    function datagrid($grid = 'none') {
+      $columns = array(
+        0 => array(
+          'name' => 'Username',
+          'db_name' => 'username',
+          'header' => 'Username',
+          'group' => 'User',
+          'required' => TRUE,
+          'unique' => TRUE,
+          'form_control' => 'text_long',
+          'type' => 'string'),
+        1 => array(
+          'name' => 'email',
+          'db_name' => 'email',
+          'header' => 'email',
+          'group' => 'User',
+          'required' => TRUE,
+          'visible' => FALSE,
+          'form_control' => 'text_short',
+          'type' => 'string')
+      );
+      
+      $params = array(
+                'id' => 'users',
+                'table' => 'users',
+                'url' => 'sample/single',
+                'uri_param' => $grid,
+                'columns' => $columns,
+                
+                'ajax' => TRUE
+            );
+     
+            $this->load->library('carbogrid', $params);
+     
+            if ($this->carbogrid->is_ajax)
+            {
+                $this->carbogrid->render();
+                return FALSE;
+            }
+     
+            // Pass grid to the view
+            
+            $data->page_grid = $this->carbogrid->render();
+     
+            $this->load->view('admin/datagrid/datagrid', $data);
+}
     
     function addMenuItem(){
             
@@ -220,9 +261,7 @@ class Admin extends Application{
         
         }
     }
-
 }
-
 
 /* End of file: dashboard.php */
 /* Location: application/controllers/admin/dashboard.php */

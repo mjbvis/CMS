@@ -1,0 +1,74 @@
+@page {
+	size: A4 portrait;
+	margin: 10mm;
+}
+body {
+	margin: 0;
+	padding: 0;
+}
+.cg-hidden {
+	display: none;
+}
+.cg-left {
+	float: left;
+}
+.cg-right {
+	float: right;
+}
+.cg-clear {
+	clear: both;
+}
+.carbogrid {
+	font-size: 11px;
+	font-family: arial, helvetica, verdana;
+}
+.carbogrid table {
+	width: 100%;
+	border: 1px solid #000;
+	border-collapse: collapse;
+}
+.carbogrid table tr.cg-footer td {
+	font-weight: normal;
+	vertical-align: center;
+	background: #ddd;
+	border: 1px solid #000;
+	color: #000;
+}
+.carbogrid table tr.cg-footer td span {
+	display: block;
+	line-height: 29px;
+}
+.carbogrid table tr.cg-footer td span.cg-left {
+	display: none;
+}
+.carbogrid table th {
+	padding: 5px;
+	text-align: left;
+	vertical-align: center;
+	white-space: nowrap;
+	background: #ddd;
+	border: 1px solid #000;
+	color: #000;
+}
+.carbogrid table th a {
+}
+.carbogrid table th span {
+	display: block;
+}
+.carbogrid table td {
+	padding: 5px;
+	text-align: left;
+	vertical-align: center;
+	background: #fff;
+	border: 1px solid #000;
+}
+.carbogrid table tr.cg-odd td {
+	background: #eee;
+}
+.carbogrid table tr.cg-even td {
+}
+.carbogrid table tr.cg-first td {
+}
+.carbogrid table tr.cg-last td {
+}
+
