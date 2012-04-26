@@ -231,7 +231,7 @@ class Admin extends Application{
           'type' => '1-n'),
          4 => array(
           'name' => 'LastName',
-          'db_name' => 'id',
+          'db_name' => 'LastName',
           'header' => 'LastName',
           'group' => 'User',
           'ref_table_db_name' => 'Parent',
@@ -240,7 +240,7 @@ class Admin extends Application{
           'required' => FALSE,
           'visible' => TRUE,
           'form_control' => 'text_short',
-          'type' => '1-n'),
+          'type' => 'string'),
       );
       
       $params = array(
