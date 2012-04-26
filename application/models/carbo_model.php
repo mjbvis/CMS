@@ -62,6 +62,10 @@ class Carbo_model extends CI_Model
             $this->db->select("{$table}.{$id_name}");
             $join = 0;
             $multilang = FALSE;
+			
+			/* Store the tables that have been joined so they are not rejoined*/
+			$joined_tables = array();
+			
             foreach ($fields as $field)
             {
                 switch ($field->type)
@@ -72,7 +76,10 @@ class Carbo_model extends CI_Model
                         //$id2 = $field->ref_table_db_name . "_join" . $join . ".{$field->ref_table_id_name}";
                         //$this->db->join("{$field->ref_table_db_name} {$field->ref_table_db_name}_join{$join}", $id1 . " = " . $id2, "left");
                         $id2 = $field->ref_table_db_name . "." . $field->ref_table_id_name;
-                        $this->db->join("{$field->ref_table_db_name}", $id1 . " = " . $id2, "left");
+						if(empty($joined_tables[$field->ref_table_db_name])){
+                        	$this->db->join("{$field->ref_table_db_name}", $id1 . " = " . $id2, "left");
+							$joined_tables[$field->ref_table_db_name] = 1;
+						}
 
                         //$this->db->select("{$field->ref_table_db_name}_join{$join}.{$field->ref_field_db_name} AS `{$field->unique_name}`");
                         $this->db->select("{$field->ref_table_db_name}.{$field->ref_field_db_name} AS `{$field->unique_name}`");
@@ -206,6 +213,10 @@ class Carbo_model extends CI_Model
             $this->db->from("{$table}");
             $this->db->select("{$table}.{$id_name}");
             $join = 0;
+			
+			/* Store the tables that have been joined so they are not rejoined*/
+			$joined_tables = array();
+			
             foreach ($fields as $field)
             {
                 switch ($field->type)
@@ -221,8 +232,11 @@ class Carbo_model extends CI_Model
                         //$field->order_name = $field->ref_field_db_name;
                         $id1 = $table . ".{$id_name}";
                         $id2 = $field->ref_table_db_name . "." . $field->ref_table_id_name;
-                        $this->db->join("{$field->ref_table_db_name}", $id1 . " = " . $id2, "left");
-
+						if(empty($joined_tables[$field->ref_table_db_name])){
+                        	$this->db->join("{$field->ref_table_db_name}", $id1 . " = " . $id2, "left");
+							$joined_tables[$field->ref_table_db_name] = 1;
+						}
+						
                         break;
 
                     default:
