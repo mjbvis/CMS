@@ -2,6 +2,16 @@
 
 <html>
 <head>
+
+<script src="http://code.jquery.com/jquery-1.7.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+
+<script src="<?php echo base_url(); ?>js/jquery.bbq.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>js/jquery.form.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>js/jquery.timepicker.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>js/carbo.grid.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>js/carbo.form.js" type="text/javascript"></script>
+
 </title>
     <link rel="stylesheet" href="<?php echo base_url(); ?>css/carbo/jquery-ui-1.8.16.custom.css" type="text/css" media="all" />
     <link href="<?php echo base_url(); ?>css/carbo.grid.css" rel="stylesheet" type="text/css" media="all" />
@@ -23,14 +33,6 @@
 </div>
 
 
-<script src="http://code.jquery.com/jquery-1.7.min.js" type="text/javascript"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
-
-<script src="<?php echo base_url(); ?>js/jquery.bbq.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>js/jquery.form.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>js/jquery.timepicker.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>js/carbo.grid.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>js/carbo.form.js" type="text/javascript"></script>
 
 </body>
 

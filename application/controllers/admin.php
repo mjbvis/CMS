@@ -205,15 +205,48 @@ class Admin extends Application{
           'header' => 'email',
           'group' => 'User',
           'required' => TRUE,
-          'visible' => FALSE,
+          'visible' => TRUE,
           'form_control' => 'text_short',
-          'type' => 'string')
+          'type' => 'string'),
+         2 => array(
+          'name' => 'HasChangedPassword',
+          'db_name' => 'HasChangedPassword',
+          'header' => 'HasChangedPassword',
+          'group' => 'User',
+          'required' => TRUE,
+          'visible' => TRUE,
+          'form_control' => 'text_short',
+          'type' => 'string'),
+         3 => array(
+          'name' => 'FirstName',
+          'db_name' => 'id',
+          'header' => 'FirstName',
+          'group' => 'User',
+          'ref_table_db_name' => 'Parent',
+          'ref_field_db_name' => 'FirstName',
+          'ref_table_id_name' => 'UserID',
+          'required' => TRUE,
+          'visible' => TRUE,
+          'form_control' => 'text_short',
+          'type' => '1-n'),
+         4 => array(
+          'name' => 'LastName',
+          'db_name' => 'id',
+          'header' => 'LastName',
+          'group' => 'User',
+          'ref_table_db_name' => 'Parent',
+          'ref_field_db_name' => 'LastName',
+          'ref_table_id_name' => 'UserID',
+          'required' => FALSE,
+          'visible' => TRUE,
+          'form_control' => 'text_short',
+          'type' => '1-n'),
       );
       
       $params = array(
                 'id' => 'users',
                 'table' => 'users',
-                'url' => 'sample/single',
+                'url' => 'admin/datagrid',
                 'uri_param' => $grid,
                 'columns' => $columns,
                 
@@ -232,8 +265,10 @@ class Admin extends Application{
             
             $data->page_grid = $this->carbogrid->render();
      
+            //$this->load->view('templates/header', $this->data);  
             $this->load->view('admin/datagrid/datagrid', $data);
-}
+            //$this->load->view('templates/footer');
+    }
     
     function addMenuItem(){
             
