@@ -236,7 +236,8 @@ class Admin extends Application{
 }
     
     function addMenuItem(){
-            
+        $this->data['allMenuItems'] = Menu_item::all(array('select' => 'MenuItemID, Label')); 
+		
         $this->form_validation->set_rules('menuItemID', 'menuItemID', 'required');
         $this->form_validation->set_rules('label', 'label', 'required');
         $this->form_validation->set_rules('URL', 'URL', 'required');
@@ -244,7 +245,7 @@ class Admin extends Application{
 
         if($this->form_validation->run() == FALSE){
             $this->load->view('templates/header', $this->data);  
-            $this->load->view('admin/menu/add_menu_item');
+            $this->load->view('admin/menu/add_menu_item', $this->data);
             $this->load->view('templates/footer');
         }
         else{
