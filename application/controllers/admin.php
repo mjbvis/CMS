@@ -188,10 +188,10 @@ class Admin extends Application{
         
     }
     
-    function datagrid($grid = 'none') {
+    function manageUsers($grid = 'none') {
       $columns = array(
         0 => array(
-          'name' => 'Username',
+          'name' => 'username',
           'db_name' => 'username',
           'header' => 'Username',
           'group' => 'User',
@@ -202,66 +202,49 @@ class Admin extends Application{
         1 => array(
           'name' => 'email',
           'db_name' => 'email',
-          'header' => 'email',
+          'header' => 'Email',
           'group' => 'User',
           'required' => TRUE,
           'visible' => TRUE,
-          'form_control' => 'text_short',
+          'form_control' => 'text_long',
           'type' => 'string'),
          2 => array(
           'name' => 'HasChangedPassword',
           'db_name' => 'HasChangedPassword',
           'header' => 'HasChangedPassword',
           'group' => 'User',
+          'required' => FALSE,
+          'visible' => TRUE,
+          'form_control' => 'checkbox',
+          'type' => 'boolean'),
+         3 => array(
+          'name' => 'group_id',
+          'db_name' => 'group_id',
+          'header' => 'group_id',
+          'group' => 'User',
           'required' => TRUE,
           'visible' => TRUE,
           'form_control' => 'text_short',
           'type' => 'string'),
          3 => array(
-          'name' => 'FirstName',
-          'db_name' => 'id',
-          'header' => 'FirstName',
+          'name' => 'Enabled',
+          'db_name' => 'Enabled',
+          'header' => 'Enabled',
           'group' => 'User',
-          'ref_table_db_name' => 'Parent',
-          'ref_field_db_name' => 'FirstName',
-          'ref_table_id_name' => 'UserID',
-          'required' => TRUE,
-          'visible' => TRUE,
-          'form_control' => 'dropdown',
-          'type' => '1-n'),
-         4 => array(
-          'name' => 'MiddleName',
-          'db_name' => 'MiddleName',
-          'header' => 'MiddleName',
-          'group' => 'User',
-          'ref_table_db_name' => 'Parent',
-          'ref_field_db_name' => 'MiddleName',
-          'ref_table_id_name' => 'UserID',
           'required' => FALSE,
           'visible' => TRUE,
-          'form_control' => 'dropdown',
-          'type' => '1-n'),
-         5 => array(
-          'name' => 'LastName',
-          'db_name' => 'LastName',
-          'header' => 'LastName',
-          'group' => 'User',
-          'ref_table_db_name' => 'Parent',
-          'ref_field_db_name' => 'LastName',
-          'ref_table_id_name' => 'UserID',
-          'required' => FALSE,
-          'visible' => TRUE,
-          'form_control' => 'dropdown',
-          'type' => '1-n')
+          'form_control' => 'checkbox',
+          'type' => 'boolean')
       );
       
       $params = array(
                 'id' => 'users',
                 'table' => 'users',
-                'url' => 'admin/datagrid',
+                'url' => 'admin/manageUsers',
                 'uri_param' => $grid,
                 'columns' => $columns,
-                'ajax' => TRUE
+                'ajax' => TRUE,
+                'allow_add' => FALSE
             );
      
             $this->load->library('carbogrid', $params);
@@ -277,7 +260,7 @@ class Admin extends Application{
             $data->page_grid = $this->carbogrid->render();
      
             //$this->load->view('templates/header', $this->data);  
-            $this->load->view('admin/datagrid/datagrid', $data);
+            $this->load->view('admin/record_management/manage_users', $data);
             //$this->load->view('templates/footer');
     }
     
