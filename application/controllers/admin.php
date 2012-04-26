@@ -227,9 +227,21 @@ class Admin extends Application{
           'ref_table_id_name' => 'UserID',
           'required' => TRUE,
           'visible' => TRUE,
-          'form_control' => 'text_short',
+          'form_control' => 'dropdown',
           'type' => '1-n'),
          4 => array(
+          'name' => 'MiddleName',
+          'db_name' => 'MiddleName',
+          'header' => 'MiddleName',
+          'group' => 'User',
+          'ref_table_db_name' => 'Parent',
+          'ref_field_db_name' => 'MiddleName',
+          'ref_table_id_name' => 'UserID',
+          'required' => FALSE,
+          'visible' => TRUE,
+          'form_control' => 'dropdown',
+          'type' => '1-n'),
+         5 => array(
           'name' => 'LastName',
           'db_name' => 'LastName',
           'header' => 'LastName',
@@ -239,8 +251,8 @@ class Admin extends Application{
           'ref_table_id_name' => 'UserID',
           'required' => FALSE,
           'visible' => TRUE,
-          'form_control' => 'text_short',
-          'type' => 'string'),
+          'form_control' => 'dropdown',
+          'type' => '1-n')
       );
       
       $params = array(
@@ -249,7 +261,6 @@ class Admin extends Application{
                 'url' => 'admin/datagrid',
                 'uri_param' => $grid,
                 'columns' => $columns,
-                
                 'ajax' => TRUE
             );
      
