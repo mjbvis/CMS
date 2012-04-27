@@ -244,7 +244,8 @@ class Admin extends Application{
                 'uri_param' => $grid,
                 'columns' => $columns,
                 'ajax' => TRUE,
-                'allow_add' => FALSE
+                'allow_add' => FALSE,
+                'show_empty_rows' => FALSE
             );
      
             $this->load->library('carbogrid', $params);
