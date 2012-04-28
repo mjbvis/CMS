@@ -180,7 +180,7 @@ class Admin extends Application{
     }
     
     function getUserID($userName){
-                
+        //TODO this belongs in a model        
         $query = "SELECT id FROM users WHERE username ='" . $userName . "'";
         $result = mysql_query($query);
         
@@ -283,7 +283,8 @@ class Admin extends Application{
         $label = set_value('label');
         $URL = set_value('URL');
         $rankOrder = set_value('rankOrder');
-                
+        
+		//TODO this belongs in a model        
         $query = "INSERT INTO SubItem (MenuItemID, Label, URL, RankOrder) VALUES (" . $menuItemID . ", '" . $label . "', '" . $URL . "', " . $rankOrder . ")";
         $result = mysql_query($query);
         
@@ -291,6 +292,172 @@ class Admin extends Application{
         
         }
     }
+
+	function waitlist($grid1 = 'none', $grid2 = 'none') {
+			
+	    if ($this->input->post('moveToEnrolled')){
+            // cg_preEnrolledForm_item_ids is a var auto made from cg
+            // the preEnrolledForm is from the 'id' => 'preEnrolledForm',
+            // item_ids i belive referes to 'table_id_name' => 'FormID',
+            $ids = $this->input->post('cg_preEnrolledForm_item_ids');
+ 
+            if (count($ids)){
+                //TODO: This should be in a model of course
+                $this->db->set('IsWaitlisted', 0)->where_in('FormID', $ids)->update('WaitlistForm');
+				$this->db->set('IsPreEnrolled', 1)->where_in('FormID', $ids)->update('WaitlistForm');
+            }
+        }
+        if ($this->input->post('moveToWaitlist')){
+            $ids = $this->input->post('cg_WaitlistForm_item_ids');
+ 
+            if (count($ids)){
+                //TODO This should be in a model of course
+                $this->db->set('IsWaitlisted', 1)->where_in('FormID', $ids)->update('WaitlistForm');
+				$this->db->set('IsPreEnrolled', 0)->where_in('FormID', $ids)->update('WaitlistForm');
+            }
+        }	
+			
+			
+      	
+		//grid1 - the waitlist table
+		$columns = array(
+			0 => array(
+				'name' => 'cFname',
+				'db_name' => 'FirstName',
+				'header' => 'First Name',
+				'group' => 'Child',
+				'required' => TRUE,
+				'unique' => TRUE,
+				'form_control' => 'text_long',
+				'type' => 'string'),
+			1 => array(
+				'name' => 'cLname',
+				'db_name' => 'LastName',
+				'header' => 'First Name',
+				'group' => 'Child',
+				'required' => FALSE,
+				'visible' => TRUE,
+				'form_control' => 'text_long',
+				'type' => 'string'),
+			2 => array(
+				'name' => 'preEnrolled',
+				'db_name' => 'IsPreEnrolled',
+				'header' => 'Pre-enrolled',
+				'group' => 'Child',
+				'allow_filter' => FALSE,
+                'visible' => FALSE,
+                'form_control' => 'checkbox',
+                'type' => 'boolean'),
+		);
+		      
+		$params = array(
+			'id' => 'preEnrolledForm',
+			'table' => 'WaitlistForm',
+			'table_id_name' => 'FormID',
+			'url' => 'admin/waitlist',
+			'uri_param' => $grid1,
+			'params_after' => $grid2,
+			'columns' => $columns,
+			
+			'hard_filters' => array(
+                2 => array('value' => FALSE)
+            ),
+			
+			'allow_add' => FALSE,
+            'allow_edit' => FALSE,
+            'allow_delete' => FALSE,
+            'allow_filter' => FALSE,
+            'allow_columns' => FALSE,
+            'allow_page_size' => FALSE,
+			
+			'nested' => TRUE,
+			'ajax' => TRUE,
+			
+		);
+		
+		$this->load->library('carbogrid', $params, 'grid1');
+ 
+        if ($this->grid1->is_ajax)
+        {
+            $this->grid1->render();
+            return FALSE;
+        }
+ 
+		
+		//grid2 - the pre-enrolled table
+		$columns = array(
+			0 => array(
+				'name' => 'cFname',
+				'db_name' => 'FirstName',
+				'header' => 'First Name',
+				'group' => 'Child',
+				'required' => TRUE,
+				'unique' => TRUE,
+				'form_control' => 'text_long',
+				'type' => 'string'),
+			1 => array(
+				'name' => 'cLname',
+				'db_name' => 'LastName',
+				'header' => 'First Name',
+				'group' => 'Child',
+				'required' => FALSE,
+				'visible' => TRUE,
+				'form_control' => 'text_long',
+				'type' => 'string'),
+			2 => array(
+				'name' => 'preEnrolled',
+				'db_name' => 'IsPreEnrolled',
+				'header' => 'Pre-enrolled',
+				'group' => 'Child',
+				'required' => FALSE,
+				'visible' => FALSE,
+				'form_control' => 'checkbox',
+				'type' => 'string')
+		);
+		      
+		$params = array(
+			'id' => 'WaitlistForm',
+			'table' => 'WaitlistForm',
+			'table_id_name' => 'FormID',
+			'url' => 'admin/waitlist',
+			'uri_param' => $grid2,
+			'params_before' => $grid1,
+			'columns' => $columns,
+			
+			'hard_filters' => array(
+                2 => array('value' => TRUE)
+            ),
+			
+			'allow_add' => FALSE,
+            'allow_edit' => FALSE,
+            'allow_delete' => FALSE,
+            'allow_filter' => FALSE,
+            'allow_columns' => FALSE,
+            'allow_page_size' => FALSE,
+			
+			'nested' => TRUE,
+			'ajax' => TRUE,
+			
+		);
+		
+		$this->load->library('carbogrid', $params, 'grid2');
+ 
+        if ($this->grid2->is_ajax)
+        {
+            $this->grid2->render();
+            return FALSE;
+        }		
+ 
+
+        // Pass grid to the view     
+        $data->grid1 = $this->grid1->render();
+		$data->grid2 = $this->grid2->render();
+ 
+        //$this->load->view('templates/header', $this->data);  
+		$this->load->view('admin/record_management/waitlist_managment', $data);
+		//$this->load->view('templates/footer');
+    }
+
 }
 
 /* End of file: dashboard.php */

@@ -54,7 +54,9 @@ class Login extends Application {
             $plainTextPassword = set_value('password');
             $saltedPassword = $this->ag_auth->salt($plainTextPassword); 
             
+            //TODO this belongs in a model
             $query = "UPDATE users SET password='". $saltedPassword . "', HasChangedPassword = 1 WHERE username = '" . username() . "'";     
+            
             mysql_query($query); 
             
             redirect(get_dashboard());
@@ -92,7 +94,7 @@ class Login extends Application {
     }
     
     function getUserinfo($username){
-            
+        //TODO this belongs in a model   
         $query =   "SELECT Parent.FirstName, Parent.LastName, users.email 
                     FROM users
                     JOIN Parent ON (users.id = Parent.UserID)
