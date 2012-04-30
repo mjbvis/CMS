@@ -349,6 +349,15 @@ class Admin extends Application{
                 'visible' => FALSE,
                 'form_control' => 'checkbox',
                 'type' => 'boolean'),
+			3 => array(
+				'name' => 'waitlisted',
+				'db_name' => 'IsWaitlisted',
+				'header' => 'Waitlisted',
+				'group' => 'Child',
+				'allow_filter' => FALSE,
+                'visible' => FALSE,
+                'form_control' => 'checkbox',
+                'type' => 'boolean')
 		);
 		      
 		$params = array(
@@ -362,6 +371,7 @@ class Admin extends Application{
 			
 			'hard_filters' => array(
                 2 => array('value' => FALSE)
+			   ,3 => array('value' => TRUE)
             ),
 			
 			'allow_add' => FALSE,
@@ -413,7 +423,16 @@ class Admin extends Application{
 				'required' => FALSE,
 				'visible' => FALSE,
 				'form_control' => 'checkbox',
-				'type' => 'string')
+				'type' => 'string'),
+			3 => array(
+				'name' => 'waitlisted',
+				'db_name' => 'IsWaitlisted',
+				'header' => 'Waitlisted',
+				'group' => 'Child',
+				'allow_filter' => FALSE,
+                'visible' => FALSE,
+                'form_control' => 'checkbox',
+                'type' => 'boolean')
 		);
 		      
 		$params = array(
@@ -427,6 +446,7 @@ class Admin extends Application{
 			
 			'hard_filters' => array(
                 2 => array('value' => TRUE)
+			   ,3 => array('value' => FALSE)
             ),
 			
 			'allow_add' => FALSE,
