@@ -237,6 +237,7 @@ class Admin extends Application{
                 'columns' => $columns,
                 'ajax' => TRUE,
                 'allow_add' => FALSE,
+                'allow_delete' => FALSE,
                 'show_empty_rows' => FALSE
             );
      
