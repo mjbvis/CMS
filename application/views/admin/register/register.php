@@ -19,7 +19,7 @@ function addInput(divName){
 		<form method="post" id="registerUser" class="clearfix">
 		    <fieldset>
 		    <legend><h2>Register a new parent account</h2></legend>
-		    <ul>Parent
+		    <ul>
 		    	<li>
 					<label>First Name:</label>
 					<input type="text" name="first" size="50" class="form" value="<?php echo set_value('first'); ?>" /><br /><?php echo form_error('first'); ?><br />
