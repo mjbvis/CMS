@@ -35,7 +35,7 @@ class Admin extends Application{
 		}
 	}
 	
-	public function register(){
+	public function addParentUserAccount(){
 		$this->form_validation->set_rules('first', 'First Name', 'required|min_length[1]|callback_field_exists');
         $this->form_validation->set_rules('last', 'Last Name', 'required|min_length[1]|callback_field_exists');
         $this->form_validation->set_rules('middle', 'Middle Name', '');
@@ -43,7 +43,7 @@ class Admin extends Application{
 
 		if($this->form_validation->run() == FALSE){
 			$this->load->view('templates/header', $this->data);	
-			$this->load->view('admin/register/register');
+			$this->load->view('admin/register/add_parent_user');
 			$this->load->view('templates/footer');
 		}
 		else{
