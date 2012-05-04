@@ -25,12 +25,6 @@ if (!function_exists('isset_not_empty')) {
 		<link rel="icon" type="image/x-icon" href="<?php echo base_url('favicon.ico');?>" />
 		<link rel="stylesheet" href="<?php echo base_url('assets/styles/screen.css');?>" type="text/css" media="screen" />
 		<link rel="stylesheet" href="<?php echo base_url('assets/styles/forms/screen.css');?>" type="text/css" media="screen" />
-		<!--	IF WE END UP USING JQgrid, the following will come in handy. remove them otherwise.
-		<link rel="stylesheet" href="<?php echo base_url('assets/js/jqgrid-php-v1.4/js/themes/ui-lightness/jquery-ui.custom.css'); ?>" type="text/css" media="screen" />
-		<link rel="stylesheet" href="<?php echo base_url('assets/js/jqgrid-php-v1.4/js/jqgrid/css/ui.jqgrid.css'); ?>" type="text/css" media="screen" />
-		<script src="<?php echo base_url('assets/js/jqgrid-php-v1.4/js/jqgrid/js/i18n/grid.locale-en.js'); ?>" type="text/javascript"></script>
-		<script src="<?php echo base_url('assets/js/jqgrid-php-v1.4/js/jqgrid/js/jquery.jqGrid.min.js'); ?>" type="text/javascript"></script> -->
-		
 	</head>
 	<body>
 		<div id="header">
