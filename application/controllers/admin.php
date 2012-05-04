@@ -87,7 +87,8 @@ class Admin extends Application{
 				echo "Error";
 			}
             
-            $userId = $this->getUserID($username);
+			$newUserAttr = User::find_by_username($username)->attributes();
+            $userId = $newUserAttr['id'];
                   
             $this->createParent($userId, $firstName, $middleName, $lastName, $email);
             
@@ -177,15 +178,6 @@ class Admin extends Application{
         $parent->email = $email;
         $parent->uddtm = date('Y-m-d H:i:s', time());
         $parent->save();
-    }
-    
-    function getUserID($userName){
-        //TODO this belongs in a model        
-        $query = "SELECT id FROM users WHERE username ='" . $userName . "'";
-        $result = mysql_query($query);
-        
-        return mysql_result($result,0,"id");
-        
     }
     
     function manageUsers($grid = 'none') {
