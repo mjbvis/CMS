@@ -80,16 +80,6 @@ class admissions extends Application {
 			$this->load->view('templates/footer', $this->data);
 		}
 	}
-
-	// returns all waitlisted students.
-	// TODO: this functions purpose is for when we get datagrids working.
-	// this method will convert the datagrid info to xml or json so that it
-	// can be sent to the view and interpreted by the JQuery.
-	function getWaitlistedStudentsAsJSON() {
-		$join = 'LEFT JOIN Student s ON(WaitlistForm.FormID = s.QuestionaireID AND s.IsEnrolled != 1)';
-		$wForms = Waitlist_form::all(array('joins' => $join));
-		var_dump($wForms);
-	}
 	
 	// Displays the list of all waitlisted students for the current user.
 	// 	That is, the waitlisted students who were waitlisted by the current
