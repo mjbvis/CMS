@@ -48,9 +48,11 @@ class admissions extends Application {
 		// get all enabled questions
 		$wlQuestions = Waitlist_question::find_all_by_enabled(1);
 		
-		// get all enabled program groups
+		// get all enabled program groups AND filter out program groups with no enabled programs
 		// NOTE: Programs will be eager loaded but must be filtered by enabled in the view
-		$progGroups = Program_group::find_all_by_enabled(1);
+		$join = 'INNER JOIN Program ON Program.ProgramGroupID = ProgramGroup.ProgramGroupID AND Program.Enabled = 1';
+		$progGroups = Program_group::all(array('joins' => $join
+											  ,'conditions' => array('ProgramGroup.Enabled=?', 1)));
 
 		// send these questions and programs to the view for display
 		$this->data['wlQuestions'] = $wlQuestions;
@@ -105,9 +107,11 @@ class admissions extends Application {
 			redirect('login');
 		}
 		
-		// get all enabled program groups
+		// get all enabled program groups AND filter out program groups with no enabled programs
 		// NOTE: Programs will be eager loaded but must be filtered by enabled in the view
-		$progGroups = Program_group::find_all_by_enabled(1);
+		$join = 'INNER JOIN Program ON Program.ProgramGroupID = ProgramGroup.ProgramGroupID AND Program.Enabled = 1';
+		$progGroups = Program_group::all(array('joins' => $join
+											  ,'conditions' => array('ProgramGroup.Enabled=?', 1)));
 		
 		// populate view data with child info and program info
 		$this->data['firstName'] = $wlStud->firstname;
