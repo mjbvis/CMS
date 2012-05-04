@@ -64,14 +64,8 @@ class admissions extends Application {
 			// get answers from waitlist questionaire
 			$this->storeWaitListForm($wlQuestions, $progGroups);
 			
-			$this->data['firstName'] = set_value('cFirstName');
-			$this->data['middleName'] = set_value('cMiddleName');
-			$this->data['lastName'] = set_value('cLastName');
-			
-			// display SUCCESS!
-			$this->load->view('templates/header', $this->data);	
-			$this->load->view('admissions/forms/waitlist_success', $this->data);
-			$this->load->view('templates/footer', $this->data);
+			// display waitlist and pre-enrolled students for this parent
+			redirect('admissions/registerStudentSelector');
 		}
 		else{	
 			// display the waitlist questionaire
@@ -84,10 +78,6 @@ class admissions extends Application {
 	// Displays the list of all waitlisted students for the current user.
 	// 	That is, the waitlisted students who were waitlisted by the current
 	// 	user AND who have been approved for registration.
-	//  TODO: the parents should be able to see waitlisted students
-	//		who are not at PreEnrolled status, who are not eligible for registration.
-	//	TODO: pre-enrolled students should not show up after they have been fully
-	//		registered. Do a left outer join on the student table.
 	function registerStudentSelector() {
 		$this->data['preEnStudents'] = Waitlist_form::all(
 				array('conditions' => array('UserID=? AND IsPreEnrolled=1', user_id())
