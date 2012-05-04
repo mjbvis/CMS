@@ -25,17 +25,7 @@ function get_menu_items($group_name = NULL){
 	return Menu_item::all(array('conditions' => array('GroupID=?', $groupID)
 							    ,'joins' => array('group_menu_items')
 							    ,'order' => 'RankOrder'));
-								
-	
-	// EAGER LOADING MANY_TO_MANY EXPERIMENTS:
-	
-	//$Grp = Group::find_by_id($groupID, array('include' => array('group_menu_items' => array('menu_item'))));
-	//var_dump($Grp->group_menu_items);
-	//$gmi = $Grp->group_menu_items[0];
-	//var_dump($gmi->menu_item);
 
-	// $Grp = Group::find_by_id($groupID);//, array('include' => array('group_menu_items' => array('menu_item'))));
-	// var_dump($Grp);
 	
 }
 	
