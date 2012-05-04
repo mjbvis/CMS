@@ -75,10 +75,14 @@ function show_hide(value) {
 							printf('<ul>');
 								foreach($pGroup->programs as $program):
 									$programAttr = $program->attributes();
-									printf('<li>');
-										printf('<input type="radio" name="programChecked" id="programCheckbox%d" value="%d" %s />', $i, $programAttr['programid'], ($programAttr['programid'] == $progSelected) ? set_radio('programChecked', $programAttr['programid'], TRUE) : set_radio('programChecked', $programAttr['programid']));
-										printf('%s, %s - %s', $programAttr['days'], $programAttr['starttime'], $programAttr['endtime']);
-									printf('</li>');
+									// only display enabled Programs.
+									// NOTE: these are not filtered out at this point
+									if($programAttr['enabled'] == 1):
+										printf('<li>');
+											printf('<input type="radio" name="programChecked" id="programCheckbox%d" value="%d" %s />', $i, $programAttr['programid'], ($programAttr['programid'] == $progSelected) ? set_radio('programChecked', $programAttr['programid'], TRUE) : set_radio('programChecked', $programAttr['programid']));
+											printf('%s, %s - %s', $programAttr['days'], $programAttr['starttime'], $programAttr['endtime']);
+										printf('</li>');
+									endif;
 								endforeach;
 							printf('</ul>');
 						printf('</li>');

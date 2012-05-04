@@ -49,7 +49,7 @@ class admissions extends Application {
 		$wlQuestions = Waitlist_question::find_all_by_enabled(1);
 		
 		// get all enabled program groups
-		// TODO: filter programs by enabled
+		// NOTE: Programs will be eager loaded but must be filtered by enabled in the view
 		$progGroups = Program_group::find_all_by_enabled(1);
 
 		// send these questions and programs to the view for display
@@ -105,7 +105,8 @@ class admissions extends Application {
 			redirect('login');
 		}
 		
-		// TODO: filter programs by enabled (we are currently only filtering program groups)
+		// get all enabled program groups
+		// NOTE: Programs will be eager loaded but must be filtered by enabled in the view
 		$progGroups = Program_group::find_all_by_enabled(1);
 		
 		// populate view data with child info and program info
