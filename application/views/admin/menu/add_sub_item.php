@@ -22,8 +22,6 @@
 					endforeach;
 					printf('</select>');
 					?>
-				    <!--<input type="text" name="menuItemID" value="<?php echo set_value('menuItemID');?>" /><br />
-			    	-->
 			    </li>
 				    <li>
 				    </br>
@@ -41,6 +39,6 @@
 			</ul>
 		</fieldset>
  
-        <input type="submit" value="Submit" name="submit" class="submit"/>
+        <input type="submit" value="Submit" name="addSubItem" class="submit"/>
 	</form>
 </div>

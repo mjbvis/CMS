@@ -6,7 +6,7 @@ class Sub_item extends ActiveRecord\Model
 	static $table_name = 'SubItem';
 	
 	# explicit pk since our pk is not "id" 
- 	static $primary_key = 'SubItemID';
+ 	//static $primary_key = 'SubItemID';
 	
 	# explicit column names for the sake of readability
 	static $alias_attribute = array(
