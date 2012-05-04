@@ -129,11 +129,9 @@ class admissions extends Application {
 		}
 		else {
 			$this->storeRegistrationForm($wlid);
-			
-			// TODO: success page?
-			
-			// let the login controller redirect us to the appropriate dashboard
-			redirect(login);	
+						
+			// display waitlist and pre-enrolled students for this parent
+			redirect('admissions/registerStudentSelector');
 		}
 	}
 	
@@ -147,6 +145,8 @@ class admissions extends Application {
 		$wlForm->middlename = set_value('cMiddleName');
 		$wlForm->lastname = set_value('cLastName');
 		$wlForm->agreement = set_value('pAgreement');
+		$wlForm->ispreenrolled = 0;
+		$wlForm->iswaitlisted = 1;
 		$wlForm->submissiondttm = date('Y-m-d H:i:s', time()); // Example: 2012-11-28 14:32:08
 		$wlForm->save();
 
