@@ -38,6 +38,6 @@ function addInput(divName){
 				</li>
 			</ul>
 
-		<input type="submit" value="Register" name="register" class="submit"/>
+		<input type="submit" value="Register" name="addParentUserAccount" class="submit"/>
 	</form>
 </div>
