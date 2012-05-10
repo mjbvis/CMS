@@ -26,8 +26,7 @@
 <div id="content">
 	<div class="container_12">
 		<div class="grid_12">
-			<br /><br />HEADER<br /><br />
-				<?php echo form_open(); ?>
+			<?php echo form_open(); ?>
 				<table width="100%">
 				    <tr>
 						<td style="vertical-align:top;"><?php echo $grid1; ?></td>
@@ -39,8 +38,7 @@
 					</tr>
 				</table>
 				<?php echo form_close(); ?>
-			<br /><br />FOOTER<br /><br />  
-		</div>
+			</div>
 		<div class="clear"></div>
 	</div>
 </div>

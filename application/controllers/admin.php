@@ -253,9 +253,9 @@ class Admin extends Application{
             
             $data->page_grid = $this->carbogrid->render();
      
-            //$this->load->view('templates/header', $this->data);  
+            $this->load->view('templates/header', $this->data);  
             $this->load->view('admin/record_management/manage_users', $data);
-            //$this->load->view('templates/footer');
+            $this->load->view('templates/footer');
     }
     
     function addSubItem(){
@@ -464,7 +464,7 @@ class Admin extends Application{
         $data->grid1 = $this->grid1->render();
 		$data->grid2 = $this->grid2->render();
  
-    $this->load->view('templates/header', $this->data);  
+    	$this->load->view('templates/header', $this->data);  
 		$this->load->view('admin/record_management/waitlist_managment', $data);
 		$this->load->view('templates/footer');
     }
