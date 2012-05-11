@@ -15,6 +15,8 @@ class Parental extends ActiveRecord\Model
 		'Email' => 'Email',
 		'Employer' => 'Employer',
 		'Occupation' => 'Occupation',
+		'VolunteerOptOut' => 'VolunteerOptOut',
+		'SkillSheetID' => 'SkillSheetID',
 		'UDTTM' => 'UDTTM');
 }
 	
