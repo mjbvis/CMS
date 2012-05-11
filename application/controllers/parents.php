@@ -337,7 +337,7 @@ Class Parents extends Application {
             'allow_columns' => FALSE,
             'allow_page_size' => FALSE,
 			'nested' => FALSE,
-			'ajax' => FALSE,
+			'ajax' => TRUE,
 			'show_empty_rows' => FALSE,
 			
 		);
