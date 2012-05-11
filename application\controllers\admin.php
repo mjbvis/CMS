@@ -24,11 +24,173 @@ class Admin extends Application{
 	
 	public function index(){
 				
-		if(logged_in()){				
-			/* load views */
+		if(logged_in()){
+			
+		$wlGrid = 'none';
+		$preEnrollGrid = 'none';	
+				
+		//wlGrid - the waitlist table
+		$columns = array(
+			0 => array(
+				'name' => 'cFname',
+				'db_name' => 'FirstName',
+				'header' => 'First Name',
+				'group' => 'Child',
+				'required' => TRUE,
+				'unique' => TRUE,
+				'form_control' => 'text_long',
+				'type' => 'string'),
+			1 => array(
+				'name' => 'cLname',
+				'db_name' => 'LastName',
+				'header' => 'First Name',
+				'group' => 'Child',
+				'required' => FALSE,
+				'visible' => TRUE,
+				'form_control' => 'text_long',
+				'type' => 'string'),
+			2 => array(
+				'name' => 'preEnrolled',
+				'db_name' => 'IsPreEnrolled',
+				'header' => 'Pre-enrolled',
+				'group' => 'Child',
+				'allow_filter' => FALSE,
+                'visible' => FALSE,
+                'form_control' => 'checkbox',
+                'type' => 'boolean'),
+			3 => array(
+				'name' => 'waitlisted',
+				'db_name' => 'IsWaitlisted',
+				'header' => 'Waitlisted',
+				'group' => 'Child',
+				'allow_filter' => FALSE,
+                'visible' => FALSE,
+                'form_control' => 'checkbox',
+                'type' => 'boolean')
+		);
+		      
+		$params = array(
+			'id' => 'preEnrolledForm',
+			'table' => 'WaitlistForm',
+			'table_id_name' => 'FormID',
+			'url' => 'admin/waitlist',
+			'uri_param' => $wlGrid,
+			'params_after' => $preEnrollGrid,
+			'columns' => $columns,
+			
+			'hard_filters' => array(
+                2 => array('value' => FALSE)
+			   ,3 => array('value' => TRUE)
+            ),
+			
+			'allow_add' => FALSE,
+            'allow_edit' => FALSE,
+            'allow_delete' => FALSE,
+            'allow_filter' => FALSE,
+            'allow_columns' => FALSE,
+            'allow_page_size' => FALSE,
+            
+			'show_empty_rows' => FALSE,
+			
+			'nested' => TRUE,
+			'ajax' => TRUE,
+			
+		);
+		
+		$this->load->library('carbogrid', $params, 'wlGrid');
+ 
+        if ($this->wlGrid->is_ajax)
+        {
+            $this->wlGrid->render();
+            return FALSE;
+        }
+ 
+		
+		//preEnrollGrid - the pre-enrolled table
+		$columns = array(
+			0 => array(
+				'name' => 'cFname',
+				'db_name' => 'FirstName',
+				'header' => 'First Name',
+				'group' => 'Child',
+				'required' => TRUE,
+				'unique' => TRUE,
+				'form_control' => 'text_long',
+				'type' => 'string'),
+			1 => array(
+				'name' => 'cLname',
+				'db_name' => 'LastName',
+				'header' => 'First Name',
+				'group' => 'Child',
+				'required' => FALSE,
+				'visible' => TRUE,
+				'form_control' => 'text_long',
+				'type' => 'string'),
+			2 => array(
+				'name' => 'preEnrolled',
+				'db_name' => 'IsPreEnrolled',
+				'header' => 'Pre-enrolled',
+				'group' => 'Child',
+				'required' => FALSE,
+				'visible' => FALSE,
+				'form_control' => 'checkbox',
+				'type' => 'string'),
+			3 => array(
+				'name' => 'waitlisted',
+				'db_name' => 'IsWaitlisted',
+				'header' => 'Waitlisted',
+				'group' => 'Child',
+				'allow_filter' => FALSE,
+                'visible' => FALSE,
+                'form_control' => 'checkbox',
+                'type' => 'boolean')
+		);
+		      
+		$params = array(
+			'id' => 'WaitlistForm',
+			'table' => 'WaitlistForm',
+			'table_id_name' => 'FormID',
+			'url' => 'admin/waitlist',
+			'uri_param' => $preEnrollGrid,
+			'params_before' => $wlGrid,
+			'columns' => $columns,
+			
+			'hard_filters' => array(
+                2 => array('value' => TRUE)
+			   ,3 => array('value' => FALSE)
+            ),
+			
+			'allow_add' => FALSE,
+            'allow_edit' => FALSE,
+            'allow_delete' => FALSE,
+            'allow_filter' => FALSE,
+            'allow_columns' => FALSE,
+            'allow_page_size' => FALSE,
+			
+			'show_empty_rows' => FALSE,
+			
+			'nested' => TRUE,
+			'ajax' => TRUE,
+			
+		);
+		
+		$this->load->library('carbogrid', $params, 'preEnrollGrid');
+ 
+        if ($this->preEnrollGrid->is_ajax)
+        {
+            $this->preEnrollGrid->render();
+            return FALSE;
+        }		
+ 
+
+        // Pass grid to the view     
+        $data->wlGrid = $this->wlGrid->render();
+		$data->preEnrollGrid = $this->preEnrollGrid->render();
+					 
+			//* load views */
 			$this->load->view('templates/header', $this->data);
-			$this->load->view('admin/dashboard', $this->data);
-			$this->load->view('templates/footer', $this->data);
+			$this->load->view('admin/dashboard', $data);
+			$this->load->view('templates/footer');
 		}
 		else{
 			$this->login();
@@ -468,6 +630,14 @@ class Admin extends Application{
 		$this->load->view('admin/record_management/waitlist_managment', $data);
 		$this->load->view('templates/footer');
     }
+
+	function checkAjax($name){
+        if ($this->$name->is_ajax)
+        {
+            $this->$name->render();
+            return FALSE;
+        }
+	}
 
 }
 
