@@ -13,10 +13,8 @@ class Alerts extends Application
 		
 		/* Load helpers */
 		$this->load->helper(array('url', 'form', 'menu', 'alerts'));
+		
     	/* Load libraries */
-
-        /* Load Models */
-        $this->load->model('alerts_model');
 		
 		# setup default view data
 		$this->data['title'] = 'Alert Dashboard';

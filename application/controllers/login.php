@@ -12,9 +12,6 @@ class Login extends Application {
 		# Load Libraries
 		$this->load->library('form_validation');
         
-		# Load Modules
-		$this->load->model('alerts_model');
-        
         # Load Config
         $this->config->load('ag_auth');
 		
