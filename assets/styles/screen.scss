@@ -175,7 +175,7 @@ body {
       ul{
         position:   absolute;
         right:      20px;
-        top:        $menuHeight + 10;       // Firefox has a bug and will not transition default values.
+        top:        $menuHeight + 10;  // Firefox has a bug and will not transition default values.
         visibility: hidden;
         opacity:    0;
         padding:    0;
@@ -189,9 +189,10 @@ body {
           padding-bottom: 0;
         }
         li{
-          width:         100%;
-          padding-left:  10px;
-          padding-right: 10px !important;
+          width:            100%;
+          padding-left:     10px;
+          padding-right:    10px !important;
+          background-color: #FFF;
           a{
             width:   100%;
             margin:  0 -10px;

@@ -30,6 +30,7 @@ div {
     font-size: 1em;
 }
 .cg-grid-form {
+	  width: 100%;
     margin: 0;
     padding: 0;
 }

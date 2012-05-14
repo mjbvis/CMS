@@ -253,9 +253,9 @@ class Admin extends Application{
             
             $data->page_grid = $this->carbogrid->render();
      
-            //$this->load->view('templates/header', $this->data);  
+            $this->load->view('templates/header', $this->data);  
             $this->load->view('admin/record_management/manage_users', $data);
-            //$this->load->view('templates/footer');
+            $this->load->view('templates/footer');
     }
     
     function addSubItem(){
