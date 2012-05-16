@@ -16,6 +16,7 @@ class Admin extends Application{
         
 		/* Load libraries */
         $this->load->library('Repositories/Registration_Repository', '', 'reg');
+		$this->load->library('grocery_CRUD');
 		
 		/* setup default view data */
 		$this->data['title'] = 'Admin Dashboard';
@@ -25,178 +26,50 @@ class Admin extends Application{
 	public function index(){
 				
 		if(logged_in()){
-			
-		$wlGrid = 'none';
-		$preEnrollGrid = 'none';	
 				
-		//wlGrid - the waitlist table
-		$columns = array(
-			0 => array(
-				'name' => 'cFname',
-				'db_name' => 'FirstName',
-				'header' => 'First Name',
-				'group' => 'Child',
-				'required' => TRUE,
-				'unique' => TRUE,
-				'form_control' => 'text_long',
-				'type' => 'string'),
-			1 => array(
-				'name' => 'cLname',
-				'db_name' => 'LastName',
-				'header' => 'First Name',
-				'group' => 'Child',
-				'required' => FALSE,
-				'visible' => TRUE,
-				'form_control' => 'text_long',
-				'type' => 'string'),
-			2 => array(
-				'name' => 'preEnrolled',
-				'db_name' => 'IsPreEnrolled',
-				'header' => 'Pre-enrolled',
-				'group' => 'Child',
-				'allow_filter' => FALSE,
-                'visible' => FALSE,
-                'form_control' => 'checkbox',
-                'type' => 'boolean'),
-			3 => array(
-				'name' => 'waitlisted',
-				'db_name' => 'IsWaitlisted',
-				'header' => 'Waitlisted',
-				'group' => 'Child',
-				'allow_filter' => FALSE,
-                'visible' => FALSE,
-                'form_control' => 'checkbox',
-                'type' => 'boolean')
-		);
-		      
-		$params = array(
-			'id' => 'preEnrolledForm',
-			'table' => 'WaitlistForm',
-			'table_id_name' => 'FormID',
-			'url' => 'admin/waitlist',
-			'uri_param' => $wlGrid,
-			'params_after' => $preEnrollGrid,
-			'columns' => $columns,
+		//* load views */
+		$this->load->view('templates/header', $this->data);		
+		$this->load->view('admin/dashboard');
+		$this->load->view('templates/footer');
 			
-			'hard_filters' => array(
-                2 => array('value' => FALSE)
-			   ,3 => array('value' => TRUE)
-            ),
-			
-			'allow_add' => FALSE,
-            'allow_edit' => FALSE,
-            'allow_delete' => FALSE,
-            'allow_filter' => FALSE,
-            'allow_columns' => FALSE,
-            'allow_page_size' => FALSE,
-            
-			'show_empty_rows' => FALSE,
-			
-			'nested' => TRUE,
-			'ajax' => TRUE,
-			
-		);
-		
-		$this->load->library('carbogrid', $params, 'wlGrid');
- 
-        if ($this->wlGrid->is_ajax)
-        {
-            $this->wlGrid->render();
-            return FALSE;
-        }
- 
-		
-		//preEnrollGrid - the pre-enrolled table
-		$columns = array(
-			0 => array(
-				'name' => 'cFname',
-				'db_name' => 'FirstName',
-				'header' => 'First Name',
-				'group' => 'Child',
-				'required' => TRUE,
-				'unique' => TRUE,
-				'form_control' => 'text_long',
-				'type' => 'string'),
-			1 => array(
-				'name' => 'cLname',
-				'db_name' => 'LastName',
-				'header' => 'First Name',
-				'group' => 'Child',
-				'required' => FALSE,
-				'visible' => TRUE,
-				'form_control' => 'text_long',
-				'type' => 'string'),
-			2 => array(
-				'name' => 'preEnrolled',
-				'db_name' => 'IsPreEnrolled',
-				'header' => 'Pre-enrolled',
-				'group' => 'Child',
-				'required' => FALSE,
-				'visible' => FALSE,
-				'form_control' => 'checkbox',
-				'type' => 'string'),
-			3 => array(
-				'name' => 'waitlisted',
-				'db_name' => 'IsWaitlisted',
-				'header' => 'Waitlisted',
-				'group' => 'Child',
-				'allow_filter' => FALSE,
-                'visible' => FALSE,
-                'form_control' => 'checkbox',
-                'type' => 'boolean')
-		);
-		      
-		$params = array(
-			'id' => 'WaitlistForm',
-			'table' => 'WaitlistForm',
-			'table_id_name' => 'FormID',
-			'url' => 'admin/waitlist',
-			'uri_param' => $preEnrollGrid,
-			'params_before' => $wlGrid,
-			'columns' => $columns,
-			
-			'hard_filters' => array(
-                2 => array('value' => TRUE)
-			   ,3 => array('value' => FALSE)
-            ),
-			
-			'allow_add' => FALSE,
-            'allow_edit' => FALSE,
-            'allow_delete' => FALSE,
-            'allow_filter' => FALSE,
-            'allow_columns' => FALSE,
-            'allow_page_size' => FALSE,
-			
-			'show_empty_rows' => FALSE,
-			
-			'nested' => TRUE,
-			'ajax' => TRUE,
-			
-		);
-		
-		$this->load->library('carbogrid', $params, 'preEnrollGrid');
- 
-        if ($this->preEnrollGrid->is_ajax)
-        {
-            $this->preEnrollGrid->render();
-            return FALSE;
-        }		
- 
-
-        // Pass grid to the view     
-        $data->wlGrid = $this->wlGrid->render();
-		$data->preEnrollGrid = $this->preEnrollGrid->render();
-					 
-			//* load views */
-			$this->load->view('templates/header', $this->data);
-			$this->load->view('admin/dashboard', $data);
-			$this->load->view('templates/footer');
 		}
 		else{
 			$this->login();
 		}
 	}
 	
+	// grids for the dashboard
+	function waitlistGrid(){
+			
+		$crud = new grocery_CRUD();
+			
+		$crud->set_table('WaitlistForm')
+			->columns('FirstName', 'LastName')
+			->display_as('FirstName', 'First')
+			->display_as('LastName','Last')
+			->unset_add()
+			->unset_edit()
+			->unset_delete();
+			
+		
+    	$output = $crud->render();
+		$this->load->view('templates/grid',$output);
+	}
+
+	function preEnrolledGrid(){
+		$this->grocery_crud->set_table('users');
+    	$output = $this->grocery_crud->render();
+		$this->load->view('templates/grid',$output);
+	}
+	
+	function volunteerLogGrid(){
+		$this->grocery_crud->set_table('users');
+    	$output = $this->grocery_crud->render();
+		$this->load->view('templates/grid',$output);
+	}
+	// end grids for dashboard
+	
+	// this function is for creating a new account for parents
 	public function addParentUserAccount(){
 		$this->form_validation->set_rules('first', 'First Name', 'required|min_length[1]|callback_field_exists');
         $this->form_validation->set_rules('last', 'Last Name', 'required|min_length[1]|callback_field_exists');
@@ -342,79 +215,8 @@ class Admin extends Application{
         $parent->save();
     }
     
-    function manageUsers($grid = 'none') {
-      $columns = array(
-        0 => array(
-          'name' => 'username',
-          'db_name' => 'username',
-          'header' => 'Username',
-          'group' => 'User',
-          'required' => TRUE,
-          'unique' => TRUE,
-          'form_control' => 'text_long',
-          'type' => 'string'),
-        1 => array(
-          'name' => 'email',
-          'db_name' => 'email',
-          'header' => 'Email',
-          'group' => 'User',
-          'required' => TRUE,
-          'visible' => TRUE,
-          'form_control' => 'text_long',
-          'type' => 'string'),
-         2 => array(
-          'name' => 'HasChangedPassword',
-          'db_name' => 'HasChangedPassword',
-          'header' => 'HasChangedPassword',
-          'group' => 'User',
-          'required' => FALSE,
-          'visible' => TRUE,
-          'form_control' => 'checkbox',
-          'type' => 'boolean'),
-         3 => array(
-          'name' => 'group_id',
-          'db_name' => 'group_id',
-          'header' => 'group_id',
-          'group' => 'User',
-          'required' => TRUE,
-          'visible' => TRUE,
-          'form_control' => 'text_short',
-          'type' => 'string'),
-         3 => array(
-          'name' => 'Enabled',
-          'db_name' => 'Enabled',
-          'header' => 'Enabled',
-          'group' => 'User',
-          'required' => FALSE,
-          'visible' => TRUE,
-          'form_control' => 'checkbox',
-          'type' => 'boolean')
-      );
-      
-      $params = array(
-                'id' => 'users',
-                'table' => 'users',
-                'url' => 'admin/manageUsers',
-                'uri_param' => $grid,
-                'columns' => $columns,
-                'ajax' => TRUE,
-                'allow_add' => FALSE,
-                'allow_delete' => FALSE,
-                'show_empty_rows' => FALSE
-            );
-     
-            $this->load->library('carbogrid', $params);
-     
-            if ($this->carbogrid->is_ajax)
-            {
-                $this->carbogrid->render();
-                return FALSE;
-            }
-     
-            // Pass grid to the view
-            
-            $data->page_grid = $this->carbogrid->render();
-     
+    function manageUsers() {
+           
             $this->load->view('templates/header', $this->data);  
             $this->load->view('admin/record_management/manage_users', $data);
             $this->load->view('templates/footer');
@@ -469,9 +271,7 @@ class Admin extends Application{
 				$this->db->set('IsPreEnrolled', 0)->where_in('FormID', $ids)->update('WaitlistForm');
             }
         }	
-			
-			
-      	
+			  	
 		//grid1 - the waitlist table
 		$columns = array(
 			0 => array(
@@ -546,7 +346,6 @@ class Admin extends Application{
             return FALSE;
         }
  
-		
 		//grid2 - the pre-enrolled table
 		$columns = array(
 			0 => array(
@@ -630,14 +429,6 @@ class Admin extends Application{
 		$this->load->view('admin/record_management/waitlist_managment', $data);
 		$this->load->view('templates/footer');
     }
-
-	function checkAjax($name){
-        if ($this->$name->is_ajax)
-        {
-            $this->$name->render();
-            return FALSE;
-        }
-	}
 
 }
 
