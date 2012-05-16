@@ -115,6 +115,7 @@ Class Parents extends Application {
 	
 	function get_current_datetime() {
 		$curr_datetime = date('Y-m-d H:i:s', time());
+
 		return '<input type="text" maxlength="50" value="' . $curr_datetime . '" name="SubmissionDTTM" style="width:400px" readonly="true">';
 	}
 }
