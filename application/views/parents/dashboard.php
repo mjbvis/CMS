@@ -1,19 +1,27 @@
-<div id="waitlistForm">
-	<IFRAME SRC=<?php echo base_url('parents/waitlistGrid');?> WIDTH=40% class="autoHeight" frameborder="0"></IFRAME>
-</div>
+<style type="text/css">
+	table, iframe{ width: 100%;	}
+	table{
+		text-align:center;
+		border-collapse: collapse;
+	}
+</style>
 
-<div id="preEnrolledForm">
-	<IFRAME SRC=<?php echo base_url('parents/preEnrolledGrid');?> WIDTH=40% class="autoHeight" frameborder="0"></IFRAME>
-</div>
+<table border="0">
+	<tr>
+		<td>
+			Notifications
+			<IFRAME SRC=<?php echo base_url('parents/notificationGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
+			Volunteer Logging
+			<IFRAME SRC=<?php echo base_url('parents/volunteeringGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
+		</td>
+		<td valign="top" width="400">
+			Waitlisted
+			<IFRAME SRC=<?php echo base_url('parents/waitlistGrid');?>  class="autoHeight" frameborder="0"></IFRAME>
+			Pre-Enrolled
+			<IFRAME SRC=<?php echo base_url('parents/preEnrolledGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
+			Registered
+			<IFRAME SRC=<?php echo base_url('parents/registeredGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
+		</td>
+	</tr>
+</table>
 
-<div id="registeredForm">
-	<IFRAME SRC=<?php echo base_url('parents/registeredGrid');?> WIDTH=40% class="autoHeight" frameborder="0"></IFRAME>
-</div>
-
-<!-- <div id="NotificationForm">
-	<IFRAME SRC=<?php echo base_url('parents/notificationGrid');?> WIDTH=40% class="autoHeight" frameborder="0"></IFRAME>
-</div> -->
-
-<div id="VolunteeringForm">
-	<IFRAME SRC=<?php echo base_url('parents/volunteeringGrid');?> WIDTH=100% class="autoHeight" frameborder="0"></IFRAME>
-</div>
