@@ -47,24 +47,40 @@ class Admin extends Application{
 			->columns('FirstName', 'LastName')
 			->display_as('FirstName', 'First')
 			->display_as('LastName','Last')
-			->unset_add()
-			->unset_edit()
-			->unset_delete();
-			
+			->unset_operations();
+		
+		$crud->where('IsWaitlisted', 1);	
 		
     	$output = $crud->render();
 		$this->load->view('templates/grid',$output);
 	}
 
 	function preEnrolledGrid(){
-		$this->grocery_crud->set_table('users');
-    	$output = $this->grocery_crud->render();
+		
+		$crud = new grocery_CRUD();
+		
+		$crud->set_table('WaitlistForm')
+			->columns('FirstName', 'LastName')
+			->display_as('FirstName', 'First')
+			->display_as('LastName','Last')
+			->unset_operations();
+		
+		$crud->where('IsPreEnrolled', 1);
+		
+    	$output = $crud->render();
 		$this->load->view('templates/grid',$output);
 	}
 	
 	function volunteerLogGrid(){
-		$this->grocery_crud->set_table('users');
-    	$output = $this->grocery_crud->render();
+			
+		$crud = new grocery_CRUD();
+		
+		$crud->set_table('VolunteerLogEntry')
+			->set_relation('UserID', 'users', 'username')
+			->columns('UserID', 'Hours', 'Description', 'SubmissionDTTM')
+			->unset_operations();
+		
+    	$output = $crud->render();
 		$this->load->view('templates/grid',$output);
 	}
 	// end grids for dashboard

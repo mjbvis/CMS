@@ -6,17 +6,31 @@
 	}
 </style>
 
-<table border="1">
+<table border="0">
 	<tr>
-		<td valign="top" width="300">
+		<td valign="top" width="400">
+			Waitlist
 			<IFRAME SRC=<?php echo base_url('admin/waitlistGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
-		</td>
-		<td valign="top">
+			Pre-Enrolled List
 			<IFRAME SRC=<?php echo base_url('admin/preEnrolledGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
+		</td>
+		<td >
+			Recent Volunteer Activity
 			<IFRAME SRC=<?php echo base_url('admin/volunteerLogGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 	</tr>
+</table>
+
+<table>
 	<tr>
-		<td colspan="2" valign="top"><IFRAME SRC=<?php echo base_url('admin/volunteerLogGrid'); ?> class="autoHeight" frameborder="0"></IFRAME></td>
+		<td width=50% valign="top">
+			Prospect Information
+			<IFRAME SRC=<?php echo base_url('admin/volunteerLogGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
+		</td>
+		
+		<td width=50% valign="top">
+			Recent Donation Activity
+			<IFRAME SRC=<?php echo base_url('admin/volunteerLogGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
+		</td>
 	</tr>
 </table>
