@@ -82,6 +82,9 @@ Class Parents extends Application {
 		$this->load->view('templates/grid', $output);
 	}
 
+	# The volunteering grocery crud for the parent dashboard. This
+	# grid should have Add enabled but Edit and Delete disabled. Parent's
+	# should not be able to edit and/or delete their volunteer logs.
 	function volunteeringGrid() {
 		
 		// This is the maximum number of hours that can be logged in a single log entry
@@ -96,7 +99,9 @@ Class Parents extends Application {
 			 ->required_fields('UserID', 'Hours', 'Description', 'SubmissionDTTM')
 			 ->unset_edit()
 			 ->unset_delete();
-			 
+		
+		# Use these callback fields to make UserID and SubmissionDTTM readonly
+		# with default values.
 		$crud->callback_add_field('UserID', array($this, 'get_user_id'));
 		$crud->callback_add_field('SubmissionDTTM', array($this, 'get_current_datetime'));
 		
@@ -109,13 +114,18 @@ Class Parents extends Application {
 		$this->load->view('templates/grid', $output);
 	}
 
+	# Callback Add Field for the UserID.
+	# We want a the UserID to be readonly and set to the current user's id. This
+	# function adds the UserID to the add form of a grocery crud.
 	function get_user_id() {
 		return '<input type="text" maxlength="50" value="' . user_id() . '" name="UserID" style="width:400px" readonly="true">';
 	}
 	
+	# Callback Add Field for the SubmissionDTTM.
+	# We want a the SubmissionDTTM to be readonly and set to the current datetime.
+	# This function adds the SubmissionDTTM to the add form of a grocery crud.
 	function get_current_datetime() {
 		$curr_datetime = date('Y-m-d H:i:s', time());
-
 		return '<input type="text" maxlength="50" value="' . $curr_datetime . '" name="SubmissionDTTM" style="width:400px" readonly="true">';
 	}
 }
