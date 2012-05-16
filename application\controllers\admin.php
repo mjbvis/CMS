@@ -38,7 +38,36 @@ class Admin extends Application{
 		}
 	}
 	
+	function manageStudents(){
+		$this->load->view('templates/header', $this->data);		
+		$this->load->view('admin/record_management/manage_students');
+		$this->load->view('templates/footer');
+	}
+	
+	function studentGrid(){
+		$crud = new grocery_CRUD();
+		$crud->set_table('Student');
+		$output = $crud->render();
+		$this->load->view('templates/grid', $output);
+	}
+	
+	function studentEducBackgroundGrid(){
+		$crud = new grocery_CRUD();
+		$crud->set_table('StudentEduBackground');
+		$output = $crud->render();
+		$this->load->view('templates/grid', $output);
+	}
+	
+	function studentMedicalInformationGrid(){
+		$crud = new grocery_CRUD();
+		$crud->set_table('StudentMedicalInformation');
+		$output = $crud->render();
+		$this->load->view('templates/grid', $output);
+	}
+	
 	function manageAccounts(){
+		//this is so we can add more grids using iframes
+		// hopefully soon grocery CRUD supports multiple tables with out using iframes in 1 view soon	
 		$this->manActGrid();
 	}
 	
@@ -464,7 +493,7 @@ class Admin extends Application{
 		$data->grid2 = $this->grid2->render();
  
     	$this->load->view('templates/header', $this->data);  
-		$this->load->view('admin/record_management/waitlist_managment', $data);
+		$this->load->view('admin/record_management/waitlist_management', $data);
 		$this->load->view('templates/footer');
     }
 
