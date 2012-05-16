@@ -1,6 +1,5 @@
 <?php
 
-//probably move this function once working
 function get_menu_items($group_name = NULL){
 	$CI =& get_instance();
 	

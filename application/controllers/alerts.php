@@ -12,16 +12,14 @@ class Alerts extends Application
 		//$this->ag_auth->restrict('alert');
 		
 		/* Load helpers */
-		$this->load->helper(array('url', 'form', 'menu'));
+		$this->load->helper(array('url', 'form', 'menu', 'alerts'));
+		
     	/* Load libraries */
-
-        /* Load Models */
-        $this->load->model('alerts_model');
 		
 		# setup default view data
 		$this->data['title'] = 'Alert Dashboard';
 		$this->data['MenuItems'] = get_menu_items('alert');
-		$this->data['userAlerts'] = $this->alerts_model->selectUserAlerts(user_id());
+		$this->data['userAlerts'] = selectUserAlerts(user_id());
 	}
 	
 	public function index()
