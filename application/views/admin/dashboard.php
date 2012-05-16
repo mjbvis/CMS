@@ -5,8 +5,7 @@
 		border-collapse: collapse;
 	}
 </style>
-
-<<<<<<< HEAD
+</br>
 <table border="0">
 	<tr>
 		<td valign="top" width="400">
@@ -35,3 +34,4 @@
 		</td>
 	</tr>
 </table>
+</br>

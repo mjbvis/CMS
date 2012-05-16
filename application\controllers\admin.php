@@ -85,7 +85,9 @@ class Admin extends Application{
 		$crud->callback_before_insert(array($this,'encrypt_password_callback'));
 		
     	$output = $crud->render();
+		$this->load->view('templates/header', $this->data);		
 		$this->load->view('templates/grid', $output);
+		$this->load->view('templates/footer');
 	}
 
 	function encrypt_password_callback($post_array) {

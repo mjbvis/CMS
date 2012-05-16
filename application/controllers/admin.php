@@ -38,6 +38,64 @@ class Admin extends Application{
 		}
 	}
 	
+	function manageStudents(){
+		$this->load->view('templates/header', $this->data);		
+		$this->load->view('admin/record_management/manage_students');
+		$this->load->view('templates/footer');
+	}
+	
+	function studentGrid(){
+		$crud = new grocery_CRUD();
+		$crud->set_table('Student');
+		$output = $crud->render();
+		$this->load->view('templates/grid', $output);
+	}
+	
+	function studentEducBackgroundGrid(){
+		$crud = new grocery_CRUD();
+		$crud->set_table('StudentEduBackground');
+		$output = $crud->render();
+		$this->load->view('templates/grid', $output);
+	}
+	
+	function studentMedicalInformationGrid(){
+		$crud = new grocery_CRUD();
+		$crud->set_table('StudentMedicalInformation');
+		$output = $crud->render();
+		$this->load->view('templates/grid', $output);
+	}
+	
+	function manageAccounts(){
+		//this is so we can add more grids using iframes
+		// hopefully soon grocery CRUD supports multiple tables with out using iframes in 1 view soon	
+		$this->manActGrid();
+	}
+	
+	function manActGrid(){
+		$crud = new grocery_CRUD();
+		
+		$crud->set_table('users')
+			->columns('username', 'email', 'password', 'group_id', 'Enabled', 'HasChangedPassword');
+		
+		$crud->fields('username', 'email', 'password', 'group_id', 'Enabled', 'HasChangedPassword');
+		$crud->required_fields('username', 'email', 'password', 'group_id', 'Enabled', 'HasChangedPassword');
+		
+		//$crud->change_field_type('password', 'password');
+     	$crud->callback_before_update(array($this,'encrypt_password_callback'));
+		$crud->callback_before_insert(array($this,'encrypt_password_callback'));
+		
+    	$output = $crud->render();
+		$this->load->view('templates/header', $this->data);		
+		$this->load->view('templates/grid', $output);
+		$this->load->view('templates/footer');
+	}
+
+	function encrypt_password_callback($post_array) {
+		$post_array['password'] = $this->ag_auth->salt($post_array['password']);
+		return $post_array;
+	}        
+
+	
 	// grids for the dashboard
 	function waitlistGrid(){
 			
@@ -78,10 +136,12 @@ class Admin extends Application{
 		$crud->set_table('VolunteerLogEntry')
 			->set_relation('UserID', 'users', 'username')
 			->columns('UserID', 'Hours', 'Description', 'SubmissionDTTM')
+			->display_as('SubmissionDTTM', 'Date Submitted')
+			->display_as('UserID', 'Username')
 			->unset_operations();
 		
     	$output = $crud->render();
-		$this->load->view('templates/grid',$output);
+		$this->load->view('templates/grid', $output);
 	}
 	// end grids for dashboard
 	
@@ -231,13 +291,6 @@ class Admin extends Application{
         $parent->save();
     }
     
-    function manageUsers() {
-           
-            $this->load->view('templates/header', $this->data);  
-            $this->load->view('admin/record_management/manage_users', $data);
-            $this->load->view('templates/footer');
-    }
-    
     function addSubItem(){
         $this->data['allMenuItems'] = Menu_item::all(array('select' => 'MenuItemID, Label')); 
 		
@@ -263,7 +316,7 @@ class Admin extends Application{
 		redirect('login');
         }
     }
-
+	
 	function waitlist($grid1 = 'none', $grid2 = 'none') {
 			
 	    if ($this->input->post('moveToEnrolled')){
@@ -442,7 +495,7 @@ class Admin extends Application{
 		$data->grid2 = $this->grid2->render();
  
     	$this->load->view('templates/header', $this->data);  
-		$this->load->view('admin/record_management/waitlist_managment', $data);
+		$this->load->view('admin/record_management/waitlist_management', $data);
 		$this->load->view('templates/footer');
     }
 
