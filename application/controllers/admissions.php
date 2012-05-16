@@ -355,4 +355,60 @@ class admissions extends Application {
 		$this->form_validation->set_rules('nameOfInsuredName', 'Name of Insured', 'required|min_length[4]|callback_field_exists');
 		$this->form_validation->set_rules('employerName', 'Employer', 'required|min_length[4]|callback_field_exists');
 	}
+
+	function studentMedical() {
+		
+		$this->load->view('templates/header', $this->data);  
+		$this->load->view('admissions/forms/student_medical');
+		$this->load->view('templates/footer');
+	}
+
+	function saveStudentMedical() {
+		// Set up the MedicalInformation data which will be saved in the StudentMedicalInformation table. 
+		$studentId = 1;
+		$hospital = $this->input->post('preferredHospitalName');
+		$hospitalPhone = $this->input->post('hospitalPhoneName');
+		$physician = $this->input->post('pFirstName') . ' ' . $this->input->post('pLastName');
+		$physicianPhone = $this->input->post('pPhoneName');
+		$dentist = $this->input->post('dFirstName') . ' ' . $this->input->post('dLastName');
+		$dentistPhone = $this->input->post('dPhoneName');
+		$medicalConditions = $this->input->post('medicalConditionsName');
+		$allergies = $this->input->post('allergiesName');
+		
+		// This will save the information to the StudentMedicalInformation table.
+		$this->createMedicalInformation($studentId, $hospital, $hospitalPhone, $physician, $physicianPhone, $dentist, $dentistPhone, $medicalConditions, $allergies);
+		
+		// Set up the InsuranceInformation data which will be saved in the InsuranceInformation table.
+		$insuranceCompany = $this->input->post('insuranceCompanyName');
+		$certificateNumber = $this->input->post('certificateNumberName');
+		$insured = $this->input->post('iFirstName') . ' ' . $this->input->post('iLastName');
+		$employer = $this->input->post('employerName');
+		
+		// This will save the information to the InsuranceInformation table.
+		$this->createInsuranceInformation($studentId, $insuranceCompany, $certificateNumber, $insured, $employer);
+	}
+		
+		function createMedicalInformation($studentId, $hospital, $hospitalPhone, $physician, $physicianPhone, $dentist, $dentistPhone, $medicalConditions, $allergies) { 
+			$student_medical = new Student_medical();
+	        $student_medical->studentid = $studentId;
+	        $student_medical->preferredhospital = $hospital;
+	        $student_medical->hospitalphone = $hospitalPhone;
+	        $student_medical->physician = $physician;
+	        $student_medical->physicianphone = $physicianPhone;
+			$student_medical->dentist = $dentist;
+			$student_medical->dentistphone = $dentistPhone;
+			$student_medical->medicalconditions = $medicalConditions;
+			$student_medical->allergies = $allergies;
+	        $student_medical->save();
+		}
+		
+		function createInsuranceInformation($studentId, $insuranceCompany, $certificateNumber, $insured, $employer) {
+			$student_insurance = new Student_insurance();
+			$student_insurance->studentid = $studentId;
+			$student_insurance->insurancecompany = $insuranceCompany; 
+			$student_insurance->certificatenumber = $certificateNumber;
+			$student_insurance->nameofinsured = $insured;
+			$student_insurance->employer =$employer;
+			$student_insurance->save();
+		}
 }
