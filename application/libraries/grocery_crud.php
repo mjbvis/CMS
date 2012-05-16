@@ -239,7 +239,8 @@ class grocery_CRUD_Field_Types
 				
 			break;
 			case 'true_false':
-				$value = $this->default_true_false_text[$value];
+				if(isset($this->default_true_false_text[$value]))
+					$value = $this->default_true_false_text[$value];
 			break;
 			case 'string':
 				$value = $this->character_limiter($value,30,"...");
@@ -274,7 +275,6 @@ class grocery_CRUD_Field_Types
 				$value = $this->character_limiter($value,20,"...");
 			break;	
 			case 'relation_n_n':
-				$value = implode(', ' ,$this->get_relation_n_n_selection_array( $value, $this->relation_n_n[$field_info->name] ));
 				$value = $this->character_limiter($value,30,"...");
 			break;						
 			
@@ -435,11 +435,29 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		if(!empty($this->or_like))
 			foreach($this->or_like as $or_like)
 				$this->basic_model->or_like($or_like[0],$or_like[1],$or_like[2]);	
-				
+
+		if(!empty($this->having))
+			foreach($this->having as $having)
+				$this->basic_model->having($having[0],$having[1],$having[2]);		
+		
 		if(!empty($this->relation))
 			foreach($this->relation as $relation)
 				$this->basic_model->join_relation($relation[0],$relation[1],$relation[2]);				
+		
+		if(!empty($this->relation_n_n))
+		{
+			$columns = $this->get_columns();
+			foreach($columns as $column)
+			{
+				//Use the relation_n_n ONLY if the column is called . The set_relation_n_n are slow and it will make the table slower without any reason as we don't need those queries.
+				if(isset($this->relation_n_n[$column->field_name]))
+				{
+					$this->basic_model->set_relation_n_n_field($this->relation_n_n[$column->field_name]);
+				}
+			}
 				
+		}		
+		
 		return $this->basic_model->get_total_results();
 	}
 	
@@ -486,7 +504,7 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					$temp_relation[$this->_unique_field_name($relation_name)] = $this->_get_field_names_to_search($relation_values);
 			
 			if($state_info->search->field != null)
-			{
+			{			
 				if(isset($temp_relation[$state_info->search->field]))
 				{
 					if(is_array($temp_relation[$state_info->search->field]))
@@ -495,7 +513,12 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 					else
 						$this->like($temp_relation[$state_info->search->field] , $state_info->search->text);
 				}
-				else 
+				elseif(isset($this->relation_n_n[$state_info->search->field]))
+				{
+					$escaped_text = $this->basic_model->escape_str($state_info->search->text);
+					$this->having($state_info->search->field." LIKE '%".$escaped_text."%'");
+				} 
+				else
 				{
 					$this->like($state_info->search->field , $state_info->search->text);
 				}
@@ -504,24 +527,33 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			{
 				$columns = $this->get_columns();
 				
-				#region temporary solution for the search with relation_n_n
-				if(!empty($this->relation_n_n))
-					foreach($columns as $num_row => $column)
-						if(isset($this->relation_n_n[$column->field_name]))
-							unset($columns[$num_row]);
-				#endregion
-				
 				$search_text = $state_info->search->text;
+
+				if(!empty($this->where))
+					foreach($this->where as $where)
+						$this->basic_model->having($where[0],$where[1],$where[2]);
 				
 				foreach($columns as $column)
+				{	
 					if(isset($temp_relation[$column->field_name]))
+					{
 						if(is_array($temp_relation[$column->field_name]))
+						{
 							foreach($temp_relation[$column->field_name] as $search_field)
-								$this->or_like($search_field, $search_text);				
-						else	
-							$this->or_like($temp_relation[$column->field_name], $search_text);					
-					else
+							{
+								$this->or_like($search_field, $search_text);
+							}
+						}				
+						else
+						{	
+							$this->or_like($temp_relation[$column->field_name], $search_text);
+						}
+					}					
+					else 
+					{
 						$this->or_like($column->field_name, $search_text);
+					}
+				}
 			}
 		}
 	}
@@ -1028,15 +1060,44 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			foreach($this->or_like as $or_like)
 				$this->basic_model->or_like($or_like[0],$or_like[1],$or_like[2]);				
 			
+		if(!empty($this->having))
+			foreach($this->having as $having)
+				$this->basic_model->having($having[0],$having[1],$having[2]);		
+		
 		if(!empty($this->relation))
 			foreach($this->relation as $relation)
 				$this->basic_model->join_relation($relation[0],$relation[1],$relation[2]);
 				
+		if(!empty($this->relation_n_n))
+		{
+			$columns = $this->get_columns();
+			foreach($columns as $column)
+			{
+				//Use the relation_n_n ONLY if the column is called . The set_relation_n_n are slow and it will make the table slower without any reason as we don't need those queries.
+				if(isset($this->relation_n_n[$column->field_name]))
+				{
+					$this->basic_model->set_relation_n_n_field($this->relation_n_n[$column->field_name]);
+				}
+			}
+				
+		}	
+		
 		if($this->config['crud_paging'] === true)
 		{
 			if($this->limit == null)
 			{
-				$this->basic_model->limit(10);	
+				$ci = &get_instance();
+				$ci->load->config('grocery_crud');
+				
+				$default_per_page = $ci->config->item('grocery_crud_default_per_page');
+				if(is_numeric($default_per_page) && $default_per_page >1)
+				{
+					$this->basic_model->limit($default_per_page);
+				}
+				else
+				{
+					$this->basic_model->limit(10);
+				}
 			}
 			else
 			{
@@ -1258,7 +1319,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		}
 	}
 	
-	protected function showList($ajax = false)
+	protected function showList($ajax = false, $state_info = null)
 	{
 		$data = $this->get_common_data();
 		
@@ -1274,6 +1335,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		$data->columns 				= $this->get_columns();
 		
+		$data->success_message		= $this->get_success_message_at_list($state_info);
+		
 		$data->primary_key 			= $this->get_primary_key();
 		$data->add_url				= $this->getAddUrl();
 		$data->edit_url				= $this->getEditUrl();
@@ -1286,6 +1349,13 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->unset_add			= $this->unset_add;
 		$data->unset_edit			= $this->unset_edit;
 		$data->unset_delete			= $this->unset_delete;
+		
+		$ci = &get_instance();
+		$ci->load->config('grocery_crud');
+		
+		$default_per_page = $ci->config->item('grocery_crud_default_per_page');
+		$data->paging_options = array('10','25','50','100');
+		$data->default_per_page		= is_numeric($default_per_page) && $default_per_page >1 && in_array($default_per_page,$data->paging_options)? $default_per_page : 25; 
 		
 		if($data->list === false)
 		{
@@ -1373,10 +1443,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 				$field_value 	= isset( $row->{$column->field_name} ) ? $row->{$column->field_name} : null;
 				if( $has_callbacks && isset($this->callback_column[$field_name]) )
 					$list[$num_row]->$field_name = call_user_func($this->callback_column[$field_name], $field_value, $row);
-				elseif(isset($types[$field_name]) && $types[$field_name]->crud_type != 'relation_n_n')
-					$list[$num_row]->$field_name = $this->change_list_value($types[$field_name] , $field_value);
-				elseif(isset($types[$field_name]) && $types[$field_name]->crud_type == 'relation_n_n')
-					$list[$num_row]->$field_name = $this->change_list_value($types[$field_name] , $row->$primary_key);				
+				elseif(isset($types[$field_name]))
+					$list[$num_row]->$field_name = $this->change_list_value($types[$field_name] , $field_value);				
 				else
 					$list[$num_row]->$field_name = $field_value;
 			}
@@ -1399,6 +1467,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		
 		$data->fields 			= $this->get_add_fields();
 		$data->hidden_fields	= $this->get_add_hidden_fields();
+		$data->unset_back_to_list	= $this->unset_back_to_list;
 		
 		$this->_theme_view('add.php',$data);
 		$this->_inline_js("var js_date_format = '".$this->js_date_format."';");
@@ -1422,6 +1491,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 
 		$data->fields 		= $this->get_edit_fields();
 		$data->hidden_fields	= $this->get_edit_hidden_fields();
+		$data->unset_back_to_list	= $this->unset_back_to_list;
 		
 		$data->validation_url	= $this->getValidationUpdateUrl($state_info->primary_key); 
 		
@@ -1446,6 +1516,25 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->set_echo_and_die();
 	}
 	
+	protected function get_success_message_at_list($field_info = null)
+	{
+		if($field_info !== null && isset($field_info->success_message) && $field_info->success_message)
+		{
+			if(!empty($field_info->primary_key) && !$this->unset_edit)
+			{
+				return $this->l('insert_success_message')." <a href='".$this->getEditUrl($field_info->primary_key)."'>".$this->l('form_edit')." {$this->subject}</a> ";
+			}
+			else
+			{
+				return $this->l('insert_success_message');
+			}
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
 	protected function insert_layout($insert_result = false)
 	{
 		if($insert_result === false)
@@ -1455,14 +1544,25 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		else 
 		{
 			$success_message = '<p>'.$this->l('insert_success_message');
-			if($insert_result !== true)
+			
+			if(!$this->unset_back_to_list && !empty($insert_result) && !$this->unset_edit)
 			{
 				$success_message .= " <a href='".$this->getEditUrl($insert_result)."'>".$this->l('form_edit')." {$this->subject}</a> ".$this->l('form_or');
 			}
-			$success_message .= " <a href='".$this->getListUrl()."'>".$this->l('form_go_back_to_list')."</a>";
+			
+			if(!$this->unset_back_to_list)
+			{
+				$success_message .= " <a href='".$this->getListUrl()."'>".$this->l('form_go_back_to_list')."</a>";
+			}
+			
 			$success_message .= '</p>';
 			
-			echo "<textarea>".json_encode(array('success' => true , 'insert_primary_key' => $insert_result, 'success_message' => $success_message))."</textarea>";
+			echo "<textarea>".json_encode(array(
+					'success' => true , 
+					'insert_primary_key' => $insert_result, 
+					'success_message' => $success_message,
+					'success_list_url'	=> $this->getListSuccessUrl($insert_result)
+			))."</textarea>";
 		}
 		$this->set_echo_and_die();
 	}
@@ -1550,7 +1650,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		}	
 	}
 	
-	protected function update_layout($update_result = false)
+	protected function update_layout($update_result = false, $state_info = null)
 	{
 		if($update_result === false)
 		{
@@ -1559,11 +1659,19 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		else 
 		{
 			$success_message = '<p>'.$this->l('update_success_message');
-			$success_message .= " <a href='".$this->getListUrl()."'>".$this->l('form_go_back_to_list')."</a>";
+			if(!$this->unset_back_to_list)
+			{
+				$success_message .= " <a href='".$this->getListUrl()."'>".$this->l('form_go_back_to_list')."</a>";
+			}
 			$success_message .= '</p>';
 			
-			/* The textarea is only because of a BUG of the jquery plugin jquery form */
-			echo "<textarea>".json_encode(array('success' => true , 'insert_primary_key' => $update_result, 'success_message' => $success_message))."</textarea>";
+			/* The textarea is only because of a BUG of the jquery form plugin with the combination of multipart forms */
+			echo "<textarea>".json_encode(array(
+					'success' => true , 
+					'insert_primary_key' => $update_result, 
+					'success_message' => $success_message,
+					'success_list_url'	=> $this->getListSuccessUrl($state_info->primary_key)
+			))."</textarea>";
 		}
 		$this->set_echo_and_die();
 	}
@@ -1635,7 +1743,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			$datetime = '';
 		}
 		$input = "<input name='{$field_info->name}' type='text' value='$datetime' maxlength='19' class='datetime-input' /> 
-		<button class='datetime-input-clear'>".$this->l('form_button_clear')."</button>
+		<a class='datetime-input-clear' tabindex='-1'>".$this->l('form_button_clear')."</a>
 		({$this->ui_date_format}) hh:mm:ss";
 		return $input;
 	}
@@ -1676,7 +1784,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		}
 		
 		$input = "<input name='{$field_info->name}' type='text' value='$date' maxlength='10' class='datepicker-input' /> 
-		<button class='datepicker-input-clear'>".$this->l('form_button_clear')."</button> (".$this->ui_date_format.")";
+		<a class='datepicker-input-clear' tabindex='-1'>".$this->l('form_button_clear')."</a> (".$this->ui_date_format.")";
 		return $input;
 	}	
 
@@ -1876,6 +1984,17 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 				max_file_size: '.$max_file_size_bytes.', 
 				max_file_size_ui: "'.$max_file_size_ui.'" 
 			};
+				
+			var string_upload_file 	= "'.$this->l('form_upload_a_file').'";
+			var string_delete_file 	= "'.$this->l('string_delete_file').'";
+			var string_progress 			= "'.$this->l('string_progress').'";
+			var error_on_uploading 			= "'.$this->l('error_on_uploading').'";
+			var message_promt_delete_file 	= "'.$this->l('message_promt_delete_file').'";
+			
+			var error_max_number_of_files 	= "'.$this->l('error_max_number_of_files').'";
+			var error_accept_file_types 	= "'.$this->l('error_accept_file_types').'";
+			var error_max_file_size 		= "'.str_replace("{max_file_size}",$max_file_size_ui,$this->l('error_max_file_size')).'";
+			var error_min_file_size 		= "'.$this->l('error_min_file_size').'";				
 		');		
 		
 		
@@ -2115,7 +2234,8 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 		11	=> 'upload_file',
 		12	=> 'delete_file',
 		13	=> 'ajax_relation',
-		14	=> 'ajax_relation_n_n'
+		14	=> 'ajax_relation_n_n',
+		15	=> 'success'
 	);
 	
 	protected function getStateCode()
@@ -2266,6 +2386,14 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 			return $this->state_url('delete/'.$state_info->primary_key);
 	}
 
+	protected function getListSuccessUrl($primary_key = null)
+	{
+		if(empty($primary_key))
+			return $this->state_url('success');
+		else
+			return $this->state_url('success/'.$primary_key);
+	}	
+	
 	protected function getUploadUrl($field_name)
 	{		
 		return $this->state_url('upload_file/'.$field_name);
@@ -2409,6 +2537,13 @@ class grocery_CRUD_States extends grocery_CRUD_Layout
 			case 14:
 				$state_info->field_name = $_POST['field_name'];
 				$state_info->search 	= $_POST['term'];
+			break;
+
+			case 15:
+				$state_info = (object)array(
+					'primary_key' 		=> $first_parameter,
+					'success_message'	=> true
+				);
 			break;			
 		}
 		
@@ -2470,12 +2605,13 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected $field_types 			= null;	
 	protected $basic_db_table 		= null;
 	protected $config 				= array();
-	protected $subject 				= 'Record';
-	protected $subject_plural 		= 'Records';
+	protected $subject 				= null;
+	protected $subject_plural 		= null;
 	protected $display_as 			= array();
 	protected $order_by 			= null;
 	protected $where 				= array();
 	protected $like 				= array();
+	protected $having 				= array();
 	protected $limit 				= null;
 	protected $required_fields		= array();
 	protected $validation_rules		= array();
@@ -2488,14 +2624,16 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected $change_field_type	= null;
 	
 	/* The unsetters */
-	protected $unset_texteditor	= array();
-	protected $unset_add		= false;
-	protected $unset_edit		= false;
-	protected $unset_delete		= false;
-	protected $unset_jquery		= false;
-	protected $unset_columns	= null;
-	protected $unset_add_fields = null;
-	protected $unset_edit_fields = null;
+	protected $unset_texteditor		= array();
+	protected $unset_add			= false;
+	protected $unset_edit			= false;
+	protected $unset_delete			= false;
+	protected $unset_jquery			= false;
+	protected $unset_list			= false;
+	protected $unset_back_to_list	= false;
+	protected $unset_columns		= null;
+	protected $unset_add_fields 	= null;
+	protected $unset_edit_fields	= null;
 	
 	/* Callbacks */
 	protected $callback_before_insert 	= null;
@@ -2703,6 +2841,15 @@ class grocery_CRUD extends grocery_CRUD_States
 		return $this;
 	}	
 	
+	public function unset_list()
+	{
+		$this->unset_list = true;
+		
+		$this->unset_back_to_list();
+	
+		return $this;
+	}	
+	
 	public function unset_fields()
 	{
 		$args = func_get_args();
@@ -2745,6 +2892,19 @@ class grocery_CRUD extends grocery_CRUD_States
 	
 		return $this;
 	}	
+	
+	
+	/**
+	 * Unsets everything that has to do with buttons or links with go back to list message
+	 * @access	public
+	 * @return	void 
+	 */
+	public function unset_back_to_list()
+	{
+		$this->unset_back_to_list = true;
+		
+		return $this;
+	}
 	
 	/**
 	 * 
@@ -3130,6 +3290,11 @@ class grocery_CRUD extends grocery_CRUD_States
 	{
 		$this->like[] = array($field, $match, $side);
 	}
+
+	protected function having($key, $value = '', $escape = TRUE)
+	{
+		$this->having[] = array($key, $value, $escape);
+	}
 	
 	public function or_like($field, $match = '', $side = 'both')
 	{
@@ -3169,22 +3334,31 @@ class grocery_CRUD extends grocery_CRUD_States
 		
 		$this->set_basic_db_table($this->get_table());		
 		
-		switch ($this->state_code) {			
+		switch ($this->state_code) {
+			case 15://success
 			case 1://list
+				if($this->unset_list)
+				{
+					throw new Exception('You don\'t have permissions for this operation', 14);
+					die();
+				}
+				
 				if($this->theme === null)
 					$this->set_theme($this->default_theme);				
 				$this->setThemeBasics();
 					
 				$this->set_basic_Layout();
 					
-				$this->showList();
+				$state_info = $this->getStateInfo();
+				
+				$this->showList(false,$state_info);
 
 			break;
 			
 			case 2://add
 				if($this->unset_add)
 				{
-					throw new Exception('This user is not allowed to do this operation', 14);
+					throw new Exception('You don\'t have permissions for this operation', 14);
 					die();
 				}
 				
@@ -3203,7 +3377,7 @@ class grocery_CRUD extends grocery_CRUD_States
 			case 3://edit
 				if($this->unset_edit)
 				{
-					throw new Exception('This user is not allowed to do this operation', 14);
+					throw new Exception('You don\'t have permissions for this operation', 14);
 					die();
 				}
 				
@@ -3260,10 +3434,16 @@ class grocery_CRUD extends grocery_CRUD_States
 				$state_info = $this->getStateInfo();
 				$update_result = $this->db_update($state_info);
 				
-				$this->update_layout( $update_result );
+				$this->update_layout( $update_result,$state_info);
 			break;	
 
 			case 7://ajax_list
+				
+				if($this->unset_list)
+				{
+					throw new Exception('You don\'t have permissions for this operation', 14);
+					die();
+				}
 				
 				if($this->theme === null)
 					$this->set_theme($this->default_theme);				
