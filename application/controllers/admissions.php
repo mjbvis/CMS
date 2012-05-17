@@ -8,7 +8,7 @@ class admissions extends Application {
 		parent::__construct();
 	
 		# Load Helpers
-		$this->load->helper(array('url', 'form', 'dashboard', 'ag_auth', 'menu'));
+		$this->load->helper(array('url', 'form', 'dashboard', 'ag_auth', 'menu', 'notification'));
 		
 		# Load Libraries
 		
@@ -161,6 +161,9 @@ class admissions extends Application {
 			
 			$i++;
 		}
+		
+		unsetNotification('waitlistAChild', user_id());
+		$this->output->enable_profiler(TRUE);//Turns on CI debugging
 	}
 	
 	# saves the registration form

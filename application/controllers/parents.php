@@ -29,6 +29,8 @@ Class Parents extends Application {
 			$this->load->view('templates/header', $this->data);
 			$this->load->view('parents/dashboard', $this->data);
 			$this->load->view('templates/footer');
+			
+			$this->output->enable_profiler(TRUE);//Turns on CI debugging
 		}
 		else {
 			$this->login();
