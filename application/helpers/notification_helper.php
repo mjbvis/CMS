@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	
 	// TODO: refactor this helper. This is gross. Try to use some sort of associative array.
