@@ -7,7 +7,7 @@ class Login extends Application {
 		parent::__construct();
 
 		# Load Helpers
-		$this->load->helper(array('url', 'form', 'dashboard', 'ag_auth', 'registration'));
+		$this->load->helper(array('url', 'form', 'dashboard', 'ag_auth', 'registration', 'notification'));
 
 		# Load Libraries
 		$this->load->library('form_validation');
@@ -90,21 +90,7 @@ class Login extends Application {
         }
     }
     
-    function getUserinfo($username){
-        //TODO this belongs in a model   
-        $query =   "SELECT Parent.FirstName, Parent.LastName, users.email 
-                    FROM users
-                    JOIN Parent ON (users.id = Parent.UserID)
-                    WHERE users.username ='" . $username . "'";     
-        
-        $result = mysql_query($query);
-        
-        $info['first'] =  mysql_result($result, 0, "FirstName");
-        $info['last'] =  mysql_result($result, 0, "LastName");
-        $info['email'] =  mysql_result($result, 0, "email");
-        
-        return $info;
-    }
+
     
 }
 

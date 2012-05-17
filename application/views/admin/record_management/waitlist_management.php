@@ -31,8 +31,8 @@
 				    <tr>
 						<td style="vertical-align:top;"><?php echo $grid1; ?></td>
 						<td style="text-align:center;">
-							<input style="width:100px;" type="submit" name="moveToEnrolled" value="enroll" /><br/>
-							<input style="width:100px;" type="submit" name="moveToWaitlist" value="waitlist" />
+							<input style="width:100px;" type="submit" name="moveToEnrolled" value="enroll -->>>" /><br/>
+							<input style="width:100px;" type="submit" name="moveToWaitlist" value="<<<-- waitlist" />
 						</td>
 						<td style="vertical-align:top;"><?php echo $grid2; ?></td>
 					</tr>

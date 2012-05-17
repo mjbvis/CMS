@@ -233,7 +233,7 @@ class Admin extends Application{
                   
             $this->createParent($userId, $firstName, $middleName, $lastName, $email);
 			setNotification('waitlistAChild', $userId);
-             $this->output->enable_profiler(TRUE);//Turns on CI debugging
+             //$this->output->enable_profiler(TRUE);//Turns on CI debugging
 		} 
 	}
 
@@ -362,6 +362,9 @@ class Admin extends Application{
                 //TODO: This should be in a model of course
                 $this->db->set('IsWaitlisted', 0)->where_in('FormID', $ids)->update('WaitlistForm');
 				$this->db->set('IsPreEnrolled', 1)->where_in('FormID', $ids)->update('WaitlistForm');
+				
+				setNotification('registerAChild' , getUserIDFromFormID($ids), $ids);
+				emailParentAndLetThemKnowTheyCanRegisterAStudent($ids);
             }
         }
         if ($this->input->post('moveToWaitlist')){
@@ -371,6 +374,9 @@ class Admin extends Application{
                 //TODO This should be in a model of course
                 $this->db->set('IsWaitlisted', 1)->where_in('FormID', $ids)->update('WaitlistForm');
 				$this->db->set('IsPreEnrolled', 0)->where_in('FormID', $ids)->update('WaitlistForm');
+				
+				unsetNotification('registerAChild' , getUserIDFromFormID($ids), $ids);
+				
             }
         }	
 			  	
