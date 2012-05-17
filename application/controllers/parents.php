@@ -35,6 +35,9 @@ Class Parents extends Application {
 		}
 	}
 
+	# The grocery crud for waitlisted students belonging
+	# to the current user. This grid is dedicated for viewing.
+	# Adds, Edits, and Deletes should not be allowed.
 	function waitlistGrid() {
 		$crud = new grocery_CRUD();
 		$crud->set_table('WaitlistForm')
@@ -52,6 +55,9 @@ Class Parents extends Application {
 		$this->load->view('templates/grid', $output);
 	}
 
+	# The grocery crud for pre-enrolled students belonging
+	# to the current user. This grid is dedicated for viewing.
+	# Adds, Edits, and Deletes should not be allowed.
 	function preEnrolledGrid() {
 		$crud = new grocery_CRUD();
 		$crud->set_table('WaitlistForm')
@@ -68,6 +74,9 @@ Class Parents extends Application {
 		$this->load->view('templates/grid', $output);
 	}
 
+	# The grocery crud for the registered students belonging
+	# to the current user. This grid is dedicated for viewing.
+	# Adds, Edits, and Deletes should not be allowed.
 	function registeredGrid() {
 		$crud = new grocery_CRUD();
 		$crud->set_table('Student')
@@ -84,7 +93,8 @@ Class Parents extends Application {
 
 	# The volunteering grocery crud for the parent dashboard. This
 	# grid should have Add enabled but Edit and Delete disabled. Parent's
-	# should not be able to edit and/or delete their volunteer logs.
+	# should not be able to edit and/or delete their volunteer logs. It
+	# should only show log entries for the current user.
 	function volunteeringGrid() {
 		
 		// This is the maximum number of hours that can be logged in a single log entry
