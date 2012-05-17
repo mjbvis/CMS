@@ -1,13 +1,29 @@
+<<<<<<< HEAD
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	
-	function setNotification($type , $userID, $add = null){
+	// TODO: refactor this helper. This is gross. Try to use some sort of associative array.
+	
+	function setNotification($type , $userID, $additionalInfo = null){
 		switch ($type) {
 			case "waitlistAChild":
-				waitlistAChild($userID, 1);
+				setWaitlistAChild($userID, 1);
 		}
 	}
 	
-	function waitlistAChild($userID, $id){
+	function unsetNotification($type , $userID, $additionalInfo = null){
+		switch ($type) {
+			case "waitlistAChild":
+				unsetWaitlistAChild($userID, 1);
+		}		
+		
+	}
+	
+	function setWaitlistAChild($userID, $id){
 	    mysql_query("INSERT INTO UserNotifications Value(" . $id . ",'" . $userID . "', '')");
 	}
+	
+	function unsetWaitlistAChild($userID, $id){
+	    mysql_query("DELETE FROM UserNotifications WHERE UserID =" . $userID . " AND NotificationID =" . $id );
+	}
+	
 ?>
