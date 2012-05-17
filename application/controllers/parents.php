@@ -124,6 +124,28 @@ Class Parents extends Application {
 		$this->load->view('templates/grid', $output);
 	}
 
+
+	# The grocery crud for the current user's notifications. This grid is dedicated
+	# for viewing. Adds, Edits, and Deletes should not be allowed.
+	function notificationGrid() {
+
+		$crud = new grocery_CRUD();
+		$crud->set_table('Notifications')
+			 ->set_relation('NotificationID', 'UserNotifications', 'UserID')
+	         ->columns('Description')
+			 ->display_as('NotificationID', 'UserID')
+			 ->callback_column('Description', array($this, 'get_notification_URL'))
+			 ->unset_operations();
+			 
+		$crud->where('UserID', user_id());
+
+        $output = $crud->render();
+		
+		$this->output->enable_profiler(TRUE);//Turns on CI debugging
+		
+		$this->load->view('templates/grid', $output);
+	}
+
 	# Callback Add Field for the UserID.
 	# We want a the UserID to be readonly and set to the current user's id. This
 	# function adds the UserID to the add form of a grocery crud.
@@ -137,6 +159,13 @@ Class Parents extends Application {
 	function get_current_datetime() {
 		$curr_datetime = date('Y-m-d H:i:s', time());
 		return '<input type="text" maxlength="50" value="' . $curr_datetime . '" name="SubmissionDTTM" style="width:400px" readonly="true">';
+	}
+	
+	# Callback Add Field for the SubmissionDTTM.
+	# We want a the SubmissionDTTM to be readonly and set to the current datetime.
+	# This function adds the SubmissionDTTM to the add form of a grocery crud.
+	function get_notification_URL($value, $row) {
+		return '<a href="' . base_url($row->URL) . '" target="_blank">' . $row->Description . '</a>';
 	}
 }
 ?>
