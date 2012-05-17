@@ -31,45 +31,49 @@
             <ul>
                 <li>
                     <label>PreferredHospital:</label>
-					<input type='text' name='preferredHospitalName' id='preferredHospitalId' placeholder="Preferred Hospital" max='50' />
+					<input type='text' name='preferredHospitalName' id='preferredHospitalId' placeholder="Preferred Hospital" max='50' 
+						value="<?php echo set_value('preferredhospital', $studentMedicalInformation->preferredhospital);  ?>" />
                     </br>
                 </li>
                 <li>
                 	<label>Hospital's Phone:</label>
-                	<input type="text" name="hospitalPhoneName" id="hospitalPhoneId" placeholder="555-555-5555" max="15" />
+                	<input type="text" name="hospitalPhoneName" id="hospitalPhoneId" placeholder="555-555-5555" max="15" 
+                		value="<?php echo set_value('hospitalphone', $studentMedicalInformation->hospitalphone);  ?>" />
                 	</br>
                 </li>
 				<li>
 					<label>Physician's Name:</label>
-					<input type="text" name="pfirstName" id="pfirstId" placeholder="First Name" max="50" />
-					<input type="text" name="plastName" id="plastId" placeholder="Last Name" max="50" />
+					<input type="text" name="physicianName" id="physicianId" placeholder="Name of your physician" max="50" 
+						value="<?php echo set_value('physician', $studentMedicalInformation->physician);  ?>"/>
 					</br>
 				</li>
 				<li>
 					<label>Physician's Phone:</label>
-					<input type="text" name="pPhoneName" id="pPhoneId" placeholder="555-555-5555" max="15" />
+					<input type="text" name="pPhoneName" id="pPhoneId" placeholder="555-555-5555" max="15" 
+						value="<?php echo set_value('physicianphone', $studentMedicalInformation->physicianphone);  ?>"/>
 					</br>
 				</li>
 				<li>
 					<label>Dentist's Name:</label>
-					<input type="text" name="dfirstName" id="dfirstId" placeholder="First Name" max="50" />
-					<input type="text" name="dlastName" id="dlastId" placeholder="Last Name" max="50" />
+					<input type="text" name="dentistName" id="dentistId" placeholder="Name of your dentist" max="50" 
+						value="<?php echo set_value('dentist', $studentMedicalInformation->dentist);  ?>"/>
 					</br>
 				</li>
 								<li>
 					<label>Dentist's Phone:</label>
-					<input type="text" name="dPhoneName" id="dPhoneId" placeholder="555-555-5555" max="15" />
+					<input type="text" name="dPhoneName" id="dPhoneId" placeholder="555-555-5555" max="15" 
+						value="<?php echo set_value('dentistphone', $studentMedicalInformation->dentistphone);  ?>"/>
 					</br>
 				</li>
 				<li>
 					 <label>Medical Conditions:</label>
 					<textarea name="medicalConditionsName" id="medicalConditionsId" cols="100" rows="2" max="1000" 
-						placeholder="List any medican conditions here..."></textarea></br>
+						placeholder="List any medican conditions here..."><?php echo set_value('medicalconditions', $studentMedicalInformation->medicalconditions);  ?></textarea></br>
 				</li>
 				<li>
 				 <label>Allergies:</label>
 					<textarea name="allergiesName" id="allergiesId" cols="100" rows="2" max="1000" 
-						placeholder="List any allergies here..."></textarea></br>
+						placeholder="List any allergies here..."><?php echo set_value('allergies', $studentMedicalInformation->allergies);  ?></textarea></br>
 				</li>
 			</ul>
 			</fieldset>
@@ -80,23 +84,26 @@
 				<ul>
 					<li>
 	                    <label>Insurance Company:</label>
-						<input type='text' name='insuranceCompanyName' id='insuranceCompanyId' placeholder="Insurance Companies Name" max='50' />
+						<input type='text' name='insuranceCompanyName' id='insuranceCompanyId' placeholder="Insurance Companies Name" 
+							value="<?php echo set_value('insurancecompany', $studentInsurance->insurancecompany);  ?>" max='50' />
 	                    </br>
 	                </li>
 					<li>
 	                    <label>Certificate Number:</label>
-						<input type='text' name='certificateNumberName' id='certificateNumberId' placeholder="Certificate Number" max='50' />
+						<input type='text' name='certificateNumberName' id='certificateNumberId' placeholder="Certificate Number"
+							value="<?php echo set_value('certificatenumber', $studentInsurance->certificatenumber);  ?>" max='50' />
 	                    </br>
 	                </li>
 	                <li>
 						<label>Name of Insured:</label>
-						<input type="text" name="ifirstName" id="ifirstId" placeholder="First Name" max="50" />
-						<input type="text" name="ilastName" id="ilastId" placeholder="Last Name" max="50" />
+						<input type="text" name="insuredName" id="insuredId" placeholder="Name of Insured" max="50" 
+							value="<?php echo set_value('nameofinsured', $studentInsurance->nameofinsured);  ?>"/>
 						</br>
 					</li>
 					<li>
 						<label>Employer:</label>
-						<input type="text" name="employerName" id="employerId" placeholder="Employers Name" max="50" />
+						<input type="text" name="employerName" id="employerId" placeholder="Employers Name" max="50" 
+							value="<?php echo set_value('employer', $studentInsurance->employer);  ?>"/>
 					</li>
 				</ul>
 			</fieldset>

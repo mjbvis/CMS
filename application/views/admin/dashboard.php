@@ -6,8 +6,13 @@
 	}
 </style>
 
-<<<<<<< HEAD
 <table border="0">
+	<tr valign="top">
+		<td colspan="2">
+			Notifications
+			<IFRAME SRC=<?php echo base_url('admin/notificationGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
+		</td>
+	</tr>
 	<tr>
 		<td valign="top" width="400">
 			Waitlist
