@@ -12,7 +12,7 @@ class Admin extends Application{
 		$this->ag_auth->restrict('admin');
 		
 		/* Load helpers */
-		$this->load->helper(array('url', 'form', 'registration', 'menu', 'language'));
+		$this->load->helper(array('url', 'form', 'registration', 'menu', 'language' , 'notification'));
         
 		/* Load libraries */
         $this->load->library('Repositories/Registration_Repository', '', 'reg');
@@ -24,7 +24,8 @@ class Admin extends Application{
 	}
 	
 	public function index(){
-				
+		
+		// Main function called when this controller is loaded		
 		if(logged_in()){
 				
 		//* load views */
@@ -143,10 +144,38 @@ class Admin extends Application{
     	$output = $crud->render();
 		$this->load->view('templates/grid', $output);
 	}
+	
+	# The grocery crud for the current user's notifications. This grid is dedicated
+	# for viewing. Adds, Edits, and Deletes should not be allowed.
+	function notificationGrid() {
+
+		$crud = new grocery_CRUD();
+		$crud->set_table('Notifications')
+			 ->set_relation('NotificationID', 'UserNotifications', 'UserID')
+	         ->columns('Description')
+			 ->display_as('NotificationID', 'UserID')
+			 ->callback_column('Description', array($this, 'get_notification_URL'))
+			 ->unset_operations();
+			 
+		$crud->where('UserID', user_id());
+
+        $output = $crud->render();
+		
+		//$this->output->enable_profiler(TRUE);//Turns on CI debugging
+		
+		$this->load->view('templates/grid', $output);
+	}
 	// end grids for dashboard
 	
+	# Callback Add Field for the SubmissionDTTM.
+	# We want a the SubmissionDTTM to be readonly and set to the current datetime.
+	# This function adds the SubmissionDTTM to the add form of a grocery crud.
+	function get_notification_URL($value, $row) {
+		return '<a href="' . base_url($row->URL) . '" target="_blank">' . $row->Description . '</a>';
+	}
+	
 	// this function is for creating a new account for parents
-	public function addParentUserAccount(){
+	function addParentUserAccount(){
 		$this->form_validation->set_rules('first', 'First Name', 'required|min_length[1]|callback_field_exists');
         $this->form_validation->set_rules('last', 'Last Name', 'required|min_length[1]|callback_field_exists');
         $this->form_validation->set_rules('middle', 'Middle Name', '');
@@ -177,6 +206,7 @@ class Admin extends Application{
             
             $plainTextPassword = generatePassword();
             
+			// encrypt the password
 			$password = $this->ag_auth->salt($plainTextPassword);
 			$email = set_value('email');
 
@@ -202,13 +232,14 @@ class Admin extends Application{
             $userId = $newUserAttr['id'];
                   
             $this->createParent($userId, $firstName, $middleName, $lastName, $email);
-            
+			setNotification('waitlistAChild', $userId);
+             $this->output->enable_profiler(TRUE);//Turns on CI debugging
 		} 
 	}
 
 	// This is the Interview/Observation form that the administrator
 	// fills out for the parent.
-	public function interviewObservationForm(){
+	function interviewObservationForm(){
 	    $this->load->view('templates/header', $this->data);  
         $this->load->view('admin/interview_observation');
         $this->load->view('templates/footer');
@@ -291,30 +322,32 @@ class Admin extends Application{
         $parent->save();
     }
     
+    // dev function for creating new menu items
+    // this function will not be used in final prod
     function addSubItem(){
-        $this->data['allMenuItems'] = Menu_item::all(array('select' => 'MenuItemID, Label')); 
-		
-        $this->form_validation->set_rules('MenuItemDropDown', 'menuItemID', 'required');
+
+        $this->form_validation->set_rules('menuItemID', 'menuItemID', 'required');
         $this->form_validation->set_rules('label', 'label', 'required');
         $this->form_validation->set_rules('URL', 'URL', 'required');
         $this->form_validation->set_rules('rankOrder', 'rankOrder', 'required');
 
         if($this->form_validation->run() == FALSE){
             $this->load->view('templates/header', $this->data);  
-            $this->load->view('admin/menu/add_sub_item', $this->data);
+            $this->load->view('admin/menu/add_menu_item');
             $this->load->view('templates/footer');
         }
         else{
         
-		$newSubItem = new Sub_item();
-		$newSubItem->menuitemid = set_value('MenuItemDropDown');
-		$newSubItem->label = set_value('label');
-		$newSubItem->url = set_value('URL');
-		$newSubItem->url = set_value('rankOrder');        
-        $newSubItem->save();
-		
-		redirect('login');
-        }
+        $menuItemID = set_value('menuItemID');
+        $label = set_value('label');
+        $URL = set_value('URL');
+        $rankOrder = set_value('rankOrder');
+                
+        $query = "INSERT INTO SubItem (MenuItemID, Label, URL, RankOrder) VALUES (" . $menuItemID . ", '" . $label . "', '" . $URL . "', " . $rankOrder . ")";
+        $result = mysql_query($query);
+        
+        redirect('admin');        
+		}
     }
 	
 	function waitlist($grid1 = 'none', $grid2 = 'none') {
