@@ -141,8 +141,6 @@ Class Parents extends Application {
 
         $output = $crud->render();
 		
-		$this->output->enable_profiler(TRUE);//Turns on CI debugging
-		
 		$this->load->view('templates/grid', $output);
 	}
 
