@@ -35,6 +35,10 @@ class Student extends ActiveRecord\Model
 		array('admissions_form'
 			 ,'class_name' => 'Admissions_form'
 			 ,'foreign_key' => 'studentid'
+			 ,'primary_key' => 'studentid'),
+		array('Student_medical'
+			 ,'class_name' => 'Student_medical'
+			 ,'foreign_key' => 'studentid'
 			 ,'primary_key' => 'studentid')
 		);
 		

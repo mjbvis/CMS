@@ -7,7 +7,7 @@ class Student_medical extends ActiveRecord\Model
 	
 	// explicit map for the sake of readability
 	static $alias_attribute = array(
-				'StudentId' => 'StudentId',
+				'StudentID' => 'StudentID',
 		'PreferredHospital' => 'PreferredHospital',
 			'HospitalPhone' => 'HospitalPhone',
 				'Physician' => 'Physician',
@@ -15,7 +15,18 @@ class Student_medical extends ActiveRecord\Model
 		   		  'Dentist' => 'Dentist',
 		   	 'DentistPhone' => 'DentistPhone',
 		'MedicalConditions' => 'MedicanConditions',
-			    'Allergies' => 'Allergies');
+			    'Allergies' => 'Allergies',
+	 	 'InsuranceCompany' => 'InsuranceCompany',
+		'CertificateNumber' => 'CertificateNumber',
+		 	 	 'Employer' => 'Employer');
+				 
+				 
+	static $belongs_to = array(
+		array('student'
+			 ,'class_name' => 'Student'
+			 ,'foreign_key' => 'studentid'
+			 ,'primary_key' => 'studentid')
+		);
 }
 	
 	
