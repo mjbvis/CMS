@@ -176,9 +176,9 @@ class Admin extends Application{
 	
 	// this function is for creating a new account for parents
 	function addParentUserAccount(){
-		$this->form_validation->set_rules('first', 'First Name', 'required|min_length[1]|callback_field_exists');
-        $this->form_validation->set_rules('last', 'Last Name', 'required|min_length[1]|callback_field_exists');
-        $this->form_validation->set_rules('middle', 'Middle Name', '');
+		$this->form_validation->set_rules('first', 'First Name', 'required|min_length[1]');
+        $this->form_validation->set_rules('last', 'Last Name', 'required|min_length[1]');
+        //$this->form_validation->set_rules('middle', 'Middle Name', '');
         $this->form_validation->set_rules('email', 'Email Address', 'required|min_length[3]|valid_email|callback_field_exists');
 
 		if($this->form_validation->run() == FALSE){
@@ -188,7 +188,7 @@ class Admin extends Application{
 		}
 		else{
 			$firstName = set_value('first');
-            $middleName = set_value('middle');
+            //$middleName = set_value('middle');
             $lastName = set_value('last');
 			$username = $firstName . '.' . $lastName;
             

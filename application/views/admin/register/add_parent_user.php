@@ -24,10 +24,7 @@ function addInput(divName){
 					<label>First Name:</label>
 					<input type="text" name="first" size="50" class="form" value="<?php echo set_value('first'); ?>" /><br /><?php echo form_error('first'); ?><br />
 				</li>
-				<li>
-					<label>Middle Name:</label>
-					<input type="text" name="middle" size="50" class="form" value="<?php echo set_value('middle'); ?>" /><br /><?php echo form_error('middle'); ?><br />
-				</li>
+				
 				<li>
 					<label>Last Name:</label>
 					<input type="text" name="last" size="50" class="form" value="<?php echo set_value('last'); ?>" /><br /><?php echo form_error('last'); ?><br />
