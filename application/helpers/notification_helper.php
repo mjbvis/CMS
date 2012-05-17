@@ -9,6 +9,9 @@
 			
 			case "registerAChild":
 				set($userID, 6);
+				
+			case "MedicalInformation":
+				set($userID, 7, $additionalInfo);
 		}
 	}
 	
