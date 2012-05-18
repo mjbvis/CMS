@@ -94,6 +94,12 @@ class Admissions extends Application {
 			redirect('login');
 		}
 
+		// verify that this student hasn't filled out his admissions for yet.
+		$student = Student::find_by_questionaireid($wlid);
+		if ($student != null || !empty($student)){
+			redirect('login');
+		}
+
 		// get all enabled program groups AND filter out program groups with no enabled programs
 		// NOTE: Programs will be eager loaded but must be filtered by enabled in the view
 		$join = 'INNER JOIN Program ON Program.ProgramGroupID = ProgramGroup.ProgramGroupID AND Program.Enabled = 1';
