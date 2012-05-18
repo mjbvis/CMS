@@ -59,8 +59,8 @@ class Admissions extends Application {
 			// get answers from waitlist questionaire
 			$this->storeWaitListForm($wlQuestions, $progGroups);
 
-			// display waitlist and pre-enrolled students for this parent
-			redirect('admissions/registerStudentSelector');
+			// let the login controller decide our fate
+			redirect('login');
 		} else {
 			// display the waitlist questionaire
 			$this->load->view('templates/header', $this->globalViewData);
@@ -121,8 +121,8 @@ class Admissions extends Application {
 		} else {
 			$this->storeRegistrationForm($wlid);
 
-			// display waitlist and pre-enrolled students for this parent
-			redirect('admissions/registerStudentSelector');
+			// Let the login controller decide our fate!!! MwaHaHaHa
+			redirect('login');
 		}
 	}
 
