@@ -11,13 +11,21 @@
 	//const  ID = 11;
 	//const  ID = 12;
 	
+	/*
+	 * $type = type of notification see above
+	 * $userID = sets whats user is getting the notification
+	 * $urlParam = sets additional information that will be needed to generate a proper URL
+	 * $additionalInfo = this is where names go if you want them in them to show up in the URL discription
+	 * 
+	 */
+	
 	function setNotification($type , $userID, $urlParam = '', $additionalInfo = null){
 		switch ($type) {
 			case "waitlistAChild":
 				set($userID, waitlistID, $urlParam, $additionalInfo);
 				break;
 			case "registerAChild":
-				set($userID, registerAChildID, $urlParam, $additionalInfo);
+				set($userID, registerAChildID, $urlParam, getChildNameFromFormID($urlParam));
 				break;
 			case "medicalInformation":
 				set($userID, medicalInformationID, $urlParam, $additionalInfo);
@@ -62,6 +70,14 @@
 		$usersAttr = $users->attributes();
         
 		return $usersAttr['username'];
+
+	}
+	
+	function getChildNameFromFormID($ids){
+		$waitlistForm = Waitlist_form::find_by_formid($ids);
+		$wlAttr = $waitlistForm->attributes();
+		
+		return $wlAttr['firstname'] . ' ' . $wlAttr['lastname'];
 
 	}
 	
