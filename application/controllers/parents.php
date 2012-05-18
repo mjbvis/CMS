@@ -107,13 +107,10 @@ Class Parents extends Application {
 			 ->display_as('Description', 'Task')
 			 ->add_fields('UserID', 'Hours', 'Description', 'SubmissionDTTM')
 			 ->required_fields('UserID', 'Hours', 'Description', 'SubmissionDTTM')
+			 ->change_field_type('UserID', 'hidden', user_id())
+			 ->change_field_type('SubmissionDTTM', 'hidden', date('Y-m-d H:i:s', time()))
 			 ->unset_edit()
 			 ->unset_delete();
-		
-		# Use these callback fields to make UserID and SubmissionDTTM readonly
-		# with default values.
-		$crud->callback_add_field('UserID', array($this, 'get_user_id'));
-		$crud->callback_add_field('SubmissionDTTM', array($this, 'get_current_datetime'));
 		
 		$crud->where('UserID', user_id());
 		
@@ -141,21 +138,6 @@ Class Parents extends Application {
         $output = $crud->render();
 
 		$this->load->view('templates/grid', $output);
-	}
-
-	# Callback Add Field for the UserID.
-	# We want a the UserID to be readonly and set to the current user's id. This
-	# function adds the UserID to the add form of a grocery crud.
-	function get_user_id() {
-		return '<input type="text" maxlength="50" value="' . user_id() . '" name="UserID" style="width:400px" readonly="true">';
-	}
-	
-	# Callback Add Field for the SubmissionDTTM.
-	# We want a the SubmissionDTTM to be readonly and set to the current datetime.
-	# This function adds the SubmissionDTTM to the add form of a grocery crud.
-	function get_current_datetime() {
-		$curr_datetime = date('Y-m-d H:i:s', time());
-		return '<input type="text" maxlength="50" value="' . $curr_datetime . '" name="SubmissionDTTM" style="width:400px" readonly="true">';
 	}
 	
 	# Callback Column for notifications.
