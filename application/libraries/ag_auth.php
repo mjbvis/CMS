@@ -171,6 +171,11 @@ class AG_Auth
 		$user['logged_in'] = TRUE;
 		
 		$this->CI->session->set_userdata($user);
+		
+		// update user's last login dttm
+		$user = User::find_by_id(user_id());
+		$user->lastlogindttm = date('Y-m-d H:i:s', time());
+		$user->save();
 	}
 	
 	
