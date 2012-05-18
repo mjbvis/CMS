@@ -1,10 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class admissions extends Application {
+class Admissions extends Application {
 
-	private static $data = array();
+	private static $globalViewData = array();
 
-	public function __construct() {
+	function __construct() {
 		parent::__construct();
 
 		# Load Helpers
@@ -12,21 +12,18 @@ class admissions extends Application {
 
 		# Load Libraries
 
-		# Load Modules
-		$this->load->library('Repositories/Admissions_Repository', '', 'reg');
-
 		# setup default view data
-		$this->data['title'] = 'Admissions Dashboard';
-		$this->data['MenuItems'] = get_menu_items();		// no argument means use current gruop
+		$this->globalViewData['title'] = 'Admissions Dashboard';
+		$this->globalViewData['MenuItems'] = get_menu_items();		// no argument means use current gruop
 		
 	}
 
-	public function index() {
+	function index() {
 		if (logged_in()) {
 			/* load views */
-			$this->load->view('templates/header', $this->data);
-			$this->load->view('admissions/dashboard', $this->data);
-			$this->load->view('templates/footer', $this->data);
+			$this->load->view('templates/header', $this->globalViewData);
+			$this->load->view('admissions/dashboard');
+			$this->load->view('templates/footer');
 		} else {
 			$this->login();
 		}
@@ -34,9 +31,9 @@ class admissions extends Application {
 
 	# view the Montessori policy and statements of value
 	function policy() {
-		$this->load->view('templates/header', $this -> data);
-		$this->load->view('admissions/forms/policy', $this -> data);
-		$this->load->view('templates/footer', $this -> data);
+		$this->load->view('templates/header', $this->globalViewData);
+		$this->load->view('admissions/forms/policy');
+		$this->load->view('templates/footer');
 	}
 
 	# Manages the waitlist_questionaire. Handles displaying the
@@ -51,8 +48,8 @@ class admissions extends Application {
 		$progGroups = Program_group::all(array('joins' => $join, 'conditions' => array('ProgramGroup.Enabled=?', 1)));
 
 		// send these questions and programs to the view for display
-		$this->data['wlQuestions'] = $wlQuestions;
-		$this->data['progGroups'] = $progGroups;
+		$viewData['wlQuestions'] = $wlQuestions;
+		$viewData['progGroups'] = $progGroups;
 
 		# Set up validation for admissionsPage1.php
 		$this->validateWaitlistQuestionaire($wlQuestions, $progGroups);
@@ -66,9 +63,9 @@ class admissions extends Application {
 			redirect('admissions/registerStudentSelector');
 		} else {
 			// display the waitlist questionaire
-			$this->load->view('templates/header', $this -> data);
-			$this->load->view('admissions/forms/waitlist_questionaire', $this -> data);
-			$this->load->view('templates/footer', $this -> data);
+			$this->load->view('templates/header', $this->globalViewData);
+			$this->load->view('admissions/forms/waitlist_questionaire', $viewData);
+			$this->load->view('templates/footer');
 		}
 	}
 
@@ -76,12 +73,12 @@ class admissions extends Application {
 	# 	That is, the waitlisted students who were waitlisted by the current
 	# 	user AND who have been approved for registration.
 	function registerStudentSelector() {
-		$this->data['preEnStudents'] = Waitlist_form::all(array('conditions' => array('UserID=? AND IsPreEnrolled=1', user_id()), 'joins' => array('user')));
+		$viewData['preEnStudents'] = Waitlist_form::all(array('conditions' => array('UserID=? AND IsPreEnrolled=1', user_id()), 'joins' => array('user')));
 
-		$this->data['wlStudents'] = Waitlist_form::all(array('conditions' => array('UserID=? AND IsPreEnrolled=0', user_id()), 'joins' => array('user')));
+		$viewData['wlStudents'] = Waitlist_form::all(array('conditions' => array('UserID=? AND IsPreEnrolled=0', user_id()), 'joins' => array('user')));
 
-		$this->load->view('templates/header', $this->data);
-		$this->load->view('admissions/forms/register_student_selection');
+		$this->load->view('templates/header', $this->globalViewData);
+		$this->load->view('admissions/forms/register_student_selection', $viewData);
 		$this->load->view('templates/footer');
 	}
 
@@ -103,17 +100,17 @@ class admissions extends Application {
 		$progGroups = Program_group::all(array('joins' => $join, 'conditions' => array('ProgramGroup.Enabled=?', 1)));
 
 		// populate view data with child info and program info
-		$data['firstName'] = $wlStud->firstname;
-		$data['middleName'] = $wlStud->middlename;
-		$data['lastName'] = $wlStud->lastname;
-		$data['progSelected'] = $wlStud->expectedprogramid;
-		$data['progGroups'] = $progGroups;
+		$viewData['firstName'] = $wlStud->firstname;
+		$viewData['middleName'] = $wlStud->middlename;
+		$viewData['lastName'] = $wlStud->lastname;
+		$viewData['progSelected'] = $wlStud->expectedprogramid;
+		$viewData['progGroups'] = $progGroups;
 
 		# Validation for the student registration process
 		$this -> validateRegistrationForm();
 		if ($this->form_validation -> run() == FALSE) {
-			$this->load->view('templates/header', $this->data);
-			$this->load->view('admissions/forms/register_student', $data);
+			$this->load->view('templates/header', $this->globalViewData);
+			$this->load->view('admissions/forms/register_student', $viewData);
 			$this->load->view('templates/footer');
 		} else {
 			$this->storeRegistrationForm($wlid);
@@ -131,7 +128,7 @@ class admissions extends Application {
 
 		$data['wlStudents'] = Waitlist_form::all(array('conditions' => array('UserID=? AND IsPreEnrolled=0', user_id()), 'joins' => array('user')));
 
-		$this->load->view('templates/header', $this -> data);
+		$this->load->view('templates/header', $this->globalViewData);
 		$this->load->view('admissions/forms/register_student_selection');
 		$this->load->view('templates/footer');
 	}
@@ -153,15 +150,15 @@ class admissions extends Application {
 		}
 
 		// populate view data with relevant child info
-		$data['firstName'] = $student->firstname;
-		$data['middleName'] = $student->middlename;
-		$data['lastName'] = $student->lastname;
+		$viewData['firstName'] = $student->firstname;
+		$viewData['middleName'] = $student->middlename;
+		$viewData['lastName'] = $student->lastname;
 
 		// Validation for the student registration process
 		$this->validateMedicalForm();
 		if ($this->form_validation -> run() == FALSE) {
-			$this->load->view('templates/header', $this->data);
-			$this->load->view('admissions/forms/student_medical', $data);
+			$this->load->view('templates/header', $this->globalViewData);
+			$this->load->view('admissions/forms/student_medical', $viewData);
 			$this->load->view('templates/footer');
 		} else {
 			$this->storeMedicalForm($studentId);
@@ -175,17 +172,17 @@ class admissions extends Application {
 	function storeWaitlistForm($questions) {
 		// save waitlist form to DB
 		$wlForm = new Waitlist_form();
-		$wlForm -> userid = user_id();
-		$wlForm -> expectedprogramid = set_value('programChecked');
-		$wlForm -> firstname = set_value('cFirstName');
-		$wlForm -> middlename = set_value('cMiddleName');
-		$wlForm -> lastname = set_value('cLastName');
-		$wlForm -> agreement = set_value('pAgreement');
-		$wlForm -> ispreenrolled = 0;
-		$wlForm -> iswaitlisted = 1;
-		$wlForm -> submissiondttm = date('Y-m-d H:i:s', time());
+		$wlForm->userid = user_id();
+		$wlForm->expectedprogramid = set_value('programChecked');
+		$wlForm->firstname = set_value('cFirstName');
+		$wlForm->middlename = set_value('cMiddleName');
+		$wlForm->lastname = set_value('cLastName');
+		$wlForm->agreement = set_value('pAgreement');
+		$wlForm->ispreenrolled = 0;
+		$wlForm->iswaitlisted = 1;
+		$wlForm->submissiondttm = date('Y-m-d H:i:s', time());
 		// Example: 2012-11-28 14:32:08
-		$wlForm -> save();
+		$wlForm->save();
 
 		// store each answer from the waitlist questionaire form
 		$i = 0;
@@ -247,9 +244,9 @@ class admissions extends Application {
 			$student->placeofbirth = set_value('cBirthplace');
 			$student->dob = date('Y-m-d H:i:s', strtotime(set_value('cDOB')));
 			$student->phonenumber = set_value('cPhoneNum');
-			$student->emergencycontactid1 = $emergencyContact1 -> contactid;
-			$student->emergencycontactid2 = $emergencyContact2 -> contactid;
-			$student->emergencycontactid3 = $emergencyContact3 -> contactid;
+			$student->emergencycontactid1 = $emergencyContact1->contactid;
+			$student->emergencycontactid2 = $emergencyContact2->contactid;
+			$student->emergencycontactid3 = $emergencyContact3->contactid;
 			$student->questionaireid = $wlid;
 			$student->isenrolled = 0;
 			$student->udttm = date('Y-m-d H:i:s', time());
