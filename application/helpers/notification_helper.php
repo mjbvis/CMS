@@ -44,7 +44,7 @@
 	}
 	
 	function delete($userID, $id, $urlParam){
-	    mysql_query("DELETE FROM UserNotifications WHERE UserID =" . $userID . " AND NotificationID =" . $id . " AND UrlParam =" . $urlParam );
+	    mysql_query("DELETE FROM UserNotifications WHERE UserID =" . $userID . " AND NotificationID =" . $id . " AND UrlParam ='" . $urlParam . "'" );
 	}
 	
 	function getUserIDFromFormID($ids){
