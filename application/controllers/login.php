@@ -89,6 +89,12 @@ class Login extends Application {
             redirect(get_dashboard());
         }
     }
+	
+	function wrongPassword(){
+		
+		$this->load->view('login/password/wrong_password'); 
+		
+	}
     
 
     

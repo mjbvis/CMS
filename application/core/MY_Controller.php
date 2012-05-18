@@ -88,7 +88,7 @@ class Application extends CI_Controller
 			} 
 			else
 			{
-				echo "error";
+				redirect('login/wrongPassword');
 			}
 		}
 	}
