@@ -130,12 +130,19 @@ class Admissions extends Application {
 	# Displays the list of all students that lack medical info belonging
 	# to the current parent.
 	function studentMedicalSelector() {
-		$data['Student'] = Student::all(array('conditions' => array('UserID=? AND IsEnrolled=0', user_id()), 'joins' => array('user', 'insurance_information')));
+		// get students who aren't enrolled yet
+		$students = Student::all(array('conditions' => array('UserID=? AND IsEnrolled=0', user_id()), 'include' => array('student_medical')));
 
-		$data['wlStudents'] = Waitlist_form::all(array('conditions' => array('UserID=? AND IsPreEnrolled=0', user_id()), 'joins' => array('user')));
+		// filter out students who already have their medical forms filled out
+		$students = array_filter($students, function($student){
+			$medForm = $student->student_medical;
+			return $medForm ? 0 : 1;
+		});
+		
+		$viewData['Students'] = $students;
 
 		$this->load->view('templates/header', $this->globalViewData);
-		$this->load->view('admissions/forms/register_student_selection');
+		$this->load->view('admissions/forms/student_medical_selector', $viewData);
 		$this->load->view('templates/footer');
 	}
 
