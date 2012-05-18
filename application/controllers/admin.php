@@ -231,7 +231,7 @@ class Admin extends Application{
 			$newUserAttr = User::find_by_username($username)->attributes();
             $userId = $newUserAttr['id'];
                   
-            $this->createParent($userId, $firstName, $middleName, $lastName, $email);
+            $this->createParent($userId, $firstName, $lastName, $email);
 			setNotification('waitlistAChild', $userId);
              //$this->output->enable_profiler(TRUE);//Turns on CI debugging
 		} 
@@ -311,11 +311,11 @@ class Admin extends Application{
 		$this->form_validation->set_rules('feeReceivedName', 'Date Application Fee Received', 'required|min_length[4]');
 	}
 
-    function createParent($userId, $fName, $mName, $lName, $email){
+    function createParent($userId, $fName, $lName, $email){
         $parent = new Parental();
         $parent->userid = $userId;
         $parent->firstname = $fName;
-        $parent->middlename = $mName;
+        //$parent->middlename = $mName;
         $parent->lastname = $lName;
         $parent->email = $email;
         $parent->uddtm = date('Y-m-d H:i:s', time());
@@ -364,7 +364,7 @@ class Admin extends Application{
 				$this->db->set('IsPreEnrolled', 1)->where_in('FormID', $ids)->update('WaitlistForm');
 								
 				foreach ($ids as $id) {
-					setNotification('registerAChild' , getUserIDFromFormID($id), '', $id);
+					setNotification('registerAChild' , getUserIDFromFormID($id), $id);
 					emailParentAndLetThemKnowTheyCanRegisterAStudent($id);
 				}
 				
@@ -379,7 +379,7 @@ class Admin extends Application{
 				$this->db->set('IsPreEnrolled', 0)->where_in('FormID', $ids)->update('WaitlistForm');
 				
 				foreach ($ids as $id) {
-					unsetNotification('registerAChild' , getUserIDFromFormID($id), '',  $id);
+					unsetNotification('registerAChild' , getUserIDFromFormID($id), $id);
 				}
 				
             }
