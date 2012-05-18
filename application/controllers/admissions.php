@@ -88,8 +88,8 @@ class Admissions extends Application {
 	# waitlist ID, wlid.
 	function registerStudent($wlid='0') {
 		
-		// verify that this student belongs to this user
-		$wlStud = Waitlist_form::find(array('conditions' => array('FormID=? AND UserID=?', $wlid, user_id())));
+		// verify that this student belongs to this user and does not yet have a completed registration form
+		$wlStud = Waitlist_form::find(array('conditions' => array('FormID=? AND UserID=? AND IsPreEnrolled=1 AND IsWaitlisted=0', $wlid, user_id())));
 		if ($wlStud == null || empty($wlStud)) {
 			redirect('login');
 		}
@@ -274,7 +274,9 @@ class Admissions extends Application {
 			$form->notes = set_value('otherImportantInfo');
 			$form->save();
 			
-			setNotification('MedicalInformation', user_id(), $student->studentid);
+			// when a student is registered, unset the register notification and set the medical information notification
+			unsetNotification('registerAChild', user_id(), $wlid);
+			setNotification('medicalInformation', user_id(), $student->studentid, $student->firstname . ' ' . $student->lastname);
 		});
 	}
 

@@ -4,51 +4,47 @@
 	
 	const waitlistID = 1;
 	const registerAChildID = 6;
-	const MedicalInformationID = 7;
+	const medicalInformationID = 7;
 	const registrationCompleteID = 8;
 	//const  ID = 9;
 	//const  ID = 10;
 	//const  ID = 11;
 	//const  ID = 12;
 	
-	function setNotification($type , $userID, $additionalInfo = null, $urlParam = null){
+	function setNotification($type , $userID, $urlParam, $additionalInfo = null){
 		switch ($type) {
 			case "waitlistAChild":
-				set($userID, waitlistID, $additionalInfo, $urlParam);
+				set($userID, waitlistID, $urlParam, $additionalInfo);
 				break;
-			
 			case "registerAChild":
-				set($userID, registerAChildID, $additionalInfo, $urlParam);
+				set($userID, registerAChildID, $urlParam, $additionalInfo);
 				break;
-				
-			case "MedicalInformation":
-				set($userID, MedicalInformationID, $additionalInfo, $urlParam);
+			case "medicalInformation":
+				set($userID, medicalInformationID, $urlParam, $additionalInfo);
 				break;
 			case "registrationComplete":
-				set($userID, registrationCompleteID, $additionalInfo, $urlParam);
+				set($userID, registrationCompleteID, $urlParam, $additionalInfo);
 				break;
 		}
 	}
 	
-	function unsetNotification($type , $userID, $additionalInfo = null, $urlParam = null){
+	function unsetNotification($type , $userID, $urlParam){
 		switch ($type) {
 			case "waitlistAChild":
-				delete($userID, waitlistID, $additionalInfo, $urlParam);
-				break;
-				
-				case "registerAChild":
-				delete($userID, registerAChildID, $additionalInfo, $urlParam);
+				delete($userID, waitlistID, $urlParam);
+				break;	
+			case "registerAChild":
+				delete($userID, registerAChildID, $urlParam);
 				break;
 		}		
-		
 	}
 	
-	function set($userID , $id, $additionalInfo = null, $urlParam = null){
+	function set($userID , $id, $urlParam, $additionalInfo = null){
 	    mysql_query("INSERT INTO UserNotifications Value(" . $id . ",'" . $userID . "', '" . $additionalInfo . "', '" . $urlParam . "')");
 	}
 	
-	function delete($userID, $id){
-	    mysql_query("DELETE FROM UserNotifications WHERE UserID =" . $userID . " AND NotificationID =" . $id );
+	function delete($userID, $id, $urlParam){
+	    mysql_query("DELETE FROM UserNotifications WHERE UserID =" . $userID . " AND NotificationID =" . $id . " AND UrlParam =" . $urlParam );
 	}
 	
 	function getUserIDFromFormID($ids){
