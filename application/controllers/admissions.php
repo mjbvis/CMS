@@ -373,11 +373,11 @@ class Admissions extends Application {
 		$this->form_validation->set_rules('pPhoneName', 'Physician\'s Phone', 'required|min_length[12]');
 		$this->form_validation->set_rules('dentistName', 'Dentist', 'required|min_length[1]');
 		$this->form_validation->set_rules('dPhoneName', 'Dentist\'s Phone', 'required|min_length[12]');
-		$this->form_validation->set_rules('medicalConditionsName', 'Medical Conditions', 'callback_field_exists');
-		$this->form_validation->set_rules('allergiesName', 'Allergies', 'callback_field_exists');
+		$this->form_validation->set_rules('medicalConditionsName', 'Medical Conditions', '');
+		$this->form_validation->set_rules('allergiesName', 'Allergies', '');
 		$this->form_validation->set_rules('insuranceCompanyName', 'Insurance Company', 'required|min_length[1]');
 		$this->form_validation->set_rules('certificateNumberName', 'Insurance Certification Number', 'required|min_length[1]');
-		$this->form_validation->set_rules('employerName', 'Employer', 'callback_field_exists');
+		$this->form_validation->set_rules('employerName', 'Employer', '');
 	}
 
 }
