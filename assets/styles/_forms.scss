@@ -133,3 +133,20 @@ fieldset{
     margin-left:    20px;
   }
 }
+
+#filtering_form{
+  width:            100%;
+  border:           0;
+  position:         static;
+  margin:           0;
+  padding:          0;
+  background-color: inherit;
+  font-weight:      inherit;
+  font-size:        inherit;
+  font-family:      inherit;
+  input{
+    margin:  0;
+    padding: 0;
+    position: static;
+  }
+}
