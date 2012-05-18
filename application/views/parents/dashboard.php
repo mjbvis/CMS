@@ -8,7 +8,7 @@
 
 <table border="0">
 	<tr>
-		<td>
+		<td valign="top">
 			Notifications
 			<IFRAME SRC=<?php echo base_url('parents/notificationGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 			Volunteer Logging
