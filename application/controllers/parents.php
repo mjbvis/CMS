@@ -132,6 +132,7 @@ Class Parents extends Application {
 		$crud->set_table('UserNotifications')
 			 ->set_relation('NotificationID', 'Notifications', 'Description')
 			 ->columns('UrlParam')
+			 ->display_as('UrlParam', 'Description')
 			 ->callback_column('UrlParam', array($this, 'get_notification_URL'))
 			 ->unset_operations();
 			 
