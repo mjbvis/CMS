@@ -363,8 +363,11 @@ class Admin extends Application{
                 $this->db->set('IsWaitlisted', 0)->where_in('FormID', $ids)->update('WaitlistForm');
 				$this->db->set('IsPreEnrolled', 1)->where_in('FormID', $ids)->update('WaitlistForm');
 								
-				setNotification('registerAChild' , getUserIDFromFormID($ids), '', $ids[0]);
-				emailParentAndLetThemKnowTheyCanRegisterAStudent($ids);
+				foreach ($ids as $id) {
+					setNotification('registerAChild' , getUserIDFromFormID($id), '', $id);
+					emailParentAndLetThemKnowTheyCanRegisterAStudent($id);
+				}
+				
             }
         }
         if ($this->input->post('moveToWaitlist')){
@@ -375,7 +378,9 @@ class Admin extends Application{
                 $this->db->set('IsWaitlisted', 1)->where_in('FormID', $ids)->update('WaitlistForm');
 				$this->db->set('IsPreEnrolled', 0)->where_in('FormID', $ids)->update('WaitlistForm');
 				
-				unsetNotification('registerAChild' , getUserIDFromFormID($ids), '',  $ids[0]);
+				foreach ($ids as $id) {
+					unsetNotification('registerAChild' , getUserIDFromFormID($id), '',  $id);
+				}
 				
             }
         }	

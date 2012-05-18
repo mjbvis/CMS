@@ -5,6 +5,7 @@
 	const waitlistID = 1;
 	const registerAChildID = 6;
 	const MedicalInformationID = 7;
+	const registrationCompleteID = 8;
 	//const  ID = 9;
 	//const  ID = 10;
 	//const  ID = 11;
@@ -22,6 +23,9 @@
 				
 			case "MedicalInformation":
 				set($userID, MedicalInformationID, $additionalInfo, $urlParam);
+				break;
+			case "registrationComplete":
+				set($userID, registrationCompleteID, $additionalInfo, $urlParam);
 				break;
 		}
 	}
