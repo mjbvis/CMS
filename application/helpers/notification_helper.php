@@ -1,7 +1,5 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	
-	// TODO: refactor this helper. This is gross. Try to use some sort of associative array.
-	
 	const waitlistID = 1;
 	const registerAChildID = 6;
 	const medicalInformationID = 7;
@@ -15,7 +13,7 @@
 	 * $type = type of notification see above
 	 * $userID = sets whats user is getting the notification
 	 * $urlParam = sets additional information that will be needed to generate a proper URL
-	 * $additionalInfo = this is where names go if you want them in them to show up in the URL discription
+	 * $additionalInfo = this is where names go if you want them in them to show up in the URL description
 	 * 
 	 */
 	
@@ -43,6 +41,12 @@
 				break;	
 			case "registerAChild":
 				delete($userID, registerAChildID, $urlParam);
+				break;
+			case "medicalInformation":
+				delete($userID, medicalInformationID, $urlParam);
+				break;
+			case "registrationComplete":
+				delete($userID, registrationCompleteID, $urlParam);
 				break;
 		}		
 	}

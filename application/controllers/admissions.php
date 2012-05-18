@@ -304,6 +304,8 @@ class Admissions extends Application {
 		$student_medical->certificatenumber = set_value('certificateNumberName');
 		$student_medical->employer = set_value('employerName');
 		$student_medical->save();
+		
+		unsetNotification('medicalInformation', user_id(), $studentId);
 	}
 
 	# sets the validation rules
