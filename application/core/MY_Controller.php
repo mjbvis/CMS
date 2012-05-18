@@ -23,7 +23,7 @@ class Application extends CI_Controller
 		# Load Libraries
 		$this->load->library(array('ag_auth'));
 		# Load Helpers
-		$this->load->helper(array('url', 'email', 'ag_auth', 'dashboard', 'form', 'alerts'));
+		$this->load->helper(array('url', 'email', 'ag_auth', 'dashboard', 'form'));
 		# Load Config
 		$this->config->load('ag_auth');
 	}
@@ -79,15 +79,6 @@ class Application extends CI_Controller
 				unset($user_data['password']);
 
 				$this->ag_auth->login_user($user_data);
-				
-				// get all alerts for current user
-				$alerts = selectUserAlerts(user_id());
-				
-				// put parents in the alert group if they have alerts to deal with  
-            	if(userHasAlerts(user_id()) && user_group('parent') == TRUE) {
-                	$alertGroupID = $this->ag_auth->config['auth_groups']['alert'];
-                	changeGroup(user_id(), $alertGroupID);
-            	}
 
 				if($redirect === NULL){
 					$redirect = get_dashboard();

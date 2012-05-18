@@ -13,7 +13,8 @@ function get_menu_items($group_name = NULL){
 			$group_name = 'parent';
 		}
 		else {
-			$group_name = 'alerts';
+			// default group. (adjust as necessary)
+			$group_name = 'parents';
 		}
 	}
 	

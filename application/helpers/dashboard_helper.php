@@ -15,9 +15,6 @@ function get_dashboard(){
 	elseif(user_group('parent') == TRUE) {
 		return 'parents';
 	}
-	elseif(user_group('alert') == TRUE) {
-		return 'alerts';
-	}
 	else {
 		//TODO: redirect to some page that will handle this error
 		return "error";
