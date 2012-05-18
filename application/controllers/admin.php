@@ -283,32 +283,32 @@ class Admin extends Application{
 
 	// Sets the validation rules for the InterviewObservationForm
 	function validateInterviewObservationForm(){
-		$this->form_validation->set_rules('pFirstName', 'Parent\'s First Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('pLastName', 'Parent\'s Last Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('cLastName', 'Child\'s Last Name', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('cAgeName', 'Child\'s Age', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('dobName', 'Date of Birth', 'required|min_length[4]|callback_field_exists');
-		$this->form_validation->set_rules('contactDateName', 'Contact Date', 'required|min_length[4]|callback_field_exists');
-		$this->form_validation->set_rules('phoneName', 'Phone Number', 'required|min_length[10]|callback_field_exists');
-		$this->form_validation->set_rules('visitDateName', 'Visit Date', 'required|min_length[10]|callback_field_exists');
-		$this->form_validation->set_rules('emailName', 'Email', 'required|min_length[5]|callback_field_exists');
+		$this->form_validation->set_rules('pFirstName', 'Parent\'s First Name', 'required|min_length[1]');
+		$this->form_validation->set_rules('pLastName', 'Parent\'s Last Name', 'required|min_length[1]');
+		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]');
+		$this->form_validation->set_rules('cLastName', 'Child\'s Last Name', 'required|min_length[1]');
+		$this->form_validation->set_rules('cAgeName', 'Child\'s Age', 'required|min_length[1]');
+		$this->form_validation->set_rules('dobName', 'Date of Birth', 'required|min_length[4]');
+		$this->form_validation->set_rules('contactDateName', 'Contact Date', 'required|min_length[4]');
+		$this->form_validation->set_rules('phoneName', 'Phone Number', 'required|min_length[10]');
+		$this->form_validation->set_rules('visitDateName', 'Visit Date', 'required|min_length[10]');
+		$this->form_validation->set_rules('emailName', 'Email', 'required|min_length[5]');
 		$this->form_validation->set_rules('learnedAboutName', 'Learned About CMS How', 'required');
 		$this->form_validation->set_rules('interestName', 'Level of Interest', 'required');
 		$this->form_validation->set_rules('understandingName', 'Understanding of Montessori', 'required');
 		$this->form_validation->set_rules('willingnessName', 'Willingness to learn more', 'required');
-		$this->form_validation->set_rules('movingCityName', 'Moving City', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('movingStateName', 'Moving State', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('movingSchoolName', 'Moving School', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('montessoriImpressionsName', 'Montessori Impressions', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('interviewImpressionsName', 'Interviews Impressions', 'required|min_length[1]|callback_field_exists');
-		$this->form_validation->set_rules('observationDateName', 'Classroom Obersvation Date', 'required|min_length[4]|callback_field_exists');
-		$this->form_validation->set_rules('classroomName', 'Classroom Observed', 'required|min_length[1]|callback_field_exists');
+		$this->form_validation->set_rules('movingCityName', 'Moving City', 'required|min_length[1]');
+		$this->form_validation->set_rules('movingStateName', 'Moving State', 'required|min_length[1]');
+		$this->form_validation->set_rules('movingSchoolName', 'Moving School', 'required|min_length[1]');
+		$this->form_validation->set_rules('montessoriImpressionsName', 'Montessori Impressions', 'required|min_length[1]');
+		$this->form_validation->set_rules('interviewImpressionsName', 'Interviews Impressions', 'required|min_length[1]');
+		$this->form_validation->set_rules('observationDateName', 'Classroom Obersvation Date', 'required|min_length[4]');
+		$this->form_validation->set_rules('classroomName', 'Classroom Observed', 'required|min_length[1]');
 		$this->form_validation->set_rules('attendedName', 'Attended', 'required');
 		$this->form_validation->set_rules('onTimeName', 'On Time', 'required');
-		$this->form_validation->set_rules('interviewDateName', 'Interview Date', 'required|min_length[4]|callback_field_exists');
-		$this->form_validation->set_rules('appReceivedName', 'Date Application Received', 'required|min_length[4]|callback_field_exists');
-		$this->form_validation->set_rules('feeReceivedName', 'Date Application Fee Received', 'required|min_length[4]|callback_field_exists');
+		$this->form_validation->set_rules('interviewDateName', 'Interview Date', 'required|min_length[4]');
+		$this->form_validation->set_rules('appReceivedName', 'Date Application Received', 'required|min_length[4]');
+		$this->form_validation->set_rules('feeReceivedName', 'Date Application Fee Received', 'required|min_length[4]');
 	}
 
     function createParent($userId, $fName, $mName, $lName, $email){
