@@ -2,32 +2,45 @@
 	
 	// TODO: refactor this helper. This is gross. Try to use some sort of associative array.
 	
-	function setNotification($type , $userID, $additionalInfo = null){
+	const waitlistID = 1;
+	const registerAChildID = 6;
+	const MedicalInformationID = 7;
+	//const  ID = 9;
+	//const  ID = 10;
+	//const  ID = 11;
+	//const  ID = 12;
+	
+	function setNotification($type , $userID, $additionalInfo = null, $urlParam = null){
 		switch ($type) {
 			case "waitlistAChild":
-				set($userID, 1);
+				set($userID, waitlistID, $additionalInfo, $urlParam);
+				break;
 			
 			case "registerAChild":
-				set($userID, 6);
+				set($userID, registerAChildID, $additionalInfo, $urlParam);
+				break;
 				
 			case "MedicalInformation":
-				set($userID, 7, $additionalInfo);
+				set($userID, MedicalInformationID, $additionalInfo, $urlParam);
+				break;
 		}
 	}
 	
-	function unsetNotification($type , $userID, $additionalInfo = null){
+	function unsetNotification($type , $userID, $additionalInfo = null, $urlParam = null){
 		switch ($type) {
 			case "waitlistAChild":
-				delete($userID, 1);
+				delete($userID, waitlistID, $additionalInfo, $urlParam);
+				break;
 				
 				case "registerAChild":
-				delete($userID, 6);
+				delete($userID, registerAChildID, $additionalInfo, $urlParam);
+				break;
 		}		
 		
 	}
 	
-	function set($userID, $id, $additionalInfo = null){
-	    mysql_query("INSERT INTO UserNotifications Value(" . $id . ",'" . $userID . "', '" . $additionalInfo . "')");
+	function set($userID , $id, $additionalInfo = null, $urlParam = null){
+	    mysql_query("INSERT INTO UserNotifications Value(" . $id . ",'" . $userID . "', '" . $additionalInfo . "', '" . $urlParam . "')");
 	}
 	
 	function delete($userID, $id){

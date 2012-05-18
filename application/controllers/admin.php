@@ -362,8 +362,8 @@ class Admin extends Application{
                 //TODO: This should be in a model of course
                 $this->db->set('IsWaitlisted', 0)->where_in('FormID', $ids)->update('WaitlistForm');
 				$this->db->set('IsPreEnrolled', 1)->where_in('FormID', $ids)->update('WaitlistForm');
-				
-				setNotification('registerAChild' , getUserIDFromFormID($ids), $ids);
+								
+				setNotification('registerAChild' , getUserIDFromFormID($ids), '', $ids[0]);
 				emailParentAndLetThemKnowTheyCanRegisterAStudent($ids);
             }
         }
@@ -375,7 +375,7 @@ class Admin extends Application{
                 $this->db->set('IsWaitlisted', 1)->where_in('FormID', $ids)->update('WaitlistForm');
 				$this->db->set('IsPreEnrolled', 0)->where_in('FormID', $ids)->update('WaitlistForm');
 				
-				unsetNotification('registerAChild' , getUserIDFromFormID($ids), $ids);
+				unsetNotification('registerAChild' , getUserIDFromFormID($ids), '',  $ids[0]);
 				
             }
         }	
