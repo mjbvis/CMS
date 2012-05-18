@@ -11,7 +11,7 @@
 	//const  ID = 11;
 	//const  ID = 12;
 	
-	function setNotification($type , $userID, $urlParam, $additionalInfo = null){
+	function setNotification($type , $userID, $urlParam = '', $additionalInfo = null){
 		switch ($type) {
 			case "waitlistAChild":
 				set($userID, waitlistID, $urlParam, $additionalInfo);
@@ -28,7 +28,7 @@
 		}
 	}
 	
-	function unsetNotification($type , $userID, $urlParam){
+	function unsetNotification($type , $userID, $urlParam = ''){
 		switch ($type) {
 			case "waitlistAChild":
 				delete($userID, waitlistID, $urlParam);

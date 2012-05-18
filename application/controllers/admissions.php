@@ -197,7 +197,7 @@ class Admissions extends Application {
 		}
 
 		// UrlParam is empty string on waitlist notifications
-		unsetNotification('waitlistAChild', user_id(), '');
+		unsetNotification('waitlistAChild', user_id());
 	}
 
 	# saves the admissions form
