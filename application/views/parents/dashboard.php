@@ -9,19 +9,18 @@
 <table border="0">
 	<tr>
 		<td valign="top">
-			Notifications
+			<strong>Notifications</strong>
 			<IFRAME SRC=<?php echo base_url('parents/notificationGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
-			Volunteer Logging
+			<strong>Volunteer Logging</strong>
 			<IFRAME SRC=<?php echo base_url('parents/volunteeringGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 		<td valign="top" width="400">
-			Waitlisted
+			<strong>Waitlisted</strong>
 			<IFRAME SRC=<?php echo base_url('parents/waitlistGrid');?>  class="autoHeight" frameborder="0"></IFRAME>
-			Pre-Enrolled
+			<strong>Pre-Enrolled</strong>
 			<IFRAME SRC=<?php echo base_url('parents/preEnrolledGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
-			Registered
+			<strong>Registered</strong>
 			<IFRAME SRC=<?php echo base_url('parents/registeredGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 	</tr>
 </table>
-

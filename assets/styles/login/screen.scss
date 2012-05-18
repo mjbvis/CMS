@@ -45,9 +45,8 @@ $submitBackHover:       $cmsDarkBlue;
 $submitTextColor:		    $white;
 $submitTextShadowColor: $cmsGreen;
 
-
 // ************ End Color Theme ************************
-
+$font-family:   Verdana, Arial, Helvetica, sans-serif;
 
 // Mixins
 @mixin transAll($speed){
@@ -82,7 +81,7 @@ $submitTextShadowColor: $cmsGreen;
 // End Mixins
 
 body {
-  font-family:      Tahoma, Geneva, Arial, Helvetica, sans-serif;
+  font-family:      $font-family;
   font-size:        16px;
   letter-spacing:   1px;
   font-weight:      bold;
@@ -122,20 +121,17 @@ img{ padding-bottom: 20px; }
 
 input {
   width:         270px;
-  background:    $inputBackground;
   padding:       6px;
   margin-bottom: 10px;
   border:        0;
-  border:        3px solid $inputBoarder;
+  border:        solid 1px #E5E5E5;
+  background: #FFF url('bg_form.png') left top repeat-x;
+  background: -webkit-gradient(linear, left top, left 25, from(#FFF), color-stop(4%, #EEE), to(#FFF));
+  background: -moz-linear-gradient(top, #FFF, #EEE 1px, #FFF 25px);
   @include boxShadow(0px 0px 2px, #000);
   @include transAll(0.5s ease-in-out);
-  &:focus{
-    //@include boxShadow(0px 0px 4px, #000);
-    background-color: $inputBackgroundHover;
-    @include transform(scale(1.03));
-  }
   &.submit{
-    font-family:    Tahoma, Geneva, Arial, Helvetica, sans-serif;
+    font-family:    $font-family;
     font-size:      16px;
     text-transform: uppercase;
     letter-spacing: 1px;

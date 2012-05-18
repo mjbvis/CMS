@@ -49,7 +49,7 @@ $sideBar2:             $white;
 $horizontalBars:       $cmsGreen;
 $links:                $cmsGreen;
 $formShadow:           $cmsLightBlue;
-$formBorder:          $cmsGreen;
+$formBorder:           $cmsGreen;
 $forumBackgroundColor: $reallyLightBlue;
 
 // ************ End Color Theme ************************
@@ -59,6 +59,8 @@ $aTrans:        0.75s;    // Transition speed (menu nav 50% this speed)
 $menuHeight:    38px;     // Height of the top menu [>45 yeilds undesireable results]
 $footerHeight:  75px;
 $footerPadding: 10px;
+$font-family:   Verdana, Arial, Helvetica, sans-serif;
+// Tahoma, Geneva, Arial, Helvetica, sans-serif
 
 // Mixins
 @mixin transAll($speed){
@@ -123,7 +125,7 @@ body {
 
 #main {
   position:         relative;
-  font-family:      Tahoma, Geneva, Arial, Helvetica, sans-serif;
+  font-family:      $font-family;
   margin:           0 auto;
   min-width:        780px;
   max-width:        1120px;
@@ -244,7 +246,7 @@ a:link, a:visited {
   border:         3px solid $horizontalBars;
   padding:        10px;
   margin:         25px auto 0;
-  font-family:    Tahoma, Geneva, Arial, Helvetica, sans-serif;
+  font-family:    $font-family;
   font-size:      16px;
   letter-spacing: 1px;
   font-weight:    bold;

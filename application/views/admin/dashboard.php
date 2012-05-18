@@ -9,19 +9,19 @@
 <table border="0">
 	<tr valign="top">
 		<td colspan="2">
-			Notifications
+			<strong>Notifications</strong>
 			<IFRAME SRC=<?php echo base_url('admin/notificationGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 	</tr>
 	<tr>
 		<td valign="top" width="400">
-			Waitlist
+			<strong>Waitlist</strong>
 			<IFRAME SRC=<?php echo base_url('admin/waitlistGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
-			Pre-Enrolled List
+			<strong>Pre-Enrolled List</strong>
 			<IFRAME SRC=<?php echo base_url('admin/preEnrolledGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 		<td >
-			Recent Volunteer Activity
+			<strong>Recent Volunteer Activity</strong>
 			<IFRAME SRC=<?php echo base_url('admin/volunteerLogGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 	</tr>
@@ -30,12 +30,12 @@
 <table>
 	<tr>
 		<td width=50% valign="top">
-			Prospect Information
+			<strong>Prospect Information</strong>
 			<IFRAME SRC=<?php echo base_url('admin/volunteerLogGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 		
 		<td width=50% valign="top">
-			Recent Donation Activity
+			<strong>Recent Donation Activity</strong>
 			<IFRAME SRC=<?php echo base_url('admin/volunteerLogGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 	</tr>
