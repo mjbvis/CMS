@@ -40,8 +40,13 @@ class Admin extends Application{
 	}
 	
 	function manageStudents(){
+		
+		$crud = new grocery_CRUD();
+		$crud->set_table('Student');
+		$output = $crud->render();
+				
 		$this->load->view('templates/header', $this->data);		
-		$this->load->view('admin/record_management/manage_students');
+		$this->load->view('admin/record_management/manage_students', $output);
 		$this->load->view('templates/footer');
 	}
 	

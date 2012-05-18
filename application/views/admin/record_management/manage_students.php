@@ -1,3 +1,11 @@
-<IFRAME SRC=<?php echo base_url('admin/studentGrid'); ?> class="autoHeight" width=100% frameborder="0"></IFRAME>
-<IFRAME SRC=<?php echo base_url('admin/studentEducBackgroundGrid'); ?> class="autoHeight" width=100% frameborder="0"></IFRAME>
-<IFRAME SRC=<?php echo base_url('admin/studentMedicalInformationGrid'); ?> class="autoHeight" width=100% frameborder="0"></IFRAME>
+<?php 
+foreach($css_files as $file): ?>
+    <link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
+ 
+<?php endforeach; ?>
+<?php foreach($js_files as $file): ?>
+    <script src="<?php echo $file; ?>"></script>
+<?php endforeach; ?>
+
+<?php echo $output; ?>
+	
