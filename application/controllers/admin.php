@@ -40,9 +40,31 @@ class Admin extends Application{
 	}
 	
 	function manageStudents(){
-		
+		// TODO: emergency contacts need to be handled in some creative manner
 		$crud = new grocery_CRUD();
-		$crud->set_table('Student');
+		$crud->set_table('Student')
+			 ->set_relation('UserID', 'users', 'username')
+			 ->set_relation('ClassID', 'Classroom', 'ClassName', array('Enabled' => '1'))
+			 ->set_relation('ProgramID', 'Program', '{Days}, {StartTime} - {EndTime}')
+			 //->set_relation('EmergencyContactID1', 'EmergencyContact', '{ECName}|{ECPhone}|{ECRelationship}')
+	         ->columns('FirstName', 'LastName', 'ClassID', 'PhoneNumber', 'Medical Information', 'Admissions Form', 'Waitlist Questionaire')
+			 ->callback_column('Medical Information', array($this, 'getMedicalInformationLink'))
+			 ->callback_column('Admissions Form', array($this, 'getAdmissionsFormLink'))
+			 ->callback_column('Waitlist Questionaire', array($this, 'getWaitlistQuestionaireLink'))
+			 ->callback_edit_field('UserID')
+			 ->callback_edit_field('UDTTM', array($this, 'getCurrentDateTime'))
+			 ->display_as('UserID', 'Username')
+			 ->display_as('ClassID', 'Classroom')
+			 ->display_as('PhoneNumber', 'Phone')
+			 ->display_as('EmergencyContact', 'Emergency Contacts')
+			 ->display_as('ProgramID', 'Program')
+			 ->display_as('EmergencyContactID1', 'Emergency Contact 1')
+			 ->change_field_type('UserID', 'readonly')
+			 ->change_field_type('Gender', 'readonly')
+			 ->unset_edit_fields('EmergencyContactID1', 'EmergencyContactID2', 'EmergencyContactID3', 'QuestionaireID')
+			 ->unset_add()
+			 ->unset_delete();
+			 
 		$output = $crud->render();
 				
 		$this->load->view('templates/header', $this->data);		
@@ -50,25 +72,62 @@ class Admin extends Application{
 		$this->load->view('templates/footer');
 	}
 	
-	function studentGrid(){
-		$crud = new grocery_CRUD();
-		$crud->set_table('Student');
-		$output = $crud->render();
-		$this->load->view('templates/grid', $output);
+	# Callback Column for generating links to the student's Medical Information.
+	function getMedicalInformationLink($value, $row) {
+		$medInfo = Student_medical::find_by_studentid($row->StudentID);
+		if ($medInfo != null || !empty($medInfo)) {
+			return '<a href="' . base_url('admin/medicalInformationGrid/edit/' . $row->StudentID) . '" target="_blank">' . 'Medical Information' . '</a>';
+		}
+		return;
 	}
 	
-	function studentEducBackgroundGrid(){
-		$crud = new grocery_CRUD();
-		$crud->set_table('StudentEduBackground');
-		$output = $crud->render();
-		$this->load->view('templates/grid', $output);
+	# Callback Column for generating links to the student's Admissions Form.
+	function getAdmissionsFormLink($value, $row) {
+		$form = Admissions_form::find_by_studentid($row->StudentID);
+		if ($form != null || !empty($form)) {
+			return '<a href="' . base_url('admin/admissionsFormGrid/edit/' . $row->StudentID) . '" target="_blank">' . 'Admissions Form' . '</a>';
+		}
 	}
 	
-	function studentMedicalInformationGrid(){
+	# Callback Column for generating links to the student's Admissions Form.
+	function getWaitlistQuestionaireLink($value, $row) {
+		return '<a href="' . base_url() . '" target="_blank">' . 'Waitlist Questionaire' . '</a>';
+	}
+	
+	# Callback Edit Field for the Update DateTime.
+	# We want a the Update DateTime to be readonly and set to the current datetime.
+	# This function adds the Update DateTime to the edit form of a grocery crud.
+	function getCurrentDateTime() {
+		$curr_datetime = date('Y-m-d H:i:s', time());
+		return '<input type="text" maxlength="50" value="' . $curr_datetime . '" name="UDTTM" readonly="true">';
+	}
+		
+	function medicalInformationGrid($studentID) {
 		$crud = new grocery_CRUD();
-		$crud->set_table('StudentMedicalInformation');
+		$crud->set_table('StudentMedicalInformation')
+	         ->change_field_type('StudentID', 'readonly');
+		$crud->where('StudentID', $studentID);
+		$crud->unset_list();
+			 
 		$output = $crud->render();
-		$this->load->view('templates/grid', $output);
+				
+		$this->load->view('templates/header', $this->data);		
+		$this->load->view('admin/record_management/manage_medical_form', $output);
+		$this->load->view('templates/footer');
+	}
+	
+	function admissionsFormGrid($studentID) {
+		$crud = new grocery_CRUD();
+		$crud->set_table('AdmissionsForm')
+	         ->change_field_type('StudentID', 'readonly');
+		$crud->where('StudentID', $studentID);
+		$crud->unset_list();
+			 
+		$output = $crud->render();
+				
+		$this->load->view('templates/header', $this->data);		
+		$this->load->view('admin/record_management/manage_admissions_form', $output);
+		$this->load->view('templates/footer');
 	}
 	
 	function manageAccounts(){
