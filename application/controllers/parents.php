@@ -163,7 +163,10 @@ Class Parents extends Application {
 	# We want a the SubmissionDTTM to be readonly and set to the current datetime.
 	# This function adds the SubmissionDTTM to the add form of a grocery crud.
 	function get_notification_URL($value, $row) {
-		return '<a href="' . base_url($row->URL) . '" target="_blank">' . $row->Description . '</a>';
+		$userNotification = User_notifications::find_by_notificationid($row->NotificationID);
+		$userNotifAttr = $userNotification->attributes();
+			
+		return '<a href="' . base_url($row->URL . $userNotifAttr['urlparam']) . '" target="_blank">' . $row->Description . '</a>';
 	}
 }
 ?>
