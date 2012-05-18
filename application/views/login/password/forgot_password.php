@@ -15,7 +15,8 @@
 			<img src="<?php echo base_url('assets/images/login_banner.png'); ?>" alt="CMS Logo" width="400" height="150">
 			<p>
 				If you forgot your password, please enter your username below.
-				<br /><br>
+				<br />
+				<br>
 				We will reset your password and email your account info.
 			</p>
 			<form name="forgotPasswordForm" method="POST">
@@ -29,7 +30,7 @@
 
 				<div id="bottom">
 					<input type="submit" value="Submit" name="submit" class="submit"/>
-					<a href="<?php echo base_url('login');?>">Go back</a>
+					<a href="<?php echo base_url('login'); ?>">Go back</a>
 				</div>
 
 			</form>

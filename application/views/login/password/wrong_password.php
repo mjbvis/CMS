@@ -15,9 +15,10 @@
 			<img src="<?php echo base_url('assets/images/login_banner.png'); ?>" alt="CMS Logo" width="400" height="150">
 			<p>
 				The username or password was not correct.  If you continue to experience difficulties or feel that you have reached
-				this message in error please give us a call at (541) 753-2513.</p>
-				<a href="<?php echo base_url('login/forgotPass');?>" style="float: right;">Forgot your password</a>
-				<a href="<?php echo base_url('login');?>">Go back</a>
-				</div>
-				</body>
-				</html>
+				this message in error please give us a call at (541) 753-2513.
+			</p>
+			<a href="<?php echo base_url('login/forgotPass'); ?>" style="float: right;">Forgot your password</a>
+			<a href="<?php echo base_url('login'); ?>">Go back</a>
+		</div>
+	</body>
+</html>
