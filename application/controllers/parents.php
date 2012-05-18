@@ -127,20 +127,18 @@ Class Parents extends Application {
 
 	# The grocery crud for the current user's notifications. This grid is dedicated
 	# for viewing. Adds, Edits, and Deletes should not be allowed.
-	function notificationGrid() {
-
+	function notificationGrid() {		 
 		$crud = new grocery_CRUD();
-		$crud->set_table('Notifications')
-			 ->set_relation('NotificationID', 'UserNotifications', 'UserID')
-	         ->columns('Description')
-			 ->display_as('NotificationID', 'UserID')
-			 ->callback_column('Description', array($this, 'get_notification_URL'))
+		$crud->set_table('UserNotifications')
+			 ->set_relation('NotificationID', 'Notifications', 'Description')
+			 ->columns('UrlParam')
+			 ->callback_column('UrlParam', array($this, 'get_notification_URL'))
 			 ->unset_operations();
 			 
 		$crud->where('UserID', user_id());
 
         $output = $crud->render();
-		
+
 		$this->load->view('templates/grid', $output);
 	}
 
@@ -159,14 +157,12 @@ Class Parents extends Application {
 		return '<input type="text" maxlength="50" value="' . $curr_datetime . '" name="SubmissionDTTM" style="width:400px" readonly="true">';
 	}
 	
-	# Callback Add Field for the SubmissionDTTM.
-	# We want a the SubmissionDTTM to be readonly and set to the current datetime.
-	# This function adds the SubmissionDTTM to the add form of a grocery crud.
+	# Callback Column for notifications.
+	# We want to construct a link so that the user can click it to resolve the notification.
 	function get_notification_URL($value, $row) {
-		$userNotification = User_notifications::find_by_notificationid($row->NotificationID);
-		$userNotifAttr = $userNotification->attributes();
-			
-		return '<a href="' . base_url($row->URL . $userNotifAttr['urlparam']) . '" target="_blank">' . $row->Description . '</a>';
+		$notification = Notifications::find_by_notificationid($row->NotificationID);
+		$NotificationAttr = $notification->attributes();
+		return '<a href="' . base_url($NotificationAttr['url'] . $row->UrlParam) . '" target="_blank">' . $NotificationAttr['description'] . '</a>';
 	}
 }
 ?>
