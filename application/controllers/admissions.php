@@ -312,7 +312,10 @@ class Admissions extends Application {
 		$student_medical->employer = set_value('employerName');
 		$student_medical->save();
 		
+		// when a student is registered, unset the register medical info notification and
+		// set the completed registration notification for the admin
 		unsetNotification('medicalInformation', user_id(), $studentId);
+		setNotification('registrationComplete', user_id(), $student->studentid, $student->firstname . ' ' . $student->lastname);
 	}
 
 	# sets the validation rules
