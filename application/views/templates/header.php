@@ -31,7 +31,7 @@ if (!function_exists('isset_not_empty')) {
 	</head>
 	<body>
 		<div id="header">
-			<a href="http://www.corvallismontessori.org/"><img src="<?php echo base_url('assets/images/cms_logo.png');?>" alt="CMS Logo" width="585" height="67"></a>
+			<a href="http://www.corvallismontessori.org/"><img src="<?php echo base_url('assets/images/cms_logo.png');?>" alt="CMS Logo" width="580" height="91"></a>
 		</div>
 		<div id="main">
 			<nav id="topNav">
