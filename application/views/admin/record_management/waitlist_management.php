@@ -29,12 +29,12 @@
 			<?php echo form_open(); ?>
 				<table width="100%">
 				    <tr>
-						<td style="vertical-align:top;"><?php echo $grid1; ?></td>
+						<td style="vertical-align:top;"><h4 style="text-align: center;">Waitlist</h1><?php echo $grid1; ?></td>
 						<td style="text-align:center;">
-							<input style="width:100px;" type="submit" name="moveToEnrolled" value="enroll -->>>" /><br/>
-							<input style="width:100px;" type="submit" name="moveToWaitlist" value="<<<-- waitlist" />
+							<input style="width:100px;" type="submit" name="moveToEnrolled" value="Pre-Enroll -->" /><br/>
+							<input style="width:100px;" type="submit" name="moveToWaitlist" value="<-- Waitlist" />
 						</td>
-						<td style="vertical-align:top;"><?php echo $grid2; ?></td>
+						<td style="vertical-align:top;"><h4 style="text-align: center;">Pre-Enrolled List</h4><?php echo $grid2; ?></td>
 					</tr>
 				</table>
 				<?php echo form_close(); ?>
