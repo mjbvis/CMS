@@ -307,7 +307,7 @@ class Admin extends Application{
 	// fills out for the parent.
 	function interviewObservationForm(){
 	    $this->load->view('templates/header', $this->data);  
-        $this->load->view('admin/interview_observation');
+        $this->load->view('admin/register/interview_observation');
         $this->load->view('templates/footer');
 	}
 
