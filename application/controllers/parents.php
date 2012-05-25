@@ -69,7 +69,7 @@ Class Parents extends Application {
 		$crud->where('UserID', user_id());
 		$crud->where('IsWaitlisted', 0);
 		$crud->where('IsPreEnrolled', 1);
-		
+
         $output = $crud->render();
 		$this->load->view('templates/grid', $output);
 	}
@@ -85,7 +85,12 @@ Class Parents extends Application {
 			 ->display_as('LastName', 'Last')
 			 ->unset_operations();
 			 
+		// make sure that the child is only considered registered after they have filled out their
+		// StudentMedicalInformation form.
 		$crud->where('UserID', user_id());
+		$crud->where('Student.StudentID IN (SELECT StudentMedicalInformation.StudentID
+											FROM StudentMedicalInformation
+											WHERE StudentMedicalInformation.StudentID = Student.StudentID)');
 		
         $output = $crud->render();
 		$this->load->view('templates/grid', $output);

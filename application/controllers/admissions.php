@@ -73,10 +73,21 @@ class Admissions extends Application {
 	# 	That is, the waitlisted students who were waitlisted by the current
 	# 	user AND who have been approved for registration.
 	function registerStudentSelector() {
-		$viewData['preEnStudents'] = Waitlist_form::all(array('conditions' => array('UserID=? AND IsPreEnrolled=1', user_id()), 'joins' => array('user')));
+		$preenrolled = Waitlist_form::all(array('conditions' => array('UserID=? AND IsPreEnrolled=1', user_id())
+											  , 'joins' => array('user')
+											  , 'include' => array('student')));
 
-		$viewData['wlStudents'] = Waitlist_form::all(array('conditions' => array('UserID=? AND IsPreEnrolled=0', user_id()), 'joins' => array('user')));
+		$waitlisted = Waitlist_form::all(array('conditions' => array('UserID=? AND IsPreEnrolled=0', user_id()), 'joins' => array('user')));
 
+		// filter out students who are already represented in the Student table
+		$preenrolled = array_filter($preenrolled, function($preenrolled){
+			$stud = $preenrolled->student;
+			return $stud ? 0 : 1;
+		});
+		
+		$viewData['preEnStudents'] = $preenrolled;
+		$viewData['wlStudents'] = $waitlisted;
+		
 		$this->load->view('templates/header', $this->globalViewData);
 		$this->load->view('admissions/forms/register_student_selection', $viewData);
 		$this->load->view('templates/footer');
@@ -219,12 +230,6 @@ class Admissions extends Application {
 		// make submission of multiple tables to database atomic.
 		Admissions_form::transaction(function() use ($wlid) {
 
-			// do this to disable the new student from being re-registered
-			$waitlistform = Waitlist_form::find_by_formid($wlid);
-			$waitlistform->iswaitlisted = 0;
-			$waitlistform->ispreenrolled = 0;
-			$waitlistform->save();
-
 			// must save 3 emergency contacts 1st
 			$emergencyContact1 = new Emergency_contact();
 			$emergencyContact1->ecname = set_value('emergencyContactName1');
@@ -296,26 +301,40 @@ class Admissions extends Application {
 
 	# saves the medical form to the DB
 	function storeMedicalForm($studentId) {
-		// This will save the information to the StudentMedicalInformation table.
-		$student_medical = new Student_medical();
-		$student_medical->studentid = $studentId;
-		$student_medical->preferredhospital = set_value('preferredHospitalName');
-		$student_medical->hospitalphone = set_value('hospitalPhoneName');
-		$student_medical->physician = set_value('physicianName');
-		$student_medical->physicianphone = set_value('pPhoneName');
-		$student_medical->dentist = set_value('dentistName');
-		$student_medical->dentistphone = set_value('dPhoneName');
-		$student_medical->medicalconditions = set_value('medicalConditionsName');
-		$student_medical->allergies = set_value('allergiesName');
-		$student_medical->insurancecompany = set_value('insuranceCompanyName');
-		$student_medical->certificatenumber = set_value('certificateNumberName');
-		$student_medical->employer = set_value('employerName');
-		$student_medical->save();
 		
-		// when a student is registered, unset the register medical info notification and
-		// set the completed registration notification for the admin
-		unsetNotification('medicalInformation', user_id(), $studentId);
-		setNotification('registrationComplete', user_id(), $student->studentid, $student->firstname . ' ' . $student->lastname);
+		// make submission of multiple tables to database atomic.
+		Student::transaction(function() use ($studentId) {
+		
+			$student = Student::find_by_studentid($studentId);
+			$studAttr = $student->attributes();
+		
+			// at this point, the student is no longer considered pre-enrolled
+			$waitlistform = Waitlist_form::find_by_formid($studAttr['questionaireid']);
+			$waitlistform->iswaitlisted = 0;
+			$waitlistform->ispreenrolled = 0;
+			$waitlistform->save();
+			
+			// This will save the information to the StudentMedicalInformation table.
+			$student_medical = new Student_medical();
+			$student_medical->studentid = $studentId;
+			$student_medical->preferredhospital = set_value('preferredHospitalName');
+			$student_medical->hospitalphone = set_value('hospitalPhoneName');
+			$student_medical->physician = set_value('physicianName');
+			$student_medical->physicianphone = set_value('pPhoneName');
+			$student_medical->dentist = set_value('dentistName');
+			$student_medical->dentistphone = set_value('dPhoneName');
+			$student_medical->medicalconditions = set_value('medicalConditionsName');
+			$student_medical->allergies = set_value('allergiesName');
+			$student_medical->insurancecompany = set_value('insuranceCompanyName');
+			$student_medical->certificatenumber = set_value('certificateNumberName');
+			$student_medical->employer = set_value('employerName');
+			$student_medical->save();
+			
+			// when a student is registered, unset the register medical info notification and
+			// set the completed registration notification for the admin
+			unsetNotification('medicalInformation', user_id(), $studentId);
+			setNotification('registrationComplete', user_id(), $student->studentid, $student->firstname . ' ' . $student->lastname);
+		});
 	}
 
 	# sets the validation rules
