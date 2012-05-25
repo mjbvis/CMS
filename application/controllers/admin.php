@@ -47,20 +47,22 @@ class Admin extends Application{
 			 ->set_relation('ClassID', 'Classroom', 'ClassName', array('Enabled' => '1'))
 			 ->set_relation('ProgramID', 'Program', '{Days}, {StartTime} - {EndTime}')
 			 //->set_relation('EmergencyContactID1', 'EmergencyContact', '{ECName}|{ECPhone}|{ECRelationship}')
-	         ->columns('FirstName', 'LastName', 'ClassID', 'PhoneNumber', 'Medical Information', 'Admissions Form', 'Waitlist Questionaire')
+	         ->columns('FirstName', 'LastName', 'ClassID', 'PhoneNumber', 'Medical Information', 'Admissions Form', 'Waitlist Questionaire', 'IsEnrolled')
 			 ->callback_column('Medical Information', array($this, 'getMedicalInformationLink'))
 			 ->callback_column('Admissions Form', array($this, 'getAdmissionsFormLink'))
 			 ->callback_column('Waitlist Questionaire', array($this, 'getWaitlistQuestionaireLink'))
 			 ->callback_edit_field('UserID')
-			 ->callback_edit_field('UDTTM', array($this, 'getCurrentDateTime'))
 			 ->display_as('UserID', 'Username')
 			 ->display_as('ClassID', 'Classroom')
 			 ->display_as('PhoneNumber', 'Phone')
 			 ->display_as('EmergencyContact', 'Emergency Contacts')
 			 ->display_as('ProgramID', 'Program')
 			 ->display_as('EmergencyContactID1', 'Emergency Contact 1')
+			 ->display_as('IsEnrolled', 'Enrollment Status')
 			 ->change_field_type('UserID', 'readonly')
 			 ->change_field_type('Gender', 'readonly')
+			 ->change_field_type('IsEnrolled', 'true_false')
+			 ->change_field_type('UDTTM', 'hidden', date('Y-m-d H:i:s', time()))
 			 ->unset_edit_fields('EmergencyContactID1', 'EmergencyContactID2', 'EmergencyContactID3', 'QuestionaireID')
 			 ->unset_add()
 			 ->unset_delete();
@@ -93,22 +95,20 @@ class Admin extends Application{
 	function getWaitlistQuestionaireLink($value, $row) {
 		return '<a href="' . base_url() . '" target="_blank">' . 'Waitlist Questionaire' . '</a>';
 	}
-	
-	# Callback Edit Field for the Update DateTime.
-	# We want a the Update DateTime to be readonly and set to the current datetime.
-	# This function adds the Update DateTime to the edit form of a grocery crud.
-	function getCurrentDateTime() {
-		$curr_datetime = date('Y-m-d H:i:s', time());
-		return '<input type="text" maxlength="50" value="' . $curr_datetime . '" name="UDTTM" readonly="true">';
-	}
 		
 	function medicalInformationGrid($studentID) {
 		$crud = new grocery_CRUD();
 		$crud->set_table('StudentMedicalInformation')
-	         ->change_field_type('StudentID', 'readonly');
+	         ->change_field_type('StudentID', 'hidden', $studentID);
 		$crud->where('StudentID', $studentID);
 		$crud->unset_list();
-			 
+		
+		// TODO: fix validation.
+		$crud->required_fields('PreferredHospital', 'HospitalPhone', 'Physician', 'PhysicianPhone', 'Dentist', 'DentistPhone');
+		$crud->set_rules('HospitalPhone','Hospital Phone','min_length[12]');
+		$crud->set_rules('PhysicianPhone','Physician Phone','min_length[12]');
+		$crud->set_rules('DentistPhone','Dentist Phone','min_length[12]');
+		
 		$output = $crud->render();
 				
 		$this->load->view('templates/header', $this->data);		
@@ -119,10 +119,12 @@ class Admin extends Application{
 	function admissionsFormGrid($studentID) {
 		$crud = new grocery_CRUD();
 		$crud->set_table('AdmissionsForm')
-	         ->change_field_type('StudentID', 'readonly');
+	         ->change_field_type('StudentID', 'hidden', $studentID);
 		$crud->where('StudentID', $studentID);
 		$crud->unset_list();
-			 
+		
+		// TODO: add validation
+		
 		$output = $crud->render();
 				
 		$this->load->view('templates/header', $this->data);		
