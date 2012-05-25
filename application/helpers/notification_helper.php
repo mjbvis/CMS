@@ -104,11 +104,13 @@
 		$to = $email;
 		$subject = "New MSG from CMS for" . $firstName . ", " . $lastName;
 		$body = "ATTN: " . $firstName . ", " . $lastName .  "\n\nYou can now finish enrolling your student.";
-		if (mail($to, $subject, $body)) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
+
+		$data['to'] = $to;
+		$data['subject'] = $subject;
+		$data['body'] = $body;
+		
+		return $data;
+
 	}
 	
     function getUserinfo($username){ 

@@ -45,13 +45,15 @@ function generatePassword() {
 
 function sendNewUserAccountCreationEmail($firstName, $lastName, $email, $username, $plainTextPassword) {
 
-     $to = $email;
-     $subject = "Welcome " . $firstName . ", " . $lastName . " to CMS";
-     $body = "Welcome " . $firstName . ", " . $lastName .  "\n\nUsername: " . $username . "\nPassword: " . $plainTextPassword . "\n\nThanks, \n\nthe CMS Team";
-     if (mail($to, $subject, $body)) {
-       return TRUE;
-     } else {
-       return FALSE;
-     }
+	$to = $email;
+	$subject = "Welcome " . $firstName . ", " . $lastName . " to CMS";
+	$body = "Welcome " . $firstName . ", " . $lastName .  "\n\nUsername: " . $username . "\nPassword: " . $plainTextPassword . "\n\nThanks, \n\nthe CMS Team";
+
+	$data['to'] = $to;
+	$data['subject'] = $subject;
+	$data['body'] = $body;
+	
+	return $data;
+
 }
 ?>

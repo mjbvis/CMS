@@ -277,7 +277,7 @@ class Admin extends Application{
 			$email = set_value('email');
 
 			if($this->ag_auth->register($username, $password, $email) === TRUE){
-				sendNewUserAccountCreationEmail($firstName, $lastName, $email, $username, $plainTextPassword);
+				$this->sendEmail(sendNewUserAccountCreationEmail($firstName, $lastName, $email, $username, $plainTextPassword));
                 
                 $this->data['firstName'] = $firstName;
                 $this->data['lastName'] = $lastName;
@@ -431,7 +431,7 @@ class Admin extends Application{
 								
 				foreach ($ids as $id) {
 					setNotification('registerAChild' , getUserIDFromFormID($id), $id);
-					emailParentAndLetThemKnowTheyCanRegisterAStudent($id);
+					$this->sendEmail(emailParentAndLetThemKnowTheyCanRegisterAStudent($id));
 				}
 				
             }
@@ -608,6 +608,31 @@ class Admin extends Application{
 		$this->load->view('admin/record_management/waitlist_management', $data);
 		$this->load->view('templates/footer');
     }
+
+	/*
+	 * This function takes data and takes on proper header information so emails dont come from corvall5
+	 * $to - the email destination
+	 * $subject - the email subject
+	 * $body - the actuall body of the email
+	 * if you want to change who emails are from in the system this is the function to change
+	 */
+	function sendEmail($data){
+	
+	$to = $data['to'];
+	$subject = $data['subject'];
+	$body = $data['body'];
+		
+	$headers   = array();
+	$headers[] = "MIME-Version: 1.0";
+	$headers[] = "Content-type: text/plain; charset=iso-8859-1";
+	$headers[] = "From: From: \"Sarah Bingham\" <sarah@corvallismontessori.org>";
+	$headers[] = "Reply-To: \"Sarah Bingham\" <sarah@corvallismontessori.org>";
+	$headers[] = "Subject: {$subject}";
+	$headers[] = "X-Mailer: PHP/".phpversion();
+	
+	mail($to, $subject, $body, implode("\r\n", $headers));
+			
+	}
 
 }
 
