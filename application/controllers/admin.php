@@ -63,7 +63,7 @@ class Admin extends Application{
 			 ->display_as('EmergencyContactID1', 'Emergency Contact 1')
 			 ->display_as('IsEnrolled', 'Enrollment Status')
 			 ->change_field_type('UserID', 'readonly')
-			 ->change_field_type('Gender', 'readonly')
+			 ->change_field_type('Gender', 'enum', array('M','F'))
 			 ->change_field_type('IsEnrolled', 'true_false')
 			 ->change_field_type('UDTTM', 'hidden', date('Y-m-d H:i:s', time()))
 			 ->unset_edit_fields('EmergencyContactID1', 'EmergencyContactID2', 'EmergencyContactID3', 'QuestionaireID')
@@ -112,6 +112,15 @@ class Admin extends Application{
 		$crud->set_rules('PhysicianPhone','Physician Phone','min_length[12]');
 		$crud->set_rules('DentistPhone','Dentist Phone','min_length[12]');
 		
+		$crud->display_as('PreferredHospital', 'Preferred Hospital')
+			->display_as('HospitalPhone', 'Hospital Phone')
+			->display_as('PhysicianPhone', 'Physician Phone')
+			->display_as('DentistPhone', 'Dentist Phone')
+			->display_as('MedicalConditions', 'Medical Conditions')
+			->display_as('InsuranceCompany ', 'Insurance Company')
+			->display_as('CertificateNumber', 'Certificate Number');
+		
+		
 		$output = $crud->render();
 				
 		$this->load->view('templates/header', $this->data);		
@@ -127,6 +136,16 @@ class Admin extends Application{
 		$crud->unset_list();
 		
 		// TODO: add validation
+		
+		$crud->display_as('SchoolExperience','School Experience')
+			->display_as('SocialExperience','Social Experience')
+			->display_as('ComfortMethods','Comfort Methods')
+			->display_as('NapTime','Nap Time')
+			->display_as('OutdoorPlay', 'Outdoor Play')
+			->display_as('SiblingNames','Sibling Names')
+			->display_as('SiblingAges','Sibling Ages')
+			->display_as('ReferrerType','Referrer Type')
+			->display_as('ReferredBy','Referred By');
 		
 		$output = $crud->render();
 				
@@ -261,6 +280,9 @@ class Admin extends Application{
             $lastName = set_value('last');
 			$username = $firstName . '.' . $lastName;
             
+			// make usernames all lower case
+			$username = strtolower($username);
+			
             //check db to make sure this is a unique name
             // if not add a number and try again
             if (!$this->reg->isUsernameUnique($username)){
@@ -278,7 +300,9 @@ class Admin extends Application{
 			// encrypt the password
 			$password = $this->ag_auth->salt($plainTextPassword);
 			$email = set_value('email');
-
+			$email = strtolower($email);
+			
+			
 			if($this->ag_auth->register($username, $password, $email) === TRUE){
 				$this->sendEmail(sendNewUserAccountCreationEmail($firstName, $lastName, $email, $username, $plainTextPassword));
                 

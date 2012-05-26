@@ -67,6 +67,10 @@ class Application extends CI_Controller
 		else
 		{
 			$username = set_value('username');
+			
+			//convert input to all lowercase
+			$username = strtolower($username);
+			
 			$password = $this->ag_auth->salt(set_value('password'));
 			$field_type  = (valid_email($username)  ? 'email' : 'username');
 			

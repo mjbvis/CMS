@@ -55,7 +55,11 @@ class grocery_CRUD_Field_Types
 					
 			if($this->change_field_type != null && isset($this->change_field_type[$field_info->name]))
 			{
-				$field_info->crud_type 	= $this->change_field_type[$field_info->name]->type;
+				$field_type 			= $this->change_field_type[$field_info->name]; 
+				
+				$field_info->crud_type 	= $field_type->type;
+				$field_info->extras 	=  $field_type->extras;
+				
 				$real_type				= $field_info->crud_type;
 			}
 			elseif(isset($this->relation[$field_info->name]))
@@ -90,15 +94,9 @@ class grocery_CRUD_Field_Types
 					$field_info->extras 	= $this->upload_fields[$field_info->name];
 				break;
 				
-				case 'hidden':
-					if(isset($this->change_field_type[$field_info->name]->value))
-						$field_info->extras = $this->change_field_type[$field_info->name]->value;
-					else
-						$field_info->extras = false;
-				break;
-				
 				default:
-					$field_info->extras = false;
+					if(empty($field_info->extras))
+						$field_info->extras = false;
 				break;
 			}
 			
@@ -113,7 +111,7 @@ class grocery_CRUD_Field_Types
 				$field_info->name		= $field_name;
 				$field_info->crud_type 	= 'relation_n_n';
 				$field_info->extras 	= $field_extras;
-				$field_info->required	= false; //Temporary false
+				$field_info->required	= !empty($this->required_fields) && in_array($field_name,$this->required_fields) ? true : false;; 
 				$field_info->display_as = 
 					isset($this->display_as[$field_name]) ? 
 						$this->display_as[$field_name] : 
@@ -132,7 +130,9 @@ class grocery_CRUD_Field_Types
 				{
 					$field_info = (object)array(
 						'name' => $field_name, 
-						'crud_type' => 'string',
+						'crud_type' => $this->change_field_type !== null && isset($this->change_field_type[$field_name]) ?
+											$this->change_field_type[$field_name]->type :
+											'string',
 						'display_as' => isset($this->display_as[$field_name]) ? 
 												$this->display_as[$field_name] : 
 												ucfirst(str_replace("_"," ",$field_name)),
@@ -152,7 +152,9 @@ class grocery_CRUD_Field_Types
 				{
 					$field_info = (object)array(
 						'name' => $field_name, 
-						'crud_type' => 'string',
+						'crud_type' => $this->change_field_type !== null && isset($this->change_field_type[$field_name]) ?
+											$this->change_field_type[$field_name]->type :
+											'string',
 						'display_as' => isset($this->display_as[$field_name]) ? 
 												$this->display_as[$field_name] : 
 												ucfirst(str_replace("_"," ",$field_name)),
@@ -440,6 +442,10 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 			foreach($this->having as $having)
 				$this->basic_model->having($having[0],$having[1],$having[2]);		
 		
+		if(!empty($this->or_having))
+			foreach($this->or_having as $or_having)
+				$this->basic_model->or_having($or_having[0],$or_having[1],$or_having[2]);	
+		
 		if(!empty($this->relation))
 			foreach($this->relation as $relation)
 				$this->basic_model->join_relation($relation[0],$relation[1],$relation[2]);				
@@ -548,7 +554,11 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 						{	
 							$this->or_like($temp_relation[$column->field_name], $search_text);
 						}
-					}					
+					}
+					elseif(isset($this->relation_n_n[$column->field_name]))
+					{
+						//@todo have a where for the relation_n_n statement
+					}									
 					else 
 					{
 						$this->or_like($column->field_name, $search_text);
@@ -876,7 +886,11 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 						}
 					}
 				}				
-				$this->basic_model->db_update($update_data, $primary_key);
+				
+				if($this->basic_model->db_update($update_data, $primary_key) === false)
+				{
+					return false;
+				}
 				
 				if(!empty($this->relation_n_n))
 				{
@@ -1063,6 +1077,10 @@ class grocery_CRUD_Model_Driver extends grocery_CRUD_Field_Types
 		if(!empty($this->having))
 			foreach($this->having as $having)
 				$this->basic_model->having($having[0],$having[1],$having[2]);		
+		
+		if(!empty($this->or_having))
+			foreach($this->or_having as $or_having)
+				$this->basic_model->or_having($or_having[0],$or_having[1],$or_having[2]);		
 		
 		if(!empty($this->relation))
 			foreach($this->relation as $relation)
@@ -1791,8 +1809,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 	protected function get_enum_input($field_info,$value)
 	{		
 		$input = "<select name='{$field_info->name}'>";
-			
-		$options_array = explode("','",substr($field_info->db_max_length,1,-1));
+		$options_array = $field_info->extras !== false && is_array($field_info->extras)? $field_info->extras  : explode("','",substr($field_info->db_max_length,1,-1));
 		foreach($options_array as $option)
 		{
 			$selected = !empty($value) && $value == $option ? "selected='selected'" : ''; 
@@ -1815,7 +1832,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/ajax-chosen.js');
 		$this->set_js($this->default_javascript_path.'/jquery_plugins/config/jquery.chosen.config.js');
 		
-		$options_array = explode("','",substr($field_info->db_max_length,1,-1));
+		$options_array = $field_info->extras !== false && is_array($field_info->extras)? $field_info->extras : explode("','",substr($field_info->db_max_length,1,-1));
 		$selected_values 	= !empty($value) ? explode(",",$value) : array();
 		
 		$select_title = str_replace('{field_display_as}',$field_info->display_as,$this->l('set_relation_title'));
@@ -2612,6 +2629,7 @@ class grocery_CRUD extends grocery_CRUD_States
 	protected $where 				= array();
 	protected $like 				= array();
 	protected $having 				= array();
+	protected $or_having 			= array();
 	protected $limit 				= null;
 	protected $required_fields		= array();
 	protected $validation_rules		= array();
@@ -2722,13 +2740,13 @@ class grocery_CRUD extends grocery_CRUD_States
 	 * Changes the default field type
 	 * @param string $field
 	 * @param string $type
-	 * @param string $value
+	 * @param array|string $extras
 	 */
-	public function change_field_type($field , $type, $value = null)
+	public function change_field_type($field , $type, $extras = null)
 	{
 		$field_type = (object)array('type' => $type);
-		if($value != null)
-			$field_type->value = $value;
+
+		$field_type->extras = $extras;
 		
 		$this->change_field_type[$field] = $field_type;
 		
@@ -3296,6 +3314,11 @@ class grocery_CRUD extends grocery_CRUD_States
 		$this->having[] = array($key, $value, $escape);
 	}
 	
+	protected function or_having($key, $value = '', $escape = TRUE)
+	{
+		$this->or_having[] = array($key, $value, $escape);
+	}	
+	
 	public function or_like($field, $match = '', $side = 'both')
 	{
 		$this->or_like[] = array($field, $match, $side);
@@ -3304,6 +3327,26 @@ class grocery_CRUD extends grocery_CRUD_States
 	public function limit($limit, $offset = '')
 	{
 		$this->limit = array($limit,$offset);
+	}
+	
+	private function _initialize_helpers()
+	{
+		$ci = &get_instance();
+		
+		$ci->load->helper('url');
+		$ci->load->helper('form');
+	}
+	
+	protected function pre_render()
+	{
+		$this->_initialize_helpers();
+		$this->_load_language();
+		$this->state_code = $this->getStateCode();
+		
+		if($this->basic_model === null)
+			$this->set_default_Model();
+		
+		$this->set_basic_db_table($this->get_table());		
 	}
 	
 	/**
@@ -3316,8 +3359,7 @@ class grocery_CRUD extends grocery_CRUD_States
 	 */
 	public function render()
 	{
-		$this->_load_language();
-		$this->state_code = $this->getStateCode();
+		$this->pre_render();
 		
 		if( $this->state_code != 0 )
 		{
@@ -3327,12 +3369,7 @@ class grocery_CRUD extends grocery_CRUD_States
 		{
 			throw new Exception('The state is unknown , I don\'t know what I will do with your data!', 4);
 			die();
-		}		
-		
-		if($this->basic_model === null)
-			$this->set_default_Model();
-		
-		$this->set_basic_db_table($this->get_table());		
+		}
 		
 		switch ($this->state_code) {
 			case 15://success

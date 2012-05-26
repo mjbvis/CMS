@@ -105,8 +105,8 @@ Class Parents extends Application {
 	# should only show log entries for the current user.
 	function volunteeringGrid() {
 		
-		// This is the maximum number of hours that can be logged in a single log entry
-		$max_hours = 8;
+		// This is the one plus the maximum number of hours that can be logged in a single log entry
+		$max_hours = 9;
 		
 		$crud = new grocery_CRUD();
 		$crud->set_table('VolunteerLogEntry')
