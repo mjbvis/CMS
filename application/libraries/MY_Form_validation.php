@@ -126,6 +126,50 @@ class MY_Form_validation extends CI_Form_validation {
         return TRUE;
     }*/
 
+    
+    /**
+     * Valid Date (human format mm/dd/yyyy)
+     *
+     * @access    public
+     * @param    string
+     * @return    bool
+     */
+    function valid_date($str)
+    {
+        if ( preg_match('/([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})/', $str) )
+        {
+            $arr = explode("/", $str);	// splitting the array
+            $yyyy = $arr[2];            // year
+            $mm = $arr[0];              // month
+            $dd = $arr[1];              // day
+            if(is_numeric($yyyy) && is_numeric($mm) && is_numeric($dd)){
+            	if($yyyy <= '1800'){
+            		$mythis =& get_instance();
+                	$mythis->form_validation->set_message('valid_date', 'The %s field\'s year must be greater than 1800.');
+                    return FALSE;
+            	}
+				elseif(!checkdate($mm, $dd, $yyyy)){
+					$mythis =& get_instance();
+                	$mythis->form_validation->set_message('valid_date', 'The %s field\'s has an invalid DateTime.');
+                    return FALSE;
+				}
+				else {
+					return TRUE;
+				}
+            } else {
+                $mythis =& get_instance();
+                $mythis->form_validation->set_message('valid_date', 'The %s field must be in format: mm/dd/yyyy.');
+                    return FALSE;
+            }
+        }
+        else
+        {
+            $mythis =& get_instance();
+            $mythis->form_validation->set_message('valid_date', 'The %s field must be in format: mm/dd/yyyy.');
+            return FALSE;
+        }
+    }
+    
 }
 
 /* End of file MY_Form_validation.php */

@@ -306,78 +306,118 @@ class Admin extends Application{
 		} 
 	}
 
-	// This is the Interview/Observation form that the administrator
-	// fills out for the parent.
+	# This is the Interview/Observation form that the administrator
+	# fills out for the parent.
 	function interviewObservationForm(){
-	    $this->load->view('templates/header', $this->data);  
-        $this->load->view('admin/register/interview_observation');
-        $this->load->view('templates/footer');
+
+		$viewData['classes'] = Classroom::find_all_by_enabled('1');
+
+		# Set up validation for admissionsPage1.php
+		$this->validateInterviewObservationForm();
+
+		// if user is posting back answers, then save the form
+		if ($this->form_validation->run() == TRUE) {
+			// get answers from waitlist questionaire
+			$this->storeInterviewObservationForm();
+
+			// back to the admin dashboard
+			redirect('admin');
+		} else {
+			// display the interview observation form
+			$this->load->view('templates/header', $this->data);  
+        	$this->load->view('admin/register/interview_observation', $viewData);
+        	$this->load->view('templates/footer');
+		}
 	}
 
-	// Saves the interview and observation form that the admin fills out.
+	# Saves the interview and observation form that the admin fills out.
 	function storeInterviewObservationForm(){
-		$data = array(
-			'pFirst' 		=> set_value('pFirstName'),
-			'pLast' 		=> set_value('pLastName'),
-			'cFirst' 		=> set_value('cFirstName'),
-			'cLast'		 	=> set_value('cLastName'),
-			'cAge' 			=> set_value('cAgeName'),
-			'dob' 			=> set_value('dobName'),
-			'contactDate' 	=> set_value('contactDateName'),
-			'phone' 		=> set_value('phoneName'),
-			'visitDate' 	=> set_value('visitDateName'),
-			'email'		 	=> set_value('emailName'),
-			'learnedAbout'  => set_value('learnedAboutName'),
-			'adIn'			=> set_value('adInName'),
-			'other'			=> set_value('otherName'),
-			'interest'		=> set_value('interestName'),
-			'understanding' => set_value('understandingName'),
-			'willingness'	=> set_value('willingnessName'),
-			'movingCity'	=> set_value('movingCityName'),
-			'movingState'	=> set_value('movingStateName'),
-			'movingSchool'	=> set_value('movingSchoolName'),
-			'learningNotes' => set_value('learningNotesName'),
-			'montessoriImp' => set_value('montessoriImpressionsName'),
-			'interviewImp'	=> set_value('interviewImpressionsName'),
-			'obervationDate'=> set_value('observationDateName'),
-			'classroom'		=> set_value('classroomName'),
-			'attended'  	=> set_value('attendedName'),
-			'onTime'		=> set_value('onTimeName'),
-			'interviewDate' => set_value('interviewDateName'),
-			'appReceived' 	=> set_value('appReceivedName'),
-			'feeReceived'	=> set_value('feeReceivedName')
-		);
-		return $data;
+		$ioform = new Interview_observation_form();
+
+		$ioform->parentnames =  set_value('pNames');
+		$ioform->childrennamesages = set_value('namesAndAges');
+		$ioform->firstcontacteddttm = date('Y-m-d H:i:s', strtotime(set_value('contactDateTime')));
+		$ioform->phonenumber = set_value('phoneNumber');
+		$ioform->visitdttm = date('Y-m-d H:i:s', strtotime(set_value('visitDateTime')));
+		$ioform->email = set_value('email');
+		$ioform->websearchref = set_value('webSearch');
+		$ioform->cmsfamilyref = set_value('cmsFamily');
+		$ioform->friendsref = set_value('friends');
+		$ioform->adref = set_value('adIn');
+		$ioform->adrefnote = set_value('adInRefNote');
+		$ioform->otherref = set_value('otherRef');
+		$ioform->otherrefnote = set_value('otherRefNote');
+		$ioform->levelofinterest = set_value('interestLevel');
+		$ioform->levelofunderstanding = set_value('understandingLevel');
+		$ioform->willingnesstolearn = set_value('willingnessLevel');
+		
+		// combine city and state
+		$city = set_value('movingCity');
+		$state = set_value('movingState');
+		
+		if($city != null && $state != null)
+			$citystate = $city . ', ' . $state;
+		else if($city != null)
+			$citystate = $city;
+		else if($state != null)
+			$citystate = $state;
+		else {
+			$citystate = "";
+		}
+		
+		$ioform->newcitystate = $citystate;
+		$ioform->newschool = set_value('movingSchool');
+		$ioform->islearningindependently = set_value('independent');
+		$ioform->islearningatownpace = set_value('ownPace');
+		$ioform->ishandsonlearner = set_value('handsOn');
+		$ioform->ismixedages = set_value('mixedAges');
+		$ioform->montessoriimpressions = set_value('montessoriImpressions');
+		$ioform->interviewimpressions = set_value('interviewImpressions');
+		$ioform->observationdttm = date('Y-m-d H:i:s', strtotime(set_value('observationDateTime')));
+		$ioform->classid = set_value('classroom');
+		$ioform->attendedobservation = set_value('attendedRadio');
+		$ioform->ontimetoobservation = set_value('onTimeRadio');
+		$ioform->interviewdttm = date('Y-m-d H:i:s', strtotime(set_value('interviewDateTime')));
+		$ioform->appreceiveddttm = date('Y-m-d H:i:s', strtotime(set_value('appReceivedDateTime')));
+		$ioform->feereceiveddttm = date('Y-m-d H:i:s', strtotime(set_value('feeReceivedDateTime')));
+
+		$ioform->save();
 	}
 
-	// Sets the validation rules for the InterviewObservationForm
+	# Sets the validation rules for the InterviewObservationForm
 	function validateInterviewObservationForm(){
-		$this->form_validation->set_rules('pFirstName', 'Parent\'s First Name', 'required|min_length[1]');
-		$this->form_validation->set_rules('pLastName', 'Parent\'s Last Name', 'required|min_length[1]');
-		$this->form_validation->set_rules('cFirstName', 'Child\'s First Name', 'required|min_length[1]');
-		$this->form_validation->set_rules('cLastName', 'Child\'s Last Name', 'required|min_length[1]');
-		$this->form_validation->set_rules('cAgeName', 'Child\'s Age', 'required|min_length[1]');
-		$this->form_validation->set_rules('dobName', 'Date of Birth', 'required|min_length[4]');
-		$this->form_validation->set_rules('contactDateName', 'Contact Date', 'required|min_length[4]');
-		$this->form_validation->set_rules('phoneName', 'Phone Number', 'required|min_length[10]');
-		$this->form_validation->set_rules('visitDateName', 'Visit Date', 'required|min_length[10]');
-		$this->form_validation->set_rules('emailName', 'Email', 'required|min_length[5]');
-		$this->form_validation->set_rules('learnedAboutName', 'Learned About CMS How', 'required');
-		$this->form_validation->set_rules('interestName', 'Level of Interest', 'required');
-		$this->form_validation->set_rules('understandingName', 'Understanding of Montessori', 'required');
-		$this->form_validation->set_rules('willingnessName', 'Willingness to learn more', 'required');
-		$this->form_validation->set_rules('movingCityName', 'Moving City', 'required|min_length[1]');
-		$this->form_validation->set_rules('movingStateName', 'Moving State', 'required|min_length[1]');
-		$this->form_validation->set_rules('movingSchoolName', 'Moving School', 'required|min_length[1]');
-		$this->form_validation->set_rules('montessoriImpressionsName', 'Montessori Impressions', 'required|min_length[1]');
-		$this->form_validation->set_rules('interviewImpressionsName', 'Interviews Impressions', 'required|min_length[1]');
-		$this->form_validation->set_rules('observationDateName', 'Classroom Obersvation Date', 'required|min_length[4]');
-		$this->form_validation->set_rules('classroomName', 'Classroom Observed', 'required|min_length[1]');
-		$this->form_validation->set_rules('attendedName', 'Attended', 'required');
-		$this->form_validation->set_rules('onTimeName', 'On Time', 'required');
-		$this->form_validation->set_rules('interviewDateName', 'Interview Date', 'required|min_length[4]');
-		$this->form_validation->set_rules('appReceivedName', 'Date Application Received', 'required|min_length[4]');
-		$this->form_validation->set_rules('feeReceivedName', 'Date Application Fee Received', 'required|min_length[4]');
+		$this->form_validation->set_rules('pNames', 'Parents', 'required');
+		$this->form_validation->set_rules('namesAndAges', 'Children', 'required');
+		$this->form_validation->set_rules('contactDateTime', 'Contact DateTime', 'required|valid_date');
+		$this->form_validation->set_rules('phoneNumber', 'Phone number', 'required|min_length[12]');
+		$this->form_validation->set_rules('visitDateTime', 'Visit DateTime', 'required|valid_date');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+		$this->form_validation->set_rules('webSearch', 'Websearch Reference', 'exact_length[1]|is_natural');
+		$this->form_validation->set_rules('cmsFamily', 'CMS Family Reference', 'exact_length[1]|is_natural');
+		$this->form_validation->set_rules('friends', 'Friend Reference', 'exact_length[1]|is_natural');
+		$this->form_validation->set_rules('adIn', 'Ad Reference', 'exact_length[1]|is_natural');
+		$this->form_validation->set_rules('adInRefNote', 'Ad Reference Description', '');
+		$this->form_validation->set_rules('otherRef', 'Other Reference', 'exact_length[1]|is_natural');
+		$this->form_validation->set_rules('otherRefNote', 'Other Reference Description', '');
+		$this->form_validation->set_rules('interestLevel', 'Level of interest', 'required');
+		$this->form_validation->set_rules('understandingLevel', 'Level of understanding', 'required');
+		$this->form_validation->set_rules('willingnessLevel', 'Willingness to learn', 'required');
+		$this->form_validation->set_rules('movingCity', 'New City', 'alpha');
+		$this->form_validation->set_rules('movingState', 'New State', 'alpha');
+		$this->form_validation->set_rules('movingSchool', 'New School', '');
+		$this->form_validation->set_rules('independent', 'Independent learner', 'required|exact_length[1]');
+		$this->form_validation->set_rules('ownPace', 'Learns at own pace', 'required|exact_length[1]');
+		$this->form_validation->set_rules('handsOn', 'Hands-on learner', 'required|exact_length[1]');
+		$this->form_validation->set_rules('mixedAges', 'Mixed ages', 'required|exact_length[1]');
+		$this->form_validation->set_rules('montessoriImpressions', 'Montessori impressions', 'required');
+		$this->form_validation->set_rules('interviewImpressions', 'Interview impressions', 'required');
+		$this->form_validation->set_rules('observationDateTime', 'Observation DateTime', 'valid_date');
+		$this->form_validation->set_rules('classroom', 'Classroom', 'is_natural_no_zero');
+		$this->form_validation->set_rules('attendedRadio', 'Attended observation', 'exact_length[1]');
+		$this->form_validation->set_rules('onTimeRadio', 'On time to observation', 'exact_length[1]');
+		$this->form_validation->set_rules('interviewDateTime', 'Interview DateTime', 'required|valid_date');
+		$this->form_validation->set_rules('appReceivedDateTime', 'Application received DateTime', 'valid_date');
+		$this->form_validation->set_rules('feeReceivedDateTime', 'Application fee received DateTime', 'valid_date');
 	}
 
     function createParent($userId, $fName, $lName, $email){
