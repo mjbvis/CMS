@@ -280,6 +280,9 @@ class Admin extends Application{
             $lastName = set_value('last');
 			$username = $firstName . '.' . $lastName;
             
+			// make usernames all lower case
+			$username = strtolower($username);
+			
             //check db to make sure this is a unique name
             // if not add a number and try again
             if (!$this->reg->isUsernameUnique($username)){
@@ -297,7 +300,9 @@ class Admin extends Application{
 			// encrypt the password
 			$password = $this->ag_auth->salt($plainTextPassword);
 			$email = set_value('email');
-
+			$email = strtolower($email);
+			
+			
 			if($this->ag_auth->register($username, $password, $email) === TRUE){
 				$this->sendEmail(sendNewUserAccountCreationEmail($firstName, $lastName, $email, $username, $plainTextPassword));
                 

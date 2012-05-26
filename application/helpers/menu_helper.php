@@ -1,4 +1,4 @@
-<?php
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 function get_menu_items($group_name = NULL){
 	$CI =& get_instance();
