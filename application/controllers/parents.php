@@ -9,6 +9,9 @@ Class Parents extends Application {
 
 		/*restrict access to all but parents*/
 		$this->ag_auth->restrict('parent');
+		
+		/* Disable Cashcing */
+		$this->output->nocache();
 
 		/* Load helpers */
 		$this->load->helper(array('url', 'form', 'menu', 'language'));

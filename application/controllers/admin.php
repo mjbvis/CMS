@@ -11,6 +11,9 @@ class Admin extends Application{
 		/* restrict access to all but admin */
 		$this->ag_auth->restrict('admin');
 		
+		/* Disable Cashcing */
+		$this->output->nocache();
+		
 		/* Load helpers */
 		$this->load->helper(array('url', 'form', 'registration', 'menu', 'language' , 'notification'));
         

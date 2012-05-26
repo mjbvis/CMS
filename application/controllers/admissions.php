@@ -9,6 +9,9 @@ class Admissions extends Application {
 
 		/* restrict access to all but admin */
 		$this->ag_auth->restrict('parent');
+		
+		/* Disable Cashcing */
+		$this->output->nocache();
 
 		# Load Helpers
 		$this->load->helper(array('url', 'form', 'dashboard', 'ag_auth', 'menu', 'notification'));
