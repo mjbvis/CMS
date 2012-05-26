@@ -112,6 +112,15 @@ class Admin extends Application{
 		$crud->set_rules('PhysicianPhone','Physician Phone','min_length[12]');
 		$crud->set_rules('DentistPhone','Dentist Phone','min_length[12]');
 		
+		$crud->display_as('PreferredHospital', 'Preferred Hospital')
+			->display_as('HospitalPhone', 'Hospital Phone')
+			->display_as('PhysicianPhone', 'Physician Phone')
+			->display_as('DentistPhone', 'Dentist Phone')
+			->display_as('MedicalConditions', 'Medical Conditions')
+			->display_as('InsuranceCompany ', 'Insurance Company')
+			->display_as('CertificateNumber', 'Certificate Number');
+		
+		
 		$output = $crud->render();
 				
 		$this->load->view('templates/header', $this->data);		
@@ -127,6 +136,16 @@ class Admin extends Application{
 		$crud->unset_list();
 		
 		// TODO: add validation
+		
+		$crud->display_as('SchoolExperience','School Experience')
+			->display_as('SocialExperience','Social Experience')
+			->display_as('ComfortMethods','Comfort Methods')
+			->display_as('NapTime','Nap Time')
+			->display_as('OutdoorPlay', 'Outdoor Play')
+			->display_as('SiblingNames','Sibling Names')
+			->display_as('SiblingAges','Sibling Ages')
+			->display_as('ReferrerType','Referrer Type')
+			->display_as('ReferredBy','Referred By');
 		
 		$output = $crud->render();
 				
