@@ -7,26 +7,22 @@ class Admissions extends Application {
 	function __construct() {
 		parent::__construct();
 
+		/* restrict access to all but admin */
+		$this->ag_auth->restrict('parent');
+
 		# Load Helpers
 		$this->load->helper(array('url', 'form', 'dashboard', 'ag_auth', 'menu', 'notification'));
-
-		# Load Libraries
-
+		
 		# setup default view data
 		$this->globalViewData['title'] = 'Admissions Dashboard';
-		$this->globalViewData['MenuItems'] = get_menu_items();		// no argument means use current gruop
-		
+		$this->globalViewData['MenuItems'] = get_menu_items();		// no argument means use current group
 	}
 
+	# The admissions controller has no default method. Thus, the index method's job here
+	# is to direct the user elsewhere.
 	function index() {
-		if (logged_in()) {
-			/* load views */
-			$this->load->view('templates/header', $this->globalViewData);
-			$this->load->view('admissions/dashboard');
-			$this->load->view('templates/footer');
-		} else {
-			$this->login();
-		}
+		// let the login controller decide our fate
+		redirect('login');
 	}
 
 	# view the Montessori policy and statements of value
