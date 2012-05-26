@@ -63,7 +63,7 @@ class Admin extends Application{
 			 ->display_as('EmergencyContactID1', 'Emergency Contact 1')
 			 ->display_as('IsEnrolled', 'Enrollment Status')
 			 ->change_field_type('UserID', 'readonly')
-			 ->change_field_type('Gender', 'readonly')
+			 ->change_field_type('Gender', 'enum', array('M','F'))
 			 ->change_field_type('IsEnrolled', 'true_false')
 			 ->change_field_type('UDTTM', 'hidden', date('Y-m-d H:i:s', time()))
 			 ->unset_edit_fields('EmergencyContactID1', 'EmergencyContactID2', 'EmergencyContactID3', 'QuestionaireID')
