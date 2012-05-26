@@ -254,5 +254,10 @@ a:link, a:visited {
   @include boxShadow(2px 5px 10px, $formShadow);
 }
 
+.required{
+  color:       #EE0000;
+  font-weight: bold; 
+}
+
 // Import other CSS documents here
 @import "forms";
