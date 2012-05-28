@@ -5,6 +5,9 @@ class Login extends Application {
 
 	function __construct() {
 		parent::__construct();
+		
+		/* Disable Cashcing */
+		$this->output->nocache();
 
 		# Load Helpers
 		$this->load->helper(array('url', 'form', 'dashboard', 'ag_auth', 'registration', 'notification'));

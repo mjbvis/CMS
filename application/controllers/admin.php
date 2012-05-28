@@ -73,7 +73,7 @@ class Admin extends Application{
 		$output = $crud->render();
 				
 		$this->load->view('templates/header', $this->data);		
-		$this->load->view('admin/record_management/manage_students', $output);
+		$this->load->view('templates/grid', $output);
 		$this->load->view('templates/footer');
 	}
 	
@@ -124,7 +124,7 @@ class Admin extends Application{
 		$output = $crud->render();
 				
 		$this->load->view('templates/header', $this->data);		
-		$this->load->view('admin/record_management/manage_medical_form', $output);
+		$this->load->view('templates/grid', $output);
 		$this->load->view('templates/footer');
 	}
 	
@@ -150,7 +150,7 @@ class Admin extends Application{
 		$output = $crud->render();
 				
 		$this->load->view('templates/header', $this->data);		
-		$this->load->view('admin/record_management/manage_admissions_form', $output);
+		$this->load->view('templates/grid', $output);
 		$this->load->view('templates/footer');
 	}
 	
@@ -349,7 +349,7 @@ class Admin extends Application{
 		} else {
 			// display the interview observation form
 			$this->load->view('templates/header', $this->data);  
-        	$this->load->view('admin/register/interview_observation', $viewData);
+        	$this->load->view('templates/grid', $viewData);
         	$this->load->view('templates/footer');
 		}
 	}
