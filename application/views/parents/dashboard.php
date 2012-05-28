@@ -15,11 +15,11 @@
 			<IFRAME SRC=<?php echo base_url('parents/volunteeringGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 		<td valign="top" width="400">
-			<strong>Waitlisted</strong>
+			<strong><a href="<?php echo base_url('admissions/waitlistQuestionaire'); ?>">Waitlisted</a></strong>
 			<IFRAME SRC=<?php echo base_url('parents/waitlistGrid');?>  class="autoHeight" frameborder="0"></IFRAME>
-			<strong>Pre-Enrolled</strong>
+			<strong><a href="<?php echo base_url('admissions/registerStudentSelector'); ?>">Pre-Enrolled</a></strong>
 			<IFRAME SRC=<?php echo base_url('parents/preEnrolledGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
-			<strong>Registered</strong>
+			<strong><a href="<?php echo base_url('parents/manageMyStudents'); ?>">Registered</a></strong>
 			<IFRAME SRC=<?php echo base_url('parents/registeredGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 	</tr>

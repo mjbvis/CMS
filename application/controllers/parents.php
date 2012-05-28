@@ -156,5 +156,25 @@ Class Parents extends Application {
 		$NotificationAttr = $notification->attributes();
 		return '<a href="' . base_url($NotificationAttr['url'] . $row->UrlParam) . '" target="_blank">' . $NotificationAttr['description'] . $row->AdditionalInfo . '</a>';
 	}
+	
+	function ManageMyStudents(){
+		$crud = new grocery_CRUD();
+		$crud->set_table('Student')
+	         ->columns('FirstName', 'LastName')
+			 ->display_as('FirstName', 'First')
+			 ->display_as('LastName', 'Last');
+			 
+		// make sure that the child is only considered registered after they have filled out their
+		// StudentMedicalInformation form.
+		$crud->where('UserID', user_id());
+		$crud->where('Student.StudentID IN (SELECT StudentMedicalInformation.StudentID
+											FROM StudentMedicalInformation
+											WHERE StudentMedicalInformation.StudentID = Student.StudentID)');
+		
+        $output = $crud->render();
+		$this->load->view('templates/header', $this->data);
+		$this->load->view('templates/grid', $output);
+		$this->load->view('templates/footer');
+	}
 }
 ?>
