@@ -1,0 +1,1 @@
+Once you have completed step 4, you will wait for an admin to approve your application and place the child in a classroom.

@@ -177,5 +177,6 @@ Class Parents extends Application {
 		$this->load->view('templates/grid', $output);
 		$this->load->view('templates/footer');
 	}
+
 }
 ?>

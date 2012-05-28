@@ -1,0 +1,1 @@
+Once there is an availible spot in your desired Classroom and admin will move your child from the waitlist and you will notified that you can proceed to step 3 of the admission process.

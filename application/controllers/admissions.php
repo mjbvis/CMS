@@ -415,5 +415,17 @@ class Admissions extends Application {
 		$this->form_validation->set_rules('certificateNumberName', 'Insurance Certification Number', 'required|min_length[1]');
 		$this->form_validation->set_rules('employerName', 'Employer', '');
 	}
+	
+	function stepTwoInfo(){
+		$this->load->view('templates/header', $this->globalViewData);
+		$this->load->view('admissions/step_two');
+		$this->load->view('templates/footer');
+	}
+	
+		function adminApproval(){
+		$this->load->view('templates/header', $this->globalViewData);
+		$this->load->view('admissions/admin_approval');
+		$this->load->view('templates/footer');
+	}
 
 }
