@@ -110,7 +110,7 @@ Class Parents extends Application {
 		
 		$crud = new grocery_CRUD();
 		$crud->set_table('VolunteerLogEntry')
-	         ->columns('SubmissionDTTM', 'Hours', 'Description', 'VolunteeredDTTM')
+	         ->columns('Hours', 'Description', 'VolunteeredDTTM')
 			 ->display_as('SubmissionDTTM', 'Date/Time')
 			 ->display_as('VolunteeredDTTM', 'Date of Activity')
 			 ->display_as('Description', 'Task')
