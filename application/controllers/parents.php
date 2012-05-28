@@ -99,32 +99,17 @@ Class Parents extends Application {
 		$this->load->view('templates/grid', $output);
 	}
 
-	# The volunteering grocery crud for the parent dashboard. This
-	# grid should have Add enabled but Edit and Delete disabled. Parent's
-	# should not be able to edit and/or delete their volunteer logs. It
-	# should only show log entries for the current user.
+	# This function produces a non editable grid of the volunteer log table
 	function volunteeringGrid() {
-		
-		// This is the one plus the maximum number of hours that can be logged in a single log entry
-		$max_hours = 9;
 		
 		$crud = new grocery_CRUD();
 		$crud->set_table('VolunteerLogEntry')
 	         ->columns('Hours', 'Description', 'VolunteeredDTTM')
-			 ->display_as('SubmissionDTTM', 'Date/Time')
 			 ->display_as('VolunteeredDTTM', 'Date of Activity')
 			 ->display_as('Description', 'Task')
-			 ->add_fields('UserID', 'Hours', 'Description', 'SubmissionDTTM', 'VolunteeredDTTM')
-			 ->required_fields('UserID', 'Hours', 'Description', 'SubmissionDTTM', 'VolunteeredDTTM')
-			 ->change_field_type('UserID', 'hidden', user_id())
-			 ->change_field_type('SubmissionDTTM', 'hidden', date('Y-m-d H:i:s', time()))
-			 ->unset_edit()
-			 ->unset_delete();
+			 ->unset_operations();
 		
 		$crud->where('UserID', user_id());
-		
-		$crud->set_rules('Hours','Hours','numeric|less_than[' . $max_hours . ']');
-		$crud->set_rules('Description', 'required');
 		
         $output = $crud->render();
 		$this->load->view('templates/grid', $output);
@@ -157,7 +142,7 @@ Class Parents extends Application {
 		return '<a href="' . base_url($NotificationAttr['url'] . $row->UrlParam) . '" target="_blank">' . $NotificationAttr['description'] . $row->AdditionalInfo . '</a>';
 	}
 	
-	function ManageMyStudents(){
+	function manageMyStudents(){
 		$crud = new grocery_CRUD();
 		$crud->set_table('Student')
 	         ->columns('FirstName', 'LastName')
@@ -173,7 +158,41 @@ Class Parents extends Application {
 											WHERE StudentMedicalInformation.StudentID = Student.StudentID)');
 		
         $output = $crud->render();
+		
+		$this->data['preGrid'] = "<style type=\"text/css\"> h2 {text-align:center} </style><h2>My Student Management</h2>";
+		
 		$this->load->view('templates/header', $this->data);
+		$this->load->view('templates/grid', $output);
+		$this->load->view('templates/footer');
+	}
+	
+	function manageMyVolunteerActivity(){
+		// This is the one plus the maximum number of hours that can be logged in a single log entry
+		$max_hours = 9;
+		
+		$crud = new grocery_CRUD();
+		$crud->set_table('VolunteerLogEntry')
+	         ->columns('Hours', 'Description', 'VolunteeredDTTM')
+			 ->display_as('SubmissionDTTM', 'Date/Time')
+			 ->display_as('VolunteeredDTTM', 'Date of Activity')
+			 ->display_as('Description', 'Task')
+			 ->add_fields('UserID', 'Hours', 'Description', 'SubmissionDTTM', 'VolunteeredDTTM')
+			 ->required_fields('UserID', 'Hours', 'Description', 'SubmissionDTTM', 'VolunteeredDTTM')
+			 ->change_field_type('UserID', 'hidden', user_id())
+			 ->change_field_type('SubmissionDTTM', 'hidden', date('Y-m-d H:i:s', time()))
+			 ->unset_edit()
+			 ->unset_delete();
+		
+		$crud->where('UserID', user_id());
+		
+		$crud->set_rules('Hours','Hours','numeric|less_than[' . $max_hours . ']');
+		$crud->set_rules('Description', 'required');
+		
+		$this->data['preGrid'] = "<style type=\"text/css\"> h2 {text-align:center} </style><h2>Volunter Log Management</h2>";
+		
+        $output = $crud->render();
+		$this->load->view('templates/header', $this->data);
+		
 		$this->load->view('templates/grid', $output);
 		$this->load->view('templates/footer');
 	}

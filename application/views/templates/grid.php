@@ -7,8 +7,17 @@ foreach($css_files as $file): ?>
     <script src="<?php echo $file; ?>"></script>
 <?php endforeach; ?>
 
+<?php 
+	if (isset($preGrid))
+		echo $preGrid
+?>
+
 <?php echo $output; ?>
-	
+
+<?php 
+	if (isset($postGrid))
+		echo $postGrid
+?>	
 
 
 

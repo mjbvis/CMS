@@ -9,19 +9,19 @@
 <table border="0">
 	<tr valign="top">
 		<td colspan="2">
-			<strong>Notifications</strong>
+			<h3>Notifications</h3>
 			<IFRAME SRC=<?php echo base_url('admin/notificationGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 	</tr>
 	<tr>
 		<td valign="top" width="400">
-			<strong><a href="<?php echo base_url('admin/waitlist'); ?>">Waitlist</a></strong>
+			<h3><a href="<?php echo base_url('admin/waitlist'); ?>">Waitlist</a></h3>
 			<IFRAME SRC=<?php echo base_url('admin/waitlistGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
-			<strong><a href="<?php echo base_url('admin/waitlist'); ?>">Pre-Enrolled List</a></strong>
+			<h3><a href="<?php echo base_url('admin/waitlist'); ?>">Pre-Enrolled List</a></h3>
 			<IFRAME SRC=<?php echo base_url('admin/preEnrolledGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 		<td >
-			<strong><a href="<?php echo base_url('admin/manageVolunteerLogs'); ?>">Recent Volunteer Activity</a></strong>
+			<h3><a href="<?php echo base_url('admin/manageVolunteerLogs'); ?>">Recent Volunteer Activity</a></h3>
 			<IFRAME SRC=<?php echo base_url('admin/volunteerLogGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 	</tr>
@@ -30,7 +30,7 @@
 <table>
 	<tr>
 		<td width=100% valign="top">
-			<strong><a href="<?php echo base_url('admin/prospectManagement'); ?>">Prospect Information</a></strong>
+			<h3><a href="<?php echo base_url('admin/prospectManagement'); ?>">Prospect Information</a></h3>
 			<IFRAME SRC=<?php echo base_url('admin/prospectGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 	</tr>

@@ -9,17 +9,17 @@
 <table border="0">
 	<tr>
 		<td valign="top">
-			<strong>Notifications</strong>
+			<h3>Notifications</h3>
 			<IFRAME SRC=<?php echo base_url('parents/notificationGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
-			<strong>Volunteer Logging</strong>
+			<h3><a href="<?php echo base_url('parents/manageMyVolunteerActivity'); ?>">Volunteer Log</a></h3>
 			<IFRAME SRC=<?php echo base_url('parents/volunteeringGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 		<td valign="top" width="400">
-			<strong><a href="<?php echo base_url('admissions/waitlistQuestionaire'); ?>">Waitlisted</a></strong>
+			<h3><a href="<?php echo base_url('admissions/waitlistQuestionaire'); ?>">Waitlisted</a></h3>
 			<IFRAME SRC=<?php echo base_url('parents/waitlistGrid');?>  class="autoHeight" frameborder="0"></IFRAME>
-			<strong><a href="<?php echo base_url('admissions/registerStudentSelector'); ?>">Pre-Enrolled</a></strong>
+			<h3><a href="<?php echo base_url('admissions/registerStudentSelector'); ?>">Pre-Enrolled</a></h3>
 			<IFRAME SRC=<?php echo base_url('parents/preEnrolledGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
-			<strong><a href="<?php echo base_url('parents/manageMyStudents'); ?>">Registered</a></strong>
+			<h3><a href="<?php echo base_url('parents/manageMyStudents'); ?>">Registered</a></h3>
 			<IFRAME SRC=<?php echo base_url('parents/registeredGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 	</tr>

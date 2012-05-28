@@ -71,6 +71,8 @@ class Admin extends Application{
 			 ->unset_delete();
 			 
 		$output = $crud->render();
+		
+		$this->data['preGrid'] = "<style type=\"text/css\"> h2 {text-align:center} </style><h2>Student Record Management</h2>";
 				
 		$this->load->view('templates/header', $this->data);		
 		$this->load->view('templates/grid', $output);
@@ -174,6 +176,9 @@ class Admin extends Application{
 		$crud->callback_before_insert(array($this,'encrypt_password_callback'));
 		
     	$output = $crud->render();
+		
+		$this->data['preGrid'] = "<style type=\"text/css\"> h2 {text-align:center} </style><h2>Account Management</h2>";
+		
 		$this->load->view('templates/header', $this->data);		
 		$this->load->view('templates/grid', $output);
 		$this->load->view('templates/footer');
@@ -719,6 +724,9 @@ class Admin extends Application{
 		$crud->set_table('Tuition');
 
         $output = $crud->render();
+		
+		$this->data['preGrid'] = "<style type=\"text/css\"> h2 {text-align:center} </style><h2>Tuition Management</h2>";
+		
 		$this->load->view('templates/header', $this->data);
 		$this->load->view('templates/grid', $output);
 		$this->load->view('templates/footer');
@@ -730,6 +738,9 @@ class Admin extends Application{
 			->set_relation('UserID', 'users', 'username');
 
         $output = $crud->render();
+		
+		$this->data['preGrid'] = "<style type=\"text/css\"> h2 {text-align:center} </style><h2>Volunter Log Management</h2>";
+		
 		$this->load->view('templates/header', $this->data);
 		$this->load->view('templates/grid', $output);
 		$this->load->view('templates/footer');
@@ -740,6 +751,9 @@ class Admin extends Application{
 		$crud->set_table('ProspectInterview');
 
         $output = $crud->render();
+		
+		$this->data['preGrid'] = "<style type=\"text/css\"> h2 {text-align:center} </style><h2>Prospect Management</h2>";
+		
 		$this->load->view('templates/header', $this->data);
 		$this->load->view('templates/grid', $output);
 		$this->load->view('templates/footer');
