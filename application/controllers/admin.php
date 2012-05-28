@@ -254,6 +254,18 @@ class Admin extends Application{
 		
 		$this->load->view('templates/grid', $output);
 	}
+	
+		function prospectGrid() {
+
+		$crud = new grocery_CRUD();
+		$crud->set_table('ProspectInterview')
+			->columns('ParentNames', 'ChildrenNamesAges', 'PhoneNumber' ,'Email')
+			->unset_operations();
+			 
+        $output = $crud->render();
+		
+		$this->load->view('templates/grid', $output);
+	}
 	// end grids for dashboard
 	
 	# Callback Add Field for the SubmissionDTTM.
@@ -716,6 +728,16 @@ class Admin extends Application{
 		$crud = new grocery_CRUD();
 		$crud->set_table('VolunteerLogEntry')
 			->set_relation('UserID', 'users', 'username');
+
+        $output = $crud->render();
+		$this->load->view('templates/header', $this->data);
+		$this->load->view('templates/grid', $output);
+		$this->load->view('templates/footer');
+	}
+	
+	function prospectManagement(){
+		$crud = new grocery_CRUD();
+		$crud->set_table('ProspectInterview');
 
         $output = $crud->render();
 		$this->load->view('templates/header', $this->data);

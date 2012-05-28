@@ -15,13 +15,13 @@
 	</tr>
 	<tr>
 		<td valign="top" width="400">
-			<strong>Waitlist</strong>
+			<strong><a href="<?php echo base_url('admin/waitlist'); ?>">Waitlist</a></strong>
 			<IFRAME SRC=<?php echo base_url('admin/waitlistGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
-			<strong>Pre-Enrolled List</strong>
+			<strong><a href="<?php echo base_url('admin/waitlist'); ?>">Pre-Enrolled List</a></strong>
 			<IFRAME SRC=<?php echo base_url('admin/preEnrolledGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 		<td >
-			<strong>Recent Volunteer Activity</strong>
+			<strong><a href="<?php echo base_url('admin/manageVolunteerLogs'); ?>">Recent Volunteer Activity</a></strong>
 			<IFRAME SRC=<?php echo base_url('admin/volunteerLogGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 	</tr>
@@ -29,14 +29,9 @@
 
 <table>
 	<tr>
-		<td width=50% valign="top">
-			<strong>Prospect Information</strong>
-			<IFRAME SRC=<?php echo base_url('admin/volunteerLogGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
-		</td>
-		
-		<td width=50% valign="top">
-			<strong>Recent Donation Activity</strong>
-			<IFRAME SRC=<?php echo base_url('admin/volunteerLogGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
+		<td width=100% valign="top">
+			<strong><a href="<?php echo base_url('admin/prospectManagement'); ?>">Prospect Information</a></strong>
+			<IFRAME SRC=<?php echo base_url('admin/prospectGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 	</tr>
 </table>
