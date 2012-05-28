@@ -349,7 +349,7 @@ class Admin extends Application{
 		} else {
 			// display the interview observation form
 			$this->load->view('templates/header', $this->data);  
-        	$this->load->view('templates/grid', $viewData);
+        	$this->load->view('admin/register/interview_observation', $viewData);
         	$this->load->view('templates/footer');
 		}
 	}
@@ -699,6 +699,26 @@ class Admin extends Application{
 	
 	mail($to, $subject, $body, implode("\r\n", $headers));
 			
+	}
+	
+	function manageTuition(){
+		$crud = new grocery_CRUD();
+		$crud->set_table('Tuition');
+
+        $output = $crud->render();
+		$this->load->view('templates/header', $this->data);
+		$this->load->view('templates/grid', $output);
+		$this->load->view('templates/footer');
+	}
+	
+	function manageVolunteerLogs(){
+		$crud = new grocery_CRUD();
+		$crud->set_table('Tuition');
+
+        $output = $crud->render();
+		$this->load->view('templates/header', $this->data);
+		$this->load->view('templates/grid', $output);
+		$this->load->view('templates/footer');
 	}
 
 }
