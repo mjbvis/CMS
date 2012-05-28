@@ -162,7 +162,8 @@ Class Parents extends Application {
 		$crud->set_table('Student')
 	         ->columns('FirstName', 'LastName')
 			 ->display_as('FirstName', 'First')
-			 ->display_as('LastName', 'Last');
+			 ->display_as('LastName', 'Last')
+			 ->unset_add();
 			 
 		// make sure that the child is only considered registered after they have filled out their
 		// StudentMedicalInformation form.
