@@ -110,11 +110,12 @@ Class Parents extends Application {
 		
 		$crud = new grocery_CRUD();
 		$crud->set_table('VolunteerLogEntry')
-	         ->columns('SubmissionDTTM', 'Hours', 'Description')
+	         ->columns('SubmissionDTTM', 'Hours', 'Description', 'VolunteeredDTTM')
 			 ->display_as('SubmissionDTTM', 'Date/Time')
+			 ->display_as('VolunteeredDTTM', 'Date of Activity')
 			 ->display_as('Description', 'Task')
-			 ->add_fields('UserID', 'Hours', 'Description', 'SubmissionDTTM')
-			 ->required_fields('UserID', 'Hours', 'Description', 'SubmissionDTTM')
+			 ->add_fields('UserID', 'Hours', 'Description', 'SubmissionDTTM', 'VolunteeredDTTM')
+			 ->required_fields('UserID', 'Hours', 'Description', 'SubmissionDTTM', 'VolunteeredDTTM')
 			 ->change_field_type('UserID', 'hidden', user_id())
 			 ->change_field_type('SubmissionDTTM', 'hidden', date('Y-m-d H:i:s', time()))
 			 ->unset_edit()

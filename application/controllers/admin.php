@@ -713,7 +713,8 @@ class Admin extends Application{
 	
 	function manageVolunteerLogs(){
 		$crud = new grocery_CRUD();
-		$crud->set_table('Tuition');
+		$crud->set_table('VolunteerLogEntry')
+			->set_relation('UserID', 'users', 'username');
 
         $output = $crud->render();
 		$this->load->view('templates/header', $this->data);
