@@ -13,7 +13,7 @@ class User extends ActiveRecord\Model
 		'UserName' => 'username',
 		'Email' => 'email',
 		'Password' => 'password',
-		'GroupIdString' => 'group_id',
+		'groupid' => 'group_id',
 		'Token' => 'token',
 		'Idenifier' => 'identifier',
 		'LastLoginDTTM' => 'LastLoginDTTM',

@@ -33,6 +33,7 @@ class Admin extends Application{
 				
 		//* load views */
 		$this->load->view('templates/header', $this->data);		
+		$this->load->view('templates/fancybox_dependencies');
 		$this->load->view('admin/dashboard');
 		$this->load->view('templates/footer');
 			
@@ -146,28 +147,33 @@ class Admin extends Application{
 		$this->load->view('templates/grid', $output);
 	}
 	
-	# The grocery crud for the current user's notifications. This grid is dedicated
+	# The grocery crud for the current admin's notifications. This grid is dedicated
 	# for viewing. Adds, Edits, and Deletes should not be allowed.
-	function notificationGrid() {
-
+	function notificationGrid() {		 
 		$crud = new grocery_CRUD();
-		$crud->set_table('Notifications')
-			 ->set_relation('NotificationID', 'UserNotifications', 'UserID')
-	         ->columns('Description')
-			 ->display_as('NotificationID', 'UserID')
-			 ->callback_column('Description', array($this, 'get_notification_URL'))
+		$crud->set_table('UserNotifications')
+			 ->set_relation('NotificationID', 'Notifications', 'Description')
+			 ->columns('UrlParam')
+			 ->display_as('UrlParam', 'Description')
+			 ->callback_column('UrlParam', array($this, 'get_notification_URL'))
 			 ->unset_operations();
 			 
 		$crud->where('UserID', user_id());
 
         $output = $crud->render();
-		
-		//$this->output->enable_profiler(TRUE);//Turns on CI debugging
-		
+
 		$this->load->view('templates/grid', $output);
 	}
 	
-		function prospectGrid() {
+	# Callback Column for notifications.
+	# We want to construct a link so that the user can click it to resolve the notification.
+	function get_notification_URL($value, $row) {
+		$notification = Notifications::find_by_notificationid($row->NotificationID);
+		$NotificationAttr = $notification->attributes();
+		return '<a id="fancyframe" href="' . base_url($NotificationAttr['url'] . $row->UrlParam) . '" target="_blank">' . $NotificationAttr['description'] . $row->AdditionalInfo . '</a>';
+	}
+	
+	function prospectGrid() {
 
 		$crud = new grocery_CRUD();
 		$crud->set_table('ProspectInterview')
@@ -179,13 +185,6 @@ class Admin extends Application{
 		$this->load->view('templates/grid', $output);
 	}
 	// end grids for dashboard
-	
-	# Callback Add Field for the SubmissionDTTM.
-	# We want a the SubmissionDTTM to be readonly and set to the current datetime.
-	# This function adds the SubmissionDTTM to the add form of a grocery crud.
-	function get_notification_URL($value, $row) {
-		return '<a href="' . base_url($row->URL) . '" target="_blank">' . $row->Description . '</a>';
-	}
 	
 	// this function is for creating a new account for parents
 	function addParentUserAccount(){

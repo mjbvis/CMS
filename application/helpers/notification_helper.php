@@ -29,7 +29,10 @@
 				set($userID, medicalInformationID, $urlParam, $additionalInfo);
 				break;
 			case "registrationComplete":
-				set($userID, registrationCompleteID, $urlParam, $additionalInfo);
+				// send this notification to the admin user
+				$admin = User::find_by_groupid(1);
+				$adminAttr = $admin->attributes();
+				set($adminAttr['id'], registrationCompleteID, $urlParam, $additionalInfo);
 				break;
 		}
 	}
@@ -46,6 +49,7 @@
 				delete($userID, medicalInformationID, $urlParam);
 				break;
 			case "registrationComplete":
+				// this user should always be the admin user
 				delete($userID, registrationCompleteID, $urlParam);
 				break;
 		}		

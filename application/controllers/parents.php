@@ -30,6 +30,7 @@ Class Parents extends Application {
 		{
 			/* load views */
 			$this->load->view('templates/header', $this->data);
+			$this->load->view('templates/fancybox_dependencies');
 			$this->load->view('parents/dashboard', $this->data);
 			$this->load->view('templates/footer');
 		}
@@ -139,7 +140,7 @@ Class Parents extends Application {
 	function get_notification_URL($value, $row) {
 		$notification = Notifications::find_by_notificationid($row->NotificationID);
 		$NotificationAttr = $notification->attributes();
-		return '<a href="' . base_url($NotificationAttr['url'] . $row->UrlParam) . '" target="_blank">' . $NotificationAttr['description'] . $row->AdditionalInfo . '</a>';
+		return '<a id="fancyframe" href="' . base_url($NotificationAttr['url'] . $row->UrlParam) . '" target="_blank">' . $NotificationAttr['description'] . $row->AdditionalInfo . '</a>';
 	}
 	
 	function manageMyStudents(){
