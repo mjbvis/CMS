@@ -38,7 +38,7 @@ class Record_management extends Application{
 		$crud->set_table('Student')
 			 
 			 // set up 1-n relations
-			 ->set_relation('UserID', 'users', 'username')
+			 //->set_relation('UserID', 'users', 'username')
 			 ->set_relation('ClassID', 'Classroom', 'ClassName', array('Enabled' => '1'))
 			 ->set_relation('ProgramID', 'Program', '{AcademicYear} {Title}', array('Enabled' => '1'))
 			 ->set_relation('IsEnrolled','BinaryLookup','EnrolledPreenrolled')
@@ -55,8 +55,7 @@ class Record_management extends Application{
 			 			 
 			 // callbacks for the edit pages
 			 ->callback_edit_field('UserID', array($this, 'getUsernameFromID'))
-			 //->callback_edit_field('ProgramID', array($this, 'getProgramTitle'))
-			 			
+			 			 			
 			 ->display_as('UserID', 'Username')
 			 ->display_as('ClassID', 'Classroom')
 			 ->display_as('PhoneNumber', 'Phone')
@@ -86,14 +85,22 @@ class Record_management extends Application{
 		$crud = new grocery_CRUD();
 		
 		$crud->set_table('users')
-			->columns('username', 'email', 'password', 'group_id', 'Enabled', 'HasChangedPassword');
-		
-		$crud->fields('username', 'email', 'password', 'group_id', 'Enabled', 'HasChangedPassword');
-		$crud->required_fields('username', 'email', 'password', 'group_id', 'Enabled', 'HasChangedPassword');
-		
-		//$crud->change_field_type('password', 'password');
-     	$crud->callback_before_update(array($this,'encrypt_password_callback'));
-		$crud->callback_before_insert(array($this,'encrypt_password_callback'));
+			->columns('username', 'email', 'password', 'group_id', 'Enabled', 'HasChangedPassword')
+			->fields('username', 'email', 'password', 'group_id', 'Enabled', 'HasChangedPassword')
+			->required_fields('username', 'email', 'password', 'group_id', 'Enabled', 'HasChangedPassword')
+			
+			->set_relation('Enabled','BinaryLookup','EnabledDisabled')
+			->set_relation('HasChangedPassword','BinaryLookup','YesNo')
+			
+			// callbacks for the edit pages
+			->callback_edit_field('group_id', array($this, 'getAccountType'))
+			
+			->display_as('group_id', 'Account Type')
+			->display_as('Enabled', 'Account Status')
+			->display_as('HasChangedPassword', 'Changed Password')
+			
+			->change_field_type('password', 'readonly')
+			->unset_add();
 		
     	$output = $crud->render();
 		
@@ -110,7 +117,11 @@ class Record_management extends Application{
 			->set_relation('AcademicLevelID', 'AcademicLevel', 'AcademicLevelName')
 			->set_relation('Enabled', 'BinaryLookup', 'EnabledDisabled')
 			
-			->display_as('Enabled', 'Program Status');
+			->display_as('Enabled', 'Program Status')
+			->display_as('AcademicYear', 'Academic Year')
+			->display_as('AcademicLevelID', 'Academic Level')
+			->display_as('StartTime', 'Start Time')
+			->display_as('EndTime', 'End Time');
 
         $output = $crud->render();
 		
@@ -124,7 +135,13 @@ class Record_management extends Application{
 	function manageVolunteerLogs(){
 		$crud = new grocery_CRUD();
 		$crud->set_table('VolunteerLogEntry')
-			->set_relation('UserID', 'users', 'username');
+			->set_relation('UserID', 'users', 'username')
+			->display_as('UserID','Username')
+			->display_as('SubmissionDTTM','Date Submitted')
+			->display_as('VolunteeredDTTM','Date of Activity')
+			->change_field_type('UserID', 'readonly')
+			
+			->callback_edit_field('UserID', array($this, 'getUsernameFromID'));
 
         $output = $crud->render();
 		
@@ -137,7 +154,12 @@ class Record_management extends Application{
 	
 	function manageProspects(){
 		$crud = new grocery_CRUD();
-		$crud->set_table('ProspectInterview');
+		$crud->set_table('ProspectInterview')
+			->columns('ParentNames', 'ChildrenNamesAges', 'FirstContactedDTTM', 'VisitDTTM', 'PhoneNumber', 'Email', 'AppReceivedDTTM', 'FeeReceivedDTTM', 'LevelOfInterest')
+			
+			
+			->change_field_type('ParentNames', 'text')
+			->change_field_type('ChildrenNamesAges', 'text');
 
         $output = $crud->render();
 		
@@ -157,6 +179,13 @@ class Record_management extends Application{
 		$userAttr = $user->attributes();
 		
 		return $userAttr['username'];
+	}
+	
+	function getAccountType($value, $row){
+		$type = Group::find_by_id($value);
+		$typeAttr = $type->attributes();
+		
+		return $typeAttr['title'];
 	}
 	
 	# Callback Column for generating links to the student's Medical Information.

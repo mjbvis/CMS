@@ -25,8 +25,6 @@ if (!function_exists('isset_not_empty')) {
 		<link rel="icon" type="image/x-icon" href="<?php echo base_url('favicon.ico');?>" />
 		<link rel="stylesheet" href="<?php echo base_url('assets/styles/screen.css');?>" type="text/css" media="screen" />
 		<link rel="stylesheet" href="<?php echo base_url('assets/styles/forms/screen.css');?>" type="text/css" media="screen" />
-		
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 		<script type="text/javascript" src="assets/js/jquery.autoheight.js"></script>
 		
 	</head>
