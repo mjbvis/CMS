@@ -20,5 +20,11 @@ class Parental extends ActiveRecord\Model
 		'UDTTM' => 'UDTTM');
 }
 	
+	static $belongs_to = array(
+		array('user'
+			 ,'class_name' => 'User'
+			 ,'foreign_key' => 'userid'
+			 ,'primary_key' => 'userid')
+		);
 	
 ?>

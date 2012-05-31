@@ -25,9 +25,14 @@ class User extends ActiveRecord\Model
 		array('waitlist_forms'
 			 ,'class_name' => 'Waitlist_form'
 			 ,'foreign_key' => 'userid'
-			 ,'primary_key' => 'id')
+			 ,'primary_key' => 'id'),
+ 		array('parents'
+			 ,'class_name' => 'Parental'
+			 ,'foreign_key' => 'userid'
+			 ,'primary_key' => 'userid'
+			 )
 		);
 }
-	
+
 	
 ?>
