@@ -40,9 +40,10 @@ class Record_management extends Application{
 			 // set up 1-n relations
 			 ->set_relation('UserID', 'users', 'username')
 			 ->set_relation('ClassID', 'Classroom', 'ClassName', array('Enabled' => '1'))
-			 ->set_relation('ProgramID', 'Program', '{Days}, {StartTime} - {EndTime}')
-			 ->set_relation('IsEnrolled','BinaryLookup','EnrolledPreenrolled')			 
-			
+			 ->set_relation('ProgramID', 'Program', '{AcademicYear} {Title}', array('Enabled' => '1'))
+			 ->set_relation('IsEnrolled','BinaryLookup','EnrolledPreenrolled')
+			 
+			 
 			// columns for main screen (not the edit screen)
 			 ->columns('FirstName', 'LastName', 'ClassID', 'Emergency Contact Info', 'PhoneNumber', 'Medical Information', 'Admissions Form', 'Waitlist Questionaire', 'IsEnrolled')
 			
@@ -51,9 +52,10 @@ class Record_management extends Application{
 			 ->callback_column('Admissions Form', array($this, 'getAdmissionsFormLink'))
 			 ->callback_column('Waitlist Questionaire', array($this, 'getWaitlistQuestionaireLink'))
 			 ->callback_column('Emergency Contact Info', array($this, 'getEmergencyContactInfo'))
-			 
+			 			 
 			 // callbacks for the edit pages
 			 ->callback_edit_field('UserID', array($this, 'getUsernameFromID'))
+			 //->callback_edit_field('ProgramID', array($this, 'getProgramTitle'))
 			 			
 			 ->display_as('UserID', 'Username')
 			 ->display_as('ClassID', 'Classroom')
