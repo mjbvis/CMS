@@ -154,12 +154,66 @@ class Record_management extends Application{
 	
 	function manageProspects(){
 		$crud = new grocery_CRUD();
-		$crud->set_table('ProspectInterview')
-			->columns('ParentNames', 'ChildrenNamesAges', 'FirstContactedDTTM', 'VisitDTTM', 'PhoneNumber', 'Email', 'AppReceivedDTTM', 'FeeReceivedDTTM', 'LevelOfInterest')
+		$crud->set_table('ProspectInterview');
+		
+		//set columns for main screen
+		$crud->columns('ParentNames', 'ChildrenNamesAges', 'FirstContactedDTTM', 'VisitDTTM', 'PhoneNumber', 'Email', 'AppReceivedDTTM', 'FeeReceivedDTTM', 'LevelOfInterest', 'ClassID');	
 			
+		//set up relationships
+		$crud->set_relation('ClassID','Classroom','ClassName')
+			->set_relation('IsLearningIndependently','BinaryLookup','YesNo')
+			->set_relation('IsLearningAtOwnPace','BinaryLookup','YesNo')
+			->set_relation('IsHandsOnLearner','BinaryLookup','YesNo')
+			->set_relation('IsMixedAges','BinaryLookup','YesNo')
+			->set_relation('WebSearchRef','BinaryLookup','YesNo')
+			->set_relation('CMSFamilyRef','BinaryLookup','YesNo')
+			->set_relation('FriendsRef','BinaryLookup','YesNo')
+			->set_relation('AdRef','BinaryLookup','YesNo')
+			->set_relation('OtherRef','BinaryLookup','YesNo')
+			->set_relation('OnTimeToObservation','BinaryLookup','YesNo')
+			->set_relation('AttendedObservation','BinaryLookup','YesNo');
+		
+		
+		// set up the aliases from column names to desired output
+		$crud->display_as('ParentNames','Parent Names')
+			->display_as('ChildrenNamesAges','Children Names and Ages')
+			->display_as('FirstContactedDTTM','Date First Contacted')
+			->display_as('VisitDTTM','Date Visited')
+			->display_as('InterviewDTTM','Date Interviewed')
+			->display_as('PhoneNumber','Phone Number')
+			->display_as('MontessoriImpressions','Montessori Impressions')
+			->display_as('InterviewImpressions','Interview Impressions')
+			->display_as('LevelOfInterest','Level Of Interest')
+			->display_as('LevelOfUnderstanding','Level Of Understanding')
+			->display_as('WillingnessToLearn','Willingness To Learn')
+			->display_as('IsLearningIndependently','Learns Independently')
+			->display_as('IsLearningAtOwnPace','Learns At Own Pace')
+			->display_as('IsHandsOnLearner','Hands On Learner')
+			->display_as('IsMixedAges','Mixed Ages')
+			->display_as('WebSearchRef','Heard of CMS from Web Search')
+			->display_as('CMSFamilyRef','Heard of CMS from Family')
+			->display_as('FriendsRef','Heard of CMS from Friend')
+			->display_as('AdRef','Heard of CMS from Advertisment')
+			->display_as('AdRefNote','Advertisment Note')
+			->display_as('OtherRef','Heard of CMS from Other')
+			->display_as('OtherRefNote','Other Note')
+			->display_as('NewCityState','New City State')
+			->display_as('NewSchool','New School')
+			->display_as('ObservationDTTM','Date of Observation')
+			->display_as('ClassID','Desired Classroom')
+			->display_as('AttendedObservation','Attended Observation')
+			->display_as('OnTimeToObservation','Was On Time To Observation')
+			->display_as('AppReceivedDTTM','Date Application Received')
+			->display_as('FeeReceivedDTTM','Date Fee Received');
 			
-			->change_field_type('ParentNames', 'text')
-			->change_field_type('ChildrenNamesAges', 'text');
+			// force field types
+			$crud->change_field_type('ParentNames', 'text')
+				->change_field_type('ChildrenNamesAges', 'text')
+				->change_field_type('MontessoriImpressions', 'text')
+				->change_field_type('InterviewImpressions', 'text')
+				->change_field_type('LevelOfInterest', 'enum', array('Low','Medium','High'))
+				->change_field_type('LevelOfUnderstanding', 'enum', array('Little','Average','High'))
+				->change_field_type('WillingnessToLearn', 'enum', array('Low','Medium','High'));
 
         $output = $crud->render();
 		
