@@ -250,10 +250,11 @@ class Record_management extends Application{
 	
 	function ManageMedicalInformation($studentID) {
 		$crud = new grocery_CRUD();
-		$crud->set_table('StudentMedicalInformation')
-	         ->change_field_type('StudentID', 'hidden', $studentID);
-		$crud->where('StudentID', $studentID);
+		$crud->set_table('StudentMedicalInformation');
+	    $crud->where('StudentID', $studentID);
 		$crud->unset_list();
+		
+		$crud->callback_edit_field('StudentID', array($this, 'getnameFromStudentID'));
 		
 		// TODO: fix validation.
 		$crud->required_fields('PreferredHospital', 'HospitalPhone', 'Physician', 'PhysicianPhone', 'Dentist', 'DentistPhone');
@@ -262,12 +263,16 @@ class Record_management extends Application{
 		$crud->set_rules('DentistPhone','Dentist Phone','min_length[12]');
 		
 		$crud->display_as('PreferredHospital', 'Preferred Hospital')
+			->display_as('StudentID', 'Name')
 			->display_as('HospitalPhone', 'Hospital Phone')
 			->display_as('PhysicianPhone', 'Physician Phone')
 			->display_as('DentistPhone', 'Dentist Phone')
 			->display_as('MedicalConditions', 'Medical Conditions')
 			->display_as('InsuranceCompany ', 'Insurance Company')
 			->display_as('CertificateNumber', 'Certificate Number');
+			
+		$crud->change_field_type('MedicalConditions', 'text')
+			->change_field_type('Allergies', 'text');
 		
 		
 		$output = $crud->render();
@@ -277,22 +282,31 @@ class Record_management extends Application{
 
 	function manageAdmissionsForm($studentID) {
 		$crud = new grocery_CRUD();
-		$crud->set_table('AdmissionsForm')
-	         ->change_field_type('StudentID', 'hidden', $studentID);
-		$crud->where('StudentID', $studentID);
+		$crud->set_table('AdmissionsForm');
+	    $crud->where('StudentID', $studentID);
 		$crud->unset_list();
 		
-		// TODO: add validation
+		$crud->callback_edit_field('StudentID', array($this, 'getnameFromStudentID'));
 		
+		// set up aliases	
 		$crud->display_as('SchoolExperience','School Experience')
 			->display_as('SocialExperience','Social Experience')
 			->display_as('ComfortMethods','Comfort Methods')
 			->display_as('NapTime','Nap Time')
+			->display_as('StudentID','Name')
 			->display_as('OutdoorPlay', 'Outdoor Play')
 			->display_as('SiblingNames','Sibling Names')
 			->display_as('SiblingAges','Sibling Ages')
 			->display_as('ReferrerType','Referrer Type')
 			->display_as('ReferredBy','Referred By');
+		
+		$crud->change_field_type('SchoolExperience', 'enum', array('yes','no'))
+			->change_field_type('SocialExperience', 'enum', array('yes','no'))
+			->change_field_type('ComfortMethods', 'enum', array('yes','no'))
+			->change_field_type('Toilet', 'enum', array('yes','no'))
+			->change_field_type('NapTime', 'enum', array('yes','no'))
+			->change_field_type('OutdoorPlay', 'enum', array('yes','no'))
+			->change_field_type('notes', 'text');
 		
 		$output = $crud->render();
 				
@@ -308,6 +322,15 @@ class Record_management extends Application{
 		$userAttr = $user->attributes();
 		
 		return $userAttr['username'];
+	}
+	
+	function getnameFromStudentID($value, $row){
+		$name = Student::find_by_studentid($value);
+		$nameAttr = $name->attributes();
+		
+		$string = $nameAttr['firstname'] . ' ' . $nameAttr['lastname'];
+		
+		return $string;
 	}
 	
 	function getAccountType($value, $row){

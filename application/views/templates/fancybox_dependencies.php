@@ -21,7 +21,7 @@
 	$('.fancyframe').fancybox({
 	 'type':'iframe',
 	 'width': 800, //or whatever you want
-	 'height': 600
+	 'height': 10000
 	});
 
 </script>
