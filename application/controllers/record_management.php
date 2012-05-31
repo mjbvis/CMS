@@ -54,7 +54,14 @@ class Record_management extends Application{
 			 			 
 			 // callbacks for the edit pages
 			 ->callback_edit_field('UserID', array($this, 'getUsernameFromID'))
-			 			 			
+			 
+			 // setup display alliases
+			 ->display_as('FirstName', 'First Name')
+			 ->display_as('MiddleName', 'Middle Name')	
+			 ->display_as('LastName', 'Last Name')
+			 ->display_as('PlaceOfBirth', 'Place Of Birth')
+			 ->display_as('DOB', 'Date of Birth')
+			 ->display_as('EnrollmentDTTM', 'Date Of Enrollment')				 			
 			 ->display_as('UserID', 'Username')
 			 ->display_as('ClassID', 'Classroom')
 			 ->display_as('PhoneNumber', 'Phone')
@@ -63,6 +70,7 @@ class Record_management extends Application{
 			 ->display_as('EmergencyContactID1', 'Emergency Contact 1')
 			 ->display_as('IsEnrolled', 'Enrollment Status')
 			
+			// force types
 			 ->change_field_type('UserID', 'readonly')
 			 ->change_field_type('Gender', 'enum', array('M','F'))
 			 ->change_field_type('UDTTM', 'hidden', date('Y-m-d H:i:s', time()))
@@ -75,7 +83,8 @@ class Record_management extends Application{
 		
 		$this->data['preGrid'] = "<style type=\"text/css\"> h2 {text-align:center} </style><h2>Student Record Management</h2>";
 				
-		$this->load->view('templates/header', $this->data);		
+		$this->load->view('templates/header', $this->data);
+		$this->load->view('templates/fancybox_dependencies');	
 		$this->load->view('templates/grid', $output);
 		$this->load->view('templates/footer');
 	}
@@ -239,6 +248,57 @@ class Record_management extends Application{
 		$this->load->view('templates/footer');
 	}
 	
+	function ManageMedicalInformation($studentID) {
+		$crud = new grocery_CRUD();
+		$crud->set_table('StudentMedicalInformation')
+	         ->change_field_type('StudentID', 'hidden', $studentID);
+		$crud->where('StudentID', $studentID);
+		$crud->unset_list();
+		
+		// TODO: fix validation.
+		$crud->required_fields('PreferredHospital', 'HospitalPhone', 'Physician', 'PhysicianPhone', 'Dentist', 'DentistPhone');
+		$crud->set_rules('HospitalPhone','Hospital Phone','min_length[12]');
+		$crud->set_rules('PhysicianPhone','Physician Phone','min_length[12]');
+		$crud->set_rules('DentistPhone','Dentist Phone','min_length[12]');
+		
+		$crud->display_as('PreferredHospital', 'Preferred Hospital')
+			->display_as('HospitalPhone', 'Hospital Phone')
+			->display_as('PhysicianPhone', 'Physician Phone')
+			->display_as('DentistPhone', 'Dentist Phone')
+			->display_as('MedicalConditions', 'Medical Conditions')
+			->display_as('InsuranceCompany ', 'Insurance Company')
+			->display_as('CertificateNumber', 'Certificate Number');
+		
+		
+		$output = $crud->render();
+				
+		$this->load->view('templates/grid', $output);
+	}
+
+	function manageAdmissionsForm($studentID) {
+		$crud = new grocery_CRUD();
+		$crud->set_table('AdmissionsForm')
+	         ->change_field_type('StudentID', 'hidden', $studentID);
+		$crud->where('StudentID', $studentID);
+		$crud->unset_list();
+		
+		// TODO: add validation
+		
+		$crud->display_as('SchoolExperience','School Experience')
+			->display_as('SocialExperience','Social Experience')
+			->display_as('ComfortMethods','Comfort Methods')
+			->display_as('NapTime','Nap Time')
+			->display_as('OutdoorPlay', 'Outdoor Play')
+			->display_as('SiblingNames','Sibling Names')
+			->display_as('SiblingAges','Sibling Ages')
+			->display_as('ReferrerType','Referrer Type')
+			->display_as('ReferredBy','Referred By');
+		
+		$output = $crud->render();
+				
+		$this->load->view('templates/grid', $output);
+	}
+	
 	function getEmergencyContactInfo(){
 		
 	}
@@ -261,7 +321,7 @@ class Record_management extends Application{
 	function getMedicalInformationLink($value, $row) {
 		$medInfo = Student_medical::find_by_studentid($row->StudentID);
 		if ($medInfo != null || !empty($medInfo)) {
-			return '<a href="' . base_url('admin/medicalInformationGrid/edit/' . $row->StudentID) . '" target="_blank">' . 'Medical Information' . '</a>';
+			return '<a class=\'fancyframe\' href="' . base_url('record_management/manageMedicalInformation/edit/' . $row->StudentID) . '" target="_blank">' . 'Medical Information' . '</a>';
 		}
 		return;
 	}
@@ -270,7 +330,7 @@ class Record_management extends Application{
 	function getAdmissionsFormLink($value, $row) {
 		$form = Admissions_form::find_by_studentid($row->StudentID);
 		if ($form != null || !empty($form)) {
-			return '<a href="' . base_url('admin/admissionsFormGrid/edit/' . $row->StudentID) . '" target="_blank">' . 'Admissions Form' . '</a>';
+			return '<a class=\'fancyframe\' href="' . base_url('record_management/manageAdmissionsForm/edit/' . $row->StudentID) . '" target="_blank">' . 'Admissions Form' . '</a>';
 		}
 	}
 	
@@ -283,7 +343,7 @@ class Record_management extends Application{
 		$post_array['password'] = $this->ag_auth->salt($post_array['password']);
 		return $post_array;
 	}
-		
+			
 }
 	
 /* End of file: record_management.php */

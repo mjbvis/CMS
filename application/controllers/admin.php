@@ -43,61 +43,6 @@ class Admin extends Application{
 		}
 	}
 			
-	function medicalInformationGrid($studentID) {
-		$crud = new grocery_CRUD();
-		$crud->set_table('StudentMedicalInformation')
-	         ->change_field_type('StudentID', 'hidden', $studentID);
-		$crud->where('StudentID', $studentID);
-		$crud->unset_list();
-		
-		// TODO: fix validation.
-		$crud->required_fields('PreferredHospital', 'HospitalPhone', 'Physician', 'PhysicianPhone', 'Dentist', 'DentistPhone');
-		$crud->set_rules('HospitalPhone','Hospital Phone','min_length[12]');
-		$crud->set_rules('PhysicianPhone','Physician Phone','min_length[12]');
-		$crud->set_rules('DentistPhone','Dentist Phone','min_length[12]');
-		
-		$crud->display_as('PreferredHospital', 'Preferred Hospital')
-			->display_as('HospitalPhone', 'Hospital Phone')
-			->display_as('PhysicianPhone', 'Physician Phone')
-			->display_as('DentistPhone', 'Dentist Phone')
-			->display_as('MedicalConditions', 'Medical Conditions')
-			->display_as('InsuranceCompany ', 'Insurance Company')
-			->display_as('CertificateNumber', 'Certificate Number');
-		
-		
-		$output = $crud->render();
-				
-		$this->load->view('templates/header', $this->data);		
-		$this->load->view('templates/grid', $output);
-		$this->load->view('templates/footer');
-	}
-	
-	function admissionsFormGrid($studentID) {
-		$crud = new grocery_CRUD();
-		$crud->set_table('AdmissionsForm')
-	         ->change_field_type('StudentID', 'hidden', $studentID);
-		$crud->where('StudentID', $studentID);
-		$crud->unset_list();
-		
-		// TODO: add validation
-		
-		$crud->display_as('SchoolExperience','School Experience')
-			->display_as('SocialExperience','Social Experience')
-			->display_as('ComfortMethods','Comfort Methods')
-			->display_as('NapTime','Nap Time')
-			->display_as('OutdoorPlay', 'Outdoor Play')
-			->display_as('SiblingNames','Sibling Names')
-			->display_as('SiblingAges','Sibling Ages')
-			->display_as('ReferrerType','Referrer Type')
-			->display_as('ReferredBy','Referred By');
-		
-		$output = $crud->render();
-				
-		$this->load->view('templates/header', $this->data);		
-		$this->load->view('templates/grid', $output);
-		$this->load->view('templates/footer');
-	}
-	
 	// grids for the dashboard
 	function waitlistGrid(){
 			
