@@ -248,7 +248,7 @@ class Record_management extends Application{
 		$this->load->view('templates/footer');
 	}
 	
-	function ManageMedicalInformation($studentID) {
+	function manageMedicalInformation($studentID) {
 		$crud = new grocery_CRUD();
 		$crud->set_table('StudentMedicalInformation');
 	    $crud->where('StudentID', $studentID);
@@ -325,11 +325,35 @@ class Record_management extends Application{
 		//$crud->display_as('SchoolExperience','School Experience');
 			
 		// force fields
-		//$crud->change_field_type('SchoolExperience', 'enum', array('yes','no'));
+		$crud->change_field_type('notes', 'test');
 		
 		$output = $crud->render();
 				
 		$this->load->view('templates/grid', $output);
+	}
+	
+	function manageSubMenuItems(){
+		$crud = new grocery_CRUD();
+		$crud->set_table('SubItem')
+			->set_relation('MenuItemID', 'MenuItem', 'Label');
+			
+	    		
+		$output = $crud->render();
+				
+		$this->load->view('templates/header', $this->data);		
+		$this->load->view('templates/grid', $output);
+		$this->load->view('templates/footer');
+	}
+	
+	function manageParentMenuItems(){
+		$crud = new grocery_CRUD();
+		$crud->set_table('MenuItem');
+	    		
+		$output = $crud->render();
+				
+		$this->load->view('templates/header', $this->data);		
+		$this->load->view('templates/grid', $output);
+		$this->load->view('templates/footer');
 	}
 	
 	function getEmergencyContactInfo(){
@@ -378,7 +402,7 @@ class Record_management extends Application{
 	
 	# Callback Column for generating links to the student's Admissions Form.
 	function getWaitlistQuestionaireLink($value, $row) {
-		// use magic here	
+		// this magically works TODO mark make sure this is right
 		return '<a class=\'fancyframe\' href="' . base_url('record_management/manageWaitlistForm/edit/' . $row->StudentID) . '" target="_blank">' . 'Waitlist Questionaire' . '</a>';
 	}
 	
@@ -386,6 +410,8 @@ class Record_management extends Application{
 		$post_array['password'] = $this->ag_auth->salt($post_array['password']);
 		return $post_array;
 	}
+	
+
 			
 }
 	

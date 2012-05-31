@@ -324,34 +324,6 @@ class Admin extends Application{
         $parent->save();
     }
     
-    // dev function for creating new menu items
-    // this function will not be used in final prod
-    function addSubItem(){
-
-        $this->form_validation->set_rules('menuItemID', 'menuItemID', 'required');
-        $this->form_validation->set_rules('label', 'label', 'required');
-        $this->form_validation->set_rules('URL', 'URL', 'required');
-        $this->form_validation->set_rules('rankOrder', 'rankOrder', 'required');
-
-        if($this->form_validation->run() == FALSE){
-            $this->load->view('templates/header', $this->data);  
-            $this->load->view('admin/menu/add_menu_item');
-            $this->load->view('templates/footer');
-        }
-        else{
-        
-        $menuItemID = set_value('menuItemID');
-        $label = set_value('label');
-        $URL = set_value('URL');
-        $rankOrder = set_value('rankOrder');
-                
-        $query = "INSERT INTO SubItem (MenuItemID, Label, URL, RankOrder) VALUES (" . $menuItemID . ", '" . $label . "', '" . $URL . "', " . $rankOrder . ")";
-        $result = mysql_query($query);
-        
-        redirect('admin');        
-		}
-    }
-	
 	function waitlist($grid1 = 'none', $grid2 = 'none') {
 			
 	    if ($this->input->post('moveToEnrolled')){
