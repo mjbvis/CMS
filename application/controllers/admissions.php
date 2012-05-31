@@ -125,17 +125,22 @@ class Admissions extends Application {
 			redirect('login');
 		}
 
-		// get all enabled program groups AND filter out program groups with no enabled programs
-		// NOTE: Programs will be eager loaded but must be filtered by enabled in the view
-		$join = 'INNER JOIN Program ON Program.ProgramGroupID = ProgramGroup.ProgramGroupID AND Program.Enabled = 1';
-		$progGroups = Program_group::all(array('joins' => $join, 'conditions' => array('ProgramGroup.Enabled=?', 1)));
+		// get current school year info, so we can get only current programs
+		$schoolInfo = School_information::find_by_currentyear(1);
+		if($schoolInfo == null)
+			throw new Exception('The system could not determine the current academic year.Please contact the administration for assistance.');
 
+		// get academic levels, eagerload the programs (they must be filered in the view)
+		$academicLevels = Academic_level::find_all_by_enabled(1, array('order' => 'academiclevelid asc',
+																	   'include' => array('programs')));
+																	   
 		// populate view data with child info and program info
 		$viewData['firstName'] = $wlStud->firstname;
 		$viewData['middleName'] = $wlStud->middlename;
 		$viewData['lastName'] = $wlStud->lastname;
 		$viewData['progSelected'] = $wlStud->expectedprogramid;
-		$viewData['progGroups'] = $progGroups;
+		$viewData['academicLevels'] = $academicLevels;
+		$viewData['schoolInformation'] = $schoolInfo;
 
 		# Validation for the student registration process
 		$this -> validateRegistrationForm();
