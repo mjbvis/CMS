@@ -37,8 +37,7 @@ class Record_management extends Application{
 		$crud = new grocery_CRUD();
 		$crud->set_table('Student')
 			 
-			 // set up 1-n relations
-			 //->set_relation('UserID', 'users', 'username')
+			 // set up relations
 			 ->set_relation('ClassID', 'Classroom', 'ClassName', array('Enabled' => '1'))
 			 ->set_relation('ProgramID', 'Program', '{AcademicYear} {Title}', array('Enabled' => '1'))
 			 ->set_relation('IsEnrolled','BinaryLookup','EnrolledPreenrolled')
@@ -223,8 +222,24 @@ class Record_management extends Application{
 		$this->load->view('templates/grid', $output);
 		$this->load->view('templates/footer');
 	}
+
+	function manageClasses(){
+		$crud = new grocery_CRUD();
+		$crud->set_table('Classroom')
+			->display_as('Enabled', 'Is this Classroom Active')
+			->set_relation('AcademicLevelID','AcademicLevel','AcademicLevelName')
+			->set_relation('Enabled','BinaryLookup','YesNo');
+
+        $output = $crud->render();
+		
+		$this->data['preGrid'] = "<style type=\"text/css\"> h2 {text-align:center} </style><h2>Classroom Management</h2>";
+		
+		$this->load->view('templates/header', $this->data);
+		$this->load->view('templates/grid', $output);
+		$this->load->view('templates/footer');
+	}
 	
-		function getEmergencyContactInfo(){
+	function getEmergencyContactInfo(){
 		
 	}
 	
