@@ -183,11 +183,7 @@ class Record_management extends Application{
 		$post_array['password'] = $this->ag_auth->salt($post_array['password']);
 		return $post_array;
 	}
-	
-	function fancyBoxTest(){
-		$this->load->view('test/dashboard');
-	}
-	
+		
 }
 	
 /* End of file: record_management.php */

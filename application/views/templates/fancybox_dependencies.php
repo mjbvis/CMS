@@ -1,6 +1,3 @@
-<!-- Add jQuery library -->
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-
 <!-- Add fancyBox -->
 <link rel="stylesheet" href="<?php echo base_url()?>assets/fancybox/source/jquery.fancybox.css?v=2.0.6" type="text/css" media="screen" />
 
