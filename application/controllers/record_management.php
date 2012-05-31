@@ -312,6 +312,25 @@ class Record_management extends Application{
 				
 		$this->load->view('templates/grid', $output);
 	}
+
+	function manageWaitlistForm($studentID) {
+		$crud = new grocery_CRUD();
+		$crud->set_table('AdmissionsForm');
+	    $crud->where('StudentID', $studentID);
+		$crud->unset_list();
+		
+		$crud->callback_edit_field('StudentID', array($this, 'getnameFromStudentID'));
+		
+		// set up aliases	
+		//$crud->display_as('SchoolExperience','School Experience');
+			
+		// force fields
+		//$crud->change_field_type('SchoolExperience', 'enum', array('yes','no'));
+		
+		$output = $crud->render();
+				
+		$this->load->view('templates/grid', $output);
+	}
 	
 	function getEmergencyContactInfo(){
 		
@@ -359,7 +378,8 @@ class Record_management extends Application{
 	
 	# Callback Column for generating links to the student's Admissions Form.
 	function getWaitlistQuestionaireLink($value, $row) {
-		return '<a href="' . base_url() . '" target="_blank">' . 'Waitlist Questionaire' . '</a>';
+		// use magic here	
+		return '<a class=\'fancyframe\' href="' . base_url('record_management/manageWaitlistForm/edit/' . $row->StudentID) . '" target="_blank">' . 'Waitlist Questionaire' . '</a>';
 	}
 	
 	function encrypt_password_callback($post_array) {

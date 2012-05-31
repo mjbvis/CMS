@@ -115,7 +115,7 @@ class Admin extends Application{
 	function get_notification_URL($value, $row) {
 		$notification = Notifications::find_by_notificationid($row->NotificationID);
 		$NotificationAttr = $notification->attributes();
-		return '<a id="fancyframe" href="' . base_url($NotificationAttr['url'] . $row->UrlParam) . '" target="_blank">' . $NotificationAttr['description'] . $row->AdditionalInfo . '</a>';
+		return '<a href="' . base_url($NotificationAttr['url'] . $row->UrlParam) . '" target="_blank">' . $NotificationAttr['description'] . $row->AdditionalInfo . '</a>';
 	}
 	
 	function prospectGrid() {
