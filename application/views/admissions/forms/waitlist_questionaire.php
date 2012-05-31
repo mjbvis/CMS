@@ -21,20 +21,22 @@
 			<legend>Program:</legend>
 			<ul>
 				<?php
+					$schoolInfoAttr = $schoolInformation->attributes();
+				
 					$i = 0;
-					foreach($progGroups as $pGroup):
-						$pGroupAttr = $pGroup->attributes();
+					foreach($academicLevels as $level):
+						$levelAttr = $level->attributes();
 						printf('<li>');
-							printf('<label><h3>%s</h3></label></br>', $pGroupAttr['grouptitle']);
+							printf('<label><h3>%s</h3></label></br>', $levelAttr['academiclevelname']);
 							printf('<ul>');
-								foreach($pGroup->programs as $program):
+								foreach($level->programs as $program):
 									$programAttr = $program->attributes();
 									// only display enabled Programs.
 									// NOTE: these are not filtered out at this point
-									if($programAttr['enabled'] == 1):
+									if($programAttr['enabled'] == 1 && $programAttr['academicyear'] == $schoolInfoAttr['academicyear']):
 										printf('<li>');
 											printf('<input type="radio" name="programChecked" id="programCheckbox%d" value="%d" %s />', $i, $programAttr['programid'], set_radio('programChecked', $programAttr['programid']));
-											printf('%s, %s - %s', $programAttr['days'], $programAttr['starttime'], $programAttr['endtime']);
+											printf('%s, %s - %s,      $%s', $programAttr['days'], $programAttr['starttime'], $programAttr['endtime'], $programAttr['tuition']);
 										printf('</li>');
 									endif;
 								endforeach;

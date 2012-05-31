@@ -11,17 +11,24 @@ class Program extends ActiveRecord\Model
 	# explicit column names for the sake of readability
 	static $alias_attribute = array(
 		'ProgramID' => 'ProgramID',
-		'ProgramGroupID' => 'ProgramGroupID',
+		'AcademicYear' => 'AcademicYear',
+		'AcademicLevelID' => 'AcademicLevelID',
+		'Title' => 'Title',
 		'Days' => 'Days',
 		'StartTime' => 'StartTime',
 		'EndTime' => 'EndTime',
+		'Tuition' => 'Tuition',
 		'Enabled' => 'Enabled');
 		
 	static $belongs_to = array(
-		array('program_group'
-			 ,'class_name' => 'Program_group'
-			 ,'foreign_key' => 'programgroupid'
-			 ,'primary_key' => 'programgroupid')
+		array('academic_level'
+			 ,'class_name' => 'Academic_level'
+			 ,'foreign_key' => 'academiclevelid'
+			 ,'primary_key' => 'academiclevelid'),
+		array('school_information'
+			 ,'class_name' => 'School_information'
+			 ,'foreign_key' => 'academicyear'
+			 ,'primary_key' => 'academicyear')	
 		);
 }
 	
