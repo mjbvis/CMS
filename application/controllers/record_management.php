@@ -15,7 +15,7 @@ class Record_management extends Application{
 		$this->output->nocache();
 		
 		/* Load helpers */
-		$this->load->helper(array('url', 'menu', 'language', 'record_management'));
+		$this->load->helper(array('url', 'menu', 'language'));
         
 		/* Load libraries */
         $this->load->library('grocery_CRUD');
@@ -36,9 +36,12 @@ class Record_management extends Application{
 		// TODO: emergency contacts need to be handled in some creative manner
 		$crud = new grocery_CRUD();
 		$crud->set_table('Student')
+			 
+			 // set up 1-n relations
 			 ->set_relation('UserID', 'users', 'username')
 			 ->set_relation('ClassID', 'Classroom', 'ClassName', array('Enabled' => '1'))
 			 ->set_relation('ProgramID', 'Program', '{Days}, {StartTime} - {EndTime}')
+			 ->set_relation('IsEnrolled','BinaryLookup','EnrolledPreenrolled')			 
 			
 			// columns for main screen (not the edit screen)
 			 ->columns('FirstName', 'LastName', 'ClassID', 'Emergency Contact Info', 'PhoneNumber', 'Medical Information', 'Admissions Form', 'Waitlist Questionaire', 'IsEnrolled')
@@ -62,7 +65,6 @@ class Record_management extends Application{
 			
 			 ->change_field_type('UserID', 'readonly')
 			 ->change_field_type('Gender', 'enum', array('M','F'))
-			 ->change_field_type('IsEnrolled', 'true_false')
 			 ->change_field_type('UDTTM', 'hidden', date('Y-m-d H:i:s', time()))
 			
 			 ->unset_edit_fields('EmergencyContactID1', 'EmergencyContactID2', 'EmergencyContactID3', 'QuestionaireID')
@@ -99,13 +101,18 @@ class Record_management extends Application{
 		$this->load->view('templates/grid', $output);
 		$this->load->view('templates/footer');
 	}
-		function manageTuition(){
+	
+	function managePrograms(){
 		$crud = new grocery_CRUD();
-		$crud->set_table('Tuition');
+		$crud->set_table('Program')
+			->set_relation('AcademicLevelID', 'AcademicLevel', 'AcademicLevelName')
+			->set_relation('Enabled', 'BinaryLookup', 'EnabledDisabled')
+			
+			->display_as('Enabled', 'Program Status');
 
         $output = $crud->render();
 		
-		$this->data['preGrid'] = "<style type=\"text/css\"> h2 {text-align:center} </style><h2>Tuition Management</h2>";
+		$this->data['preGrid'] = "<style type=\"text/css\"> h2 {text-align:center} </style><h2>Program Management</h2>";
 		
 		$this->load->view('templates/header', $this->data);
 		$this->load->view('templates/grid', $output);
@@ -175,7 +182,11 @@ class Record_management extends Application{
 	function encrypt_password_callback($post_array) {
 		$post_array['password'] = $this->ag_auth->salt($post_array['password']);
 		return $post_array;
-	} 
+	}
+	
+	function fancyBoxTest(){
+		$this->load->view('test/dashboard');
+	}
 	
 }
 	

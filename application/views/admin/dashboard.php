@@ -21,7 +21,7 @@
 			<IFRAME SRC=<?php echo base_url('admin/preEnrolledGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 		<td >
-			<h3><a href="<?php echo base_url('admin/manageVolunteerLogs'); ?>">Recent Volunteer Activity</a></h3>
+			<h3><a href="<?php echo base_url('record_management/manageVolunteerLogs'); ?>">Recent Volunteer Activity</a></h3>
 			<IFRAME SRC=<?php echo base_url('admin/volunteerLogGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 	</tr>
@@ -30,8 +30,9 @@
 <table>
 	<tr>
 		<td width=100% valign="top">
-			<h3><a href="<?php echo base_url('admin/prospectManagement'); ?>">Prospect Information</a></h3>
+			<h3><a href="<?php echo base_url('record_management/manageProspects'); ?>">Prospect Information</a></h3>
 			<IFRAME SRC=<?php echo base_url('admin/prospectGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
 		</td>
 	</tr>
 </table>
+

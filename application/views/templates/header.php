@@ -26,6 +26,7 @@ if (!function_exists('isset_not_empty')) {
 		<link rel="stylesheet" href="<?php echo base_url('assets/styles/screen.css');?>" type="text/css" media="screen" />
 		<link rel="stylesheet" href="<?php echo base_url('assets/styles/forms/screen.css');?>" type="text/css" media="screen" />
 		<script type="text/javascript" src="assets/js/jquery.autoheight.js"></script>
+		
 	</head>
 	<body>
 		<div id="header">
