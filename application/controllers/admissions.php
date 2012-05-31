@@ -352,7 +352,8 @@ class Admissions extends Application {
 			// when a student is registered, unset the register medical info notification and
 			// set the completed registration notification for the admin
 			unsetNotification('medicalInformation', user_id(), $studentId);
-			setNotification('registrationComplete', user_id(), $student->studentid, $student->firstname . ' ' . $student->lastname);
+			// on a registrationComplete notification, UserID is calculated by the notification helper
+			setNotification('registrationComplete', null, $student->studentid, $student->firstname . ' ' . $student->lastname);
 		});
 	}
 
