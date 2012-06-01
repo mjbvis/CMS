@@ -149,13 +149,18 @@ class Record_management extends Application{
 	function manageVolunteerLogs(){
 		$crud = new grocery_CRUD();
 		$crud->set_table('VolunteerLogEntry')
-			->set_relation('UserID', 'users', 'username')
-			->display_as('UserID','Username')
-			->display_as('SubmissionDTTM','Date Submitted')
-			->display_as('VolunteeredDTTM','Date of Activity')
-			->change_field_type('UserID', 'readonly')
+			 
+			 ->set_relation('UserID', 'users', 'username')
+			 
+			 ->display_as('UserID','Username')
+			 ->display_as('SubmissionDTTM','Date Submitted')
+			 ->display_as('VolunteeredDTTM','Date of Activity')
+			 
+			 ->change_field_type('UserID', 'readonly')
 			
-			->callback_edit_field('UserID', array($this, 'getUsernameFromID'));
+			 ->callback_edit_field('UserID', array($this, 'getUsernameFromID'));
+
+			 $crud->unset_add();
 
         $output = $crud->render();
 		
