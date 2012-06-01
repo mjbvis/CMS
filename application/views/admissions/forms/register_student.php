@@ -1,4 +1,5 @@
 <script type="text/javascript">
+
 function show_hide(value) {
 	switch(value){
 		case 'yes':
@@ -202,15 +203,15 @@ function show_hide(value) {
 			<div class="hearAbout">
 				<input type='radio' name='referenceType' id='parentId' value="Parent" onClick="show_hide('show_specify')" <?php echo set_radio('referenceType', "Parent"); ?>/> <label>Parent of a CMS student</label>
 				</br>
-				<input type='radio' name='referenceType' id='friendId' value="Friend" onClick="show_hide('show_specify')" <?php echo set_value('referenceType', "Friend"); ?>/> Friend
+				<input type='radio' name='referenceType' id='friendId' value="Friend" onClick="show_hide('show_specify')" <?php echo set_radio('referenceType', "Friend"); ?>/> Friend
 				</br>
-				<input type='radio' name='referenceType' id='newspaperId' value="Newspaper" onClick="show_hide('show_specify')" <?php echo set_value('referenceType', "Newspaper"); ?> /> Newspaper
+				<input type='radio' name='referenceType' id='newspaperId' value="Newspaper" onClick="show_hide('show_specify')" <?php echo set_radio('referenceType', "Newspaper"); ?> /> Newspaper
 				</br>
-				<input type='radio' name='referenceType' id='internetId' value="Internet" onClick="show_hide('hide_specify')" <?php echo set_value('referenceType', "Internet"); ?> /> Internet
+				<input type='radio' name='referenceType' id='internetId' value="Internet" onClick="show_hide('hide_specify')" <?php echo set_radio('referenceType', "Internet"); ?> /> Internet
 				</br>
-				<input type='radio' name='referenceType' id='posterId' value="Poster" onClick="show_hide('hide_specify')" <?php echo set_value('referenceType', "Poster"); ?> /> Poster
+				<input type='radio' name='referenceType' id='posterId' value="Poster" onClick="show_hide('hide_specify')" <?php echo set_radio('referenceType', "Poster"); ?> /> Poster
 				</br>
-				<input type='radio' name='referenceType' id='otherId' value="Other" onClick="show_hide('show_specify')" <?php echo set_value('referenceType', "Other"); ?>/> Other
+				<input type='radio' name='referenceType' id='otherId' value="Other" onClick="show_hide('show_specify')" <?php echo set_radio('referenceType', "Other"); ?>/> Other
 				<input type='text' name='referenceName' id='specifyTextId' value="<?php echo set_value('referenceName'); ?>" style="display:none" placeholder="Specify..." max="250"/>
 			</div>		
 		</fieldset>
