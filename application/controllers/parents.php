@@ -158,8 +158,7 @@ Class Parents extends Application {
 			 ->add_fields('UserID', 'Hours', 'Description', 'SubmissionDTTM', 'VolunteeredDTTM')
 			 ->required_fields('UserID', 'Hours', 'Description', 'SubmissionDTTM', 'VolunteeredDTTM')
 			 ->change_field_type('UserID', 'hidden', user_id())
-			 ->change_field_type('SubmissionDTTM', 'hidden', date('Y-m-d H:i:s', time()))
-			 ->unset_edit();
+			 ->change_field_type('SubmissionDTTM', 'hidden', date('Y-m-d H:i:s', time()));
 		
 		$crud->where('UserID', user_id());
 		
