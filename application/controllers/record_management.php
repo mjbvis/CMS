@@ -56,7 +56,8 @@ class Record_management extends Application{
 			 ->callback_edit_field('UserID', array($this, 'getUsernameFromID'))
 			 
 			 // call back after updates
-			 ->callback_after_update(array($this, 'updateDateTime'))
+			 ->callback_after_update(array($this, 'updateStudentDateTime'))
+			 ->callback_after_update(array($this, 'checkForEnrollmentStatus'))
 			 
 			 // setup display alliases
 			 ->display_as('FirstName', 'First Name')
@@ -77,6 +78,9 @@ class Record_management extends Application{
 			 ->change_field_type('Gender', 'enum', array('M','F'))
 			 ->change_field_type('UDTTM', 'hidden', date('Y-m-d H:i:s', time()))
 			 			 
+			 // Custom Action
+			 ->add_action('test', base_url().'assets/images/remove.png', 'record_management/removeFromPreEnrolled')
+			 
 			 ->unset_edit_fields('EmergencyContactID1', 'EmergencyContactID2', 'EmergencyContactID3', 'QuestionaireID')
 			 ->unset_add()
 			 ->unset_delete();
@@ -493,6 +497,20 @@ class Record_management extends Application{
 	function encrypt_password_callback($post_array) {
 		$post_array['password'] = $this->ag_auth->salt($post_array['password']);
 		return $post_array;
+	}
+	
+	# callback function for the manageMyStudent grocery crud.
+	# updates the student's update datetime upon update.
+	function updateStudentDateTime($post_array, $studentid){
+		$student = Student::find_by_studentid($studentid);
+		if($student == null)
+			return null;
+		$student->updatedttm = date('Y-m-d H:i:s', time());
+		$student->save();
+	}
+	
+	function removeFromPreEnrolled(){
+		
 	}
 	
 
