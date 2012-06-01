@@ -1,4 +1,13 @@
 <div class="formBox">
+	
+	<?php
+	/* display validation errors */
+	$errors = validation_errors();
+	if (!empty($errors)) {
+		printf('<div class="validationBox">%s</div>', $errors);
+	}
+	?>
+	
 	<form id='studentMedical' method="post" accept-charset='UTF-8' class="clearfix">
 		<fieldset>
 			<legend>Child's Information</legend>
