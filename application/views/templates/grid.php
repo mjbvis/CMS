@@ -4,6 +4,12 @@
 	}
 	#StudentID_input_box, #UserID_input_box{ margin-top: 10px !important; }
 	
+	.required{
+  		color:       #EE0000;
+  		font-weight: bold;
+  		font-size:   18px;
+	}
+	
 </style>
 <?php 
 foreach($css_files as $file): ?>
