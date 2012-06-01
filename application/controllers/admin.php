@@ -281,10 +281,10 @@ class Admin extends Application{
 	function validateInterviewObservationForm(){
 		$this->form_validation->set_rules('pNames', 'Parents', 'required');
 		$this->form_validation->set_rules('namesAndAges', 'Children', 'required');
-		$this->form_validation->set_rules('contactDateTime', 'Contact DateTime', 'required|valid_date');
-		$this->form_validation->set_rules('phoneNumber', 'Phone number', 'required|min_length[12]');
-		$this->form_validation->set_rules('visitDateTime', 'Visit DateTime', 'required|valid_date');
-		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+		$this->form_validation->set_rules('contactDateTime', 'Contact DateTime', 'valid_date');
+		$this->form_validation->set_rules('phoneNumber', 'Phone number', 'min_length[12]');
+		$this->form_validation->set_rules('visitDateTime', 'Visit DateTime', 'valid_date');
+		$this->form_validation->set_rules('email', 'Email', 'valid_email');
 		$this->form_validation->set_rules('webSearch', 'Websearch Reference', 'exact_length[1]|is_natural');
 		$this->form_validation->set_rules('cmsFamily', 'CMS Family Reference', 'exact_length[1]|is_natural');
 		$this->form_validation->set_rules('friends', 'Friend Reference', 'exact_length[1]|is_natural');
@@ -292,23 +292,23 @@ class Admin extends Application{
 		$this->form_validation->set_rules('adInRefNote', 'Ad Reference Description', '');
 		$this->form_validation->set_rules('otherRef', 'Other Reference', 'exact_length[1]|is_natural');
 		$this->form_validation->set_rules('otherRefNote', 'Other Reference Description', '');
-		$this->form_validation->set_rules('interestLevel', 'Level of interest', 'required');
-		$this->form_validation->set_rules('understandingLevel', 'Level of understanding', 'required');
-		$this->form_validation->set_rules('willingnessLevel', 'Willingness to learn', 'required');
+		$this->form_validation->set_rules('interestLevel', 'Level of interest', '');
+		$this->form_validation->set_rules('understandingLevel', 'Level of understanding', '');
+		$this->form_validation->set_rules('willingnessLevel', 'Willingness to learn', '');
 		$this->form_validation->set_rules('movingCity', 'New City', 'alpha');
 		$this->form_validation->set_rules('movingState', 'New State', 'alpha');
 		$this->form_validation->set_rules('movingSchool', 'New School', '');
-		$this->form_validation->set_rules('independent', 'Independent learner', 'required|exact_length[1]');
-		$this->form_validation->set_rules('ownPace', 'Learns at own pace', 'required|exact_length[1]');
-		$this->form_validation->set_rules('handsOn', 'Hands-on learner', 'required|exact_length[1]');
-		$this->form_validation->set_rules('mixedAges', 'Mixed ages', 'required|exact_length[1]');
-		$this->form_validation->set_rules('montessoriImpressions', 'Montessori impressions', 'required');
-		$this->form_validation->set_rules('interviewImpressions', 'Interview impressions', 'required');
+		$this->form_validation->set_rules('independent', 'Independent learner', 'exact_length[1]');
+		$this->form_validation->set_rules('ownPace', 'Learns at own pace', 'exact_length[1]');
+		$this->form_validation->set_rules('handsOn', 'Hands-on learner', 'exact_length[1]');
+		$this->form_validation->set_rules('mixedAges', 'Mixed ages', 'exact_length[1]');
+		$this->form_validation->set_rules('montessoriImpressions', 'Montessori impressions', '');
+		$this->form_validation->set_rules('interviewImpressions', 'Interview impressions', '');
 		$this->form_validation->set_rules('observationDateTime', 'Observation DateTime', 'valid_date');
 		$this->form_validation->set_rules('classroom', 'Classroom', 'is_natural_no_zero');
 		$this->form_validation->set_rules('attendedRadio', 'Attended observation', 'exact_length[1]');
 		$this->form_validation->set_rules('onTimeRadio', 'On time to observation', 'exact_length[1]');
-		$this->form_validation->set_rules('interviewDateTime', 'Interview DateTime', 'required|valid_date');
+		$this->form_validation->set_rules('interviewDateTime', 'Interview DateTime', 'valid_date');
 		$this->form_validation->set_rules('appReceivedDateTime', 'Application received DateTime', 'valid_date');
 		$this->form_validation->set_rules('feeReceivedDateTime', 'Application fee received DateTime', 'valid_date');
 	}
