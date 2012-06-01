@@ -44,16 +44,19 @@ class Record_management extends Application{
 			 
 			 
 			// columns for main screen (not the edit screen)
-			 ->columns('FirstName', 'LastName', 'ClassID', 'Emergency Contact Info', 'PhoneNumber', 'Medical Information', 'Admissions Form', 'Waitlist Questionaire', 'IsEnrolled')
+			 ->columns('FirstName', 'LastName', 'ClassID', 'Emergency Contacts', 'PhoneNumber', 'Medical Information', 'Admissions Form', 'Waitlist Questionaire', 'IsEnrolled')
 			
 			// special functions for certain columns on the main screen
 			 ->callback_column('Medical Information', array($this, 'getMedicalInformationLink'))
 			 ->callback_column('Admissions Form', array($this, 'getAdmissionsFormLink'))
 			 ->callback_column('Waitlist Questionaire', array($this, 'getWaitlistQuestionaireLink'))
-			 ->callback_column('Emergency Contact Info', array($this, 'getEmergencyContactInfo'))
+			 ->callback_column('Emergency Contacts', array($this, 'getEmergencyContactLink'))
 			 			 
 			 // callbacks for the edit pages
 			 ->callback_edit_field('UserID', array($this, 'getUsernameFromID'))
+			 
+			 // call back after updates
+			 ->callback_after_update(array($this, 'updateDateTime'))
 			 
 			 // setup display alliases
 			 ->display_as('FirstName', 'First Name')
@@ -65,7 +68,6 @@ class Record_management extends Application{
 			 ->display_as('UserID', 'Username')
 			 ->display_as('ClassID', 'Classroom')
 			 ->display_as('PhoneNumber', 'Phone')
-			 ->display_as('EmergencyContact', 'Emergency Contacts')
 			 ->display_as('ProgramID', 'Program')
 			 ->display_as('EmergencyContactID1', 'Emergency Contact 1')
 			 ->display_as('IsEnrolled', 'Enrollment Status')
@@ -74,7 +76,7 @@ class Record_management extends Application{
 			 ->change_field_type('UserID', 'readonly')
 			 ->change_field_type('Gender', 'enum', array('M','F'))
 			 ->change_field_type('UDTTM', 'hidden', date('Y-m-d H:i:s', time()))
-			
+			 			 
 			 ->unset_edit_fields('EmergencyContactID1', 'EmergencyContactID2', 'EmergencyContactID3', 'QuestionaireID')
 			 ->unset_add()
 			 ->unset_delete();
@@ -322,7 +324,16 @@ class Record_management extends Application{
 		$crud->callback_edit_field('StudentID', array($this, 'getnameFromStudentID'));
 		
 		// set up aliases	
-		//$crud->display_as('SchoolExperience','School Experience');
+		$crud->display_as('StudentID','Name')
+			->display_as('SchoolExperience','School Experience')
+			->display_as('SocialExperience','Social Experience')
+			->display_as('ComfortMethods','Comfort Methods')
+			->display_as('NapTime','Nap Time')
+			->display_as('OutdoorPlay','Outdoor Play')
+			->display_as('SiblingNames','Sibling Names')
+			->display_as('SiblingAges','Sibling Ages')
+			->display_as('ReferrerType','Referrer Type')
+			->display_as('ReferredBy','Referred By');
 			
 		// force fields
 		$crud->change_field_type('notes', 'text');
@@ -372,19 +383,58 @@ class Record_management extends Application{
 	function manageEmergencyContacts(){
 		$crud = new grocery_CRUD();
 		$crud->set_table('EmergencyContact')
-			->columns('ContactID','ECName','ECPhone','ECRelationship')
-			->set_relation('ContactID','Student','{FirstName} {LastName}');
+			->set_relation('StudentID','Student','{FirstName} {LastName}');
+			
+		//set up aliases
+		$crud->display_as('StudentID','Student Name')
+			->display_as('ECName','Emergency Contact Name')
+			->display_as('ECPhone','Phone')
+			->display_as('ECRelationship','Relationship to Student');
 	    		
 		$output = $crud->render();
 				
 		$this->load->view('templates/header', $this->data);		
 		$this->load->view('templates/grid', $output);
 		$this->load->view('templates/footer');
-	}	
-	
-	function getEmergencyContactInfo(){
-		
 	}
+	
+		# This is the grocery crud for a parents' students' emergency contacts.
+	function manageStudentEmergencyContacts($studentID){
+		try{
+			// verify that student exists and belongs to the current parent
+			$student = Student::find_by_studentid($studentID);
+			if($student == null)
+				throw new Exception('The specified student could not be found: ' . $studentID);
+		}
+		catch(ActiveRecord\ActiveRecordException $e){
+			// TODO: handle gracefully
+			throw $e;
+		}
+		catch(Exception $e){
+			// TODO: handle gracefully
+			printf($e->getMessage());
+			return $e;
+		}
+		$crud = new grocery_CRUD();
+		$crud->set_table('EmergencyContact')
+		
+	         ->columns('ECName', 'ECPhone', 'ECRelationship')
+			 
+			 ->display_as('ECName', 'Name')
+			 ->display_as('ECPhone', 'Phone')
+			 ->display_as('ECRelationship', 'Relationship')
+			 
+			 ->required_fields('ECName', 'ECPhone', 'ECRelationship')
+			 
+			 ->unset_edit_fields('ContactID')
+			 ->unset_add();
+		
+		$crud->where('StudentID', $studentID);
+		
+        $output = $crud->render();
+		
+		$this->load->view('templates/grid', $output);
+	}	
 	
 	function getUsernameFromID($value, $row){
 		$user = User::find_by_id($value);
@@ -393,11 +443,19 @@ class Record_management extends Application{
 		return $userAttr['username'];
 	}
 	
+	# Callback Column for generating links to the student's Emergency Contacts.
+	function getEmergencyContactLink($value, $row){
+		$contact = Emergency_contact::find_by_studentid($row->StudentID);
+		if($contact != null || !empty($contact))
+			return '<a class=\'smallfancyframe\' href="' . base_url('record_management/manageStudentEmergencyContacts/' . $row->StudentID) . '" target="_blank">' . 'Emergency Contacts' . '</a>';
+		return;
+	}
+	
 	function getnameFromStudentID($value, $row){
 		$name = Student::find_by_studentid($value);
 		$nameAttr = $name->attributes();
 		
-		$string = '<span class="callackLabel">' . $nameAttr['firstname'] . ' ' . $nameAttr['lastname'] . '</span>';
+		$string = '<span class="callbackLabel">' . $nameAttr['firstname'] . ' ' . $nameAttr['lastname'] . '</span>';
 		
 		return $string;
 	}
