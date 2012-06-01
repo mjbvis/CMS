@@ -424,12 +424,12 @@ class Admissions extends Application {
 
 	# sets the validation rules for the MedicalInformationForm
 	function validateMedicalForm() {
-		$this->form_validation->set_rules('preferredHospitalName', 'Preferred Hospital', '');
-		$this->form_validation->set_rules('hospitalPhoneName', 'Hospital\'s phone number', 'min_length[12]');
-		$this->form_validation->set_rules('physicianName', 'Physician', '');
-		$this->form_validation->set_rules('pPhoneName', 'Physician\'s Phone', 'min_length[12]');
-		$this->form_validation->set_rules('dentistName', 'Dentist', '');
-		$this->form_validation->set_rules('dPhoneName', 'Dentist\'s Phone', 'min_length[12]');
+		$this->form_validation->set_rules('preferredHospitalName', 'Preferred Hospital', 'required');
+		$this->form_validation->set_rules('hospitalPhoneName', 'Hospital\'s phone number', 'required|min_length[12]');
+		$this->form_validation->set_rules('physicianName', 'Physician', 'required');
+		$this->form_validation->set_rules('pPhoneName', 'Physician\'s Phone', 'required|min_length[12]');
+		$this->form_validation->set_rules('dentistName', 'Dentist', 'required');
+		$this->form_validation->set_rules('dPhoneName', 'Dentist\'s Phone', 'required|min_length[12]');
 		$this->form_validation->set_rules('medicalConditionsName', 'Medical Conditions', '');
 		$this->form_validation->set_rules('allergiesName', 'Allergies', '');
 		$this->form_validation->set_rules('insuranceCompanyName', 'Insurance Company', '');
