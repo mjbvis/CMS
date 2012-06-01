@@ -257,8 +257,11 @@ a:link, a:visited {
 // Import other CSS documents here
 @import "forms";
 
-.required{
-  color:       #EE0000;
-  font-weight: bold;
-  font-size:   18px;
+.content_text_wrapper{
+  width:      722px;
+  margin:     0 auto;
+  margin-top: 75px;
+  font-size:  20px;
+  border:     1px solid $formBorder;
+  padding:    30px;
 }
