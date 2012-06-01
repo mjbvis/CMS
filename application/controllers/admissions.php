@@ -410,16 +410,16 @@ class Admissions extends Application {
 		$this->form_validation->set_rules('napTime', 'Takes Naps', 'required|min_length[1]');
 		$this->form_validation->set_rules('playOutside', 'Plays outside', 'required|min_length[1]');
 		$this->form_validation->set_rules('HasPets', 'Has Pets', 'required');
-		$this->form_validation->set_rules('petType', 'Type of Pet', '');
-		$this->form_validation->set_rules('petName', 'Name of Pet', '');
 		$this->form_validation->set_rules('childInterestsName', 'Child\'s Interests', 'required|min_length[1]');
-		$this->form_validation->set_rules('siblingOneName', 'Silbing\'s first name', 'required|min_length[1]');
-		$this->form_validation->set_rules('siblingOneAge', 'Silbing\'s age', 'required|min_length[1]');
+		$this->form_validation->set_rules('siblingOneName', 'Silbing\'s first name', 'alpha');
+		$this->form_validation->set_rules('siblingOneAge', 'Silbing\'s age', 'is_natural_no_zero');
 		$this->form_validation->set_rules('otherImportantInfo', 'Other Important Information', 'required|min_length[1]');
 		$this->form_validation->set_rules('referenceType', 'Heard about us', 'required|min_length[1]');
 
 		// should not be validated
 		$this->form_validation->set_rules('referenceName', 'Learned About us', '');
+		$this->form_validation->set_rules('petType', 'Type of Pet', '');
+		$this->form_validation->set_rules('petName', 'Name of Pet', '');
 	}
 
 	# sets the validation rules for the MedicalInformationForm
