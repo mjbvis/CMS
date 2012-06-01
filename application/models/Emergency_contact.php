@@ -11,15 +11,16 @@ class Emergency_contact extends ActiveRecord\Model
 	# explicit column names for the sake of readability
 	static $alias_attribute = array(
 		'ContactID' => 'ContactID',
+		'StudentID' => 'StudentID',
 		'ECName' => 'ECName',
 		'ECPhone' => 'ECPhone',
 		'ECRelationship' => 'ECRelationship');
-
-	static $has_many = array(
+	
+	static $belongs_to = array(
 		array('student'
 			 ,'class_name' => 'Student'
-			 //,'foreign_key' => 'id'
-			 ,'primary_key' => 'contactid'
+			 ,'foreign_key' => 'studentid'
+			 ,'primary_key' => 'studentid'
 			 )
 		);
 }

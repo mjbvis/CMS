@@ -369,6 +369,18 @@ class Record_management extends Application{
 		$this->load->view('templates/footer');
 	}
 	
+	function manageEmergencyContacts(){
+		$crud = new grocery_CRUD();
+		$crud->set_table('EmergencyContact')
+			->columns('ContactID','ECName','ECPhone','ECRelationship')
+			->set_relation('ContactID','Student','{FirstName} {LastName}');
+	    		
+		$output = $crud->render();
+				
+		$this->load->view('templates/header', $this->data);		
+		$this->load->view('templates/grid', $output);
+		$this->load->view('templates/footer');
+	}	
 	
 	function getEmergencyContactInfo(){
 		
