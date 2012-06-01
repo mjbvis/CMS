@@ -143,11 +143,45 @@ Class Parents extends Application {
 		return '<a id="fancyframe" href="' . base_url($NotificationAttr['url'] . $row->UrlParam) . '" target="_blank">' . $NotificationAttr['description'] . $row->AdditionalInfo . '</a>';
 	}
 	
+	# grocery crud for parents to log volunteer hours. They should be able to add. They
+	# should be able to delete. They should not be able to edit.
+	function manageMyVolunteerActivity(){
+		// This is the one plus the maximum number of hours that can be logged in a single log entry
+		$max_hours = 9;
+		
+		$crud = new grocery_CRUD();
+		$crud->set_table('VolunteerLogEntry')
+	         ->columns('Hours', 'Description', 'VolunteeredDTTM')
+			 ->display_as('SubmissionDTTM', 'Date/Time')
+			 ->display_as('VolunteeredDTTM', 'Date of Activity')
+			 ->display_as('Description', 'Task')
+			 ->add_fields('UserID', 'Hours', 'Description', 'SubmissionDTTM', 'VolunteeredDTTM')
+			 ->required_fields('UserID', 'Hours', 'Description', 'SubmissionDTTM', 'VolunteeredDTTM')
+			 ->change_field_type('UserID', 'hidden', user_id())
+			 ->change_field_type('SubmissionDTTM', 'hidden', date('Y-m-d H:i:s', time()))
+			 ->unset_edit();
+		
+		$crud->where('UserID', user_id());
+		
+		$crud->set_rules('Hours','Hours','numeric|less_than[' . $max_hours . ']');
+		$crud->set_rules('Description', 'required');
+		
+		$this->data['preGrid'] = "<style type=\"text/css\"> h2 {text-align:center} </style><h2>Volunter Log Management</h2>";
+		
+        $output = $crud->render();
+		$this->load->view('templates/header', $this->data);
+		
+		$this->load->view('templates/grid', $output);
+		$this->load->view('templates/footer');
+	}
+	
+	# grocery crud for Parents to manage their students. They
+	# should not be able to add. They should have partial ability to edit.
 	function manageMyStudents(){
 		$crud = new grocery_CRUD();
 		$crud->set_table('Student')
 		
-	         ->columns('FirstName', 'LastName', 'Admissions Form', 'Medical Information')
+	         ->columns('FirstName', 'LastName', 'Admissions Form', 'Medical Information', 'Emergency Contact')
 			 
 			 ->display_as('FirstName', 'First')
 			 ->display_as('MiddleName', 'Middle')
@@ -158,9 +192,6 @@ Class Parents extends Application {
 			 ->display_as('DOB', 'Date of Birth')
 			 ->display_as('PhoneNumber', 'Phone')
 			 ->display_as('PhoneNumber', 'Phone')
-			 ->display_as('EmergencyContactID1', 'Emergency Contact 1')
-			 ->display_as('EmergencyContactID2', 'Emergency Contact 2')
-			 ->display_as('EmergencyContactID3', 'Emergency Contact 3')
 			 
 			 ->change_field_type('UserID', 'hidden', user_id())
 			 ->change_field_type('Gender', 'enum', array('M','F'))
@@ -170,9 +201,7 @@ Class Parents extends Application {
 			 
 			 ->callback_edit_field('ProgramID', array($this, 'getProgram'))
 			 ->callback_edit_field('ClassID', array($this, 'getClassroom'))
-			 ->callback_edit_field('EmergencyContactID1', array($this, 'emergencyContactLink'))
-			 ->callback_edit_field('EmergencyContactID2', array($this, 'emergencyContactLink'))
-			 ->callback_edit_field('EmergencyContactID3', array($this, 'emergencyContactLink'))
+			 ->callback_column('Emergency Contact', array($this, 'emergencyContactLink'))
 			 
 			 ->callback_after_update(array($this, 'updateDateTime'))			 
 			 ->unset_edit_fields('QuestionaireID', 'EnrollmentDTTM', 'IsEnrolled', 'UDTTM')
@@ -227,15 +256,15 @@ Class Parents extends Application {
 		$student->save();
 	}
 	
-	function emergencyContactLink($contactID, $studentID){
-		$contact = Emergency_contact::find_by_contactid($contactID);
-		if($contact == null || empty($contact))
-			return;
-		$contactAttr = $contact->attributes();
-		return '<a class=\'smallfancyframe\' href="' . base_url('parents/manageMyEmergencyContacts/edit/' . $contactID) . '" target="_blank">' . $contactAttr['ecname'] . '</a>';
+	# Callback Column for generating links to the student's Emergency Contacts.
+	function emergencyContactLink($value, $row){
+		$contact = Emergency_contact::find_by_studentid($row->StudentID);
+		if($contact != null || !empty($contact))
+			return '<a class=\'smallfancyframe\' href="' . base_url('parents/manageMyEmergencyContacts/' . $row->StudentID) . '" target="_blank">' . 'Emergency Contacts' . '</a>';
+		return;
 	}
 	
-		# Callback Column for generating links to the student's Medical Information.
+	# Callback Column for generating links to the student's Medical Information.
 	function getMedicalInformationLink($value, $row) {
 		$medInfo = Student_medical::find_by_studentid($row->StudentID);
 		if ($medInfo != null || !empty($medInfo)) {
@@ -251,53 +280,27 @@ Class Parents extends Application {
 			return '<a class=\'fancyframe\' href="' . base_url('parents/manageMyAdmissionsForm/edit/' . $row->StudentID) . '" target="_blank">' . 'Admissions Form' . '</a>';
 		}
 	}
-	
-	function manageMyVolunteerActivity(){
-		// This is the one plus the maximum number of hours that can be logged in a single log entry
-		$max_hours = 9;
-		
-		$crud = new grocery_CRUD();
-		$crud->set_table('VolunteerLogEntry')
-	         ->columns('Hours', 'Description', 'VolunteeredDTTM')
-			 ->display_as('SubmissionDTTM', 'Date/Time')
-			 ->display_as('VolunteeredDTTM', 'Date of Activity')
-			 ->display_as('Description', 'Task')
-			 ->add_fields('UserID', 'Hours', 'Description', 'SubmissionDTTM', 'VolunteeredDTTM')
-			 ->required_fields('UserID', 'Hours', 'Description', 'SubmissionDTTM', 'VolunteeredDTTM')
-			 ->change_field_type('UserID', 'hidden', user_id())
-			 ->change_field_type('SubmissionDTTM', 'hidden', date('Y-m-d H:i:s', time()))
-			 ->unset_edit()
-			 ->unset_delete();
-		
-		$crud->where('UserID', user_id());
-		
-		$crud->set_rules('Hours','Hours','numeric|less_than[' . $max_hours . ']');
-		$crud->set_rules('Description', 'required');
-		
-		$this->data['preGrid'] = "<style type=\"text/css\"> h2 {text-align:center} </style><h2>Volunter Log Management</h2>";
-		
-        $output = $crud->render();
-		$this->load->view('templates/header', $this->data);
-		
-		$this->load->view('templates/grid', $output);
-		$this->load->view('templates/footer');
-	}
 
 	# This is the grocery crud for a parents' students' emergency contacts.
-	# in order to authenticate the current user, we need to know the student
-	# that this contact belongs to. We also need the contactID. We've packaged
-	# both these parameters into the $params parameter
-	# $params[0] => StudentID
-	# $params[1] => ContactID
-	function manageMyEmergencyContacts($contactID){
-		// verify that student exists and belongs to the current parent
-		$student = Student::find_by_contactid($contactID, array('conditions' => 'UserID = ?', user_id()));
-		if($student == null)
-			redirect('login');
-		$studentAttr = $student->attributes();
-		if($studentAttr['userid'] == user_id())
-			redirect('login');
-		
+	function manageMyEmergencyContacts($studentID){
+		try{
+			// verify that student exists and belongs to the current parent
+			$student = Student::find_by_studentid($studentID);
+			if($student == null)
+				throw new Exception('The specified student could not be found: ' . $studentID);
+			$studentAttr = $student->attributes();
+			if($studentAttr['userid'] != user_id())
+				throw new Exception('Access Denied.');
+		}
+		catch(ActiveRecord\ActiveRecordException $e){
+			// TODO: handle gracefully
+			throw $e;
+		}
+		catch(Exception $e){
+			// TODO: handle gracefully
+			printf($e->getMessage());
+			return $e;
+		}
 		$crud = new grocery_CRUD();
 		$crud->set_table('EmergencyContact')
 		
@@ -309,97 +312,134 @@ Class Parents extends Application {
 			 
 			 ->required_fields('ECName', 'ECPhone', 'ECRelationship')
 			 
-			 ->change_field_type('ContactID', 'hidden', $contactID)
-			 ->unset_list();
+			 ->unset_edit_fields('ContactID')
+			 ->unset_add();
 		
-		$crud->where('ContactID', $contactID);
+		$crud->where('StudentID', $studentID);
 		
         $output = $crud->render();
 		
 		$this->load->view('templates/grid', $output);
 	}
 
-	function manageMyMedicalInformation($studentID) {
-		// verify that student exists and belongs to the current parent
-		$student = Student::find_by_studentid($studentID);
-		if($student == null)
-			redirect('login');
-		$studentAttr = $student->attributes();
-		if($studentAttr['userid'] == user_id())
-			redirect('login');
+	# grocery crud for managing a student's medical information.
+	# NOTE: the $edit parameter just eats the '/edit' input.
+	function manageMyMedicalInformation($edit, $studentID) {		
+		try{
+			// verify that student exists and belongs to the current parent
+			$student = Student::find_by_studentid($studentID);
+			if($student == null)
+				throw new Exception('The specified student could not be found: ' . $studentID);
+			$studentAttr = $student->attributes();
+			if($studentAttr['userid'] != user_id())
+				throw new Exception('Access Denied.');
+		}
+		catch(ActiveRecord\ActiveRecordException $e){
+			// TODO: handle gracefully
+			throw $e;
+		}
+		catch(Exception $e){
+			// TODO: handle gracefully
+			printf($e->getMessage());
+			return $e;
+		}
 		
 		$crud = new grocery_CRUD();
-		$crud->set_table('StudentMedicalInformation');
-	    $crud->where('StudentID', $studentID);
-		$crud->unset_list();
-		
-		$crud->callback_edit_field('StudentID', array($this, 'getnameFromStudentID'));
-		
-		// TODO: fix validation.
-		$crud->required_fields('PreferredHospital', 'HospitalPhone', 'Physician', 'PhysicianPhone', 'Dentist', 'DentistPhone');
-		$crud->set_rules('HospitalPhone','Hospital Phone','min_length[12]');
-		$crud->set_rules('PhysicianPhone','Physician Phone','min_length[12]');
-		$crud->set_rules('DentistPhone','Dentist Phone','min_length[12]');
-		
-		$crud->display_as('PreferredHospital', 'Preferred Hospital')
-			->display_as('StudentID', 'Name')
-			->display_as('HospitalPhone', 'Hospital Phone')
-			->display_as('PhysicianPhone', 'Physician Phone')
-			->display_as('DentistPhone', 'Dentist Phone')
-			->display_as('MedicalConditions', 'Medical Conditions')
-			->display_as('InsuranceCompany ', 'Insurance Company')
-			->display_as('CertificateNumber', 'Certificate Number');
+		$crud->set_table('StudentMedicalInformation')
+	    	 
+			 ->display_as('PreferredHospital', 'Preferred Hospital')
+			 ->display_as('StudentID', 'Name')
+			 ->display_as('HospitalPhone', 'Hospital Phone')
+			 ->display_as('PhysicianPhone', 'Physician Phone')
+			 ->display_as('DentistPhone', 'Dentist Phone')
+			 ->display_as('MedicalConditions', 'Medical Conditions')
+			 ->display_as('InsuranceCompany ', 'Insurance Company')
+			 ->display_as('CertificateNumber', 'Certificate Number')
 			
-		$crud->change_field_type('MedicalConditions', 'text')
-			->change_field_type('Allergies', 'text');
+			 ->change_field_type('MedicalConditions', 'text')
+			 ->change_field_type('Allergies', 'text')
 		
+			 ->callback_edit_field('StudentID', array($this, 'getnameFromStudentID'))
+		
+			 // TODO: fix validation.
+			 ->required_fields('PreferredHospital', 'HospitalPhone', 'Physician', 'PhysicianPhone', 'Dentist', 'DentistPhone')
+			 ->set_rules('HospitalPhone','Hospital Phone','min_length[12]')
+			 ->set_rules('PhysicianPhone','Physician Phone','min_length[12]')
+			 ->set_rules('DentistPhone','Dentist Phone','min_length[12]')
+		
+			 ->where('StudentID', $studentID);
+		
+			 $crud->unset_list();
 		
 		$output = $crud->render();
 				
 		$this->load->view('templates/grid', $output);
 	}
 
-	function manageMyAdmissionsForm($studentID) {
-		// verify that student exists and belongs to the current parent
-		$student = Student::find_by_studentid($studentID);
-		if($student == null)
-			redirect('login');
-		$studentAttr = $student->attributes();
-		if($studentAttr['userid'] == user_id())
-			redirect('login');
+	# grocery crud for managing a student's medical information.
+	# NOTE: the $edit parameter just eats the '/edit' input.
+	function manageMyAdmissionsForm($edit, $studentID) {
+		try{
+			// verify that student exists and belongs to the current parent
+			$student = Student::find_by_studentid($studentID);
+			if($student == null)
+				throw new Exception('The specified student could not be found: ' . $studentID);
+			$studentAttr = $student->attributes();
+			if($studentAttr['userid'] != user_id())
+				throw new Exception('Access Denied.');
+		}
+		catch(ActiveRecord\ActiveRecordException $e){
+			// TODO: handle gracefully
+			throw $e;
+		}
+		catch(Exception $e){
+			// TODO: handle gracefully
+			printf($e->getMessage());
+			return $e;
+		}
 		
 		$crud = new grocery_CRUD();
-		$crud->set_table('AdmissionsForm');
-	    $crud->where('StudentID', $studentID);
-		$crud->unset_list();
+		$crud->set_table('AdmissionsForm')
+	    	 
+			 ->callback_edit_field('StudentID', array($this, 'getnameFromStudentID'))
 		
-		$crud->callback_edit_field('StudentID', array($this, 'getnameFromStudentID'));
+			 // set up aliases	
+			 ->display_as('SchoolExperience','School Experience')
+			 ->display_as('SocialExperience','Social Experience')
+			 ->display_as('ComfortMethods','Comfort Methods')
+			 ->display_as('NapTime','Nap Time')
+			 ->display_as('StudentID','Name')
+			 ->display_as('OutdoorPlay', 'Outdoor Play')
+			 ->display_as('SiblingNames','Sibling Names')
+			 ->display_as('SiblingAges','Sibling Ages')
+			 ->display_as('ReferrerType','Referrer Type')
+			 ->display_as('ReferredBy','Referred By')
 		
-		// set up aliases	
-		$crud->display_as('SchoolExperience','School Experience')
-			->display_as('SocialExperience','Social Experience')
-			->display_as('ComfortMethods','Comfort Methods')
-			->display_as('NapTime','Nap Time')
-			->display_as('StudentID','Name')
-			->display_as('OutdoorPlay', 'Outdoor Play')
-			->display_as('SiblingNames','Sibling Names')
-			->display_as('SiblingAges','Sibling Ages')
-			->display_as('ReferrerType','Referrer Type')
-			->display_as('ReferredBy','Referred By');
-		
-		$crud->change_field_type('SchoolExperience', 'enum', array('yes','no'))
-			->change_field_type('SocialExperience', 'enum', array('yes','no'))
-			->change_field_type('ComfortMethods', 'enum', array('yes','no'))
-			->change_field_type('Toilet', 'enum', array('yes','no'))
-			->change_field_type('NapTime', 'enum', array('yes','no'))
-			->change_field_type('OutdoorPlay', 'enum', array('yes','no'))
-			->change_field_type('notes', 'text');
+			 ->change_field_type('SchoolExperience', 'enum', array('yes','no'))
+			 ->change_field_type('SocialExperience', 'enum', array('yes','no'))
+			 ->change_field_type('ComfortMethods', 'enum', array('yes','no'))
+			 ->change_field_type('Toilet', 'enum', array('yes','no'))
+			 ->change_field_type('NapTime', 'enum', array('yes','no'))
+			 ->change_field_type('OutdoorPlay', 'enum', array('yes','no'))
+			 ->change_field_type('notes', 'text')
+			 
+			 ->where('StudentID', $studentID);
+			 
+			 $crud->unset_list();
 		
 		$output = $crud->render();
 				
 		$this->load->view('templates/grid', $output);
 	}
 
+	function getnameFromStudentID($value, $row){
+		$name = Student::find_by_studentid($value);
+		$nameAttr = $name->attributes();
+		
+		$string = $nameAttr['firstname'] . ' ' . $nameAttr['lastname'];
+		
+		return $string;
+	}
 
 }
 ?>
