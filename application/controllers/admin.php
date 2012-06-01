@@ -267,7 +267,7 @@ class Admin extends Application{
 		$ioform->montessoriimpressions = set_value('montessoriImpressions');
 		$ioform->interviewimpressions = set_value('interviewImpressions');
 		$ioform->observationdttm = date('Y-m-d H:i:s', strtotime(set_value('observationDateTime')));
-		$ioform->classid = set_value('classroom');
+		$ioform->classid = set_value('classroom') == 0 ? NULL : set_value('classroom');
 		$ioform->attendedobservation = set_value('attendedRadio');
 		$ioform->ontimetoobservation = set_value('onTimeRadio');
 		$ioform->interviewdttm = date('Y-m-d H:i:s', strtotime(set_value('interviewDateTime')));
