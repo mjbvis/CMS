@@ -24,4 +24,10 @@
 	 'height': 10000
 	});
 
+	$('.smallfancyframe').fancybox({
+	 'type':'iframe',
+	 'width': 800, //or whatever you want
+	 'height': 375
+	});
+
 </script>
