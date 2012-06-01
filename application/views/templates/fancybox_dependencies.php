@@ -21,7 +21,7 @@
 	$('.fancyframe').fancybox({
 	 'type':'iframe',
 	 'width': 800, //or whatever you want
-	 'height': 10000
+	 'height': 900
 	});
 
 	$('.smallfancyframe').fancybox({
