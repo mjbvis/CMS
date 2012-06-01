@@ -397,7 +397,7 @@ class Record_management extends Application{
 		$name = Student::find_by_studentid($value);
 		$nameAttr = $name->attributes();
 		
-		$string = $nameAttr['firstname'] . ' ' . $nameAttr['lastname'];
+		$string = '<span class="callackLabel">' . $nameAttr['firstname'] . ' ' . $nameAttr['lastname'] . '</span>';
 		
 		return $string;
 	}
