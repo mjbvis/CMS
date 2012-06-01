@@ -310,6 +310,8 @@ Class Parents extends Application {
 			 ->display_as('ECPhone', 'Phone')
 			 ->display_as('ECRelationship', 'Relationship')
 			 
+			 ->callback_edit_field('StudentID', array($this, 'getnameFromStudentID'))
+			 
 			 ->required_fields('ECName', 'ECPhone', 'ECRelationship')
 			 
 			 ->unset_edit_fields('ContactID')
