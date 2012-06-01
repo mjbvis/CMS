@@ -153,7 +153,7 @@ class Record_management extends Application{
 			 ->set_relation('UserID', 'users', 'username')
 			 
 			 ->display_as('UserID','Username')
-			 ->display_as('SubmissionDTTM','Date Submitted')
+			 ->display_as('UDTTM','Date Updated')
 			 ->display_as('VolunteeredDTTM','Date of Activity')
 			 
 			 ->change_field_type('UserID', 'readonly')

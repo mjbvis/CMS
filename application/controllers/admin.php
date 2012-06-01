@@ -82,8 +82,8 @@ class Admin extends Application{
 		
 		$crud->set_table('VolunteerLogEntry')
 			->set_relation('UserID', 'users', 'username')
-			->columns('UserID', 'Hours', 'Description', 'VolunteeredDTTM', 'SubmissionDTTM')
-			->display_as('SubmissionDTTM', 'Date Submitted')
+			->columns('UserID', 'Hours', 'Description', 'VolunteeredDTTM', 'UDTTM')
+			->display_as('UDTTM', 'Date Submitted')
 			->display_as('VolunteeredDTTM', 'Activity Date')
 			->display_as('UserID', 'Username')
 			->unset_operations();
