@@ -12,8 +12,13 @@
 			<legend>
 				Child's Name:
 			</legend>
+			<label for="cFirstId">First Name:&nbsp;&nbsp;&nbsp;</label>
 			<input type="text" name="cFirstName" id="cFirstId" max="45" placeholder="First Name" value="<?php echo set_value('cFirstName');?>" />
+			<br><br>
+			<label for="cMiddleId">Middle Name: </label>
 			<input type="text" name="cMiddleName" id="cMiddleId" max="45" placeholder="Middle Name" value="<?php echo set_value('cMiddleName');?>" />
+			<br><br>
+			<label for="cLastId">Last Name:&nbsp;&nbsp;&nbsp;</label>
 			<input type="text" name="cLastName" id="cLastId" max="45" placeholder="Last Name" value="<?php echo set_value('cLastName');?>" />
 			</br> </br>
 		</fieldset>
