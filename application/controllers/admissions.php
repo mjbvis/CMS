@@ -249,25 +249,6 @@ class Admissions extends Application {
 		// make submission of multiple tables to database atomic.
 		Admissions_form::transaction(function() use ($wlid) {
 
-			// must save 3 emergency contacts 1st
-			$emergencyContact1 = new Emergency_contact();
-			$emergencyContact1->ecname = set_value('emergencyContactName1');
-			$emergencyContact1->ecphone = set_value('emergencyContactPhone1');
-			$emergencyContact1->ecrelationship = set_value('emergencyContactRelationship1');
-			$emergencyContact1->save();
-
-			$emergencyContact2 = new Emergency_contact();
-			$emergencyContact2->ecname = set_value('emergencyContactName2');
-			$emergencyContact2->ecphone = set_value('emergencyContactPhone2');
-			$emergencyContact2->ecrelationship = set_value('emergencyContactRelationship2');
-			$emergencyContact2->save();
-
-			$emergencyContact3 = new Emergency_contact();
-			$emergencyContact3->ecname = set_value('emergencyContactName3');
-			$emergencyContact3->ecphone = set_value('emergencyContactPhone3');
-			$emergencyContact3->ecrelationship = set_value('emergencyContactRelationship3');
-			$emergencyContact3->save();
-
 			// must save the student 2nd
 			$student = new Student();
 			$student->userid = user_id();
@@ -282,15 +263,34 @@ class Admissions extends Application {
 			$student->placeofbirth = set_value('cBirthplace');
 			$student->dob = date('Y-m-d H:i:s', strtotime(set_value('cDOB')));
 			$student->phonenumber = set_value('cPhoneNum');
-			$student->emergencycontactid1 = $emergencyContact1->contactid;
-			$student->emergencycontactid2 = $emergencyContact2->contactid;
-			$student->emergencycontactid3 = $emergencyContact3->contactid;
 			$student->questionaireid = $wlid;
 			$student->isenrolled = 0;
 			$student->udttm = date('Y-m-d H:i:s', time());
 			// Example: 2012-11-28 14:32:08
 			$student->enrollmentdttm = null;
 			$student->save();
+
+			// must save 3 emergency contacts 1st
+			$emergencyContact1 = new Emergency_contact();
+			$emergencyContact1->studentid = $student->studentid;
+			$emergencyContact1->ecname = set_value('emergencyContactName1');
+			$emergencyContact1->ecphone = set_value('emergencyContactPhone1');
+			$emergencyContact1->ecrelationship = set_value('emergencyContactRelationship1');
+			$emergencyContact1->save();
+
+			$emergencyContact2 = new Emergency_contact();
+			$emergencyContact2->studentid = $student->studentid;
+			$emergencyContact2->ecname = set_value('emergencyContactName2');
+			$emergencyContact2->ecphone = set_value('emergencyContactPhone2');
+			$emergencyContact2->ecrelationship = set_value('emergencyContactRelationship2');
+			$emergencyContact2->save();
+
+			$emergencyContact3 = new Emergency_contact();
+			$emergencyContact3->studentid = $student->studentid;
+			$emergencyContact3->ecname = set_value('emergencyContactName3');
+			$emergencyContact3->ecphone = set_value('emergencyContactPhone3');
+			$emergencyContact3->ecrelationship = set_value('emergencyContactRelationship3');
+			$emergencyContact3->save();
 
 			// save the Admissions_form last to complete the transaction
 			$form = new Admissions_form();
