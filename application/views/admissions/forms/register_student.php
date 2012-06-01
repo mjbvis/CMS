@@ -1,19 +1,39 @@
 <script type="text/javascript">
 
-$(document).ready(function() {                                         
-	$("#yesPetsId").click(function() { 
+$(document).ready(function() {
+
+	// initial state of the pet name and type textboxes
+	if($("#yesPetsId:checked").length > 0){
+		$('#hasPetsDiv').show();
+	}
+	else{
+		$('#typeOfPetId, #nameOfPetId').val('');	// clear values when deselected
+		$('#hasPetsDiv').hide();
+	}
+	// initial state of the reference note textbox
+	if($("#parentId:checked, #friendId:checked, #newspaperId:checked, #otherId:checked").length > 0){
+		$('#specifyTextId').show();
+	}
+	else{
+		$('#specifyTextId').val('');	// clear value when deselected
+		$('#specifyTextId').hide();
+	}
+	// radio button control over pet name/type visibility
+	$("#yesPetsId").click(function() {
 		$('#hasPetsDiv').show();
 	});
-    
-	$("#noPetsId").click(function() { 
+	
+	$("#noPetsId").click(function() {
+		$('#typeOfPetId, #nameOfPetId').val('');	// clear values when deselected
 		$('#hasPetsDiv').hide();
 	});
-
-	$("#parentId, #friendId, #newspaperId, #otherId").click(function() { 
+	// radio button control over reference note visibility
+	$("#parentId, #friendId, #newspaperId, #otherId").click(function() {
 		$('#specifyTextId').show();
 	});
 	
-	$("#internetId, #posterId").click(function() { 
+	$("#internetId, #posterId").click(function() {
+		$('#specifyTextId').val('');	// clear value when deselected
 		$('#specifyTextId').hide();
 	});
 });
@@ -212,7 +232,7 @@ $(document).ready(function() {
 				</br>
 				<input type='radio' name='referenceType' id='otherId' value="Other" <?php echo set_radio('referenceType', "Other"); ?>/> Other
 				</br>
-				<input type='text' name='referenceName' id='specifyTextId' value="<?php echo set_value('referenceName'); ?>" style="display:none" placeholder="Specify..." max="250"/>
+				<input type='text' name='referenceName' id='specifyTextId' value="<?php echo set_value('referenceName'); ?>" placeholder="Specify..." max="250"/>
 			</div>		
 		</fieldset>
 		<input type="submit" value="Save and Continue" name="registerStudent" class="submit"/>
