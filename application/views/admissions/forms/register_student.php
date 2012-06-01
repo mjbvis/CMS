@@ -1,23 +1,22 @@
 <script type="text/javascript">
 
-function show_hide(value) {
-	switch(value){
-		case 'yes':
-			document.getElementById('hasPetsDiv').style.display = "block";
-			break;
-		case'no':
-			document.getElementById('hasPetsDiv').style.display = "none";
-			break;
-		case 'show_specify':
-			document.getElementById('specifyTextId').style.display="block";	
-			break;
-		case 'hide_specify':
-			document.getElementById('specifyTextId').style.display="none";
-			break;	
-		default:
-			break;
-	}
-}
+$(document).ready(function() {                                         
+	$("#yesPetsId").click(function() { 
+		$('#hasPetsDiv').show();
+	});
+    
+	$("#noPetsId").click(function() { 
+		$('#hasPetsDiv').hide();
+	});
+
+	$("#parentId, #friendId, #newspaperId, #otherId").click(function() { 
+		$('#specifyTextId').show();
+	});
+	
+	$("#internetId, #posterId").click(function() { 
+		$('#specifyTextId').hide();
+	});
+});
 
 </script>
 <div class="formBox">
@@ -172,8 +171,8 @@ function show_hide(value) {
 				</li>
 				<li>
 					Do you have any household pets?</br>
-					<input type="radio" name="HasPets" id="yesPetsId" value="1" onClick="show_hide('yes')" <?php echo set_radio('HasPets', "1"); ?> /> Yes
-					<input type="radio" name="HasPets" id="noPetsId" value="0" onClick="show_hide('no')" <?php echo set_radio('HasPets', "0"); ?> /> No
+					<input type="radio" name="HasPets" id="yesPetsId" value="1" <?php echo set_radio('HasPets', "1"); ?> /> Yes
+					<input type="radio" name="HasPets" id="noPetsId" value="0" <?php echo set_radio('HasPets', "0"); ?> /> No
 					<div id="hasPetsDiv" style="display:none">
 						Type(s):
 						<input type='text' name='petType' id='typeOfPetId' value="<?php echo set_value('petType'); ?>" placeholder="Enter answer here..." max="50"/>
@@ -201,17 +200,18 @@ function show_hide(value) {
 		<fieldset>
 			How did you hear about Corvallis Montessori School?</br>
 			<div class="hearAbout">
-				<input type='radio' name='referenceType' id='parentId' value="Parent" onClick="show_hide('show_specify')" <?php echo set_radio('referenceType', "Parent"); ?>/> <label>Parent of a CMS student</label>
+				<input type='radio' name='referenceType' id='parentId' value="Parent" <?php echo set_radio('referenceType', "Parent"); ?>/> <label>Parent of a CMS student</label>
 				</br>
-				<input type='radio' name='referenceType' id='friendId' value="Friend" onClick="show_hide('show_specify')" <?php echo set_radio('referenceType', "Friend"); ?>/> Friend
+				<input type='radio' name='referenceType' id='friendId' value="Friend" <?php echo set_radio('referenceType', "Friend"); ?>/> Friend
 				</br>
-				<input type='radio' name='referenceType' id='newspaperId' value="Newspaper" onClick="show_hide('show_specify')" <?php echo set_radio('referenceType', "Newspaper"); ?> /> Newspaper
+				<input type='radio' name='referenceType' id='newspaperId' value="Newspaper" <?php echo set_radio('referenceType', "Newspaper"); ?> /> Newspaper
 				</br>
-				<input type='radio' name='referenceType' id='internetId' value="Internet" onClick="show_hide('hide_specify')" <?php echo set_radio('referenceType', "Internet"); ?> /> Internet
+				<input type='radio' name='referenceType' id='internetId' value="Internet" <?php echo set_radio('referenceType', "Internet"); ?> /> Internet
 				</br>
-				<input type='radio' name='referenceType' id='posterId' value="Poster" onClick="show_hide('hide_specify')" <?php echo set_radio('referenceType', "Poster"); ?> /> Poster
+				<input type='radio' name='referenceType' id='posterId' value="Poster" <?php echo set_radio('referenceType', "Poster"); ?> /> Poster
 				</br>
-				<input type='radio' name='referenceType' id='otherId' value="Other" onClick="show_hide('show_specify')" <?php echo set_radio('referenceType', "Other"); ?>/> Other
+				<input type='radio' name='referenceType' id='otherId' value="Other" <?php echo set_radio('referenceType', "Other"); ?>/> Other
+				</br>
 				<input type='text' name='referenceName' id='specifyTextId' value="<?php echo set_value('referenceName'); ?>" style="display:none" placeholder="Specify..." max="250"/>
 			</div>		
 		</fieldset>
