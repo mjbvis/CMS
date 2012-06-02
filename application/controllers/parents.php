@@ -436,12 +436,9 @@ Class Parents extends Application {
 			 ->change_field_type('NapTime', 'enum', array('yes','no'))
 			 ->change_field_type('OutdoorPlay', 'enum', array('yes','no'))
 			 ->change_field_type('Notes', 'text')
-			 ->change_field_type('Interests')
+			 ->change_field_type('Interests', 'text')
 			 
-			 ->required_fields('PreferredHospital', 'HospitalPhone', 'Physician', 'PhysicianPhone', 'Dentist', 'DentistPhone')
-			 ->set_rules('HospitalPhone','Hospital Phone','min_length[12]')
-			 ->set_rules('PhysicianPhone','Physician Phone','min_length[12]')
-			 ->set_rules('DentistPhone','Dentist Phone','min_length[12]')
+			 ->required_fields('ReferrerType', 'Interests')
 			 
 			 ->where('StudentID', $studentID);
 			 
