@@ -164,7 +164,7 @@ Class Parents extends Application {
 			 ->change_field_type('UserID', 'hidden', user_id())
 			 ->change_field_type('UDTTM', 'hidden', date('Y-m-d H:i:s', time()))
 			 
-			 ->callback_after_update(array($this, 'updateDateTime'))
+			 ->callback_after_update(array($this, 'updateLogEntryDateTime'))
 			 
 			 ->unset_edit_fields('UDTTM');
 		
@@ -201,15 +201,15 @@ Class Parents extends Application {
 			 
 			 ->change_field_type('UserID', 'hidden', user_id())
 			 ->change_field_type('Gender', 'enum', array('M','F'))
+			 ->change_field_type('UDTTM', 'hidden', date('Y-m-d H:i:s', time()))
 			 
 			 ->callback_column('Medical Information', array($this, 'getMedicalInformationLink'))
 			 ->callback_column('Admissions Form', array($this, 'getAdmissionsFormLink'))
 			 
 			 ->callback_edit_field('ProgramID', array($this, 'getProgram'))
 			 ->callback_edit_field('ClassID', array($this, 'getClassroom'))
-			 ->callback_column('Emergency Contact', array($this, 'emergencyContactLink'))
 			 
-			 ->callback_after_update(array($this, 'updateDateTime'));
+			 ->callback_column('Emergency Contact', array($this, 'emergencyContactLink'));
 			 
 		$crud->required_fields('FirstName', 'LastName', 'Address', 'PlaceOfBirth', 'PhoneNumber');
 		$crud->set_rules('PhoneNumber', 'PhoneNumber', 'min_length[12]');
@@ -257,16 +257,6 @@ Class Parents extends Application {
 		$classroomAttr = $classroom->attributes();
 		
 		return '<label>' . $classroomAttr['classname'] . '</label>';
-	}
-
-	# callback function for the manageMyStudent grocery crud.
-	# updates the student's update datetime upon update.
-	function updateStudentDateTime($post_array, $studentid){
-		$student = Student::find_by_studentid($studentid);
-		if($student == null)
-			return null;
-		$student->updatedttm = date('Y-m-d H:i:s', time());
-		$student->save();
 	}
 	
 	# Callback Column for generating links to the student's Emergency Contacts.
@@ -323,7 +313,7 @@ Class Parents extends Application {
 			 ->display_as('ECPhone', 'Phone')
 			 ->display_as('ECRelationship', 'Relationship')
 			 
-			 ->callback_edit_field('StudentID', array($this, 'getnameFromStudentID'))
+			 ->callback_edit_field('StudentID', array($this, 'getNameFromStudentID'))
 			 
 			 ->required_fields('ECName', 'ECPhone', 'ECRelationship')
 			 
@@ -374,7 +364,7 @@ Class Parents extends Application {
 			 ->change_field_type('MedicalConditions', 'text')
 			 ->change_field_type('Allergies', 'text')
 		
-			 ->callback_edit_field('StudentID', array($this, 'getnameFromStudentID'))
+			 ->callback_edit_field('StudentID', array($this, 'getNameFromStudentID'))
 		
 			 ->required_fields('PreferredHospital', 'HospitalPhone', 'Physician', 'PhysicianPhone', 'Dentist', 'DentistPhone')
 			 ->set_rules('HospitalPhone','Hospital Phone','min_length[12]')
@@ -415,7 +405,7 @@ Class Parents extends Application {
 		$crud = new grocery_CRUD();
 		$crud->set_table('AdmissionsForm')
 	    	 
-			 ->callback_edit_field('StudentID', array($this, 'getnameFromStudentID'))
+			 ->callback_edit_field('StudentID', array($this, 'getNameFromStudentID'))
 		
 			 // set up aliases	
 			 ->display_as('SchoolExperience','School Experience')
@@ -449,7 +439,7 @@ Class Parents extends Application {
 		$this->load->view('templates/grid', $output);
 	}
 
-	function getnameFromStudentID($value, $row){
+	function getNameFromStudentID($value, $row){
 		$name = Student::find_by_studentid($value);
 		$nameAttr = $name->attributes();
 		

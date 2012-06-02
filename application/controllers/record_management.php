@@ -42,11 +42,12 @@ class Record_management extends Application{
 			 ->set_relation('ProgramID', 'Program', '{AcademicYear} {Title}', array('Enabled' => '1'))
 			 ->set_relation('IsEnrolled','BinaryLookup','EnrolledPreenrolled')
 			 
-			 
-			// columns for main screen (not the edit screen)
+			 // columns for main screen (not the edit screen)
 			 ->columns('FirstName', 'LastName', 'ClassID', 'Emergency Contacts', 'PhoneNumber', 'Medical Information', 'Admissions Form', 'Waitlist Questionaire', 'IsEnrolled')
+			 // edit fields
+			 ->edit_fields('UserID', 'FirstName', 'MiddleName', 'LastName', 'ProgramID', 'ClassID', 'Gender', 'Address', 'PhoneNumber', 'PlaceOfBirth', 'DOB', 'EnrollmentDTTM', 'IsEnrolled', 'UDTTM')
 			
-			// special functions for certain columns on the main screen
+			 // special functions for certain columns on the main screen
 			 ->callback_column('Medical Information', array($this, 'getMedicalInformationLink'))
 			 ->callback_column('Admissions Form', array($this, 'getAdmissionsFormLink'))
 			 ->callback_column('Waitlist Questionaire', array($this, 'getWaitlistQuestionaireLink'))
@@ -54,10 +55,10 @@ class Record_management extends Application{
 			 			 
 			 // callbacks for the edit pages
 			 ->callback_edit_field('UserID', array($this, 'getUsernameFromID'))
+			 ->callback_edit_field('UDTTM', array($this, 'getFieldAsReadonly'))
 			 
 			 // call back after updates
 			 ->callback_after_update(array($this, 'updateStudentDateTime'))
-			 ->callback_after_update(array($this, 'checkForEnrollmentStatus'))
 			 
 			 // setup display alliases
 			 ->display_as('FirstName', 'First Name')
@@ -72,16 +73,21 @@ class Record_management extends Application{
 			 ->display_as('ProgramID', 'Program')
 			 ->display_as('EmergencyContactID1', 'Emergency Contact 1')
 			 ->display_as('IsEnrolled', 'Enrollment Status')
+			 ->display_as('UDTTM', 'Last Modified')
 			
 			// force types
 			 ->change_field_type('UserID', 'readonly')
 			 ->change_field_type('Gender', 'enum', array('M','F'))
-			 ->change_field_type('UDTTM', 'hidden', date('Y-m-d H:i:s', time()))
 			 			 
 			 // Custom Action
 			 ->add_action('test', base_url().'assets/images/remove.png', 'record_management/removeFromPreEnrolled')
+		
+			 ->required_fields('FirstName', 'LastName', 'ProgramID', 'Address', 'PhoneNumber', 'PlaceOfBirth', 'DOB', 'IsEnrolled')
+			 // TODO: figure out how to validate Dates in grocery crud. Using the valid_date rule
+			 //		  doesn't work because the integer is converted to a bazaar date before validation occurs.
+			 //->set_rules('DOB', 'Date of Birth', 'required|valid_date')
 			 
-			 ->unset_edit_fields('EmergencyContactID1', 'EmergencyContactID2', 'EmergencyContactID3', 'QuestionaireID')
+			 ->unset_edit_fields('QuestionaireID')
 			 ->unset_add()
 			 ->unset_delete();
 			 
@@ -135,7 +141,9 @@ class Record_management extends Application{
 			->display_as('AcademicYear', 'Academic Year')
 			->display_as('AcademicLevelID', 'Academic Level')
 			->display_as('StartTime', 'Start Time')
-			->display_as('EndTime', 'End Time');
+			->display_as('EndTime', 'End Time')
+
+			->required_fields('Enabled', 'AcademicYear', 'AcademicLevelID', 'StartTime', 'EndTime', 'Tuition', 'Title', 'Days');
 
         $output = $crud->render();
 		
@@ -152,13 +160,21 @@ class Record_management extends Application{
 			 
 			 ->set_relation('UserID', 'users', 'username')
 			 
+			 // fields to show up in edit
+			 ->edit_fields('UserID', 'Hours', 'Description', 'VolunteeredDTTM', 'UDTTM')
+			 
 			 ->display_as('UserID','Username')
 			 ->display_as('UDTTM','Date Updated')
 			 ->display_as('VolunteeredDTTM','Date of Activity')
 			 
 			 ->change_field_type('UserID', 'readonly')
 			
-			 ->callback_edit_field('UserID', array($this, 'getUsernameFromID'));
+			 ->callback_edit_field('UDTTM', array($this, 'getFieldAsReadonly'))
+			 ->callback_edit_field('UserID', array($this, 'getUsernameFromID'))
+			 
+			 ->callback_after_update(array($this, 'updateLogEntryDateTime'))
+			 
+			 ->required_fields('Hours', 'Description', 'VolunteeredDTTM');
 
 			 $crud->unset_add();
 
@@ -180,22 +196,21 @@ class Record_management extends Application{
 			
 		//set up relationships
 		$crud->set_relation('ClassID','Classroom','ClassName')
-			->set_relation('IsLearningIndependently','BinaryLookup','YesNo')
-			->set_relation('IsLearningAtOwnPace','BinaryLookup','YesNo')
-			->set_relation('IsHandsOnLearner','BinaryLookup','YesNo')
-			->set_relation('IsMixedAges','BinaryLookup','YesNo')
-			->set_relation('WebSearchRef','BinaryLookup','YesNo')
-			->set_relation('CMSFamilyRef','BinaryLookup','YesNo')
-			->set_relation('FriendsRef','BinaryLookup','YesNo')
-			->set_relation('AdRef','BinaryLookup','YesNo')
-			->set_relation('OtherRef','BinaryLookup','YesNo')
-			->set_relation('OnTimeToObservation','BinaryLookup','YesNo')
-			->set_relation('AttendedObservation','BinaryLookup','YesNo');
-		
-		
+			 ->set_relation('IsLearningIndependently','BinaryLookup','YesNo')
+			 ->set_relation('IsLearningAtOwnPace','BinaryLookup','YesNo')
+			 ->set_relation('IsHandsOnLearner','BinaryLookup','YesNo')
+			 ->set_relation('IsMixedAges','BinaryLookup','YesNo')
+			 ->set_relation('WebSearchRef','BinaryLookup','YesNo')
+			 ->set_relation('CMSFamilyRef','BinaryLookup','YesNo')
+			 ->set_relation('FriendsRef','BinaryLookup','YesNo')
+			 ->set_relation('AdRef','BinaryLookup','YesNo')
+			 ->set_relation('OtherRef','BinaryLookup','YesNo')
+			 ->set_relation('OnTimeToObservation','BinaryLookup','YesNo')
+			 ->set_relation('AttendedObservation','BinaryLookup','YesNo');
+			
 		// set up the aliases from column names to desired output
 		$crud->display_as('ParentNames','Parent Names')
-			 ->display_as('ChildrenNamesAges','Children Names and Ages')
+			 ->display_as('ChildrenNamesAges','Children Names/Ages')
 			 ->display_as('FirstContactedDTTM','Date First Contacted')
 			 ->display_as('VisitDTTM','Date Visited')
 			 ->display_as('InterviewDTTM','Date Interviewed')
@@ -225,14 +240,16 @@ class Record_management extends Application{
 			 ->display_as('AppReceivedDTTM','Date Application Received')
 			 ->display_as('FeeReceivedDTTM','Date Fee Received');
 			
-			// force field types
-			$crud->change_field_type('ParentNames', 'text')
-				->change_field_type('ChildrenNamesAges', 'text')
-				->change_field_type('MontessoriImpressions', 'text')
-				->change_field_type('InterviewImpressions', 'text')
-				->change_field_type('LevelOfInterest', 'enum', array('Low','Medium','High'))
-				->change_field_type('LevelOfUnderstanding', 'enum', array('Little','Average','High'))
-				->change_field_type('WillingnessToLearn', 'enum', array('Low','Medium','High'));
+		// force field types
+		$crud->change_field_type('ParentNames', 'text')
+			 ->change_field_type('ChildrenNamesAges', 'text')
+			 ->change_field_type('MontessoriImpressions', 'text')
+			 ->change_field_type('InterviewImpressions', 'text')
+		 	 ->change_field_type('LevelOfInterest', 'enum', array('Low','Medium','High'))
+			 ->change_field_type('LevelOfUnderstanding', 'enum', array('Little','Average','High'))
+			 ->change_field_type('WillingnessToLearn', 'enum', array('Low','Medium','High'))
+
+			 ->required_fields('ParentNames', 'ChildrenNamesAges');
 
         $output = $crud->render();
 		
@@ -246,9 +263,15 @@ class Record_management extends Application{
 	function manageClasses(){
 		$crud = new grocery_CRUD();
 		$crud->set_table('Classroom')
-			->display_as('Enabled', 'Is this Classroom Active')
-			->set_relation('AcademicLevelID','AcademicLevel','AcademicLevelName')
-			->set_relation('Enabled','BinaryLookup','YesNo');
+
+			 ->set_relation('AcademicLevelID','AcademicLevel','AcademicLevelName')
+			 ->set_relation('Enabled','BinaryLookup','YesNo')
+			 
+			 ->display_as('ClassName', 'Classroom')
+			 ->display_as('AcademicLevelID', 'Academic Level')
+			 ->display_as('Enabled', 'Is Classroom Active')
+			 
+			 ->required_fields('ClassName', 'AcademicLevelID', 'Enabled');
 
         $output = $crud->render();
 		
@@ -265,7 +288,7 @@ class Record_management extends Application{
 	    $crud->where('StudentID', $studentID);
 		$crud->unset_list();
 		
-		$crud->callback_edit_field('StudentID', array($this, 'getnameFromStudentID'));
+		$crud->callback_edit_field('StudentID', array($this, 'getNameFromStudentID'));
 		
 		// TODO: fix validation.
 		$crud->required_fields('PreferredHospital', 'HospitalPhone', 'Physician', 'PhysicianPhone', 'Dentist', 'DentistPhone');
@@ -297,7 +320,7 @@ class Record_management extends Application{
 	    $crud->where('StudentID', $studentID);
 		$crud->unset_list();
 		
-		$crud->callback_edit_field('StudentID', array($this, 'getnameFromStudentID'));
+		$crud->callback_edit_field('StudentID', array($this, 'getNameFromStudentID'));
 		
 		// set up aliases	
 		$crud->display_as('SchoolExperience','School Experience')
@@ -309,7 +332,9 @@ class Record_management extends Application{
 			->display_as('SiblingNames','Sibling Names')
 			->display_as('SiblingAges','Sibling Ages')
 			->display_as('ReferrerType','Referrer Type')
-			->display_as('ReferredBy','Referred By');
+			->display_as('ReferredBy','Referred By')
+		
+			->required_fields('ReferrerType', 'Interests');
 		
 		$crud->change_field_type('SchoolExperience', 'enum', array('yes','no'))
 			->change_field_type('SocialExperience', 'enum', array('yes','no'))
@@ -330,7 +355,7 @@ class Record_management extends Application{
 	    $crud->where('StudentID', $studentID);
 		$crud->unset_list();
 		
-		$crud->callback_edit_field('StudentID', array($this, 'getnameFromStudentID'));
+		$crud->callback_edit_field('StudentID', array($this, 'getNameFromStudentID'));
 		
 		// set up aliases	
 		$crud->display_as('StudentID','Name')
@@ -392,14 +417,16 @@ class Record_management extends Application{
 	function manageEmergencyContacts(){
 		$crud = new grocery_CRUD();
 		$crud->set_table('EmergencyContact')
-			->set_relation('StudentID','Student','{FirstName} {LastName}');
+			 ->set_relation('StudentID','Student','{FirstName} {LastName}');
 			
 		//set up aliases
 		$crud->display_as('StudentID','Student Name')
-			->display_as('ECName','Emergency Contact Name')
-			->display_as('ECPhone','Phone')
-			->display_as('ECRelationship','Relationship to Student');
+			 ->display_as('ECName','Contact Name')
+			 ->display_as('ECPhone','Phone')
+			 ->display_as('ECRelationship','Relationship')
 	    		
+			 ->required_fields('ECName', 'ECPhone', 'ECRelationship');
+			 
 		$output = $crud->render();
 				
 		$this->load->view('templates/header', $this->data);		
@@ -425,13 +452,15 @@ class Record_management extends Application{
 			return $e;
 		}
 		$crud = new grocery_CRUD();
-		$crud->set_table('EmergencyContact')
-		
+		$crud->set_table('EmergencyContact')		
 	         ->columns('ECName', 'ECPhone', 'ECRelationship')
 			 
+			 ->display_as('StudentID', 'Student')
 			 ->display_as('ECName', 'Name')
 			 ->display_as('ECPhone', 'Phone')
 			 ->display_as('ECRelationship', 'Relationship')
+			 
+			 ->callback_edit_field('StudentID', array($this, 'getNameFromStudentID'))
 			 
 			 ->required_fields('ECName', 'ECPhone', 'ECRelationship')
 			 
@@ -460,7 +489,7 @@ class Record_management extends Application{
 		return;
 	}
 	
-	function getnameFromStudentID($value, $row){
+	function getNameFromStudentID($value, $row){
 		$name = Student::find_by_studentid($value);
 		$nameAttr = $name->attributes();
 		
@@ -499,27 +528,40 @@ class Record_management extends Application{
 		return '<a class=\'fancyframe\' href="' . base_url('record_management/manageWaitlistForm/edit/' . $row->StudentID) . '" target="_blank">' . 'Waitlist Questionaire' . '</a>';
 	}
 	
+	# Callback edit field that displays a field as a readonly label
+	function getFieldAsReadonly($value, $row){
+		return '<label>' . $value . '</label>';
+	}
+	
 	function encrypt_password_callback($post_array) {
 		$post_array['password'] = $this->ag_auth->salt($post_array['password']);
 		return $post_array;
 	}
 	
-	# callback function for the manageMyStudent grocery crud.
+	# callback function for the manageVolunteeLogs grocery crud.
+	# updates the log entry's update datetime upon update.
+	function updateLogEntryDateTime($post_array, $entryid){
+		$entry = Volunteer_log_entry::find_by_entryid($entryid);
+		if($entry == null)
+			return null;
+		$entry->udttm = date('Y-m-d H:i:s', time());
+		$entry->save();
+	}
+	
+	# callback function for the manageStudents grocery crud.
 	# updates the student's update datetime upon update.
 	function updateStudentDateTime($post_array, $studentid){
 		$student = Student::find_by_studentid($studentid);
 		if($student == null)
 			return null;
-		$student->updatedttm = date('Y-m-d H:i:s', time());
+		$student->udttm = date('Y-m-d H:i:s', time());
 		$student->save();
 	}
 	
+	
 	function removeFromPreEnrolled(){
 		
-	}
-	
-
-			
+	}		
 }
 	
 /* End of file: record_management.php */
