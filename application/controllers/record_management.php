@@ -317,7 +317,7 @@ class Record_management extends Application{
 			->change_field_type('Toilet', 'enum', array('yes','no'))
 			->change_field_type('NapTime', 'enum', array('yes','no'))
 			->change_field_type('OutdoorPlay', 'enum', array('yes','no'))
-			->change_field_type('notes', 'text');
+			->change_field_type('Notes', 'text');
 		
 		$output = $crud->render();
 				
@@ -334,18 +334,18 @@ class Record_management extends Application{
 		
 		// set up aliases	
 		$crud->display_as('StudentID','Name')
-			->display_as('SchoolExperience','School Experience')
-			->display_as('SocialExperience','Social Experience')
-			->display_as('ComfortMethods','Comfort Methods')
-			->display_as('NapTime','Nap Time')
-			->display_as('OutdoorPlay','Outdoor Play')
-			->display_as('SiblingNames','Sibling Names')
-			->display_as('SiblingAges','Sibling Ages')
-			->display_as('ReferrerType','Referrer Type')
-			->display_as('ReferredBy','Referred By');
+			 ->display_as('SchoolExperience','School Experience')
+			 ->display_as('SocialExperience','Social Experience')
+			 ->display_as('ComfortMethods','Comfort Methods')
+			 ->display_as('NapTime','Nap Time')
+			 ->display_as('OutdoorPlay','Outdoor Play')
+			 ->display_as('SiblingNames','Sibling Names')
+			 ->display_as('SiblingAges','Sibling Ages')
+			 ->display_as('ReferrerType','Referrer Type')
+			 ->display_as('ReferredBy','Referred By');
 			
 		// force fields
-		$crud->change_field_type('notes', 'text');
+		$crud->change_field_type('Notes', 'text');
 		
 		$output = $crud->render();
 				
