@@ -198,7 +198,6 @@ Class Parents extends Application {
 			 ->display_as('PlaceOfBirth', 'Place Of Birth')
 			 ->display_as('DOB', 'Date of Birth')
 			 ->display_as('PhoneNumber', 'Phone')
-			 ->display_as('PhoneNumber', 'Phone')
 			 
 			 ->change_field_type('UserID', 'hidden', user_id())
 			 ->change_field_type('Gender', 'enum', array('M','F'))
@@ -210,8 +209,15 @@ Class Parents extends Application {
 			 ->callback_edit_field('ClassID', array($this, 'getClassroom'))
 			 ->callback_column('Emergency Contact', array($this, 'emergencyContactLink'))
 			 
-			 ->callback_after_update(array($this, 'updateDateTime'))			 
-			 ->unset_edit_fields('QuestionaireID', 'EnrollmentDTTM', 'IsEnrolled', 'UDTTM')
+			 ->callback_after_update(array($this, 'updateDateTime'));
+			 
+		$crud->required_fields('FirstName', 'LastName', 'Address', 'PlaceOfBirth', 'PhoneNumber');
+		$crud->set_rules('PhoneNumber', 'PhoneNumber', 'min_length[12]');
+		// TODO: figure out how to validate Dates in grocery crud. Using the valid_date rule
+		//		 doesn't work because the integer is converted to a bazaar date before validation occurs.
+		$crud->set_rules('DOB', 'Date of Birth', 'required|valid_date');
+
+		$crud->unset_edit_fields('QuestionaireID', 'EnrollmentDTTM', 'IsEnrolled', 'UDTTM')
 			 ->unset_add();
 			 
 		// make sure that the child is only considered registered after they have filled out their
