@@ -30,6 +30,7 @@ class Admissions extends Application {
 
 	# view the Montessori policy and statements of value
 	function policy() {
+		$this->load->view('templates/css');	
 		$this->load->view('admissions/forms/policy');
 	}
 
