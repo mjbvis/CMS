@@ -30,9 +30,7 @@ class Admissions extends Application {
 
 	# view the Montessori policy and statements of value
 	function policy() {
-		$this->load->view('templates/header', $this->globalViewData);
 		$this->load->view('admissions/forms/policy');
-		$this->load->view('templates/footer');
 	}
 
 	# Manages the waitlist_questionaire. Handles displaying the
@@ -78,6 +76,7 @@ class Admissions extends Application {
 		} else {
 			// display the waitlist questionaire
 			$this->load->view('templates/header', $this->globalViewData);
+			$this->load->view('templates/fancybox_dependencies');
 			$this->load->view('admissions/forms/waitlist_questionaire', $viewData);
 			$this->load->view('templates/footer');
 		}
