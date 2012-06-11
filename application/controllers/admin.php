@@ -30,11 +30,23 @@ class Admin extends Application{
 		
 		// Main function called when this controller is loaded		
 		if(logged_in()){
+		
+		$crud = new grocery_CRUD();
+		$crud->set_table('UserNotifications')
+			 ->set_relation('NotificationID', 'Notifications', 'Description')
+			 ->columns('UrlParam')
+			 ->display_as('UrlParam', 'Description')
+			 ->callback_column('UrlParam', array($this, 'get_notification_URL'))
+			 ->unset_operations();
+			 
+		$crud->where('UserID', user_id());
+
+        $output = $crud->render();
 				
 		//* load views */
 		$this->load->view('templates/header', $this->data);		
 		$this->load->view('templates/fancybox_dependencies');
-		$this->load->view('admin/dashboard');
+		$this->load->view('admin/dashboard', $output);
 		$this->load->view('templates/footer');
 			
 		}
@@ -95,17 +107,7 @@ class Admin extends Application{
 	# The grocery crud for the current admin's notifications. This grid is dedicated
 	# for viewing. Adds, Edits, and Deletes should not be allowed.
 	function notificationGrid() {		 
-		$crud = new grocery_CRUD();
-		$crud->set_table('UserNotifications')
-			 ->set_relation('NotificationID', 'Notifications', 'Description')
-			 ->columns('UrlParam')
-			 ->display_as('UrlParam', 'Description')
-			 ->callback_column('UrlParam', array($this, 'get_notification_URL'))
-			 ->unset_operations();
-			 
-		$crud->where('UserID', user_id());
 
-        $output = $crud->render();
 
 		$this->load->view('templates/grid', $output);
 	}
@@ -115,7 +117,7 @@ class Admin extends Application{
 	function get_notification_URL($value, $row) {
 		$notification = Notifications::find_by_notificationid($row->NotificationID);
 		$NotificationAttr = $notification->attributes();
-		return '<a href="' . base_url($NotificationAttr['url'] . $row->UrlParam) . '" target="_blank">' . $NotificationAttr['description'] . $row->AdditionalInfo . '</a>';
+		return '<a href="' . base_url($NotificationAttr['url'] . $row->UrlParam) . '">' . $NotificationAttr['description'] . $row->AdditionalInfo . '</a>';
 	}
 	
 	function prospectGrid() {

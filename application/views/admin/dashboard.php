@@ -6,11 +6,20 @@
 	}
 </style>
 
+<?php 
+foreach($css_files as $file): ?>
+    <link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
+ 
+<?php endforeach; ?>
+<?php foreach($js_files as $file): ?>
+    <script src="<?php echo $file; ?>"></script>
+<?php endforeach; ?>
+
 <table border="0">
 	<tr valign="top">
 		<td colspan="2">
 			<h3>Notifications</h3>
-			<IFRAME SRC=<?php echo base_url('admin/notificationGrid'); ?> class="autoHeight" frameborder="0"></IFRAME>
+			<?php echo $output; ?>
 		</td>
 	</tr>
 	<tr>
