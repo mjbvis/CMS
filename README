@@ -1,10 +1,27 @@
 Repository for cms-team
 cms-team@googlegroups.com
-test
 
+Hello new team.
 
-Read this!!!
+This project is based off of amoung other things the following
+CodeIgnighter: http://codeigniter.com/
+Grocery CRUD: http://www.grocerycrud.com/
+php-active record: http://www.phpactiverecord.org/
 
-http://codeigniter.com/user_guide/general/styleguide.html#php_closing_tag
+it also uses the following but they are not as important
+fancybox
+jquery
+ag_auth (heavily modiefied does not look like ag_auth any more)
 
-Also has good formatting guides for CI
+there is one function in the admin controller that still uses CarboGrid and should be ported to grocery crud
+/application/controllers/admin.php/manageWaitlist()
+its view is located in the views folder
+
+as a result there are a bunch of carbogrid files still
+
+when you take over the project email Justin
+for control of the google group
+and to ask questions
+
+Justin
+fieldju@gmail.com
